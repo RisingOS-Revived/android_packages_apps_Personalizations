@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Squiggle animation -->
+    <string name="show_squiggle_animation_title">Show squiggle animation</string>
+    <string name="show_squiggle_animation_summary">Show media panel squiggle animation\nAfter change need to switch music, pause music or move the progress bar to apply</string>
+
     <!-- Statusbar Custom color -->
     <string name="status_bar_logo_use_custom_color_title">Status bar logo custom color</string>
     <string name="status_bar_logo_use_custom_color_summary">Enable Status bar logo custom color</string>
