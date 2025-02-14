@@ -15,6 +15,9 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Notifications/Island notification -->
+    <string name="notifications_island_notification_title">岛屿通知</string>
+    <string name="notifications_island_notification_summary">以IOS中'灵动岛'的样式显示弹出通知</string>
 
     <!-- Hide NavBar space -->
     <string name="hide_ime_space_style_title">隐藏导航栏空隙样式</string>
@@ -61,8 +64,8 @@
     <string name="aod_pulse_category_title">脉冲/瞌睡</string>
 
     <!-- Split Shade -->
-    <string name="qs_split_shade_enabled_title">更好的横屏快捷设置面板 (实验性)</string>
-    <string name="qs_split_shade_enabled_summary">启用新的实验性的快速设置分隔,\n打破横屏弹出通知</string>
+    <string name="qs_split_shade_enabled_title">更好的横屏QS面板 (实验性)</string>
+    <string name="qs_split_shade_enabled_summary">启用新的实验性的快速设置面板分隔,\n将会使横屏弹出通知不可用</string>
 
     <!-- Now Bar -->
     <string name="keyguard_now_bar_enabled_title">Now Bar</string>
@@ -252,6 +255,11 @@
     <string name="settings_random4">发现即拥有</string>
     <string name="settings_random5">搜索设置</string>
     <string name="settings_random6">你找不到不存在的东西！</string>
+    <!-- Notifications/Island notification -->
+    <string name="notifications_island_notification_title">Island notification</string>
+    <string name="notifications_island_notification_summary">Display heads-up notification in     <!-- Notifications/Island notification -->
+    <string name="notifications_island_notification_title">Island notification</string>
+    <string name="notifications_island_notification_summary">Display heads-up notification in IOS \'Dynamic Island\' style</string>
 
 
     <!-- User Card -->
