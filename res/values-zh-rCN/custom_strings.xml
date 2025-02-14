@@ -255,12 +255,6 @@
     <string name="settings_random4">发现即拥有</string>
     <string name="settings_random5">搜索设置</string>
     <string name="settings_random6">你找不到不存在的东西！</string>
-    <!-- Notifications/Island notification -->
-    <string name="notifications_island_notification_title">Island notification</string>
-    <string name="notifications_island_notification_summary">Display heads-up notification in     <!-- Notifications/Island notification -->
-    <string name="notifications_island_notification_title">Island notification</string>
-    <string name="notifications_island_notification_summary">Display heads-up notification in IOS \'Dynamic Island\' style</string>
-
 
     <!-- User Card -->
     <string name="user_card_title">用户</string>
