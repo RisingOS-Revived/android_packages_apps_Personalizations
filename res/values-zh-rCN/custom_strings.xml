@@ -17,7 +17,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Notifications/Island notification -->
     <string name="notifications_island_notification_title">岛屿通知</string>
-    <string name="notifications_island_notification_summary">以IOS中'灵动岛'的样式显示弹出通知</string>
+    <string name="notifications_island_notification_summary">以IOS中灵动岛的样式显示弹出通知</string>
 
     <!-- Hide NavBar space -->
     <string name="hide_ime_space_style_title">隐藏导航栏空隙样式</string>
