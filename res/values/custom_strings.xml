@@ -16,6 +16,10 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!-- Notifications/Island notification -->
+    <string name="notifications_island_notification_title">Island notification</string>
+    <string name="notifications_island_notification_summary">Display heads-up notification in IOS \'Dynamic Island\' style</string>
+
     <!-- Hide NavBar space -->
     <string name="hide_ime_space_style_title">Hide NavBar space style</string>
     <string name="hide_ime_space_style_1">Narrow space</string>

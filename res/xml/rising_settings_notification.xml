@@ -54,7 +54,14 @@
             android:title="@string/less_boring_heads_up_title"
             android:summary="@string/less_boring_heads_up_summary"
             android:defaultValue="false"
-            android:dependency="heads_up_notifications_enabled"
+            android:dependency="heads_up_notifications_enabled" />
+
+        <!-- Island notification -->
+        <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="island_notification"
+            android:title="@string/notifications_island_notification_title"
+            android:summary="@string/notifications_island_notification_summary"
+            android:fragment="com.rising.settings.fragments.IslandSettings"
             lineage:position="bottom" />
 
     </PreferenceCategory>
