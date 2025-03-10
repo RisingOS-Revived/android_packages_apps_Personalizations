@@ -15,6 +15,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Custom settings dashboard style -->
+    <string name="settings_dashboard_style_title">Settings Styles</string>
+    <string name="settings_dashboard_style_1">Rising Style</string>
+    <string name="settings_dashboard_style_2">Simple Style</string>
+
     <!-- Nowbar height -->
     <string name="notification_corner_radius_title">Notification corner radius</string>
     <string name="notification_corner_radius_summary">Adjust the corner radius of notifications</string>

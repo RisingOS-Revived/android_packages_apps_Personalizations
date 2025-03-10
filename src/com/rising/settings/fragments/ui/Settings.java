@@ -15,9 +15,16 @@
  */
 package com.rising.settings.fragments.ui;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.UserHandle;
 
+import androidx.preference.Preference;
+import androidx.preference.Preference.OnPreferenceChangeListener;
+
+import com.android.internal.util.android.SystemRestartUtils;
+import com.android.settings.preferences.SystemSettingListPreference;
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -27,7 +34,12 @@ import com.android.settingslib.search.SearchIndexable;
 import java.util.List;
 
 @SearchIndexable
-public class Settings extends SettingsPreferenceFragment {
+public class Settings extends SettingsPreferenceFragment implements
+        Preference.OnPreferenceChangeListener {
+
+    public static final String SETTINGS_DASHBOARD_STYLE = "settings_dashboard_style";
+
+    private SystemSettingListPreference mSettingsDashBoardStyle;
 
     private static final String TAG = "Settings";
 
@@ -35,11 +47,23 @@ public class Settings extends SettingsPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.rising_settings_settingsui);
+        mSettingsDashBoardStyle = (SystemSettingListPreference) findPreference(SETTINGS_DASHBOARD_STYLE);
+        mSettingsDashBoardStyle.setOnPreferenceChangeListener(this);
     }
 
     @Override
     public int getMetricsCategory() {
         return MetricsProto.MetricsEvent.VIEW_UNKNOWN;
+    }
+
+    public boolean onPreferenceChange(Preference preference, Object objValue) {
+        final String key = preference.getKey();
+        ContentResolver resolver = getActivity().getContentResolver();
+	if (preference == mSettingsDashBoardStyle){
+            SystemRestartUtils.showSettingsRestartDialog(getContext());
+            return true;
+            }
+        return false;
     }
 
     /**
