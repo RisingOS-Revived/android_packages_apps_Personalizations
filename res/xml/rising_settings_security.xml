@@ -27,6 +27,12 @@
             android:fragment="com.rising.settings.fragments.HideDeveloperStatusSettings"
             app:position="top" />
 
+       <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="hide_applist_setting"
+            android:title="@string/hide_applist_title"
+            android:summary="@string/hide_applist_summary"
+            android:fragment="com.rising.settings.fragments.HideAppListSettings" />
+
         <com.android.settings.preferences.SystemSettingSwitchPreference
             android:key="hide_screen_capture_status"
             android:title="@string/hide_screen_capture_status_title"

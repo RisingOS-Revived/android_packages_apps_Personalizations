@@ -46,6 +46,12 @@
     <string name="freeform_launch_mode_1">Native AOSP</string>
     <string name="freeform_launch_mode_2">LMOFreeForm</string>
 
+    <!-- Hide applist -->
+    <string name="hide_applist_title">Hide applist</string>
+    <string name="hide_applist_summary">Prevent apps from checking selected apps from appslist</string>
+    <string name="menu_show_overlay">Show overlay</string>
+    <string name="menu_hide_overlay">Hide overlay</string>
+
     <!-- Clipboard auto clear -->
     <string name="clipboard_auto_clear_timeout_title">Clipboard auto clear timeout</string>
     <string name="clipboard_auto_clear_title">Clipboard auto clear</string>
