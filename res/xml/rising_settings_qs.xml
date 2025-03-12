@@ -118,8 +118,17 @@
             android:key="qs_tile_layout"
             android:title="@string/qs_layout_category_title"
             android:summary="@string/qs_layout_category_summary"
-            android:fragment="com.rising.settings.fragments.quicksettings.QsTileLayoutSettings"
-            lineage:position="bottom" />
+            android:fragment="com.rising.settings.fragments.quicksettings.QsTileLayoutSettings"  />
+ 
+         <com.android.settings.preferences.SystemSettingSeekBarPreference
+             android:key="qs_header_clock_size"
+             android:title="@string/qs_clock_size_title"
+             android:max="27"
+             settings:min="0"
+             settings:interval="1"
+             android:defaultValue="14"
+             settings:units="px"
+             lineage:position="bottom" />
 
     </PreferenceCategory>
 
