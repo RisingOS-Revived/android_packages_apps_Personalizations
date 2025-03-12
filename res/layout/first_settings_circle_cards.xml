@@ -32,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Battery"
+                android:text="@string/power_usage_summary_title"
                 android:textSize="14sp"
                 android:textColor="?android:attr/textColorPrimary" />
 
@@ -115,7 +115,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Storage"
+                android:text="@string/storage_label"
                 android:textSize="14sp"
                 android:textColor="?android:attr/textColorPrimary" />
 
@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:text="Available" />
+                    android:text="@string/storage_available" />
             </LinearLayout>
         </FrameLayout>
 

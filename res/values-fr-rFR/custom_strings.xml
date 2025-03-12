@@ -1141,4 +1141,10 @@ Les notifications flottantes seront automatiquement désactivées.</string>
     <!-- QS Bluetooth auto on -->
     <string name="qs_bt_auto_on_title">Bluetooth automatique activé</string>
     <string name="qs_bt_auto_on_summary">Toujours activer le bluetooth lors de l\'appui sur la tuile Internet des réglages rapides</string>
+    <!-- Settings New design Circle cards  -->
+    <string name="battery_fully_charged">Entièrement chargé</string>
+    <string name="battery_charging">En charge</string>
+    <string name="battery_discharging">Décharge</string>
+    <string name="storage_card_used">utilisés</string>
+    <string name="storage_available">Disponible</string>
 </resources>
