@@ -94,6 +94,7 @@
     	    android:defaultValue="18"
     	    android:min="0"
     	    android:max="210"
+            android:dependency="keyguard_now_bar_enabled"
             lineage:position="bottom" />
 
     </PreferenceCategory>
