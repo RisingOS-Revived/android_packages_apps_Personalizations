@@ -15,284 +15,783 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Statusbar Custom color -->
+    <string name="status_bar_logo_use_custom_color_title">رنگ سفارشی لوگو نوار وضعیت</string>
+    <string name="status_bar_logo_use_custom_color_summary">فعال‌کردن رنگ سفارشی برای لوگو نوار وضعیت</string>
+    <string name="status_bar_logo_custom_color_title">رنگ سفارشی لوگو نوار وضعیت</string>
+    <string name="status_bar_logo_custom_color_summary">تنظیم رنگ سفارشی برای لوگوی نوار وضعیت</string>
+    <!-- Statusbar lyric -->
+    <string name="status_bar_lyric_title">متن آهنگ نوار وضعیت</string>
+    <string name="status_bar_lyric_summary">نمایش متن آهنگ در نوار وضعیت (نیاز به پشتیبانی برنامه)</string>
+    <string name="status_bar_lyric_options_title">گزینه‌ها</string>
+    <string name="disguise_props_for_music_app_title">پنهان کردن دستگاه برای برنامه‌ موسیقی</string>
+    <string name="disguise_props_for_music_app_summary">پنهان کردن دستگاه در برخی از برنامه‌های موسیقی برای پشتیبانی از نمایش متن آهنگ در نواراعلان. پس از تغییر این تنظیم، باید برنامه‌ها را مجدداً راه‌اندازی کنید تا تغییر اعمال شود.</string>
+    <!-- Custom settings dashboard style -->
+    <string name="settings_dashboard_style_title">سبک تنظیمات</string>
+    <string name="settings_dashboard_style_1">سبک Rising</string>
+    <string name="settings_dashboard_style_2">سبک ساده</string>
+    <!-- Nowbar height -->
+    <string name="notification_corner_radius_title">شعاع گوشه اعلان‌ها</string>
+    <string name="notification_corner_radius_summary">تنظیم شعاع گوشه اعلان‌ها</string>
+    <!-- Nowbar height -->
+    <string name="now_bar_height_title">ارتفاع نوار ناوبری</string>
+    <string name="now_bar_height_summary">تنظیم ارتفاع نوار ناوبری</string>
+    <!-- Title for the option to use classic back gesture style -->
+    <string name="back_gesture_style_classic_title">استفاده از سبک ساده برای حرکت بازگشت</string>
+    <!-- Summary for the option to use classic back gesture style -->
+    <string name="back_gesture_style_classic_summary">تغییر بین سبک جدید نقطه‌ای برای بازگشت و سبک ساده فلش</string>
+    <!-- Ongoing action chip -->
+    <string name="ongoing_action_chip_title">چیپ اقدام جاری</string>
+    <string name="ongoing_action_chip_summary">نمایش نشانگر پیشرفت در نوار وضعیت برای اقدامات جاری مانند دانلودها</string>
+    <!-- Notifications/Island notification -->
+    <string name="notifications_island_notification_title">اعلانات جزیره</string>
+    <string name="notifications_island_notification_summary">نمایش اعلان‌های فوری به سبک \"جزیره پویا\" در iOS</string>
+    <!-- Hide NavBar space -->
+    <string name="hide_ime_space_style_title">پنهان کردن فضای زیر نوار ناوبری</string>
+    <string name="hide_ime_space_style_1">فضای باریک</string>
+    <string name="hide_ime_space_style_2">بدون فضا (پنهان کردن دکمه‌های صفحه‌کلید)</string>
+    <!-- Freeform launch mode -->
+    <string name="freeform_launch_mode_title">حالت راه‌اندازی فرم آزاد</string>
+    <string name="freeform_launch_mode_1">بومی اندروید</string>
+    <string name="freeform_launch_mode_2">LMOFreeForm</string>
+    <!-- Clock size -->
+    <string name="statusbar_clock_size_title">اندازه ساعت (نوار‌وضعیت)</string>
+    <string name="qs_clock_size_title">اندازه ساعت (تنظیم‌سریع)</string>
+    <!-- Hide applist -->
+    <string name="hide_applist_title">پنهان کردن برنامه‌ها</string>
+    <string name="hide_applist_summary">جلوگیری از بررسی برنامه‌های انتخابی از لیست توسط سایر برنامه‌ها</string>
+    <string name="menu_show_overlay">نمایش پوشش</string>
+    <string name="menu_hide_overlay">مخفی‌سازی پوشش</string>
+    <!-- Clipboard auto clear -->
+    <string name="clipboard_auto_clear_timeout_title">مهلت زمانی پاک کردن خودکار بریده‌دان</string>
+    <string name="clipboard_auto_clear_title">پاک کردن خودکار بریده‌دان</string>
+    <string name="clipboard_auto_clear_summary">پاک کردن خودکار بریده‌دان در زمان برنامه ریزی شده</string>
+    <string name="clipboard_auto_clear_enabled_title">استفاده از پاک کردن خودکار بریده‌دان</string>
+    <string name="clipboard_auto_clear_timeout_disable_clipboard">غیر‌فعال کردن بریده‌دان</string>
+    <!-- Cycle through ringer modes gesture -->
+    <string name="prevent_ringing_option_cycle">چرخش بین حالت‌ها</string>
+    <string name="prevent_ringing_option_cycle_summary">روشن (چرخش بین حالت‌ها)</string>
+    <!-- Tensor spoof -->
+    <string name="tensor_spoof_title">جعل ویژگی های تانسور</string>
+    <string name="tensor_spoof_summary">باز کردن ویژگی‌های تنسور/پیکسل</string>
+    <string name="tensor_spoof_option_disabled">ویژگی‌های تنسور همیشه روی این دستگاه فعال هستند</string>
+    <!-- AOD Settings -->
+    <string name="aod_display_category_title">صفحه همیشه روشن</string>
+    <string name="aod_pulse_category_title">نبض/دوز</string>
+    <!-- Split Shade -->
+    <string name="qs_split_shade_enabled_title">بهبود تنظیم‌سریع افقی (آزمایشی)</string>
+    <string name="qs_split_shade_enabled_summary">فعال کردن تنظیم‌سریع سایه تقسیم‌شده جدید،\nممکن است اعلان‌های فوری در حالت افقی را مختل کند</string>
+    <!-- Now Bar -->
+    <string name="keyguard_now_bar_enabled_title">نوار الان</string>
+    <string name="keyguard_now_bar_enabled_summary">نمایش ابزارک های صفحه قفل نوار الان سامسونگ</string>
+    <!-- Power Menu Styles -->
+    <string name="powermenu_style_title">سبک منو نیرو</string>
+    <string name="powermenu_style1">سایبرپانک</string>
+    <string name="powermenu_style2">دائولین</string>
+    <string name="powermenu_style3">IOS</string>
+    <string name="powermenu_style4">لایه‌ها</string>
+    <!-- QS Header Clock Styles -->
+    <string name="qs_header_clock_style_title">سبک ساعت سربرگ تنظیم‌سریع</string>
+    <string name="qs_header_style1">تراشه</string>
+    <string name="qs_header_style2">اکسیژن</string>
+    <string name="qs_header_style3">آنالوگ</string>
+    <string name="qs_header_style4">ساده</string>
+    <!-- Peek Display Styles -->
+    <string name="peek_display_minimalist">مینیمال</string>
+    <string name="peek_display_style_title">سبک نمایش مشاهده</string>
+    <!-- Notification Styles -->
+    <string name="notif_style_title">سبک اعلان</string>
+    <string name="notif_style1">سایبرپانک</string>
+    <string name="notif_style2">دائولین</string>
+    <string name="notif_style3">IOS</string>
+    <string name="notif_style4">لایه‌ها</string>
+    <!-- Progress Bar Styles -->
+    <string name="progress_bar_style_title">سبک نوار پیشرفت</string>
+    <string name="progress_bar_style1">شستی بلوکی</string>
+    <string name="progress_bar_style2">شستی مینیمال</string>
+    <string name="progress_bar_style3">شستی حاشیه‌ای</string>
+    <string name="progress_bar_style4">شیشو</string>
+    <!-- Lockscreen Widgets Styles -->
+    <string name="lockscreen_widgets_style_title">سبک ابزارک صفحه‌قفل</string>
+    <string name="lockscreen_widgets_style1">گرد متریال</string>
+    <string name="lockscreen_widgets_style2">مربع متریال</string>
+    <string name="lockscreen_widgets_style3">شفاف (مربعی)</string>
+    <string name="lockscreen_widgets_style4">شفاف (گرد)</string>
+    <string name="lockscreen_widgets_transparency_title">شفافیت سبک ابزارک شفاف</string>
+    <string name="lockscreen_widgets_transparency_summary">پیکربندی سطح شفافیت سبک ویجت شفاف</string>
+    <!-- Sidebar -->
+    <string name="sidebar_title">نوار کناری</string>
+    <string name="sidebar_summary">برنامه ها را به سرعت در یک پنجره شناور باز کنید</string>
+    <!-- Peek Display -->
+    <string name="peek_display_notifications_title">صفحه مشاهده</string>
+    <string name="peek_display_notifications_summary">سبک اعلان‌های مینیمال صفحه قفل</string>
+    <string name="peek_display_location_title">مکان صفحه مشاهده</string>
+    <string name="peek_display_bottom_margin_title">حاشیه بالا (پایین) صفحه مشاهده</string>
+    <!-- Dashboard Revamped -->
+    <string name="colors_title">رنگ‌ها</string>
+    <string name="fonts_title">قلم‌ها</string>
+    <string name="fonts_summary">RISING123\nABCDEFGHIJKL\n0123456789</string>
+    <!-- Wallpaper Styles -->
+    <string name="wallpaper_settings_title">سبک تصویر‌زمینه</string>
+    <string name="wallpaper_settings_summary">پیکربندی سبک‌ها و تنظیمات تصویر‌زمینه</string>
+    <string name="wallpaper_blur_title">تاری تصویر‌زمینه</string>
+    <string name="wallpaper_blur_summary">فعال کردن یا نکردن اثر تاری تصویر‌زمینه</string>
+    <string name="wallpaper_blur_filter">سبک تاری تصویر‌زمینه</string>
+    <string name="wallpaper_dim_title">کم رنگی تصویر‌زمینه</string>
+    <string name="wallpaper_dim_level_title">سطح کم رنگی تصویر‌زمینه</string>
+    <string name="wallpaper_dim_level_summary">پیکربندی سطح کم رنگی تصویر‌زمینه</string>
+    <string name="glass_blur">تاری شیشه‌ای</string>
+    <string name="frosted_blur">تاری یخی</string>
+    <string name="wallpaper_styles_footer">        برای اینکه سبک‌های تصویر زمینه به درستی عمل کنند، کاربران باید تصاویر زمینه را برای صفحه قفل و صفحه اصلی در زمان‌های مختلف تنظیم کنند.\nمی‌توان از یک تصویر زمینه مشابه استفاده کرد، اما نباید همزمان برای هر دو صفحه قفل و صفحه اصلی اعمال شود.\nاین مورد هنگام استفاده از گزینه \"هردو\" برای سبک‌های تار کردن و کاهش روشنایی تصویر زمینه اختیاری است.
+    </string>
+    <!-- Circle to search -->
+    <string name="search_press_hold_gesture_summary">برای فراخوانی جستجو بر روی صفحه‌نمایش، دستگیره ناوبری را فشار داده و نگه دارید.</string>
+    <string name="search_press_hold_gesture_title">نگه داشتن دستگیره برای جستجو</string>
+    <!-- Category Title text for back gesture edge lock. [CHAR LIMIT=60] -->
+    <string name="gesture_navigation_settings_category_title">تنظیمات حرکات ناوبری</string>
+    <!-- Title text for immersive ui lock. [CHAR LIMIT=60] -->
+    <string name="lock_immersive_system_ui_title">قفل رابط کاربری همه‌جانبه</string>
+    <!-- Summary text for immersive ui lock. [CHAR LIMIT=NONE] -->
+    <string name="lock_immersive_system_ui_summary">غیرفعال کردن نوار وضعیت و نوار ناوبری شفاف در حالت همه‌جانبه</string>
+    <!-- Title text for back gesture edge lock. [CHAR LIMIT=60] -->
+    <string name="lock_edge_back_gesture_title">قفل حرکت لبه بازگشت</string>
+    <!-- Summary text for sback gesture edge lock. [CHAR LIMIT=NONE] -->
+    <string name="lock_edge_back_gesture_summary">غیرفعال کردن کشیدن به چپ/راست از لبه در حالت ناوبری با حرکات</string>
+    <!-- Compact Headsup -->
+    <string name="notification_heads_up_compact_title">اعلانات فوری فشرده</string>
+    <string name="notification_heads_up_compact_summary">نمایش اعلان های بازشو کوتاه</string>
+    <!-- AI Assistant -->
+    <string name="ai_assistant_title">دستیار هوش مصنوعی (ریسا)</string>
+    <string name="ai_assistant_summary">پیکربندی تنظیمات دستیار هوش مصنوعی</string>
+    <string name="ai_assistant_gesture_title">دستیار هوش مصنوعی قدرت گرفته از جمینای</string>
+    <string name="ai_assistant_gesture_summary">فعال کردن دستیار هوش مصنوعی برای انجام وظایف مختلف با کشیدن دو انگشت به سمت پایین. (اتصال به اینترنت الزامی است)</string>
+    <string name="ai_assistant_gemini_key_title">کلیدهای API دستیار جمینای</string>
+    <string name="ai_assistant_gemini_key_summary">وارد کردن کلید API برای دستیار هوش مصنوعی تا هنگام تعامل با جمینای استفاده شود</string>
+    <string name="ai_assistant_gemini_key_dialog_title">تنظیم کلید API دستیار هوش مصنوعی</string>
+    <string name="wiki_link_assistant_title">راهنمای کاربر دستیار هوش مصنوعی</string>
+    <string name="wiki_link_assistant_summary">درباره ریسا و نحوه استفاده از دستورات مختلف برای انجام وظایف خاص بیشتر بیاموزید.</string>
+    <!-- Sleep Mode -->
+    <string name="sleep_mode_title">حالت خواب</string>
+    <string name="sleep_mode_summary_on">روشن / <xliff:g name="auto_mode_summary" example="Never turn off automatically">%1$s</xliff:g></string>
+    <string name="sleep_mode_summary_off">خاموش / <xliff:g name="auto_mode_summary" example="Never turn on automatically">%1$s</xliff:g></string>
+    <string name="sleep_mode_ringer_title">حالت زنگ</string>
+    <string name="sleep_mode_ringer_off_title">بدون تغییر</string>
+    <string name="sleep_mode_ringer_vibrate_title">لرزش</string>
+    <string name="sleep_mode_ringer_dnd_title">مزاحم نشوید</string>
+    <string name="sleep_mode_ringer_silent_title">بی‌صدا</string>
+    <string name="sleep_mode_schedule_sunset">غروب آفتاب</string>
+    <string name="sleep_mode_schedule_sunrise">طلوع آفتاب</string>
+    <string name="sleep_mode_schedule_mixed_sunset">روشن شدن از زمان غروب آفتاب تا یک زمان سفارشی</string>
+    <string name="sleep_mode_schedule_mixed_sunrise">روشن شدن از زمان سفارشی تا طلوع آفتاب</string>
+    <string name="sleep_mode_toggles_title">تغییر</string>
+    <string name="sleep_mode_wifi_toggle_title">خاموش کردن وای‌فای</string>
+    <string name="sleep_mode_wifi_toggle_summary">غیرفعال کردن وای‌فای هنگامی که حالت خواب فعال می‌شود</string>
+    <string name="sleep_mode_bluetooth_toggle_title">خاموش کردن بلوتوث</string>
+    <string name="sleep_mode_bluetooth_toggle_summary">غیرفعال کردن بلوتوث هنگامی که حالت خواب فعال می‌شود</string>
+    <string name="sleep_mode_cellular_toggle_title">خاموش کردن داده همراه</string>
+    <string name="sleep_mode_cellular_toggle_summary">غیرفعال کردن داده همراه هنگامی که حالت خواب فعال می‌شود</string>
+    <string name="sleep_mode_location_toggle_title">خاموش کردن مکان</string>
+    <string name="sleep_mode_location_toggle_summary">غیرفعال کردن مکان هنگامی که حالت خواب فعال می‌شود</string>
+    <string name="sleep_mode_sensors_toggle_title">غیرفعال کردن حسگر‌ها</string>
+    <string name="sleep_mode_sensors_toggle_summary">غیرفعال کردن حسگر‌ها هنگامی که حالت خواب فعال می‌شود</string>
+    <string name="sleep_mode_display_text">حالت خواب به شما امکان می‌دهد برخی از خدمات را غیرفعال کنید تا به صرفه‌جویی در باتری کمک کند و تلفن خود را در زمان خواب بی‌صدا نگه دارید.</string>
+    <!-- Display settings screen, activation button action for manual mode. [CHAR LIMIT=40] -->
+    <string name="night_display_activation_on_manual">اکنون روشن شود</string>
+    <!-- Display settings screen, deactivation button action for manual mode. [CHAR LIMIT=40] -->
+    <string name="night_display_activation_off_manual">اکنون خاموش شود</string>
+    <!-- Display settings screen, activation button action for sunset-to-sunrise schedule [CHAR LIMIT=40] -->
+    <string name="night_display_activation_on_twilight">تا طلوع آفتاب روشن باشد</string>
+    <!-- Display settings screen, deactivation button action for sunset-to-sunrise schedule [CHAR LIMIT=40] -->
+    <string name="night_display_activation_off_twilight">تا غروب آفتاب خاموش باشد</string>
+    <!-- Display settings screen, activation button action for custom schedule [CHAR LIMIT=40] -->
+    <string name="night_display_activation_on_custom">روشن بودن تا <xliff:g name="time" example="6 AM">%1$s</xliff:g></string>
+    <!-- Display settings screen, deactivation button action for custom schedule [CHAR LIMIT=40] -->
+    <string name="night_display_activation_off_custom">خاموش بودن تا <xliff:g name="time" example="10 PM">%1$s</xliff:g></string>
+    <!-- Max cached processes -->
+    <string name="max_cached_processes_title">حداکثر فرآیندهای کش شده</string>
+    <!-- Dashboard Greetings Messages -->
+    <string name="dashboard_morning1">شروع روز با انرژی مثبت!</string>
+    <string name="dashboard_morning2">خورشید اومده بالا!</string>
+    <string name="dashboard_morning3">یه صبح زیبا...</string>
+    <string name="dashboard_morning4">یه روز دیگه واسه زندگی...</string>
+    <string name="dashboard_morning5">یه روز جدید...</string>
+    <string name="dashboard_morning_greeting1">صبح بخیر %s!</string>
+    <string name="dashboard_morning_greeting2">روز خوش %s!</string>
+    <string name="dashboard_noon1">زندگیت رو بکن.</string>
+    <string name="dashboard_noon2">از آفتاب لذت ببر.</string>
+    <string name="dashboard_noon3">به خونه خوش آمدی،\n%s.</string>
+    <string name="dashboard_noon4">از روز لذت ببر!</string>
+    <string name="dashboard_noon5">خوش برگشتی،\n%s.</string>
+    <string name="dashboard_noon_greeting1">بعد از ظهر بخیر،\n%s</string>
+    <string name="dashboard_early_night1">شب داره میاد...</string>
+    <string name="dashboard_early_night2">وقت شامه!</string>
+    <string name="dashboard_early_night_greeting1">عصر بخیر،\n%s</string>
+    <string name="dashboard_night3">خوابای خوب ببینی!</string>
+    <string name="dashboard_night4">وقت خواب رسیده...</string>
+    <string name="dashboard_night5">خوب بخوابی!</string>
+    <string name="dashboard_night_greetings1">شب خوش،\n%s</string>
+    <string name="dashboard_midnight1">از سکوت لذت ببر...</string>
+    <string name="dashboard_midnight2">به کمک نیاز داری...</string>
+    <string name="dashboard_midnight3">بگیر بخواب...</string>
+    <string name="dashboard_midnight4">استراحت بکن...</string>
+    <string name="dashboard_midnight5">دیر میخوابی؟</string>
+    <string name="dashboard_random1">سلام %s!</string>
+    <string name="dashboard_random2">سلام %s!</string>
+    <string name="dashboard_random3">سلام %s!</string>
+    <string name="dashboard_random4">روز خوش %s!</string>
+    <string name="dashboard_random5">چطوری %s!</string>
+    <string name="dashboard_random6">چه خبر %s؟</string>
+    <string name="dashboard_random_greetings1">وقتشه یکم تخم مرغ عید پاک پیدا بکنی!</string>
+    <string name="dashboard_random_greetings2">بلند شدن از پایین؟</string>
+    <string name="dashboard_random_greetings3">سعی کن از نوار جستجو استفاده بکنی!</string>
+    <string name="dashboard_random_greetings4">از روزت لذت ببر!</string>
+    <string name="settings_random1">دنبال چیزی هستی؟</string>
+    <string name="settings_random2">بگرد و تا ببینیش</string>
+    <string name="settings_random3">بگرد و پیداش بکن</string>
+    <string name="settings_random4">یابنده صاحبشه</string>
+    <string name="settings_random5">تنظیمات جستجو</string>
+    <string name="settings_random6">چیزی که وجود نداره رو نمیتونی پیداش بکنی!</string>
+    <!-- User Card -->
+    <string name="user_card_title">کاربر</string>
+    <string name="user_card_summary">مدیریت تنظیمات کاربر</string>
+    <!-- QS fling animation -->
+    <string name="fling_animation_duration_title">مدت انیمیشن پرتاب در تنظیم‌سریع</string>
+    <!-- Cache cleaner -->
+    <string name="cache_cleaner_title">پاک‌کننده حافظه پنهان</string>
+    <string name="cache_cleaner_summary">فعال کردن سرویس پاک‌کننده حافظه پنهان برای پاک‌سازی خودکار آن در برنامه‌ها.</string>
+    <!-- Extras -->
+    <string name="extras_toolbox_title">اضافی</string>
+    <string name="extras_toolbox_summary">ویژگی‌های اضافی جعبه‌ابزار</string>
+    <!-- Smart Power Off -->
+    <string name="smart_power_off_desc">زمان خاموش شدن تنظیم شد در: </string>
+    <string name="smart_power_off_title">خاموش شدن هوشمند</string>
+    <string name="smart_power_off_summary">دستگاه به صورت خودکار در زمان مشخصی خاموش می‌شود.</string>
+    <string name="smart_power_off_time_title">تنظیم زمان خاموش شدن</string>
+    <string name="smart_power_off_time_summary">انتخاب زمان برای خاموش شدن خودکار.</string>
+    <string name="smart_power_off_footer_text">        ویژگی خاموش شدن هوشمند دستگاه را به صورت خودکار در زمان برنامه‌ریزی شده خاموش می‌کند.\n\nاین ویژگی شامل یک مکانیسم تأخیر هوشمند است: اگر حرکت کاربر تشخیص داده شود، خاموش شدن به مدت یک دقیقه به تأخیر می‌افتد و این چرخه تا زمانی که تعامل بیشتری وجود نداشته باشد، ادامه می‌یابد.
+    </string>
+    <!-- Smart 5G -->
+    <string name="smart_5g_title">نسل پنجم هوشمند</string>
+    <string name="smart_5g_summary">به‌صورت خودکار بین 5G و 4G جابه‌جا شود تا مصرف باتری کاهش یابد</string>
+    <!-- BootAnimation Styles -->
+    <string name="boot_animation_styles_title">انیمیشن بوت</string>
+    <string name="boot_animation_applied">انیمیشن بوت اعمال شد</string>
+    <!-- Play Integrit Fix JSON Update -->
+    <string name="toast_spoofing_success">pif.json با موفقیت دانلود شد. جعل هویت به عنوان %1$s برای یکپارچگی گوگل.</string>
+    <string name="toast_spoofing_failure">جعل مشخصه‌ها با شکست مواجه شد.</string>
+    <string name="update_pif_json_title">به‌روزرسانی رفع یکپارچگی گوگل</string>
+    <string name="update_pif_json_summary">به‌‎روزرسانی PIF جعل دستگاه، نیاز به اینترنت دارد.</string>
+    <string name="show_pif_properties_title">مشخصه‌های رفع یکپارچگی گوگل</string>
+    <string name="show_pif_properties_summary">نمایش تمام مشخصه‌های فعلی تنظیم شده برای PIF</string>
+    <string name="error_loading_properties">خطا در بارگذاری مشخصه‌های PIF</string>
+    <!-- Power Mode tile -->
+    <string name="power_mode_tile_label">حالت نیرو</string>
+    <string name="power_mode_default">پیش‌فرض</string>
+    <string name="power_mode_conservative">محتاط</string>
+    <string name="power_mode_powersave">ذخیره‌باتری</string>
+    <string name="power_mode_performance">عملکرد</string>
+    <string name="power_mode_gameboost">بهبود بازی</string>
+    <string name="power_mode_unknown">ناشناخته</string>
+    <!-- RAM Boost -->
+    <string name="ramboost_title">بهبود رم</string>
+    <string name="ramboost_summary">اولویت‌بندی استفاده از حافظه فشرده (ZRAM) و فضای swap (در صورت وجود) برای بهبود عملکرد کلی.</string>
+    <!-- Black themes for dark mode -->
+    <string name="black_theme_style_title">سبک پوسته مشکی</string>
+    <string name="black_theme_style_berry">توت سیاه</string>
+    <string name="black_theme_style_amoled">آمولد تاریک واقعی</string>
+    <!-- Spoofing redirect to wiki -->
+    <string name="help_section_title">کمک و پشتیبانی</string>
+    <string name="help_footer_title">راهنماهای جعل</string>
+    <string name="help_footer_summary">برای راهنمایی های دقیق و پشتیبانی از ویکی ما دیدن کنید.</string>
+    <!-- Hide developer status -->
+    <string name="hide_developer_status_title">مخفی کردن وضعیت توسعه دهنده</string>
+    <string name="hide_developer_status_summary">مخفی کردن وضعیت توسعه دهنده از برنامه‌ها</string>
+    <string name="search">جستجو</string>
+    <string name="search_apps">جستجوی برنامه‌ها</string>
+    <!-- Hide screen capture status -->
+    <string name="hide_screen_capture_status_title">مخفی کردن وضعیت عکسبرداری از صفحه</string>
+    <string name="hide_screen_capture_status_summary">وضعیت عکس از صفحه و ضبط صفحه را از همه برنامه ها مخفی کنید.</string>
+    <!-- No storage restrict -->
+    <string name="no_storage_restrict_title">بدون محدودیت ذخیره‌سازی</string>
+    <string name="no_storage_restrict_summary">هنگام انتخاب پوشه ها از طریق چارچوب دسترسی به حافظه، محدودیت را بردارید.</string>
+    <!-- Power Modes -->
+    <string name="device_power_mode">حالت نیرو</string>
+    <!-- Per-app spoofing -->
+    <string name="gameprops_title">فعال کردن جعل هر برنامه</string>
+    <string name="gameprops_summary">گزینه های جعل هر برنامه را در PixelProps فعال می کند</string>
+    <string name="gameprops_load_json_title">انتخاب فایل JSON مشخصات هر برنامه</string>
+    <string name="gameprops_load_json_summary">انتخاب فایل JSON هر برنامه برای جعل بازی‌ها</string>
+    <!-- PIF spoofing -->
+    <string name="pif_spoofing_title">انتخاب فایل PIF JSON</string>
+    <string name="pif_spoofing_summary">انتخاب فایل JSON PIF برای استفاده در جعل یکپارچگی گوگل</string>
+    <!-- AOD custom image -->
+    <string name="lockscreen_custom_image_enabled_title">فعال کردن عکس همیشه روشن صفحه‌قفل</string>
+    <string name="lockscreen_custom_image_title">عکس همیشه روشن صفحه‌قفل</string>
+    <string name="lockscreen_custom_image_summary">انتخاب عکس سفارشی همیشه روشن صفحه‌قفل</string>
+    <string name="lockscreen_custom_image_pick_summary">انتخاب عکس همیشه روشن از گالری</string>
+    <string name="custom_aod_image_not_supported">سبک ساعت پشتیبانی نمی‌‍شود</string>
+    <!-- QS Widgets -->
+    <string name="qs_widgets_enabled_title">ابزارک های تنظیم سریع</string>
+    <string name="qs_widgets_enabled_summary">نمایش ابزارک‌های تنظیم سریع برای دسترسی سریع. \nبرای جلوگیری از شکستن پیمایش صفحه تنظیم‌سریع ، ردیف‌های تنظیم‌سریع به ۲ تا محدود می‌شود</string>
+    <string name="qs_widgets_photo_showcase_enabled_title">ابزارک عکس تنظیمات سریع</string>
+    <string name="qs_widgets_photo_showcase_enabled_summary">نمایش ابزارک عکس در تنظیمات سریع </string>
+    <string name="qs_widgets_photo_showcase_image_title">تصویر ابزارک عکس در تنظیمات سریع</string>
+    <string name="qs_widgets_photo_showcase_image_summary">انتخاب عکس برای ابزارک عکس تنظیمات سریع</string>
+    <string name="qs_widgets_player_enabled_title">ابزارک موسیقی تنظیمات سریع</string>
+    <string name="qs_widgets_player_enabled_summary">یک ویجت کوچک پخش‌کننده موسیقی نمایش دهید که با کشیدن لغزنده‌ها قابل دسترسی باشد. این ویژگی پخش‌کننده پیش‌فرض رسانه در تنظیم‌سریع را غیرفعال می‌کند.</string>
+    <!-- Desktop Mode Settings -->
+    <string name="desktop_mode_pc_title">حالت میز‌کار</string>
+    <string name="desktop_mode_pc_summary">شبیه‌سازی دستگاه به رایانه شخصی یا نمایشگر خارجی</string>
+    <!-- Lockscreen Clock Highlight Guide -->
+    <string name="ls_clock_face_highlight_text">پیش‌نمایش سبک‌های ساعت با کشیدن به چپ یا راست</string>
+    <!-- Lockscreen Clock Revamp -->
+    <string name="ls_clock_custom_font_not_supported">ساعت انتخاب‌شده از فونت‌های سفارشی پشتیبانی نمی‌کند</string>
+    <!-- Media Art -->
+    <string name="ls_media_art_fade_level_title">سطح محو شدن تصویر جلد رسانه</string>
+    <string name="ls_media_art_fade_level_summary">تنظیم سطح محو شدن تصویر جلد رسانه</string>
+    <!-- Apply Button -->
+    <string name="apply_change_button_title">اعمال</string>
+    <!-- Volume Panel -->
+    <string name="volume_sound_haptics_title">بازخورد صوتی حجم صدا</string>
+    <string name="volume_sound_haptics_summary">فعال کردن بازخورد صوتی هنگام تنظیم پیشرفت ردیف حجم صدا</string>
+    <string name="volume_panel_expandable_title">ردیف‌های حجم صدا قابل گسترش</string>
+    <string name="volume_panel_expandable_summary">گسترش ردیف‌های حجم صدا به جای نمایش برگه پایینی حجم صدا</string>
+    <string name="volume_panel_media_output_title">نماد خروجی رسانه</string>
+    <string name="volume_panel_media_output_summary">نمایش نماد خروجی رسانه هنگام پخش رسانه.</string>
+    <!-- Compact QS Media Player-->
+    <string name="qs_compact_media_player_mode_title">پخش کننده رسانه فشرده تنظیم‌سریع</string>
+    <string name="qs_compact_media_player_mode_summary">فعال کردن حالت فشرده برای پخش‌کننده رسانه در تنظیم سریع</string>
+    <!-- Settings UI -->
+    <string name="show_multi_user_avatar_on_homepage_title">نمایش آواتار چندکاربره در صفحه اصلی</string>
+    <string name="show_multi_user_avatar_on_homepage_summary">نمایش یا عدم نمایش آواتار گوگل یا چند کاربره در صفحه اصلی</string>
+    <string name="show_avatar_card_on_homepage_title">نمایش کارت آواتار کاربر در صفحه اصلی</string>
+    <string name="show_avatar_card_on_homepage_summary">نمایش یا عدم نمایش کارت آواتار کاربر در صفحه اصلی</string>
+    <string name="dashboard_greetings_title">پیام‌های خوش‌آمدگویی داشبورد</string>
+    <string name="dashboard_greetings_summary">فعال/غیرفعال پیام‌ خوش‌آمدگویی داشبورد</string>
+    <!-- Reality Display Engine -->
+    <string name="display_engine_category">موتور نمایشگر</string>
+    <string name="display_engine_mode_title">موتور نمایش واقعیت</string>
+    <string name="x_reality_engine_mode_title">موتور واقعیت-X</string>
+    <string name="triluminous_display_mode_title">نمایشگر سه تایی حرفه‌ای</string>
+    <string name="vivid_engine_mode_title">نمایشگر زنده</string>
+    <string name="display_engine_default">پیش‌فرض</string>
+    <string name="display_engine_mode_footer_text">الهام گرفته از موتور Bravia شرکت سونی، موتور نمایش حالت‌های متعددی را ارائه می‌دهد که روشنایی، اشباع رنگ، جزئیات و دقت رنگ را برای تجربه‌ای بصری بهتر بهبود می‌بخشد.</string>
+    <!-- Display settings screen, color balance category title [CHAR LIMIT=30] -->
+    <string name="color_mode_balance_category">تعادل رنگ</string>
+    <!-- Display settings screen, red color balance setting slider [CHAR LIMIT=NONE] -->
+    <string name="color_mode_balance_red">قدرت قرمز</string>
+    <!-- Display settings screen, green color balance setting slider [CHAR LIMIT=NONE] -->
+    <string name="color_mode_balance_green">قدرت سبز</string>
+    <!-- Display settings screen, blue color balance setting slider [CHAR LIMIT=NONE] -->
+    <string name="color_mode_balance_blue">قدرت آبی</string>
+    <string name="keywords_color_balance">رنگ، تعادل رنگ، تصحیح رنگ، قرمز، سبز، آبی، نمایش زنده</string>
+    <!-- User Switcher -->
+    <string name="kg_user_switcher_enabled_title">تغییر کاربر</string>
+    <string name="kg_user_switcher_enabled_summary">نمایش تعویض‌کننده کاربر هنگام نمایش درخواست پین/رمز عبور</string>
+    <!-- Three Finger Gestures -->
+    <string name="three_finger_gesture_action_title">حرکات کشیدن سه‌انگشتی</string>
+    <string name="three_finger_gesture_action_dialog_title">اقدامات حرکت کشیدن سه‌انگشتی</string>
+    <string name="three_finger_long_press_action_title">اقدامات حرکت کشیدن طولانی سه‌انگشتی</string>
+    <string name="three_finger_long_press_action_dialog_title">اقدامات حرکت کشیدن سه‌انگشتی</string>
+    <!-- Ignore window secure -->
+    <string name="laboratory_ignore_window_secure_title">نادیده گرفتن پرچم‌های امنیتی پنجره</string>
+    <string name="laboratory_ignore_window_secure_summary">حذف محدودیت‌های اسکرین‌شات و ضبط صفحه برای تمامی برنامه‌ها.</string>
+    <!-- Depth Wallpaper -->
+    <string name="dw_file_header_select_title">انتخاب موضوع تصویر زمینه با عمق</string>
+    <string name="dw_file_header_select_summary">انتخاب تصویر موضوع تصویر زمینه با عمق از حافظه.</string>
+    <string name="dw_wallpaper_enabled_title">تصویر زمینه عمق‌دار</string>
+    <string name="dw_wallpaper_enabled_summary_tile">اعمال افکت عمق\nروی تصویر زمینه</string>
+    <string name="dw_wallpaper_enabled_summary">فعال کردن تصویر زمینه با الهام از عمق iOS. نیاز به یک تصویر موضوع دارد.</string>
+    <string name="dw_wallpaper_opacity_title">شفافیت تصویر زمینه عمق‌دار</string>
+    <string name="depth_wallpaper_offset_x_title">افست افقی تصویر زمینه عمق‌دار</string>
+    <string name="depth_wallpaper_offset_y_title">افست عمودی تصویر زمینه عمق‌دار</string>
+    <string name="dw_footer_text">        قابلیت عمق تصویر‌زمینه، که الهام گرفته از تقسیم‌بندی موضوع تصویر در iOS است، به شما امکان می‌دهد یک موضوع خاص را روی ساعت صفحه قفل قرار دهید و جلوه عمق تصویر‌زمینه ایجاد کنید.\n\nبرای فعال‌سازی این قابلیت:\n۱. یک تصویر‌زمینه با پس‌زمینه یا موضوع مورد نظر خود تنظیم کنید که می‌خواهید موضوع بالاتر از آن باشد.\n۲. تصویری از موضوع مورد نظر برای ردیابی انتخاب کنید؛ این تصویر بر روی ساعت صفحه قفل قرار می‌گیرد.\n۳. موقعیت و شفافیت را مطابق نیازتان تنظیم کنید.
+    </string>
+    <!-- Volume Row Percent -->
+    <string name="volume_show_volume_percent_title">نمایش درصد میزان صدا در ردیف</string>
+    <string name="volume_show_volume_percent_summary">نمایش درصد پیشرفت میزان صدا در ردیف</string>
+    <!-- Volume Media Button -->
+    <string name="volume_show_media_button_title">دکمه رسانه صدا</string>
+    <string name="volume_show_media_button_summary">نمایش دکمه تغییر خروجی رسانه در میزان صدا</string>
+    <!-- Healthy Charge -->
+    <string name="health_charge_enabled_title">شارژ سالم</string>
+    <string name="health_charge_enabled_summary">فعال کردن اعلان‌های شارژ سالم</string>
+    <string name="health_charge_low_threshold_title">آستانه سطح باتری پایین</string>
+    <string name="health_charge_high_threshold_title">آستانه سطح شارژ</string>
     <!-- App Title -->
-    <string name="rising_settings_title">تنظیمات risingOS</string>
-    <string name="rising_settings_summary">باز کردن تنظیمات ویژه</string>
+    <string name="personalize_highlight_settings_title">دستگاه خود را شخصی کنید</string>
+    <string name="network_highlight_settings_summary">راه‌اندازی شبکه و اتصال به اینترنت</string>
+    <string name="bt_highlight_settings_title">راه‌اندازی دستگاه های متصل</string>
+    <string name="bt_highlight_settings_summary">اتصالات دستگاه را اضافه کنید، بلوتوث جفت کنید و پیکربندی کنید</string>
+    <string name="rising_settings_title">شخصی‌سازی</string>
+    <string name="rising_settings_summary">نمادها، پوسته‌ها و موارد دیگر را تغییر دهید</string>
     <string name="reset_settings_title">بازنشانی تنظیمات</string>
-    <string name="reset_settings_message">با این کار بیشتر تنظیمات rising برای کاربر فعلی به مقادیر پیشفرض بازنشانی میشود،دوست دارید ادامه دهید؟</string>
+    <string name="reset_settings_message">با این کار اکثر تنظیمات rising به مقادیر پیش‌فرض برای کاربر فعلی بازنشانی می‌شوند. آیا می خواهید ادامه دهید؟</string>
+    <string name="search_homepage">جستجو</string>
+    <!-- Changelog -->
+    <string name="changelog_rising_title">چه خبر؟</string>
+    <string name="changelog_rising_summary">جدیدترین پیشرفت‌ها و به‌روزرسانی‌هایی را که در این نسخه ایجاد کرده‌ایم، کشف کنید.</string>
+    <string name="changelog_rising_error">قادر به بارگذاری تغییرات نیست</string>
     <!-- Personalization Categories -->
-    <string name="button_title">دکمه‌‌ها</string>
+    <string name="button_title">دکمه‌ها</string>
     <string name="lockscreen_title">صفحه قفل</string>
     <string name="misc_title">متفرقه</string>
-    <string name="navigation_title">جهت یابی</string>
+    <string name="navigation_title">ناوبری</string>
     <string name="notifications_title">اعلانات</string>
     <string name="quicksettings_title">تنظیمات سریع</string>
     <string name="sound_title">صدا</string>
     <string name="statusbar_title">نوار وضعیت</string>
     <string name="display_title">صفحه نمایش</string>
     <string name="ui_title">رابط کاربری</string>
+    <string name="toolbox_title">جعبه ابزار</string>
+    <string name="toolbox_summary">ابزار مناسب برای هر نیاز</string>
+    <string name="themes_title">پوسته‌ها</string>
+    <string name="themes_summary">دستگاه شما، سبک شما</string>
+    <string name="colors_summary">رنگ واقعی خود را نشان دهید</string>
+    <string name="spoofing_title">جعل کردن</string>
+    <string name="spoofing_title_summary">برای باز کردن قفل ویژگی های برنامه به دستگاه دیگری جعل کنید</string>
+    <string name="security_title">امنیت</string>
+    <string name="security_summary">ویژگی های مربوط به حریم خصوصی و امنیت را پیکربندی کنید</string>
+    <string name="security_settings_footer_text">توجه: در حالی که دور زدن برخی محدودیت‌ها ممکن است راحت باشد، اما می‌تواند منجر به خطرات بالقوه حریم خصوصی شود.</string>
+    <!-- Device Info screen -->
+    <string name="firmware_name_text">risingOS</string>
+    <string name="firmware_name_version">نسخه risingOS</string>
+    <string name="firmware_build_type_title">نوع ساخت</string>
+    <string name="firmware_build_summary_title">ساخته شده توسط</string>
+    <string name="build_is_official_title">#رسمی</string>
+    <string name="build_is_community_title">#جامعه</string>
+    <string name="maintainer_summary">توسط %s</string>
+    <string name="unknown_maintainer">ناشناخته</string>
+    <string name="device_info_platform_version">۱۴ | چهارده | کیک وارونه</string>
+    <string name="about_rising_device">دستگاه Rising</string>
+    <string name="device_header_info_category_title">نوع ساخت</string>
+    <string name="device_info_hw_sw_more">بیشتر</string>
+    <string name="device_info_security_patch">به‌روزرسانی امنیتی</string>
+    <string name="edit_device_name_title">ویرایش نام دستگاه</string>
+    <string name="edit_text_hint">واردکردن نام جدید دستگاه</string>
+    <string name="build_status">وضعیت ساخت</string>
+    <string name="hardware_info">سخت‌افزار</string>
+    <string name="device_info_battery">باتری</string>
+    <string name="device_info_chipset">تراشه</string>
+    <string name="device_info_resolution">وضوح</string>
+    <string name="device_info_storage">حافظه</string>
+    <string name="my_device_category_title">دستگاه‌ من</string>
+    <string name="my_device_category_more_title">بیشتر</string>
+    <!-- rising dashboard -->
+    <string name="about_settings_title">درباره ما</string>
+    <string name="about_settings_summary">اطلاعات درباره سیستم عامل Rising</string>
+    <string name="buttons_settings_title">دکمه‌ها</string>
+    <string name="buttons_settings_summary">تنظیم دکمه‌های سخت‌افزاری.</string>
+    <string name="lockscreen_settings_title">صفحه‌قفل</string>
+    <string name="general_lockscreen_title">تنظیمات کلی صفحه‌قفل</string>
+    <string name="lockscreen_settings_summary">سفارشی‌سازی ظاهر صفحه قفل</string>
+    <string name="misc_gen_settings_title">تنظیمات متفرقه</string>
+    <string name="misc_settings_title">متفرقه</string>
+    <string name="misc_settings_summary">موارد متفرقه دسته‌بندی‌نشده</string>
+    <string name="nav_settings_title">ناوبری</string>
+    <string name="nav_settings_summary">سفارشی‌سازی رفتار ناوبری</string>
+    <string name="notif_settings_title">اعلان</string>
+    <string name="notif_settings_summary">کنترل اعلان‌ها و موارد دیگر</string>
+    <string name="qs_settings_title">تنظیمات سریع</string>
+    <string name="qs_settings_summary">سفارشی‌سازی تنظیمات سریع.</string>
+    <string name="sound_settings_title">صدا</string>
+    <string name="sound_settings_summary">سفارشی‌سازی صدا و لرزش</string>
+    <string name="sb_settings_title">نوار وضعیت</string>
+    <string name="sb_settings_summary">سفارشی‌سازی نمادهای نوار وضعیت، چیدمان و غیره</string>
+    <string name="ui_settings_title">رابط کاربری</string>
+    <string name="ui_settings_summary">سفارشی‌سازی رنگ‌ها، آیکون‌ها، فونت‌ها و غیره در رابط کاربری</string>
+    <string name="gen_notif_settings_title">تنظیمات کلی اعلان</string>
+    <string name="gen_tb_settings_title">تنظیمات کلی جعبه ابزار</string>
+    <string name="gen_ui_settings_title">تنظیمات کلی رابط کاربری.</string>
+    <string name="settings_themes_summary">سفارشی‌سازی رابط کاربری برنامه تنظیمات</string>
+    <string name="misc_audio_settings_title">تنظیمات متفرقه صدا/صوت</string>
+    <string name="category_name_network">تنظیمات شبکه و اتصال</string>
+    <string name="category_name_sounds">تنظیمات کلی صدا و اعلان‌ها</string>
+    <string name="category_name_sounds_others">سایر تنظیمات صدا</string>
+    <string name="category_name_ui_others">سایر تنظیمات رابط کاربری</string>
+    <string name="category_name_toolbox_others">سایر تنظیمات جعبه ابزار</string>
     <!-- Color Picker -->
     <string name="dialog_color_picker">انتخابگر رنگ</string>
-    <string name="press_color_to_apply">رنگ زیر را جهت اعمال لمس کنید</string>
+    <string name="press_color_to_apply">جهت اعمال، بر روی رنگ زیر کلیک نمایید</string>
     <string name="set">اعمال</string>
     <string name="color_default">پیش‌فرض</string>
     <!-- General strings -->
-    <string name="ok">تأیید</string>
+    <string name="ok">قبول</string>
     <string name="reset">بازنشانی</string>
     <string name="cancel">لغو</string>
     <string name="save">ذخیره</string>
-    <string name="discard_changes">انصراف از تغییرات</string>
+    <string name="discard_changes">لغو تغییرات</string>
     <string name="never">هرگز</string>
     <string name="always">همیشه</string>
-    <string name="caution">احتیاط</string>
+    <string name="caution">هشدار</string>
     <string name="delete">حذف</string>
-    <string name="delete_message">مورد انتخاب شده حذف شود?</string>
-    <string name="choose_app">برنامه را انتخاب کنید</string>
+    <string name="delete_message">مورد انتخاب شده حذف شود؟</string>
+    <string name="choose_app">انتخاب برنامه‌</string>
     <string name="enable">فعال</string>
     <string name="disable">غیرفعال</string>
     <string name="accent_color">رنگ تاکیدی (پیش‌فرض)</string>
-    <string name="notification_color">رنگ اعلان ها</string>
-    <string name="wallpaper_color">رنگ کاغذ دیواری</string>
+    <string name="notification_color">رنگ اعلان</string>
+    <string name="wallpaper_color">رنگ تصویرزمینه</string>
     <string name="custom_color">رنگ سفارشی</string>
-    <!-- Changelog -->
-    <string name="changelog_rising_title">تغییرات فعلی</string>
-    <string name="changelog_rising_summary">دیدن تغییرات ایجاد شده در این ورژن</string>
-    <string name="changelog_rising_error">قادر به بارگذاری لیست تغییرات نیست</string>
+    <string name="reevaluating_theme">بارگیری مجدد پوسته های سیستم...</string>
+    <string name="wellbeing_title">آسایش دیجیتالی گوگل</string>
+    <string name="default_value">پیش‌فرض</string>
+    <string name="top">بالا</string>
+    <string name="bottom">پایین</string>
+    <string name="highlights_title">کشف ویژگی ها</string>
     <!-- About risingOS -->
-    <string name="about_rising">درباره ی risingOS</string>
+    <string name="about_rising">درباره risingOS</string>
     <string name="about_device_name">دستگاه</string>
     <!-- Share risingOS -->
-    <string name="share_rising_title">اشتراک گذاری risingOS</string>
-    <string name="share_rising_summary">به دیگران risingOS را معرفی کنید</string>
-    <string name="share_message">ببین آیا #risingOSAndroid برای دستگاه شما در دسترس هس @ https://rising.net/</string>
-    <string name="share_chooser_title">اشتراک گذاری risingOS</string>
+    <string name="share_rising_title">هم‌رسانی risingOS</string>
+    <string name="share_rising_summary">بذار بقیه هم درباره risingOS بدونن</string>
+    <string name="share_message">بررسی کنید که آیا #risingOSAndroid برای دستگاه شما موجود است @ https://rising.net/</string>
+    <string name="share_chooser_title">هم‌رسانی risingOS</string>
     <!-- Sites risingOS -->
     <string name="rising_source_title">گیت‌هاب</string>
-    <string name="rising_source_summary">ما عاشق open source هستیم، ببینید</string>
-    <string name="rising_telegram_title">جامعه risingOS</string>
+    <string name="rising_source_summary">ما متن‌باز را دوست داریم، ما را بررسی کنید</string>
+    <string name="rising_telegram_title">انجمن risingOS</string>
     <string name="rising_telegram_summary">ما در تلگرام هستیم. به ما بپیوند!</string>
     <string name="rising_telegram_channel_title">کانال به‌روزرسانی‌ها</string>
-    <string name="rising_telegram_channel_summary">در تلگرام از بروزرسانی ها مطلع شوید</string>
-    <string name="rising_website_title">تارنمای رسمی</string>
-    <string name="rising_website_summary">سایت رسمی ما را دیدن کنید</string>
+    <string name="rising_telegram_channel_summary">از نگارش‌های تازه در تلگرام آگاه شوید</string>
+    <string name="rising_website_title">وب‌سایت رسمی</string>
+    <string name="rising_website_summary">از تارنمای رسمی ما بازدید کنید</string>
     <string name="rising_translate_title">ترجمه‌ها</string>
-    <string name="rising_translate_summary">به ترجمه risingOS به زبان خودتان کمک کنید!</string>
-    <string name="rising_sponsor_summary">از سایت همکار میزبان ما دیدن کنید</string>
+    <string name="rising_translate_summary">با محلی‌سازی رام به زبان خود، کمک کنید!</string>
+    <string name="rising_sponsor_summary">از وبگاه میزبان ما بازدید کنید</string>
     <string name="rising_buildserversponsor_summary">ما سرورهای آنها را در صورت علاقه به یکی توصیه می کنیم</string>
     <!-- Donate risingOS -->
-    <string name="donate_rising_title">از ما حمایت کنید</string>
-    <string name="donate_rising_summary">برای حمایت کردن از توسعه بیشتر کمک مالی کنید</string>
+    <string name="donate_rising_title">ما را پشتیبانی کنید</string>
+    <string name="donate_rising_summary">کمک مالی برای حمایت از پیشرفت بیشتر در توسعه</string>
     <string name="donate_team_title">تیم risingOS</string>
-    <string name="donate_team_summary">برای حمایت از میزبانی سرور، زمان کار سایت و مدیریت کلی کمک مالی کنید</string>
+    <string name="donate_team_summary">کمک مالی برای میزبانی سرور و مدیریت کلی</string>
     <!-- The Drill -->
-    <string name="drill_title">محل گزارش باگ ها</string>
-    <string name="drill_summary">مشکلی در رام پیدا کردید? مشکلی با رام دارید?</string>
+    <string name="drill_title">مته</string>
+    <string name="drill_summary">یه باگ پیدا کردی؟ مشکلی با رام داری؟</string>
     <!-- OTA -->
-    <string name="rising_update_title">بروزرسانی ها و آپدیت ها</string>
-    <string name="rising_update_summary">آخرین آپدیت را بررسی و دانلود کنید</string>
+    <string name="rising_update_title">به‌روزرسانی‌ها</string>
+    <string name="rising_update_summary">آخرین به‌روز رسانی را بررسی و دانلود کنید</string>
     <!-- App details: open play store link if app is user installed -->
     <string name="app_play_store">گوگل پلی</string>
     <!-- Custom seekbar -->
-    <string name="custom_seekbar_value">ارزش: <xliff:g id="v">%s</xliff:g></string>
-    <string name="custom_seekbar_default_value">به طور پیش فرض</string>
-    <string name="custom_seekbar_default_value_to_set">ارزش پیش‌فرض: <xliff:g id="v">%s</xliff:g>\n برای تنظیم نگه دارید</string>
-    <string name="custom_seekbar_default_value_is_set">مقدار پیش‌فرض تعیین شده است</string>
+    <string name="custom_seekbar_value">مقدار: <xliff:g id="v">%s</xliff:g></string>
+    <string name="custom_seekbar_default_value">به‌طور پیش‌فرض</string>
+    <string name="custom_seekbar_default_value_to_set">مقدار پیش‌فرض:  <xliff:g id="v">%s</xliff:g>\nبرای تنظیم نگه دارید</string>
+    <string name="custom_seekbar_default_value_is_set">مقدار پیش‌فرض تنظیم شد</string>
     <!-- Units -->
     <string name="unit_seconds">ثانیه</string>
     <string name="unit_milliseconds">میلی‌ثانیه</string>
     <!-- Clipboard -->
-    <string name="copied_to_clipboard">در کلیپ‌بورد کپی شد</string>
-    <string name="longpress_to_clipboard">برای کپی کردن لمس طولانی کنید</string>
+    <string name="copied_to_clipboard">در بریده‌دان رونوشت شد</string>
+    <string name="longpress_to_clipboard">برای رونوشت لمس طولانی کنید</string>
     <!-- Hardware info -->
-    <string name="platform_revision">پلتفرم</string>
+    <string name="platform_revision">سکو</string>
     <string name="total_ram">کل رم</string>
     <!-- Notification log -->
-    <string name="notification_log_summary">نمایش گزارش تاریخچه ی اعلان ها</string>
+    <string name="notification_log_summary">نمایش گزارش تاریخچه ی اعلان‌ها</string>
     <!-- Default getTimeSpentInApp string for Wellbeing to display. [CHAR LIMIT=NONE] -->
     <string name="duration_less_than_one_minute">کمتر از ۱ دقیقه</string>
     <!-- Summary for Wellbeing screen time usage. [CHAR LIMIT=NONE] -->
-    <string name="screen_time_summary_usage_today">امروز: %1$s</string>
+    <string name="screen_time_summary_usage_today">%1$s امروز</string>
     <!-- Statusbar categories -->
-    <string name="status_bar_icons_category_title">آیکون ها</string>
-    <string name="status_bar_battery_category_title">سفارشی کردن باتری</string>
+    <string name="status_bar_icons_category_title">نماد‌ها</string>
+    <string name="status_bar_battery_category_title">سفارشی‌سازی باتری</string>
     <!-- Gestures -->
-    <string name="gestures_title">حرکات انگشتی</string>
+    <string name="gestures_title">حرکات</string>
+    <string name="gestures_title_summary">استفاده از حرکات برای انجام اقدامات دستگاه</string>
     <!-- Roaming indicator icon -->
-    <string name="roaming_indicator_icon_title">نمایشگر رومینگ</string>
+    <string name="roaming_indicator_icon_title">نشانگر رومینگ</string>
     <string name="roaming_indicator_icon_summary">نمایش نشانگر رومینگ در داخل آیکون سیگنال زمانی که در حالت رومینگ باشد</string>
     <!-- 4G icon -->
     <string name="show_fourg_icon_title">آیکون 4G</string>
-    <string name="show_fourg_icon_summary">نمایش آیکون 4G بر روی ایکون سیگنال شبکه به جای ایکون LTE</string>
+    <string name="show_fourg_icon_summary">نماد 4G به جای نماد LTE در آیکون سیگنال نمایش داده شود</string>
     <!-- Data disabled indicator -->
-    <string name="data_disabled_icon_title">علامت غیرفعال شدن دیتا</string>
-    <string name="data_disabled_icon_summary">نمایش یک علامت کنار آیکون سیگنال زمانی که دیتا غیرفعال میباشد</string>
+    <string name="data_disabled_icon_title">نشانگر غیرفعال شدن داده</string>
+    <string name="data_disabled_icon_summary">نمایش یک علامت کنار آیکون سیگنال زمانی که داده غیرفعال میباشد</string>
     <!-- Lockscreen categories -->
-    <string name="lockscreen_interface_category">رابط کاربری</string>
+    <string name="lockscreen_interface_category">رابط</string>
     <!-- Lockscreen battery info indicator -->
     <string name="lockscreen_battery_info_title">اطلاعات باتری</string>
     <string name="lockscreen_battery_info_summary">نمایش اطلاعات باتری هنگام شارژ شدن</string>
     <!-- Button settings -->
-    <string name="extras_title">سایر</string>
+    <string name="extras_title">اضافی</string>
     <string name="additional_buttons_title">دکمه های اضافی</string>
-    <string name="hardware_keys_power_key_title">دکمه Power</string>
-    <string name="hardware_keys_home_key_title">دکمه خانه</string>
-    <string name="hardware_keys_back_key_title">دکمه بازگشت</string>
-    <string name="hardware_keys_menu_key_title">دکمه فهرست</string>
-    <string name="hardware_keys_assist_key_title">دکمه جستجو</string>
-    <string name="hardware_keys_appswitch_key_title">دکمه موارد اخیر</string>
-    <string name="hardware_keys_camera_key_title">دکمه دوربین</string>
-    <string name="hardware_keys_volume_keys_title">دکمه‌های میزان صدا</string>
-    <string name="hardware_keys_short_press_title">عملکرد فشردن کوتاه‌ مدت</string>
-    <string name="hardware_keys_long_press_title">عملکرد نگه داشتن دکمه</string>
-    <string name="hardware_keys_double_tap_title">عملکرد دو ضربه</string>
-    <string name="hardware_keys_action_nothing">بدون عمل</string>
+    <string name="hardware_keys_power_key_title">دکمهٔ روشن</string>
+    <string name="hardware_keys_home_key_title">دکمهٔ خانه</string>
+    <string name="hardware_keys_back_key_title">دکمهٔ برگشت</string>
+    <string name="hardware_keys_menu_key_title">دکمهٔ فهرست</string>
+    <string name="hardware_keys_assist_key_title">دکمهٔ جستجو</string>
+    <string name="hardware_keys_appswitch_key_title">دکمهٔ موارد اخیر</string>
+    <string name="hardware_keys_camera_key_title">دکمهٔ دوربین</string>
+    <string name="hardware_keys_volume_keys_title">دکمهٔ میزان صدا</string>
+    <string name="hardware_keys_short_press_title">عمل فشردن کوتاه</string>
+    <string name="hardware_keys_long_press_title">عملکرد فشردن طولانی</string>
+    <string name="hardware_keys_double_tap_title">عمل دوبار ضربه</string>
+    <string name="hardware_keys_action_nothing">بدون اقدام</string>
     <string name="hardware_keys_action_menu">باز کردن/بستن فهرست</string>
     <string name="hardware_keys_action_app_switch">تعویضگر برنامه‌های اخیر</string>
-    <string name="hardware_keys_action_search">دستیار جست‌وجو</string>
+    <string name="hardware_keys_action_search">دستیار جستجو</string>
     <string name="hardware_keys_action_voice_search">جستجو صوتی</string>
-    <string name="hardware_keys_action_in_app_search">جستجو داخل برنامه</string>
+    <string name="hardware_keys_action_in_app_search">جستجو در برنامه</string>
     <string name="hardware_keys_action_launch_camera">اجرای دوربین</string>
     <string name="hardware_keys_action_sleep">خاموش کردن صفحه</string>
-    <string name="hardware_keys_action_last_app">برنامه قبلی</string>
-    <string name="hardware_keys_action_split_screen">تقسیم صفحه نمایش</string>
-    <string name="hardware_keys_action_close_app">توقف برنامه</string>
-    <string name="hardware_keys_action_torch">کلید چراغ قوه</string>
-    <string name="hardware_keys_action_screenshot">گرفتن اسکرین شات</string>
-    <string name="hardware_keys_action_volume_panel">دکمه کنسول صدا</string>
-    <string name="hardware_keys_action_clear_all_notifications">پاک کردن تمام اعلان‌ها</string>
-    <string name="hardware_keys_action_notifications_panel">دکمه کنسول اعلان ها</string>
-    <string name="hardware_keys_action_expand_qs_panel">بازکردن تنظیمات سریع</string>
-    <string name="hardware_keys_action_ringer_modes">تغییر دادن حالت زنگ</string>
-    <string name="home_answer_call_title">پاسخ دادن به تماس</string>
+    <string name="hardware_keys_action_last_app">آخرین برنامه</string>
+    <string name="hardware_keys_action_split_screen">تقسیم صفحه</string>
+    <string name="hardware_keys_action_close_app">بستن برنامه</string>
+    <string name="hardware_keys_action_torch">ضامن چراغ قوه</string>
+    <string name="hardware_keys_action_screenshot">گرفتن عکس صفحه</string>
+    <string name="hardware_keys_action_volume_panel">دکمه پنل صدا</string>
+    <string name="hardware_keys_action_clear_all_notifications">پاک کردن اعلان‌ها</string>
+    <string name="hardware_keys_action_notifications_panel">تغییر صفحه اعلان‌ها</string>
+    <string name="hardware_keys_action_expand_qs_panel">گسترش صفحه تنظیم‌سریع</string>
+    <string name="hardware_keys_action_ringer_modes">تغییر حالت زنگ</string>
+    <string name="home_answer_call_title">پاسخ به تماس</string>
     <string name="home_answer_call_summary">پاسخ دادن به تماس‌های ورودی با فشردن دکمه خانه</string>
     <string name="camera_sleep_on_release_title">نگاه کردن به صفحه</string>
-    <string name="camera_sleep_on_release_summary">تا زمانی که دکمه پایین نگه داشته شده، یک نیمه فشار صفحه نمایش را روشن نگه میدارد</string>
+    <string name="camera_sleep_on_release_summary">نیمه فشار دادن دکمه باعث می‌شود که صفحه‌نمایش تا زمانی که دکمه نگه داشته شود، روشن باقی بماند</string>
     <string name="camera_launch_title">اجرای دوربین</string>
     <string name="camera_launch_summary">اجرای دوربین با یه فشار طولانی و رها کردن</string>
     <string name="torch_long_press_power_gesture_title">فشار طولانی برای چراغ قوه</string>
-    <string name="torch_long_press_power_gesture_desc">فعال کردن چراغ قوه با فشردن طولانی دکمه Power هنگام خاموش بودن صفحه</string>
+    <string name="torch_long_press_power_gesture_desc">فعال کردن چراغ قوه با فشردن طولانی دکمه روشن هنگام خاموش بودن صفحه</string>
     <string name="torch_long_press_power_timeout_title">خاموش کردن خودکار چراغ قوه</string>
     <string name="volbtn_music_controls_title">کنترل پخش</string>
     <string name="volbtn_music_controls_summary">دنبال موسیقی ها گشتن با فشار طولانی کلید های صدا هنگامی که صفحه نمایش خاموش است</string>
-    <string name="volbtn_cursor_control_title">کنترل مکان نمای با صفحه کلید</string>
-    <string name="volbtn_cursor_control_off">غیرفعال شد</string>
-    <string name="volbtn_cursor_control_on">افزایش/کاهش صدا، نشانگر را به چپ/راست حرکت می‌دهد</string>
-    <string name="volbtn_cursor_control_on_reverse">زدن کلید بالا/پایین صدا باعث رفتن مکان‌نما به چپ/راست می‌شود</string>
+    <string name="volbtn_cursor_control_title">کنترل مکان نمای صفحه کلید</string>
+    <string name="volbtn_cursor_control_off">غیرفعال</string>
+    <string name="volbtn_cursor_control_on">افزایش/کاهش میزان صدا برای حرکت مکان‌نما به چپ/راست</string>
+    <string name="volbtn_cursor_control_on_reverse">افزایش/کاهش میزان صدا برای حرکت مکان‌نما به راست/چپ</string>
     <string name="power_end_call_title">پایان تماس</string>
-    <string name="power_end_call_summary">پایان تماس جاری با فشردن دکمه پاور</string>
-    <string name="swap_volume_buttons_title">جهت گیری مجدد</string>
+    <string name="power_end_call_summary">پایان تماس جاری با فشردن دکمهٔ روشن</string>
+    <string name="swap_volume_buttons_title">تغییر جهت</string>
     <string name="swap_volume_buttons_summary">هنگام چرخش صفحه، عملکرد کلیدهای صدا برعکس شود</string>
     <string name="button_wake_title">بیدار کردن دستگاه</string>
     <string name="button_wake_summary">با فشار دادن دکمه دستگاه را بیدار کنید</string>
-    <string name="volume_answer_call_title">پاسخ دادن به تماس</string>
+    <string name="volume_answer_call_title">پاسخ به تماس</string>
     <string name="volume_answer_call_summary">پاسخ دادن به تماس‌های ورودی با فشردن دکمه‌های صدا</string>
-    <string name="click_partial_screenshot_title">برای ثبت تصویر قسمتی از صفحه، ضربه بزنید</string>
-    <string name="click_partial_screenshot_summary">برای ثبت تصویر قسمتی از صفحه، کلید های پاور و کاهش صدا را فشار دهید</string>
+    <string name="click_partial_screenshot_title">ضربه برای ثبت عکس بخشی از صفحه</string>
+    <string name="click_partial_screenshot_summary">برای گرفتن عکس بخشی از صفحه، دکمه کاهش صدا و روشن را کوتاه نگه دارید</string>
     <!-- Key backlight -->
     <string name="button_backlight_title">نور پس‌زمینه</string>
     <string name="button_backlight_summary">تنظیمات نور پس‌زمینه را سفارشی کنید</string>
     <string name="button_backlight_enabled">دکمه‌های نورانی</string>
-    <string name="button_backlight_only_when_pressed_title">دکمه ها را تنها زمانی که لمس شدند، نورانی کن</string>
+    <string name="button_backlight_only_when_pressed_title">دکمه ها را تنها زمانی که لمس شدند، روشن کن</string>
     <string name="keyboard_backlight_enabled">صفحه کلید نورانی</string>
     <string name="button_backlight_seekbar_title">روشنایی دکمه</string>
     <string name="keyboard_backlight_seekbar_title">روشنایی صفحه کلید</string>
-    <string name="backlight_timeout_title">مدت زمان روشنایی</string>
+    <string name="backlight_timeout_title">مدت زمان نورانی</string>
     <string name="backlight_timeout_unlimited">خاموش نشود</string>
-    <string name="backlight_summary_disabled">غیرفعال شد</string>
-    <string name="backlight_summary_enabled_with_timeout">فعال شده برای <xliff:g id="timeout">%s</xliff:g></string>
-    <string name="backlight_summary_enabled">فعال شد</string>
+    <string name="backlight_summary_disabled">غیرفعال</string>
+    <string name="backlight_summary_enabled_with_timeout">فعال برای <xliff:g id="timeout">%s</xliff:g></string>
+    <string name="backlight_summary_enabled">فعال</string>
     <plurals name="backlight_timeout_time">
         <item quantity="one"><xliff:g id="seconds">%d</xliff:g> ثانیه</item>
-        <item quantity="other"><xliff:g id="seconds">%d</xliff:g> seconds</item>
+        <item quantity="other"><xliff:g id="seconds">%d</xliff:g> ثانیه</item>
     </plurals>
     <!-- Power menu -->
-    <string name="power_menu_title">منوی پاور</string>
-    <string name="power_menu_summary">سفارشی کردن گزینه های منوی پاور</string>
+    <string name="power_menu_title">منو نیرو</string>
+    <string name="power_menu_summary">سفارشی کردن گزینه‌های منو نیرو</string>
     <string name="power_menu_actions_title">اقدامات</string>
-    <string name="power_menu_screenshot_title">عکس گرفتن از صفحه</string>
-    <string name="power_menu_screenshot_summary">برای گرفتن شات از صفحه به صورت دلخواه ، فشار دهید و نگه دارید</string>
+    <string name="power_menu_screenshot_title">عکس از صفحه</string>
+    <string name="power_menu_screenshot_summary">فشار طولانی برای گرفتن عکس از بخشی از صفحه</string>
     <string name="power_menu_onthego_title">حالت در حرکت</string>
-    <string name="power_menu_advanced_title">گزینه های راه‌اندازی مجدد پیشرفته</string>
-    <string name="power_menu_airplane_title">حالت هواپیما</string>
-    <string name="power_menu_torch_title">چراغ‌ قوه</string>
+    <string name="power_menu_advanced_title">گزینه‌های راه‌اندازی مجدد پیشرفته</string>
+    <string name="power_menu_airplane_title">پرواز</string>
+    <string name="power_menu_torch_title">چراغ‌قوه</string>
     <string name="power_menu_settings_title">تنظیمات</string>
     <string name="power_menu_lockdown_title">قفل کامل</string>
     <string name="power_menu_lockdown_unavailable">قفل کامل غیرفعال است زیرا محافظ صفحه کلید ایمن نیست</string>
     <string name="power_menu_soundpanel_title">پنل صدا</string>
     <string name="power_menu_users_title">کاربران</string>
     <string name="power_menu_logout_title">خروج</string>
-    <string name="power_menu_emergency_title">وضعیت اضطراری</string>
-    <string name="power_menu_devicecontrols_title">کنترل‌های دستگاه</string>
+    <string name="power_menu_emergency_title">اضطراری</string>
+    <string name="power_menu_devicecontrols_title">کنترل‌ دستگاه</string>
     <!-- Advanced restart options -->
     <string name="advanced_reboot_title">شروع مجدد پیشرفته</string>
-    <string name="advanced_reboot_summary">وقتی قفل صفحه باز است ، گزینه هایی برای ریستارت در ریکاوری و بوت لودر وجود داشته باشد</string>
-    <string name="advanced_reboot_secured_title">قفل صفجه محافظت شده</string>
+    <string name="advanced_reboot_summary">هنگامی که قفل باز است، گزینه‌هایی را برای راه‌اندازی مجدد به حالت ریکاوری یا بوت‌لودر در منوی نیرو اضافه کنید</string>
+    <string name="advanced_reboot_secured_title">قفل صفحه محافظت شده</string>
     <string name="advanced_reboot_secured_summary">نمایش گزینه های شروع مجدد پیشرفته بر روی صفحه قفل محافظت شده</string>
     <!-- UI settings -->
     <string name="monet_title">تنظیمات مونت</string>
-    <string name="monet_summary">سفارشی کردن تم موتور مونت</string>
+    <string name="monet_summary">سفارشی کردن پوسته موتور مونت</string>
     <!-- Monet Engine -->
-    <string name="monet_engine_custom_color_title">رنگ تاکیدی</string>
-    <string name="monet_engine_custom_color_summary">رنگ دلخواه را برای  خود انتخاب کنیدید</string>
-    <string name="monet_engine_custom_bgcolor_title">رنگ پس زمینه</string>
+    <string name="monet_engine_custom_color_title">رنگ اصلی</string>
+    <string name="monet_engine_custom_color_summary">انتخاب رنگ سفارشی برای لهجه</string>
+    <string name="monet_engine_custom_bgcolor_title">رنگ پس‌زمینه</string>
     <string name="monet_engine_custom_bgcolor_summary">رنگ دلخواه را برای پس زمینه انتخاب کنید</string>
     <string name="monet_engine_color_override_title">رنگ سفارشی</string>
     <string name="monet_engine_luminance_factor_title">درخشندگی</string>
     <string name="monet_engine_luminance_factor_summary">مقادیر بالاتر رنگ های روشن تری تولید می کنند</string>
-    <string name="monet_engine_chroma_factor_title">عامل کروما</string>
+    <string name="monet_engine_chroma_factor_title">پراکنده انتخابی</string>
     <string name="monet_engine_chroma_factor_summary">مقادیر بالاتر رنگ های قوی تری تولید می کنند</string>
-    <string name="monet_engine_tint_background_title">رنگ پس زمینه</string>
-    <string name="monet_engine_tint_background_summary">درخشندگی و انتخاب رنگ روی رنگ‌های پس‌زمینه نیز تأثیر بگذارند</string>
-    <string name="monet_engine_style_title">شیوه نمایه</string>
-    <string name="monet_engine_style_tonal_spot">میانه آوا (پیش انگار)</string>
-    <string name="monet_engine_style_vibrant">لرزش</string>
+    <string name="monet_engine_tint_background_title">رنگ آمیزی پس‌زمینه</string>
+    <string name="monet_engine_tint_background_summary">درخشندگی و پراکنده انتخابی روی رنگ‌های پس‌زمینه نیز تأثیر بگذارند</string>
+    <string name="monet_engine_style_title">سبک طرح‌زمینه</string>
+    <string name="monet_engine_style_tonal_spot">نقطه تونال</string>
+    <string name="monet_engine_style_vibrant">لرزان</string>
     <string name="monet_engine_style_expressive">رسا</string>
     <string name="monet_engine_style_spritz">پاشیدن</string>
     <string name="monet_engine_style_rainbow">رنگین کمان</string>
-    <string name="monet_engine_style_fruit_salad">میوه سبزیانه</string>
-    <string name="monet_engine_style_muted">بيصدا شده</string>
-    <string name="monet_engine_style_content">محتویات</string>
-    <string name="monet_engine_color_source_title">Color source</string>
-    <string name="monet_engine_color_source_both">Both (Default)</string>
-    <string name="monet_engine_color_source_home">Home wallpaper</string>
-    <string name="monet_engine_color_source_lock">Lock wallpaper</string>
-    <string name="monet_engine_color_source_preset">Preset</string>
+    <string name="monet_engine_style_fruit_salad">سالاد میوه</string>
+    <string name="monet_engine_style_content">محتوا</string>
+    <string name="monet_engine_style_monochromatic">تک رنگ</string>
+    <string name="monet_engine_style_clock">ساعت</string>
+    <string name="monet_engine_style_clock_vibrant">ساعت لرزان</string>
+    <string name="monet_engine_color_source_title">منبع رنگ</string>
+    <string name="monet_engine_color_source_both">هردو (پیش فرض)</string>
+    <string name="monet_engine_color_source_home">تصویر‌زمینه خانه</string>
+    <string name="monet_engine_color_source_lock">تصویر‌زمینه قفل</string>
+    <string name="monet_engine_color_source_preset">پیش‌تنظیم</string>
+    <string name="monet_engine_whole_palette_title">پالت کامل</string>
+    <string name="monet_engine_whole_palette_summary">نورتابی و پراکنده انتخابی روی رنگ‌های ثانویه نیز تأثیر بگذارد</string>
     <!-- Auto pin confirm -->
-    <string name="lock_screen_auto_pin_confirm_summary_custom">Unlock automatically if you input a correct PIN. This is slightly less secure than tapping Enter to confirm.</string>
+    <string name="lock_screen_auto_pin_confirm_summary_custom">باز کردن قفل به صورت خودکار در صورت وارد کردن پین صحیح. این گزینه از لحاظ امنیتی کمی کمتر از زدن دکمه تایید است.</string>
     <!-- Doze settings -->
-    <string name="doze_display_title">نمایشگر حساس به محیط</string>
-    <string name="doze_display_summary">تنظیمات مربوط به نمایشگر حساس به محیط را پیکربندی کنید</string>
-    <string name="doze_additional_settings_title">تنظیمات بیشتر</string>
-    <string name="doze_additional_settings_summary">تنظیمات نمایشگر حساس به محیط مختص به دستگاه را شخصی سازی کنید</string>
-    <string name="doze_sensor_title">بر اساس سنسور</string>
-    <string name="raise_to_wake_title">بیدار شدن</string>
+    <string name="doze_display_title">نمایشگر تطبیقی</string>
+    <string name="doze_display_summary">تنظیمات مربوط به نمایشگر تطبیقی</string>
+    <string name="doze_additional_settings_title">تنظیمات اضافی</string>
+    <string name="doze_additional_settings_summary">سفارشی‌سازی تنظیمات نمایش محیطی مختص دستگاه</string>
+    <string name="doze_sensor_title">بر اساس حسگر</string>
+    <string name="raise_to_wake_title">بیدارشدن</string>
     <string name="raise_to_wake_summary">بیدار کردن صفحه به جای چشمک زدن اعلان ها</string>
     <string name="tilt_title">شیب</string>
-    <string name="tilt_summary">چشمک زدن اعلان ها در شیب</string>
+    <string name="tilt_summary">اعلان های پالس در شیب</string>
     <string name="pickup_title">برداشتن</string>
-    <string name="pickup_summary">چشمک زدن اعلان ها هنگام برداشتن گوشی</string>
-    <string name="handwave_title">حرکت دادن دست</string>
+    <string name="pickup_summary">چشمک زدن اعلان ها هنگام برداشتن</string>
+    <string name="handwave_title">حرکت دست</string>
     <string name="handwave_summary">چشمک زدن اعلان‌ها هنگام حرکت دست</string>
     <string name="pocket_title">جیب</string>
     <string name="pocket_summary">چشمک زدن اعلان‌ها هنگام بیرون آوردن از جیب</string>
     <string name="doze_vibrate">لرزش</string>
-    <string name="doze_vibrate_summary">مدت زمان لرزش هنگام چشمک زدن اعلان ها</string>
-    <string name="sensor_warning_message">تنظیمات بر اساس سنسورها مطیع به سازگاری سخت افزاری است. فعال کردن سنسورها برای نمایشگر حساس به محیط ممکن است خالی شدن شارژ را افزایش دهد.</string>
+    <string name="doze_vibrate_summary">مدت زمان لرزش هنگام چشمک اعلان ها</string>
+    <string name="sensor_warning_message">تنظیمات بر اساس حسگرها منوط به سازگاری سخت افزاری است. فعال کردن حسگرها برای نمایش تطبیقی ممکن است مصرف باتری را افزایش دهد.</string>
+    <string name="doze_pulse_on_pickup_title">چشمک هنگام برداشتن</string>
+    <string name="doze_pulse_on_pickup_summary">چشمک اعلان‌ها هنگام برداشتن دستگاه (نیازمند فعال بودن ویژگی بلند کردن برای بیدار شدن).</string>
+    <string name="doze_pulse_on_double_tap_title">چشمک با دوبار ضربه</string>
+    <string name="doze_pulse_on_double_tap_summary">چشمک اعلان‌ها با دو بار ضربه (نیازمند فعال بودن ویژگی ضربه برای بیدار شدن).</string>
+    <string name="doze_pulse_on_single_tap_title">چشمک با ضربه</string>
+    <string name="doze_pulse_on_single_tap_summary">چشمک اعلان‌ها با یک ضربه (نیازمند فعال بودن ویژگی ضربه برای بیدار شدن).</string>
     <!-- Edge light -->
     <string name="edge_light_title">نور لبه</string>
-    <string name="edge_light_summary">لبه های کناری صفحه نمایش را با پالس اعلان روشن کنید</string>
-    <string name="edge_light_always_trigger_on_pulse_title">Always trigger on pulse</string>
-    <string name="edge_light_always_trigger_on_pulse_summary">هر زمان که صفحه نمایش محیط نشان داده می شود و نه فقط برای اعلان، نور لبه را نشان می دهد یا خیر</string>
+    <string name="edge_light_summary">روشن کردن لبه های صفحه نمایش در هنگام دریافت اعلان</string>
+    <string name="edge_light_always_trigger_on_pulse_title">فعال شدن همیشه هنگام چشمک</string>
+    <string name="edge_light_always_trigger_on_pulse_summary">نمایش نور لبه هر زمان که نمایش تطبیقی فعال است و نه فقط برای اعلان‌ها</string>
     <string name="edge_light_repeat_animation_title">تکرار انیمیشن</string>
-    <string name="edge_light_repeat_animation_summary_on">تا پایان زمان تکرار شود</string>
-    <string name="edge_light_repeat_animation_summary_off">فقط یک بار نمایش داده شود</string>
+    <string name="edge_light_repeat_animation_summary_on">تکرار تا زمان اتمام</string>
+    <string name="edge_light_repeat_animation_summary_off">نمایش فقط یکبار</string>
     <string name="edge_light_color_mode_title">حالت رنگ نور لبه</string>
+    <string name="edge_light_enabled_title">فعال‌کردن نور لبه</string>
+    <string name="edge_light_rainbow_gradient">رنگین کمان گرادیان</string>
+    <string name="edge_light_style_title">سبک نور لبه</string>
+    <string name="edge_light_stroke_width_title">عرض خط نور لبه</string>
+    <string name="edge_light_stroke_width_summary">پیکربندی ضخامت نور لبه</string>
+    <string name="edge_light_style_1">رسم خط</string>
+    <string name="edge_light_style_2">چشمک/نبض</string>
     <!-- Ambient Ticker -->
     <string name="pulse_on_new_tracks_title">کنترل موسیقی</string>
-    <string name="pulse_on_new_tracks_summary">نمایش کنترل موسیقی در حالت نمایشگر حساس به محیط در زمان عوض شدن موسیقی</string>
+    <string name="pulse_on_new_tracks_summary">نمایش کنترل موسیقی در حالت نمایشگر تطبیقی در زمان عوض شدن موسیقی</string>
     <!-- Status bar - icon blocklist -->
-    <string name="status_bar_icons_title">آیکون های نوار وضعیت</string>
-    <string name="status_bar_icons_summary">انتخاب کنید کدام آیکون های نوار وضعیت نشان داده میشوند</string>
+    <string name="status_bar_icons_title">نمادهای نوار وضعیت</string>
+    <string name="status_bar_icons_summary">انتخاب کنید کدام نماد‌‍‌های نوار وضعیت نشان داده شوند</string>
     <!-- Bluetooth status -->
     <string name="bluetooth_battery_title">وضعیت باتری بلوتوث</string>
     <string name="bluetooth_battery_summary">نشان دادن وضعیت باتری دستگاه متصل شده بلوتوثی، در صورت موجود بودن</string>
@@ -304,112 +803,127 @@
     <string name="status_bar_toggle_brightness_summary">تنظیم روشنایی با کشیدن نوار وضعیت به دو طرف</string>
     <!-- Status bar - Quick pulldown -->
     <string name="status_bar_quick_qs_pulldown_title">پایین کشیدن سریع</string>
-    <string name="status_bar_quick_qs_pulldown_summary">%1$s لبه نوار وضعیت تنظیمات سریع را پایین می آورد</string>
+    <string name="status_bar_quick_qs_pulldown_summary">لبه %1$s نوار وضعیت، تنظیمات سریع را پایین می‌کشد.</string>
     <string name="status_bar_quick_qs_pulldown_summary_left">چپ</string>
     <string name="status_bar_quick_qs_pulldown_summary_right">راست</string>
     <string name="status_bar_quick_qs_pulldown_off">خاموش</string>
     <string name="status_bar_quick_qs_pulldown_left">چپ</string>
     <string name="status_bar_quick_qs_pulldown_right">راست</string>
-    <string name="status_bar_quick_qs_pulldown_always">همیشه نمایش بده تنطیمات سریع در هنگام پایین کشیدن نوار وضعیت</string>
+    <string name="status_bar_quick_qs_pulldown_always">همیشه تنظیمات سریع را با کشیدن نوار وضعیت به پایین نمایش دهید.</string>
     <!-- Status bar - Smart pulldown-->
     <string name="smart_pulldown_title">پایین کشیدن هوشمند</string>
-    <string name="smart_pulldown_summary">نمایش تنظیمات سریع زمانی که %1$s اعلانی وجود داشته باشد</string>
+    <string name="smart_pulldown_summary">نمایش تنظیمات سریع زمانی که %1$s اعلان وجود داشته باشد</string>
     <string name="smart_pulldown_none_summary">نمایش تنظیمات سریع زمانی که اعلانی وجود نداشته باشد</string>
     <string name="smart_pulldown_off">خاموش</string>
-    <string name="smart_pulldown_none">اعلانی موجود نیست</string>
-    <string name="smart_pulldown_dismissable">چیزی قابل صرف نظر وجود ندارد</string>
-    <string name="smart_pulldown_ongoing">چیزی در دست اقدام نیست</string>
+    <string name="smart_pulldown_none">بدون اعلان‌ها</string>
+    <string name="smart_pulldown_dismissable">بدون رد کردن</string>
+    <string name="smart_pulldown_ongoing">بدون جاری</string>
     <!-- Tap to sleep on status bar -->
     <string name="lockscreen_doubletap_sleep_title">ضربه زدن برای خواب</string>
     <string name="lockscreen_doubletap_sleep_summary">برای به خواب بردن دستگاه ۲ بار به صفحه قفل ضربه بزنید</string>
     <!-- Font style / Icon pack -->
     <string name="theme_customization_font_title">سبک قلم</string>
     <string name="theme_customization_font_summary">تنظیم سبک قلم سیستم</string>
-    <string name="theme_customization_icon_pack_title">بسته آیکون ها</string>
-    <string name="theme_customization_icon_pack_summary">تنظیم بسته آیکون سفارشی</string>
-    <string name="theme_customization_icon_shape_title">شکل آیکون</string>
-    <string name="theme_customization_icon_shape_summary">تنظیم بسته آیکون سفارشی</string>
-    <string name="theme_customization_signal_icon_title">سبک آیکون آنتن</string>
-    <string name="theme_customization_signal_icon_summary">تنظیم بسته آیکون آنتن سفارشی</string>
-    <string name="theme_customization_wifi_icon_title">سبک آیکون وایفای</string>
-    <string name="theme_customization_wifi_icon_summary">تنظیم بسته آیکون وایفای سفارشی</string>
+    <string name="theme_customization_icon_pack_title">بسته نماد</string>
+    <string name="theme_customization_icon_pack_summary">تنظیم بسته نماد سفارشی</string>
+    <string name="theme_customization_icon_shape_title">شکل نماد</string>
+    <string name="theme_customization_icon_shape_summary">تنظیم سبک شکل نمادهای سیستم</string>
+    <string name="theme_customization_signal_icon_title">سبک نماد آنتن</string>
+    <string name="theme_customization_signal_icon_summary">تنظیم سبک نماد آنتن سفارشی</string>
+    <string name="theme_customization_wifi_icon_title">سبک نماد وای‌فای</string>
+    <string name="theme_customization_wifi_icon_summary">تنظیم سبک سفارشی برای نماد وای‌فای</string>
     <string name="theme_customization_navbar_title">سبک ناوبری</string>
-    <string name="theme_customization_navbar_summary">تنظیم بسته نوار ناوبری سفارشی</string>
-    <string name="theme_customization_lock_clock_title">سبک فونت ساعت</string>
-    <string name="theme_customization_lock_clock_summary">سبک فونت ساعت صفحه قفل را تنظیم کنید</string>
+    <string name="theme_customization_navbar_summary">تنظیم سبک سفارشی برای نوار ناوبری</string>
+    <string name="theme_customization_lock_clock_title">ظاهر ساعت</string>
+    <string name="theme_customization_lock_clock_summary">تغییر ظاهر ساعت صفحه‌قفل</string>
     <string name="theme_customization_brightness_slider_title">سبک لغزنده روشنایی</string>
-    <string name="theme_customization_brightness_slider_summary">سبک لغزنده روشنایی را تنظیم نمایید</string>
+    <string name="theme_customization_brightness_slider_summary">تنظیم سبک سفارشی برای نوار لغزنده روشنایی</string>
     <!-- Refresh rate -->
-    <string name="default_refresh_rate_title_custom">نرخ نوسازی پیش فرض</string>
-    <string name="peak_refresh_rate_title_custom">اوج نرخ نوسازی</string>
-    <string name="low_power_refresh_rate_title_custom">نرخ نوسازی در پایین بودن شارژ دستگاه</string>
+    <string name="default_refresh_rate_title_custom">نرخ تازه‌سازی پیش فرض</string>
+    <string name="peak_refresh_rate_title_custom">اوج نرخ تازه‌سازی</string>
+    <string name="low_power_refresh_rate_title_custom">تازه‌سازی در کم بودن باتری</string>
     <!-- Status bar - Clock -->
-    <string name="status_bar_clock_title">ساعت و تاریخ</string>
-    <string name="status_bar_clock_summary">سفارشی کردن تنظیمات ساعت و تاریخ</string>
+    <string name="status_bar_clock_title">ساعت &amp; تاریخ</string>
+    <string name="status_bar_clock_summary">شخصی‌سازی ساعت &amp; تاریخ</string>
     <string name="status_bar_clock_seconds_title">ثانیه ساعت</string>
     <string name="status_bar_clock_seconds_summary">نمایش ثانیه کنار ساعت در نوار وضعیت</string>
     <string name="status_bar_clock_position_title">سبک ساعت</string>
     <string name="status_bar_clock_position_right">راست</string>
     <string name="status_bar_clock_position_left">چپ</string>
-    <string name="status_bar_clock_position_center">وسط</string>
-    <string name="status_bar_clock_position_hidden">پنهان</string>
-    <string name="status_bar_clock_auto_hide_title">پنهان‌کردن خودکار</string>
-    <string name="status_bar_clock_auto_hide_launcher_summary">اگر لانچر قابل مشاهده است ساعت را پنهان کن</string>
-    <string name="status_bar_clock_auto_hide_summary">در فواصل منظم ساعت را پنهان کن</string>
-    <string name="status_bar_clock_auto_hide_hdur_title">مدت زمان پنهان کردن</string>
+    <string name="status_bar_clock_position_center">مرکز</string>
+    <string name="status_bar_clock_position_hidden">مخفی</string>
+    <string name="status_bar_clock_auto_hide_title">مخفی‌کردن خودکار</string>
+    <string name="status_bar_clock_auto_hide_launcher_summary">اگر راه‌‎انداز قابل مشاهده بود ساعت را پنهان کن</string>
+    <string name="status_bar_clock_auto_hide_summary">پنهان کردن ساعت در فواصل زمانی منظم</string>
+    <string name="status_bar_clock_auto_hide_hdur_title">مدت مخفی کردن</string>
     <string name="status_bar_clock_auto_hide_hdur_summary">تعداد ثانیه برای مخفی کردن ساعت</string>
-    <string name="status_bar_clock_auto_hide_sdur_title">نمایش مدت زمان</string>
-    <string name="status_bar_clock_auto_hide_sdur_summary">تعداد ثانیه هایی که باید قبل از پنهان شدن ساعت منتظر بمانید</string>
+    <string name="status_bar_clock_auto_hide_sdur_title">مدت نمایش دادن</string>
+    <string name="status_bar_clock_auto_hide_sdur_summary">تعداد ثانیه ها قبل از مخفی شدن ساعت</string>
     <string name="status_bar_am_pm_title">سبک ق‌ظ/ب‌ظ</string>
-    <string name="status_bar_am_pm_info">حالت ۲۴ ساعته فعال است</string>
+    <string name="status_bar_am_pm_info">ساعت 24 ساعته فعال است</string>
     <string name="status_bar_am_pm_normal">عادی</string>
     <string name="status_bar_am_pm_small">کوچک</string>
-    <string name="status_bar_am_pm_hidden">پنهان</string>
+    <string name="status_bar_am_pm_hidden">مخفی</string>
     <string name="status_bar_date_title">تاریخ</string>
-    <string name="status_bar_date_none">پنهان</string>
+    <string name="status_bar_date_none">مخفی</string>
     <string name="status_bar_date_small">کوچک</string>
     <string name="status_bar_date_normal">عادی</string>
     <string name="status_bar_date_format_title">قالب تاریخ</string>
-    <string name="status_bar_date_style">حالت تاریخ</string>
+    <string name="status_bar_date_style">سبک تاریخ</string>
     <string name="status_bar_date_style_normal">عادی</string>
     <string name="status_bar_date_style_lowercase">حروف کوچک</string>
     <string name="status_bar_date_style_uppercase">حروف بزرگ</string>
     <string name="status_bar_date_format_custom">فرمت سفارشی جاوا</string>
     <string name="status_bar_date_string_edittext_title">باید به عنوان مثال قالب تاریخ ماه/روز/سال باشد</string>
-    <string name="status_bar_date_string_edittext_summary">متن را وارد کنید</string>
+    <string name="status_bar_date_string_edittext_summary">واردکردن رشته</string>
     <string name="clock_date_position">موقعیت تاریخ</string>
-    <string name="clock_date_right">راست از زمان</string>
-    <string name="clock_date_left">چپ از زمان</string>
-    <string name="clock_font_size_title">اندازه فونت ساعت</string>
+    <string name="clock_date_right">سمت راست زمان</string>
+    <string name="clock_date_left">سمت چپ زمان</string>
+    <string name="clock_font_size_title">اندازه قلم ساعت</string>
+    <string name="status_bar_clock_show_seconds_title">نمایش ثانیه‌ها</string>
+    <string name="status_bar_clock_show_seconds_summary">نمایش ساعت، دقیقه و ثانیه</string>
     <!-- Status bar - Battery -->
     <string name="status_bar_battery_style_title">سبک باتری</string>
-    <string name="status_bar_battery_style_icon_portrait">پرتره آیکون</string>
-    <string name="status_bar_battery_style_icon_rlandscape">منظره آیکون (راست)</string>
-    <string name="status_bar_battery_style_icon_landscape">منظره آیکون (چپ)</string>
+    <string name="status_bar_battery_style_icon_portrait">نماد عمودی</string>
+    <string name="status_bar_battery_style_icon_rlandscape">نماد افقی (راست)</string>
+    <string name="status_bar_battery_style_icon_landscape">نماد افقی (چپ)</string>
     <string name="status_bar_battery_style_circle">دایره</string>
     <string name="status_bar_battery_style_dotted_circle">دایره نقطه‌چین</string>
     <string name="status_bar_battery_style_filled_circle">دایره پر</string>
     <string name="status_bar_battery_style_text">متن</string>
-    <string name="status_bar_battery_style_hidden">پنهان</string>
+    <string name="status_bar_battery_style_hidden">مخفی</string>
     <string name="status_bar_battery_percent_title">درصد باتری</string>
-    <string name="status_bar_battery_percent_hidden">پنهان</string>
-    <string name="status_bar_battery_percent_text_inside">داخل آیکون</string>
-    <string name="status_bar_battery_percent_text_next_right">کنار آیکون (راست)</string>
-    <string name="status_bar_battery_percent_text_next_left">کنار آیکون (چپ)</string>
-    <string name="status_bar_battery_text_charging_title">نمایش درصد باتری هنگام شارژ</string>
-    <string name="status_bar_battery_text_charging_summary">همیشه هنگام شارژ درصد باتری را نمایش دهید</string>
+    <string name="status_bar_battery_percent_hidden">مخفی</string>
+    <string name="status_bar_battery_percent_text_inside">داخل نماد</string>
+    <string name="status_bar_battery_percent_text_next_right">کنار نماد (راست)</string>
+    <string name="status_bar_battery_percent_text_next_left">کنار نماد (چپ)</string>
+    <string name="status_bar_battery_text_charging_title">درصد باتری هنگام شارژ</string>
+    <string name="status_bar_battery_text_charging_summary">نمایش درصد فقط هنگامی که گوشی در حال شارژ شدن است</string>
+    <string name="status_bar_battery_style_icon_rlandscape_style_a">افقی راست سبک آ</string>
+    <string name="status_bar_battery_style_icon_landscape_style_a">افقی چپ سبک آ</string>
+    <string name="status_bar_battery_style_icon_rlandscape_style_b">افقی راست سبک ب</string>
+    <string name="status_bar_battery_style_icon_landscape_style_b">افقی چپ سبک ب</string>
+    <string name="status_bar_battery_style_icon_landscape_pill">نهایت عمودی</string>
+    <string name="status_bar_battery_style_icon_landscape_line">لورن افقی</string>
+    <string name="status_bar_battery_style_icon_landscape_musku">IOS عمودی</string>
+    <string name="status_bar_battery_style_icon_landscape_signal">ایرو افقی</string>
+    <string name="status_bar_battery_style_icon_landscape_buddy">کپسول افقی</string>
+    <string name="status_bar_battery_style_icon_landscape_ios15">آی‌اواس ۱۵ افقی</string>
+    <string name="status_bar_battery_style_icon_landscape_ios16">آی‌اواس ۱۶ افقی</string>
+    <string name="status_bar_battery_style_icon_landscape_origami">اوریگامی افقی</string>
+    <string name="status_bar_battery_style_icon_landscape_miui_pill">قرص افقی MiUI</string>
     <!-- Status bar - Battery Bar -->
     <string name="battery_bar_title">نوار باتری</string>
     <string name="battery_bar_summary">نوار باتری بالای نوار وضعیت را سفارشی و نمایش دهید</string>
     <string name="battery_bar_color">رنگ</string>
-    <string name="battery_bar_charging_color">رنگ شارژ شدن باتری</string>
-    <string name="battery_bar_battery_low_color">رنگ زمان کم‌بودن شارژ باتری</string>
+    <string name="battery_bar_charging_color">رنگ شارژ</string>
+    <string name="battery_bar_battery_low_color">رنگ کم بودن باتری</string>
     <string name="battery_bar_style_title">ترازکردن</string>
     <string name="battery_bar_thickness_title">ضخامت</string>
     <string name="battery_bar_animate_title">انیمیشن شارژ شدن</string>
     <string name="battery_bar_style_regular">عادی</string>
     <string name="battery_bar_style_center_mirrored">در مرکز-بازتاب شده</string>
-    <string name="battery_bar_style_reversed">معکوس</string>
+    <string name="battery_bar_style_reversed">معکوس شده</string>
     <string name="battery_bar_use_charging_color">رنگ سفارشی شارژ شدن</string>
     <string name="battery_bar_blend_color_title">ترکیب رنگ ها</string>
     <string name="battery_bar_blend_color_summary">رنگ های پر/خالی مربوط به درصد باتری را با هم ترکیب کنید</string>
@@ -417,7 +931,7 @@
     <string name="battery_bar_blend_color_reverse_summary_off">پر &#8594; خالی: قرمز &#8592; سبز &#8592; آبی &#8592; قرمز</string>
     <string name="battery_bar_blend_color_reverse_summary_on">پر &#8594; خالی: قرمز &#8594; سبز &#8594; آبی &#8594; قرمز</string>
     <!-- Quick setting categories -->
-    <string name="qs_misc_category">سایر</string>
+    <string name="qs_misc_category">متفرقه</string>
     <string name="qs_footer_category">پاورقی</string>
     <!-- QS clock -->
     <string name="qs_clock_title">ساعت</string>
@@ -431,8 +945,8 @@
     <string name="qs_battery_location_qs_statusbar">نوار وضعیت سریع</string>
     <string name="qs_use_status_bar_battery_style">دنبال کردن سبک نوار وضعیت</string>
     <!-- Battery estimate -->
-    <string name="battery_estimate_title">مقدار بافی مانده باتری</string>
-    <string name="battery_estimate_summary">نمایش تخمین عمر باتری وقتی موجود است</string>
+    <string name="battery_estimate_title">تخمین باتری</string>
+    <string name="battery_estimate_summary">نمایش تخمین عمر باتری در زمان دردسترس بودن</string>
     <!-- Network traffic -->
     <string name="network_traffic_settings_title">نمایش سرعت تبادل شبکه</string>
     <string name="network_traffic_settings_summary">سطح ترافیک شبکه فعلی را مشاهده یا سفارشی کنید</string>
@@ -443,21 +957,21 @@
     <string name="network_traffic_mode_title">حالت نمایش</string>
     <string name="network_traffic_mode_up">تنها بارگذاری</string>
     <string name="network_traffic_mode_down">تنها بارگیری</string>
-    <string name="network_traffic_mode_all">بارگیری و بارگذاری</string>
-    <string name="network_traffic_autohide">پنهان‌کردن خودکار</string>
-    <string name="network_traffic_autohide_summary">مخفی‌کردن سرعت تبادل شبکه در زمان عدم فعالیت</string>
+    <string name="network_traffic_mode_all">بارگذاری و بارگیری</string>
+    <string name="network_traffic_autohide">مخفی‌کردن خودکار</string>
+    <string name="network_traffic_autohide_summary">پنهان کردن نمایشگر ترافیک هنگام غیرفعال بودن</string>
     <string name="network_traffic_autohide_threshold">آستانه عدم‌فعالیت</string>
-    <string name="network_traffic_refresh_interval_title">فاصله نوسازی</string>
-    <string name="network_traffic_refresh_interval_summary">مدت زمانی که پس از آن سرعت دوباره اندازه گیری می شود</string>
-    <string name="network_traffic_units_title">واحدهای اندازه‌گیری ترافیک</string>
+    <string name="network_traffic_refresh_interval_title">فاصله بازخوانی</string>
+    <string name="network_traffic_refresh_interval_summary">مدت زمانی که سرعت دوباره اندازه گیری می شود</string>
+    <string name="network_traffic_units_title">واحد اندازگیری سرعت شبکه</string>
     <string name="network_traffic_units_bits">بیت بر ثانیه (b/s)</string>
     <string name="network_traffic_units_kilobits">کیلوبیت بر ثانیه (kb/s)</string>
-    <string name="network_traffic_units_megabits">مگابیت بر ثانیه (Mb/s)</string>
+    <string name="network_traffic_units_megabits">مگابیت در ثانیه (Mb/s)</string>
     <string name="network_traffic_units_bytes">بایت بر ثانیه (B/s)</string>
     <string name="network_traffic_units_kilobytes">کیلوبایت بر ثانیه (kB/s)</string>
     <string name="network_traffic_units_megabytes">مگابایت بر ثانیه (MB/s)</string>
-    <string name="network_traffic_hidearrow">پنهان‌کردن پیکان‌ها</string>
-    <string name="network_traffic_hidearrow_summary">پنهان‌کردن پیکان شاخص ترافیک شبکه</string>
+    <string name="network_traffic_hidearrow">پنهان کردن پیکان‌ها</string>
+    <string name="network_traffic_hidearrow_summary">پنهان کردن پیکان شاخص ترافیک شبکه</string>
     <!-- QS footer warnings -->
     <string name="qs_footer_warnings_title">هشدار پاورقی</string>
     <string name="qs_footer_warnings_summary">نشان دادن هشدار در پایین تنطیمات سریع وقتی شبکه تلفن با یک برنامه خارجی مانیتور می‌شود یا از VPN استفاده میکنید</string>
@@ -466,42 +980,42 @@
     <string name="media_art_summary">نمایش تصویر هنری رسانه ها هنگامی که موجود باشد</string>
     <!-- Lockscreen album art filter -->
     <string name="lockscreen_albumart_filter_title">فیلتر تصویر هنری رسانه</string>
-    <string name="lockscreen_albumart_filter_none">هیچ‌کدام</string>
-    <string name="lockscreen_albumart_filter_grayscale">سیاه‌وسفید</string>
+    <string name="lockscreen_albumart_filter_none">هیچ</string>
+    <string name="lockscreen_albumart_filter_grayscale">سیاه و سفید</string>
     <string name="lockscreen_albumart_filter_tint">رنگ تاکیدی</string>
-    <string name="lockscreen_albumart_filter_blur">محو سازی</string>
+    <string name="lockscreen_albumart_filter_blur">تاری</string>
     <string name="lockscreen_albumart_filter_grayblur">سایه خاکستری و محو شده</string>
     <!-- Pulse music visualizer -->
     <string name="pulse_help_policy_notice_title">درباره پالس</string>
-    <string name="pulse_help_policy_notice_summary">پالس یک اکولایزر گرافیکی است که هنگام پخش موسیقی در نوار ناوبری نمایش داده می‌شود</string>
-    <string name="pulse_settings">حالت پالس</string>
-    <string name="pulse_settings_summary">اکولایزر گرافیکی صوتی برای نوار ناوبری و قفل صفحه</string>
-    <string name="show_navbar_pulse_title">پالس نوار ناوبری</string>
+    <string name="pulse_help_policy_notice_summary">پالس یک اکولایزر گرافیکی صوتی درخشان هنگام پخش موسیقی در دستگاه است</string>
+    <string name="pulse_settings">پالس</string>
+    <string name="pulse_settings_summary">اکولایزر گرافیکی صوتی برای نوار ناوبری و صفحه‌قفل</string>
+    <string name="show_navbar_pulse_title">پالس ناوبری</string>
     <string name="show_navbar_pulse_summary">اکولایزر گرافیکی صوتی در نوار ناوبری</string>
-    <string name="show_lockscreen_pulse_title">پخش در قفل صفحه</string>
-    <string name="show_lockscreen_pulse_summary">اکولایزر گرافیکی صوتی در قفل صفحه</string>
-    <string name="show_ambient_pulse_title">پالس محیط</string>
-    <string name="show_ambient_pulse_summary">اکولایزر گرافیکی صوتی در صفحه محیط</string>
+    <string name="show_lockscreen_pulse_title">پالس در صفحه قفل</string>
+    <string name="show_lockscreen_pulse_summary">اکولایزر گرافیکی صوتی در صفحه قفل</string>
+    <string name="show_ambient_pulse_title">پالس تطبیقی</string>
+    <string name="show_ambient_pulse_summary">اکولایزر گرافیکی صوتی در صفحه تطبیقی</string>
     <string name="pulse_render_mode_title">حالت رندر</string>
     <string name="pulse_render_mode_fading_bars">بلوک های محو کننده</string>
     <string name="pulse_render_mode_solid_lines">خطوط یکپارچه</string>
-    <string name="pulse_legacy_mode_advanced_category">تنظیمات حالت بلوک های محو کننده</string>
-    <string name="pulse_custom_fudge_factor">سطح سلامت</string>
+    <string name="pulse_legacy_mode_advanced_category">تنظیمات حالت محو شدن بلوک‌ها</string>
+    <string name="pulse_custom_fudge_factor">سطح بالا آمدن</string>
     <string name="pulse_lavalamp_speed_title">سرعت چراغ گدازه</string>
     <string name="pulse_solid_units_count">تعداد خطوط یکپارچه</string>
     <string name="pulse_solid_units_opacity">وضوح خطوط یکپارچه</string>
     <string name="pulse_solid_units_rounded_title">گوشه های گرد</string>
-    <string name="pulse_solid_units_rounded_summary">خطوط یکپارچه با لبه های گرد</string>
-    <string name="pulse_solid_dimen_category">تنطیمات مد خطوط یکپارچه</string>
+    <string name="pulse_solid_units_rounded_summary">خطوط پر با لبه های گرد</string>
+    <string name="pulse_solid_dimen_category">تنطیمات حالت خطوط یکپارچه</string>
     <string name="pulse_color_mode_title">رنگ</string>
-    <string name="pulse_color_accent">قوت</string>
+    <string name="pulse_color_accent">تاییدی</string>
     <string name="pulse_color_custom">سفارشی</string>
     <string name="pulse_color_lava_lamp">لامپ گدازه ای</string>
     <string name="pulse_color_auto">آلبوم</string>
     <string name="pulse_color_user_title">انتخاب رنگ</string>
-    <string name="pulse_smoothing_enabled_title">هموارسازی را روشن کنید</string>
-    <string name="pulse_smoothing_enabled_summary">هر نوار هموارتر متحرک می شود</string>
-    <string name="pulse_custom_dimen">پهنا نوار</string>
+    <string name="pulse_smoothing_enabled_title">روشن کردن صافی</string>
+    <string name="pulse_smoothing_enabled_summary">هر میله با نرمی بیشتری پویانمایی می‌شود.</string>
+    <string name="pulse_custom_dimen">عرض نوار</string>
     <string name="pulse_custom_div">فاصله نوار</string>
     <string name="pulse_filled_block_size">اندازه بلوک</string>
     <string name="pulse_empty_block_size">فاصله بلوک</string>
@@ -510,84 +1024,89 @@
     <string name="navbar_visibility_summary">نمایش نوار ناوبری در پایین صفحه</string>
     <string name="navbar_layout_category_title">چیدمان</string>
     <string name="navbar_arrow_keys_title">نمایش کلیدهای جهت‌دار هنگام نوشتن</string>
-    <string name="navbar_arrow_keys_summary">هنگام تایپ دکمه های مکان نما چپ و راست را نمایش دهید. سوییچ IME را لغو می کند.</string>
+    <string name="navbar_arrow_keys_summary">نمایش دکمه‌های مکان‌نمای چپ و راست هنگام نوشتن. جایگزین تغییر روش ورودی.</string>
     <string name="navbar_layout_title">چیدمان</string>
-    <string name="navbar_layout_normal">معمولی</string>
+    <string name="navbar_layout_normal">عادی</string>
     <string name="navbar_layout_compact">فشرده</string>
-    <string name="navbar_layout_expanded">باز شده</string>
+    <string name="navbar_layout_expanded">گسترش یافته</string>
     <string name="navbar_layout_leftleaning">متمایل به چپ</string>
     <string name="navbar_layout_rightleaning">متمایل به راست</string>
-    <string name="navbar_invert_layout_title">چیدمان معکوس</string>
-    <string name="navbar_invert_layout_summary">چیدمان نوار ناوبری و سایر موارد مانند سوئیچر IME را برعکس می کند</string>
+    <string name="navbar_invert_layout_title">حالت معکوس</string>
+    <string name="navbar_invert_layout_summary">طرح نوار پیمایش و سایر موارد، مانند کلید IME را معکوس می کند</string>
     <string name="navbar_actions_category_title">اقدامات</string>
-    <string name="navbar_back_long_press_title">کلید بازگشت (نگه داشتن)</string>
-    <string name="navbar_back_double_tap_title">Back double tap</string>
-    <string name="navbar_home_long_press_title">کلید خانه (نگه داشتن)</string>
-    <string name="navbar_home_double_tap_title">کلید خانه (دو ضربه)</string>
-    <string name="navbar_app_switch_long_press_title">دکمه موارد اخیر (نگه داشتن)</string>
-    <string name="navbar_app_switch_double_tap_title">موارد اخیر دوبار ضربه بزنید</string>
+    <string name="navbar_back_long_press_title">نگه داشتن پشت</string>
+    <string name="navbar_back_double_tap_title">دو بار ضربه به پشت</string>
+    <string name="navbar_home_long_press_title">نگه داشتن کلید خانه</string>
+    <string name="navbar_home_double_tap_title">دو ضربه کلید خانه</string>
+    <string name="navbar_app_switch_long_press_title">نگه داشت موارد اخیر</string>
+    <string name="navbar_app_switch_double_tap_title">دوبار ضربه موارد اخیر</string>
     <string name="navbar_edge_long_swipe_title">کشیدن طولانی گوشه</string>
     <!-- Pocket judge -->
-    <string name="pocket_judge_title">تشخیص قرارگیری گوشی در جیب</string>
+    <string name="pocket_judge_title">تشخیص قرارگیری در جیب</string>
     <string name="pocket_judge_summary">قطع عملکرد صفحه نمایش و دکمه‌های ورودی هنگامی که دستگاه در جیب است</string>
+    <string name="always_on_pocket_mode_enabled_title">همیشه در حالت جیب</string>
+    <string name="always_on_pocket_mode_summary">همیشه ورودی‌های صفحه و دکمه‌ها را هنگام روشن بودن صفحه مسدود کنید</string>
     <!-- Disable HW keys -->
-    <string name="hwkeys_disabled_title">غیر فعال کردن کلیدهای HW</string>
-    <string name="hwkeys_disabled_summary">با فعال کردن این گزینه کلیدهای سخت افزاری برای ناوبری غیرفعال می شوند</string>
+    <string name="hwkeys_disabled_title">غیرفعال کردن کلید سخت افزاری</string>
+    <string name="hwkeys_disabled_summary">با فعال کردن این گزینه کلیدهای سخت افزاری برای ناوبری غیرفعال می‌شوند</string>
     <!-- Swap capacitive keys -->
     <string name="swap_capacitive_keys_title">جابجایی دکمه‌های خازنی</string>
     <string name="swap_capacitive_keys_summary">تعویض دکمه های برنامه های اخیر و بازگشت</string>
     <!-- ANBI -->
-    <string name="anbi_title">لمس‌های تصادفی</string>
-    <string name="anbi_summary">جلوگیری از اثر بر دکمه های ناوبری زمانی که صفحه لمس شده است</string>
+    <string name="anbi_title">لمس‌ تصادفی</string>
+    <string name="anbi_summary">جلوگیری از تعامل با دکمه‌های ناوبری در حالیکه صفحه در حال لمس است</string>
     <!-- Three-fingers-swipe to screenshot -->
-    <string name="three_finger_gesture">کشیدن برای تصویر از صفحه</string>
-    <string name="three_finger_gesture_summary">کشیدن سه انگشت برای تصویر از صفحه</string>
+    <string name="three_finger_gestures_title">حرکات کشیدن سه انگشتی</string>
+    <string name="three_finger_gesture">کشیدن برای عکس‌صفحه</string>
+    <string name="three_finger_gesture_summary">کشیدن سه انگشت برای عکس‌صفحه</string>
     <!-- Running services - Background processes tab -->
     <string name="background_processes_settings_title">پردازش های پس‌زمینه</string>
     <!-- QS footer icons -->
-    <string name="qs_footer_users_icon_title">آیکون حساب کاربری</string>
-    <string name="qs_footer_users_icon_summary">نمایش آیکون دسترسی چند کاربره را در صورت موجود بودن</string>
-    <string name="qs_footer_edit_icon_title">ویرایش آیکون کاشی</string>
-    <string name="qs_footer_show_power_menu_title">میانبر منوی پاور</string>
-    <string name="qs_footer_services_icon_title">میانبر خدمات های در حال اجرا</string>
-    <string name="qs_footer_settings_icon_title">میان‌بر تنظیمات</string>
+    <string name="qs_footer_users_icon_title">نماد حساب کاربری</string>
+    <string name="qs_footer_users_icon_summary">نمایش نماد دسترسی چند کاربره در صورت موجود بودن</string>
+    <string name="qs_footer_edit_icon_title">ویرایش نماد کاشی</string>
+    <string name="qs_footer_show_power_menu_title">میانبر منوی نیرو</string>
+    <string name="qs_footer_services_icon_title">میانبر خدمات در حال اجرا</string>
+    <string name="qs_footer_settings_icon_title">میانبر تنظیمات</string>
     <!-- Device Info screen. risingOS legal. -->
-    <string name="rising_license_title">حقوق risingOS</string>
+    <string name="rising_license_title">قوانین سیستم عامل rising</string>
     <!-- Quick Settings brightness slider -->
-    <string name="qs_brightness_slider_category">نوار کنترل روشنایی</string>
-    <string name="qs_show_brightness_slider_title">نوار کنترل روشنایی</string>
-    <string name="qs_show_brightness_slider_never">هرگز نمایش نده</string>
-    <string name="qs_show_brightness_slider_expanded">وقتی بزرگ شد نمایش دهید</string>
-    <string name="qs_show_brightness_slider_always">همیشه نمایش بده</string>
-    <string name="qs_show_brightness_slider_not_expanded">وقتی بزرگ نشده نمایش دهید</string>
-    <string name="qs_brightness_slider_position_title">جایگاه</string>
+    <string name="qs_brightness_slider_category">نوار روشنایی</string>
+    <string name="qs_show_brightness_slider_title">زمان نمایش</string>
+    <string name="qs_show_brightness_slider_never">عدم نمایش</string>
+    <string name="qs_show_brightness_slider_expanded">نمایش زمان گسترش</string>
+    <string name="qs_show_brightness_slider_always">نمایش همیشگی</string>
+    <string name="qs_show_brightness_slider_not_expanded">نمایش زمان عدم گسترش</string>
+    <string name="qs_brightness_slider_position_title">موقعیت</string>
     <string name="qs_brightness_slider_position_top">بالا</string>
     <string name="qs_brightness_slider_position_bottom">پایین</string>
+    <string name="status_bar_brightness_slider_title">نوار روشنایی</string>
+    <string name="status_bar_brightness_slider_summary">تنظیم روشنایی از طریق تنظیمات سریع</string>
     <!-- Brightness slider haptic feedback -->
-    <string name="qs_brightness_slider_haptic_title">لرزش لمسی</string>
-    <string name="qs_brightness_slider_haptic_summary">ارائه لرزش لمسی در مورد تغییر روشنایی با استفاده از اسلایدر</string>
+    <string name="qs_brightness_slider_haptic_title">بازخورد لمسی</string>
+    <string name="qs_brightness_slider_haptic_summary">فعال کردن بازخورد لمسی هنگام تغییر روشنایی با استفاده از لغزنده</string>
     <!-- Quick Settings brightness icon -->
-    <string name="qs_show_auto_brightness_title">آیکون روشنایی خودکار</string>
-    <string name="qs_show_auto_brightness_summary">نمایش کلید فعال سازی روشنایی تطبیقی نزدیک نوار کنترل</string>
+    <string name="qs_show_auto_brightness_title">نماد روشنایی خودکار</string>
+    <string name="qs_show_auto_brightness_summary">نمایش گزینه فعال/غیرفعال کردن روشنایی تطبیقی کنار لغزنده</string>
     <!-- Statusbar colored icons -->
-    <string name="statusbar_colored_icons_title">آیکون‌های رنگی</string>
-    <string name="statusbar_colored_icons_summary">از آیکون های برنامه مطبوع برای آیکون های اعلان در نوار وضعیت استفاده کنید</string>
+    <string name="statusbar_colored_icons_title">نمادهای رنگی</string>
+    <string name="statusbar_colored_icons_summary">استفاده از نمادهای اصلی برنامه‌ها برای نمایش اعلان در نوار‌وضعیت</string>
     <!-- Notification count -->
-    <string name="statusbar_notif_count_title">نمایش تعداد اعلان ها</string>
-    <string name="statusbar_notif_count_summary">نمایش تعداد اعلان های در حال انتظار</string>
+    <string name="statusbar_notif_count_title">نمایش تعداد اعلان‌ها</string>
+    <string name="statusbar_notif_count_summary">نمایش تعداد اعلان‌های منتظر</string>
     <!-- Notification channels -->
     <string name="channel_light_settings_name">پیش‌نمایش تنظیمات نور</string>
     <!-- Notification light dialogs -->
     <string name="edit_light_settings">ویرایش تنظیمات نور</string>
     <string name="pulse_speed_title">طول و سرعت چشمک زدن</string>
-    <string name="default_time">معمولی</string>
-    <string name="custom_time">دلخواه</string>
+    <string name="default_time">عادی</string>
+    <string name="custom_time">سفارشی</string>
     <string name="brightness">سطح روشنایی</string>
     <!-- Values for the notification light pulse spinners -->
     <string name="pulse_length_always_on">همیشه روشن</string>
     <string name="pulse_length_very_short">بسیار کوتاه</string>
     <string name="pulse_length_short">کوتاه</string>
-    <string name="pulse_length_normal">معمولی</string>
+    <string name="pulse_length_normal">عادی</string>
     <string name="pulse_length_long">طولانی</string>
     <string name="pulse_length_very_long">بسیار طولانی</string>
     <string name="pulse_speed_very_fast">خیلی سریع</string>
@@ -597,75 +1116,75 @@
     <string name="pulse_speed_very_slow">بسیار آهسته</string>
     <!-- Common light settings strings -->
     <string name="light_brightness_title">سطح روشنایی</string>
-    <string name="light_brightness_normal">معمولی</string>
+    <string name="light_brightness_normal">عادی</string>
     <string name="light_brightness_zen">مزاحم نشوید</string>
     <!-- Battery light settings -->
     <string name="light_brightness_category">تنظیمات روشنایی چراغ</string>
-    <string name="battery_light_title">چراغ اعلان باتری</string>
+    <string name="battery_light_title">چراغ باتری</string>
     <string name="battery_light_enable_title">فعال سازی چراغ باتری</string>
-    <string name="battery_light_summary">رنگ چراغ ال ای دی بر اساس میزان و وضعیت باتری تنظیم شود</string>
-    <string name="battery_low_pulse_title">هنگام کم بودن باتری چشمک بزن</string>
+    <string name="battery_light_summary">تنظیم رنگ چراغ ال ای دی بر اساس میزان و وضعیت باتری</string>
+    <string name="battery_low_pulse_title">چشمک هنگام کم بودن باتری</string>
     <string name="battery_light_full_charge_disabled_title">در صورت شارژ کامل خاموش شود</string>
-    <string name="battery_light_list_title">رنگ ها</string>
-    <string name="battery_light_low_color_title">کم بودن باتری</string>
+    <string name="battery_light_list_title">رنگ‌ها</string>
+    <string name="battery_light_low_color_title">باتری کم</string>
     <string name="battery_light_medium_color_title">درحال شارژ</string>
-    <string name="battery_light_full_color_title">تقریبا شارژ شده (&gt;90%)</string>
-    <string name="battery_light_really_full_color_title">کاملاً شارژ شده (100%)</string>
+    <string name="battery_light_full_color_title">تقریبا شارژ شده (&gt;۹۰%)</string>
+    <string name="battery_light_really_full_color_title">کاملاً شارژ شده (۱۰۰%)</string>
     <!-- Lights settings screen, notification light settings -->
     <string name="notification_light_title">چراغ اعلان</string>
     <string name="notification_light_enable_title">فعال سازی چراغ اعلان</string>
     <string name="notification_light_summary">تنظیم رنگ چراغ ال ای دی برای اعلان ها</string>
     <string name="notification_light_general_title">عمومی</string>
     <string name="notification_light_advanced_title">پیشرفته</string>
-    <string name="notification_light_applist_title">برنامه‌ها</string>
+    <string name="notification_light_applist_title">برنامه‌</string>
     <string name="notification_light_phonelist_title">تلفن</string>
-    <string name="notification_light_use_custom">استفاده از مقدار های دلخواه</string>
+    <string name="notification_light_use_custom">استفاده از مقادیر سفارشی</string>
     <string name="notification_light_default_value">پیش‌فرض</string>
-    <string name="notification_light_missed_call_title">تماس بی پاسخ</string>
+    <string name="notification_light_missed_call_title">تماس بی‌پاسخ</string>
     <string name="notification_light_voicemail_title">پیام صوتی</string>
-    <string name="notification_light_screen_on">هنگام روشن بودن صفحه چراغ ال ای دی روشن شود</string>
-    <string name="notification_light_zen_mode">فعال بودن چراغ اعلان در حالت مزاحم نشوید</string>
+    <string name="notification_light_screen_on">چراغ هنگام روشن بودن صفحه</string>
+    <string name="notification_light_zen_mode">چراغ هنگام مزاحم نشوید</string>
     <string name="notification_light_automagic">انتخاب خودکار رنگ ها</string>
-    <string name="notification_light_automagic_summary">انتخاب رنگ ها به صورت خودکار</string>
+    <string name="notification_light_automagic_summary">انتخاب رنگ‌ها به صورت خودکار</string>
     <string name="notification_light_override">لغو همه برنامه ها</string>
     <!-- Lights settings, LED notification -->
-    <string name="led_notification_title">تنظیمات نور</string>
-    <string name="led_notification_text">چراغ LED فعال شده به وسیله ی تنظیمات</string>
-    <string name="notification_light_add_apps_empty_summary">برای اضافه کردن کنترل هر برنامه، \'%1$s\' را فعال کنید و \'اضافه\' را فشار دهید</string>
+    <string name="led_notification_title">تنظیمات چراغ اعلان</string>
+    <string name="led_notification_text"> چراغ اعلان توسط تنظیمات روشن شد</string>
+    <string name="notification_light_add_apps_empty_summary">برای افزودن کنترل هر برنامه، \"%1$s\" را فعال کرده و روی \"افزودن\" فشار دهید</string>
     <!-- Heads up timeout -->
     <string name="notification_heads_up_title">اعلان فوری</string>
-    <string name="notification_heads_up_summary">اعلان‌های بازشو مجاز باشند</string>
-    <string name="notification_heads_up_timeout_title">وقفه</string>
+    <string name="notification_heads_up_summary">نمایش اعلان‌های بازشو</string>
+    <string name="notification_heads_up_timeout_title">مهلت زمانی</string>
     <string name="notification_heads_up_timeout_summary">زمان برای نمایش اعلان های فوری</string>
     <!-- Less boring heads up -->
     <string name="less_boring_heads_up_title">کمتر خسته کننده</string>
     <string name="less_boring_heads_up_summary">نمایش اعلان‌های بازشو فقط برای زنگ هشدار، شماره‌گیر و برنامه پیام‌رسانی</string>
     <!-- Notifications while screen on -->
-    <string name="notification_sound_vib_screen_on_title">اعلانات پر سر و صدا</string>
-    <string name="notification_sound_vib_screen_on_summary">پخش صدا و لرزش برای اعلان ها زمانی که صفحه روشن هست</string>
+    <string name="notification_sound_vib_screen_on_title">اعلان پر سر و صدا</string>
+    <string name="notification_sound_vib_screen_on_summary">پخش صدا و لرزش برای اعلان‌ها زمانی که صفحه روشن هست</string>
     <!-- Privacy Indicator -->
     <string name="mic_camera_privacy_indicator_title">نمایش نشانگر حریم خصوصی میکروفون و دوربین</string>
-    <string name="mic_camera_privacy_indicator_summary">نمایش نشانگر متمایز وقتی هر برنامه ای از میکروفون و دوربین استفاده کرد</string>
+    <string name="mic_camera_privacy_indicator_summary">نمایش نشانگر وقتی هر برنامه ای از میکروفون و دوربین استفاده می‌کند</string>
     <string name="location_privacy_indicator_title">نشانگر حریم خصوصی مکان</string>
-    <string name="location_privacy_indicator_summary">نمایش نشانگر متمایز وقتی هر برنامه ای از مکان استفاده کرد</string>
+    <string name="location_privacy_indicator_summary">نمایش نشانگر زمانی که هر برنامه‌ای از موقعیت مکانی استفاده می‌کند</string>
     <string name="projection_privacy_indicator_title">نشانگر حریم خصوصی رسانه</string>
-    <string name="projection_privacy_indicator_summary">نشانگر را وقتی که تصویر بازتاب می شود، نمایش بده</string>
+    <string name="projection_privacy_indicator_summary">نمایش نشانگر در زمان بازتاب شدن صفحه نمایش</string>
     <!-- Deep Sleep percentage in device info -->
     <string name="status_sleep_time">خواب عمیق</string>
     <!-- In-call feedback -->
-    <string name="incall_vibration_category">تنظیمات ویبره هنگام تماس</string>
-    <string name="incall_vibrate_connect_title">لرزش در هنگام برقراری تماس</string>
+    <string name="incall_vibration_category">تنظیمات لرزش هنگام تماس</string>
+    <string name="incall_vibrate_connect_title">لرزش در هنگام اتصال</string>
     <string name="incall_vibrate_call_wait_title">لرزش در هنگام انتظار تماس</string>
-    <string name="incall_vibrate_disconnect_title">لرزش در هنگام قطع تماس</string>
+    <string name="incall_vibrate_disconnect_title">لرزش در هنگام قطع</string>
     <!-- Blink flashlight for incoming calls -->
     <string name="flashlight_on_call_title">چشمک زدن چراغ قوه هنگام دریافت تماس</string>
-    <string name="flashlight_on_call_disabled">غیرفعال شد</string>
+    <string name="flashlight_on_call_disabled">غیرفعال</string>
     <string name="flashlight_on_call_ringer">هنگام زنگ خوردن</string>
     <string name="flashlight_on_call_no_ringer">هنگامی که زنگ بی صدا است</string>
     <string name="flashlight_on_call_silent">هنگامی که کاملا بی صدا است (بدون زنگ و لرزش)</string>
     <string name="flashlight_on_call_always">همیشه</string>
-    <string name="flashlight_on_call_ignore_dnd_title">ردکردن DND</string>
-    <string name="flashlight_on_call_ignore_dnd_summary">آیا هنگامی که حالت مزاحم نشوید فعال است فلش بزند</string>
+    <string name="flashlight_on_call_ignore_dnd_title">ردکردن مزاحم نشوید</string>
+    <string name="flashlight_on_call_ignore_dnd_summary">اینکه آیا در حالت مزاحم نشوید چشمک بزند یا نه</string>
     <string name="flashlight_on_call_rate_title">نزخ چشمک زدن</string>
     <!-- Gaming mode -->
     <string name="gaming_mode_title">فضای بازی</string>
@@ -677,26 +1196,26 @@
     <string name="enable_fingerprint_ripple_effect_title">جلوه موج دار</string>
     <string name="enable_fingerprint_ripple_effect_summary">نمایش جلوه موج دار در باز کردن قفل با اثر انگشت</string>
     <!-- Old mobiletype icon style -->
-    <string name="old_mobiletype_title">آیکون سیگنال به سبک قدیمی</string>
-    <string name="old_mobiletype_summary">ادغام آیکون های سیگنال و نوع سیگنال</string>
+    <string name="old_mobiletype_title">نماد سیگنال به سبک قدیمی</string>
+    <string name="old_mobiletype_summary">ادغام نماد های سیگنال و نوع سیگنال</string>
     <!-- Screen Off animation -->
     <string name="screen_off_animation_title">انیمیشن خاموش شدن صفحه</string>
     <string name="screen_off_animation_default">پیش‌فرض</string>
     <string name="screen_off_animation_crt">CRT</string>
     <string name="screen_off_animation_scale">مقیاس</string>
     <!-- Fingerprint authentication vibration -->
-    <string name="fp_success_vibrate_title">لرزش هنگام تایید اثر انگشت</string>
-    <string name="fp_success_vibrate_summary">لرزش زمانی که شناسایی اثر انگشت موفقیت امیز باشد</string>
-    <string name="fp_error_vibrate_title">لرزش هنگام عدم شناسایی اثر انگشت</string>
+    <string name="fp_success_vibrate_title">لرزش هنگام تایید اثرانگشت</string>
+    <string name="fp_success_vibrate_summary">لرزش زمانی که شناسایی اثر انگشت موفقیت آمیز باشد</string>
+    <string name="fp_error_vibrate_title">لرزش هنگام خطا اثرانگشت</string>
     <string name="fp_error_vibrate_summary">لرزش زمانی که شناسایی اثر انگشت موفقیت آمیز نبود</string>
     <!-- Charging animation -->
     <string name="charging_animation_title">انیمیشن شارژ شدن</string>
-    <string name="charging_animation_summary">نمایش یک انیمیشن هنگامی که شارژر متصل می‌شود</string>
+    <string name="charging_animation_summary">نمایش انیمیشن هنگامی که شارژر متصل می‌شود</string>
     <!-- One shot automatic brightness -->
-    <string name="auto_brightness_one_shot_title">روشنایی خودکار یک ضربه</string>
+    <string name="auto_brightness_one_shot_title">روشنایی خودکار تک ضربه</string>
     <string name="auto_brightness_one_shot_summary">تنظیم روشنایی فقط در لحظه روشن شدن صفحه نمایش انجام می شود</string>
     <!-- Per-app volume -->
-    <string name="app_volume">میزان صدای برنامه</string>
+    <string name="app_volume">صدای برنامه</string>
     <string name="app_volume_title">کنترل صدا هر برنامه</string>
     <string name="app_volume_summary">نمایش دکمه میزان صدا برای هر برنامه در گفتگوی صدا</string>
     <!-- AdGuard DNS Option -->
@@ -712,41 +1231,43 @@
     <string name="alert_slider_notifications_summary">نمایش اعلان هنگام تغییر موقعیت نوار کنترل هشدار</string>
     <!-- Notch: Full screen apps -->
     <string name="display_cutout_force_fullscreen_title">برنامه های تمام صفحه</string>
-    <string name="display_cutout_force_fullscreen_summary">اجبار برنامه ها به نادیده گرفتن فضای ناچ</string>
-    <string name="display_cutout_force_fullscreen_no_apps">هیچ برنامه ای</string>
+    <string name="display_cutout_force_fullscreen_summary">مجبور کردن برنامه ها به نادیده گرفتن فضای ناچ</string>
+    <string name="display_cutout_force_fullscreen_no_apps">بدون برنامه</string>
     <!-- Unlimited google photos storage -->
     <string name="use_photos_spoof_title">فضای نامحدود برای عکس ها</string>
     <string name="use_photos_spoof_summary">دستگاه خود را فقط به عنوان Pixel XL برای برنامه Google Photos جعل کنید تا فضای ذخیره‌سازی نامحدودی برای پشتیبان‌گیری فراهم کنید</string>
     <!-- Unlock FPS for specific games -->
-    <string name="use_games_spoof_title">بازکزدن FPS بالاتر در بازی ها</string>
-    <string name="use_games_spoof_summary">دستگاه خود را به عنوان مدل های مختلف برای بازی های خاص جعل کنید تا FPS بالاتر را باز کنید</string>
+    <string name="use_games_spoof_title">رفع محدودیت فریم در بازی‌ها</string>
+    <string name="use_games_spoof_summary">دستگاه خود را به عنوان مدل های مختلف برای بازی های خاص جعل کنید تا فریم بالاتر را باز کنید</string>
+    <string name="spoof_option_disabled">غیرفعال کردن جعل PixelProps توسط دستگاه فعلی پشتیبانی نمی‌شود</string>
     <!-- Volume panel -->
-    <string name="volume_panel_category">پنل صدا</string>
-    <string name="volume_dialog_timeout_title">مدت زمان نمایش پنل صدا</string>
+    <string name="volume_panel_category">پانل صدا</string>
+    <string name="volume_dialog_timeout_title">مدت نمایش پنل صدا</string>
     <string name="volume_panel_on_left_title">پنل صدا در چپ</string>
+    <string name="volume_panel_on_left_summary">پانل صدا را در سمت چپ صفحه نمایش دهید</string>
     <!-- Legacy WFD settings -->
     <string name="legacy_wfd_video_mode_title">حالت ویدئو</string>
     <!-- UDFPS settings -->
     <string name="udfps_settings_title">سفارشی کردن UDFPS</string>
     <string name="udfps_settings_summary">سفارشی کردن اسکنر اثر انگشت زیر نمایشگر</string>
     <string name="udfps_icon_picker_title">انتخاب آیکون UDFPS</string>
-    <string name="udfps_icon_picker_summary">آیکون اثر انگشت مورد علاقه خود را انتخاب کنید</string>
+    <string name="udfps_icon_picker_summary">ایکون اثر انگشت مورد علاقه خود را انتخاب کنید</string>
     <string name="udfps_recog_animation_effect_title">انیمیشن سفارشی UDFPS</string>
     <string name="udfps_recog_animation_effect_summary">انتخاب جلوه انیمیشن</string>
     <!-- Face Unlock -->
-    <string name="security_settings_face_unlock_redo_face_scan_summary">اسکن چهره موجود را حذف کرده و یک اسکن جدید ایجاد کنید</string>
+    <string name="security_settings_face_unlock_redo_face_scan_summary">اسکن صورت موجود را حذف کنید و یک اسکن جدید ایجاد کنید</string>
     <string name="security_settings_face_unlock_redo_face_scan_title">اسکن مجدد چهره</string>
-    <string name="face_redo_confirm_btn">مجدد</string>
-    <string name="face_redo_warning_msg">آیا مایلید اسکن چهره موجود را حذف کرده و اسکن جدیدی ایجاد کنید?</string>
+    <string name="face_redo_confirm_btn">دوباره</string>
+    <string name="face_redo_warning_msg">مایلید اسکن موجود صورت را حذف کرده و یک اسکن جدید ایجاد کنید؟</string>
     <string name="face_unlock_method_title">اجازه باز کردن قفل با چهره روی قفل صفحه</string>
     <string name="face_unlock_method_default">وقتی صفحه نمایش روشن است</string>
-    <string name="face_unlock_method_swipe">هنگام کشیدن روی قفل صفحه</string>
+    <string name="face_unlock_method_swipe">هنگام کشیدن روی صفحه قفل</string>
     <!-- Wifi/Bluetooth auto timeout -->
-    <string name="wifi_timeout">مدت زمان WiFi</string>
-    <string name="wifi_timeout_summary">WiFi را به‌طور خودکار خاموش نکن</string>
-    <string name="wifi_timeout_summary_auto">در صورت عدم اتصال، WiFi بعد از <xliff:g id="timeout_description">%1$s</xliff:g> خاموش خواهد شد</string>
+    <string name="wifi_timeout">مدت زمان وای‌فای</string>
+    <string name="wifi_timeout_summary">وای‌فای را به‌طور خودکار خاموش نکن</string>
+    <string name="wifi_timeout_summary_auto">وای‌فای پس از <xliff:g id="timeout_description">%1$s</xliff:g> غیرفعال خواهد شد اگر هیچ شبکه‌ای متصل نباشد.</string>
     <string name="bluetooth_timeout">مدت زمان بلوتوث</string>
-    <string name="bluetooth_timeout_summary">بلوتوث را به‌طور خودکار خاموش نکن</string>
+    <string name="bluetooth_timeout_summary">بلوتوث را بطور خودکار خاموش نکن</string>
     <string name="bluetooth_timeout_summary_auto">بلوتوث بعد از <xliff:g id="timeout_description">%1$s</xliff:g> اگر دستگاهی متصل نباشد، خاموش می‌شود</string>
     <string name="custom_timeout_summary_never">هرگز</string>
     <string name="custom_timeout_summary_5secs">۵ ثانیه</string>
@@ -758,51 +1279,58 @@
     <string name="custom_timeout_summary_5mins">۵ دقیقه</string>
     <string name="custom_timeout_summary_10mins">۱۰ دقیقه</string>
     <string name="custom_timeout_summary_20mins">۲۰ دقیقه</string>
-    <string name="custom_timeout_summary_30mins">30 دقيقه</string>
+    <string name="custom_timeout_summary_30mins">۳۰ دقیقه</string>
     <string name="custom_timeout_summary_1hour">۱ ساعت</string>
     <string name="custom_timeout_summary_2hours">2 ساعت</string>
-    <string name="custom_timeout_summary_4hours">4 ساعت</string>
-    <string name="custom_timeout_summary_8hours">8 ساعت</string>
+    <string name="custom_timeout_summary_4hours">۴ ساعت</string>
+    <string name="custom_timeout_summary_8hours">۸ ساعت</string>
+    <string name="custom_timeout_summary_12hours">۱۲ ساعت</string>
+    <string name="custom_timeout_summary_24hours">۲۴ ساعت</string>
+    <string name="custom_timeout_summary_36hours">۳۶ ساعت</string>
+    <string name="custom_timeout_summary_48hours">۴۸ ساعت</string>
+    <string name="custom_timeout_summary_72hours">۷۲ ساعت</string>
+    <!-- Default Timeouts -->
+    <string name="custom_timeout_summary_1hour_def">۱ ساعت (پیش‌فرض)</string>
     <!-- WiFi Hotspot -->
-    <string name="wifi_hotspot_ap_band_title">AP Band</string>
-    <string name="wifi_hotspot_hidden_ssid_title">مخفی کردن شبکه</string>
-    <string name="wifi_hotspot_hidden_ssid_summary">نام نقطه اتصال تلفن همراه شما در لیست شبکه های WLAN موجود ظاهر نمی شود.</string>
+    <string name="wifi_hotspot_ap_band_title">‏باند AP</string>
+    <string name="wifi_hotspot_hidden_ssid_title">شبکه مخفی</string>
+    <string name="wifi_hotspot_hidden_ssid_summary">نام نقطه اتصال تلفن همراه شما در لیست شبکه‌های وای‌فای موجود ظاهر نمی شود.</string>
     <string name="wifi_hotspot_client_manager_title">دستگاه‌های متصل</string>
-    <string name="wifi_hotspot_client_manager_summary">دستگاه های متصل به هات اسپات را فهرست و مدیریت کنید</string>
-    <string name="wifi_hotspot_client_manager_list_only_summary">دستگاه های متصل به هات اسپات را فهرست کنید</string>
+    <string name="wifi_hotspot_client_manager_summary">لیست و مدیریت دستگاه های متصل به این نقطه اتصال</string>
+    <string name="wifi_hotspot_client_manager_list_only_summary">لیست دستگاه های متصل به این نقطه اتصال</string>
     <string name="wifi_hotspot_client_limit_title">محدودیت دستگاه‌های متصل</string>
     <string name="wifi_hotspot_blocked_clients_list_title">دستگاه های مسدود شده</string>
     <string name="wifi_hotspot_connected_clients_list_title">دستگاه های متصل</string>
     <string name="wifi_hotspot_block_client_dialog_title">مسدود کردن دستگاه</string>
-    <string name="wifi_hotspot_block_client_dialog_text">This action will disconnect \"<xliff:g id="device_name">%1$s</xliff:g>\" from this device and add it to blocklist</string>
+    <string name="wifi_hotspot_block_client_dialog_text">این اقدام باعث قطع ارتباط \"<xliff:g id="device_name">%1$s</xliff:g>\" از این دستگاه و افزودن آن به فهرست مسدودها می شود.</string>
     <string name="wifi_hotspot_unblock_client_dialog_title">رفع انسداد دستگاه</string>
-    <string name="wifi_hotspot_unblock_client_dialog_text">The device \"<xliff:g id="device_name">%1$s</xliff:g>\" will be able to connect to this hotspot</string>
-    <string name="wifi_hotspot_client_manager_footer_text">هیچ مشتری در حال حاضر در دسترس نیست.  دستگاه های متصل و مسدود شده در صورت موجود بودن در اینجا فهرست می شوند.</string>
-    <string name="wifi_band_24ghz_and_5ghz">2.4 GHz &amp; 5 GHz</string>
-    <string name="wifi_band_24ghz_and_6ghz">&amp; free</string>
+    <string name="wifi_hotspot_unblock_client_dialog_text">دستگاه \"<xliff:g id="device_name">%1$s</xliff:g>\" می‌تواند به این نقطه اتصال متصل شود</string>
+    <string name="wifi_hotspot_client_manager_footer_text">هیچ اتصالی در دسترس نیست. دستگاه های متصل و مسدود شده در صورت موجود بودن در اینجا فهرست می شوند.</string>
+    <string name="wifi_band_24ghz_and_5ghz">۲٫۴ گیگاهرتز &amp; ۵ گیگاهرتز</string>
+    <string name="wifi_band_24ghz_and_6ghz">۲٫۴ گیگاهرتز &amp; ۶ گیگاهرتز</string>
     <plurals name="wifi_hotspot_client_limit_summary">
-        <item quantity="other">Up to <xliff:g id="device_num">%1$d</xliff:g> devices can connect to this hotspot</item>
-        <item quantity="one">Up to <xliff:g id="device_num">%1$d</xliff:g> device can connect to this hotspot</item>
+        <item quantity="other">حداکثر <xliff:g id="device_num">%1$d</xliff:g> دستگاه می‌تواند به این نقطه اتصال متصل شود</item>
+        <item quantity="one">حداکثر <xliff:g id="device_num">%1$d</xliff:g> دستگاه می‌تواند به این نقطه اتصال متصل شود</item>
     </plurals>
     <!-- Disable QS -->
-    <string name="disable_qs_title">QS را در قفل صفحه پنهان کنید</string>
-    <string name="disable_qs_summary">از دسترسی به کاشی های QS در قفل صفحه ایمن جلوگیری کنید</string>
+    <string name="disable_qs_title">مخفی کردن تنظیم‌سریع صفحه قفل</string>
+    <string name="disable_qs_summary">جلوگیری از دسترسی به کاشی‌ها در بخش تنظیمات سریع روی صفحه قفل ایمن</string>
     <!-- Power menu on secure lockscreen -->
-    <string name="lockscreen_enable_power_menu_title">منوی پاور</string>
-    <string name="lockscreen_enable_power_menu_summary">اجازه دسترسی به منوی پاور در قفل صفحه ایمن</string>
+    <string name="lockscreen_enable_power_menu_title">منو نیرو</string>
+    <string name="lockscreen_enable_power_menu_summary">اجازه دسترسی به منوی خاموشی در صفحه قفل ایمن</string>
     <!-- Gesture navbar length -->
     <string name="gesture_navbar_length_title">طول قرص</string>
     <string name="short_label">کوتاه</string>
-    <string name="long_label">بلند</string>
+    <string name="long_label">طولانی</string>
     <!-- Gesture navbar radius -->
-    <string name="gesture_navbar_radius_title">Pill radius</string>
+    <string name="gesture_navbar_radius_title">شعاع قرص</string>
     <string name="thin_label">نازک</string>
-    <string name="thick_label">Thick</string>
+    <string name="thick_label">ضخیم</string>
     <!-- Back gesture height -->
     <string name="back_height_low_label">کامل</string>
     <string name="back_height_high_label">پایین</string>
-    <string name="back_height_title">ارتفاع ژست عقب</string>
-    <string name="back_height_summary">ارتفاع صفحه برای ژست عقب معتبر است</string>
+    <string name="back_height_title">ارتفاع حرکت برگشت</string>
+    <string name="back_height_summary">ارتفاع صفحه معتبر برای حرکت بازگشت</string>
     <!-- Notification guts kill app button -->
     <string name="notification_guts_kill_app_button_title">دکمه توقف اجباری</string>
     <string name="notification_guts_kill_app_button_summary">نمایش دکمه توقف اجباری در منو فشار طولانی اعلان ها</string>
@@ -814,14 +1342,14 @@
     <string name="columbus_gesture_enrollment_complete">انجام شد</string>
     <string name="columbus_gesture_enrollment_do_it_later">الان نه</string>
     <string name="columbus_gesture_enrollment_settings">برو به تنظیمات</string>
-    <string name="columbus_gesture_enrollment_try_it">امتحان کنید</string>
+    <string name="columbus_gesture_enrollment_try_it">امتحان کن</string>
     <string name="columbus_gesture_training_action_no_selection_error">لطفاً یک عمل را برای انجام انتخاب کنید</string>
     <string name="columbus_gesture_training_action_text">انتخاب کنید وقتی از ضربه سریع استفاده می کنید چه اتفاقی بیفتد. بعداً می‌توانید این را در تنظیمات تغییر دهید.</string>
     <string name="columbus_gesture_training_action_title">گزینه ضربه سریع را انتخاب کنید</string>
-    <string name="columbus_gesture_training_enrolling_first_gesture">1 دو بار ضربه زدن از 2 تا شناسایی شد</string>
-    <string name="columbus_gesture_training_enrolling_first_gesture_text">بیایید یک بار دیگر آن را امتحان کنیم. با سرعت به پشت تلفن خود دو بار ضربه بزنید.</string>
+    <string name="columbus_gesture_training_enrolling_first_gesture">… 1 دو بار ضربه زدن از 2 تا شناسایی شد</string>
+    <string name="columbus_gesture_training_enrolling_first_gesture_text">بیا یک بار دیگر آن را امتحان کنیم. با سرعت به پشت تلفن خود دو بار ضربه بزنید.</string>
     <string name="columbus_gesture_training_enrolling_first_gesture_title">عالی!</string>
-    <string name="columbus_gesture_training_enrolling_second_gesture">2 دو بار ضربه زدن از 2 تا شناسایی شد</string>
+    <string name="columbus_gesture_training_enrolling_second_gesture">… 2 دو بار ضربه زدن از 2 تا شناسایی شد</string>
     <string name="columbus_gesture_training_enrolling_second_gesture_text">شما آماده شروع استفاده از ضربه سریع هستید</string>
     <string name="columbus_gesture_training_enrolling_second_gesture_title">انجامش دادی!</string>
     <string name="columbus_gesture_training_enrolling_text">با سرعت به پشت تلفن خود دو بار ضربه بزنید.</string>
@@ -834,19 +1362,19 @@
     <string name="columbus_gesture_training_launch_no_selection_error">لطفاً یک برنامه را برای باز کردن انتخاب کنید</string>
     <string name="columbus_gesture_training_launch_text">برنامه ای را که می خواهید وقتی از ضربه سریع استفاده می کنید باز کنید، انتخاب کنید.</string>
     <string name="columbus_gesture_training_launch_title">برنامه را برای باز کردن انتخاب کنید</string>
-    <string name="columbus_launch_app_extra_widget_a11y_label">%1$s تنظیمات میان‌بر</string>
+    <string name="columbus_launch_app_extra_widget_a11y_label">تنظیمات میانبر %1$s</string>
     <string name="columbus_launch_settings_activity_title">تنظیمات ضربه سریع</string>
     <string name="columbus_name">ضربه سریع</string>
-    <string name="columbus_radio_button_extra_widget_a11y_label">%1$s تنظیمات</string>
+    <string name="columbus_radio_button_extra_widget_a11y_label">تنظیمات %1$s</string>
     <string name="columbus_setting_action_assistant_title">به دستیار دیجیتالی خود دسترسی پیدا کنید</string>
-    <string name="columbus_setting_action_launch_summary_no_selection">هیچ برنامه‌ ای انتخاب نشده است</string>
+    <string name="columbus_setting_action_launch_summary_no_selection">هیچ برنامه‌ ای انتخاب نشده</string>
     <string name="columbus_setting_action_launch_summary_not_installed">برنامه نصب نشد</string>
-    <string name="columbus_setting_action_launch_title">باز کردن برنامه</string>
+    <string name="columbus_setting_action_launch_title">بازکردن برنامه</string>
     <string name="columbus_setting_action_notification_title">نمایش اعلان‌ها</string>
-    <string name="columbus_setting_action_open_app_title">باز کردن برنامه</string>
-    <string name="columbus_setting_action_overview_title">برنامه های اخیر را ببینید</string>
+    <string name="columbus_setting_action_open_app_title">بازکردن برنامه</string>
+    <string name="columbus_setting_action_overview_title">دیدن برنامه های اخیر</string>
     <string name="columbus_setting_action_play_pause_title">پخش یا توقف رسانه</string>
-    <string name="columbus_setting_action_screenshot_title">عکسبرداری از صفحه نمایش</string>
+    <string name="columbus_setting_action_screenshot_title">گرفتن عکس صفحه</string>
     <string name="columbus_setting_actions_title">دوبار به پشت تلفن ضربه بزنید تا</string>
     <string name="columbus_setting_additional_settings_title">قدرت ضربه سریع</string>
     <string name="columbus_setting_app_selection_help_text">برنامه ای را انتخاب کنید تا با دو بار ضربه زدن به پشت تلفن باز شود. اگر برنامه را حذف نصب کنید، ضربه سریع خاموش می شود تا زمانی که برنامه دیگری را انتخاب کنید.</string>
@@ -856,262 +1384,303 @@
     <!-- Game -->
     <string name="game_dashboard_always_on_summary">نمایش میانبر داشبورد بازی در بازی ها</string>
     <string name="game_dashboard_always_on_title">داشبورد بازی</string>
-    <string name="game_dashboard_dnd_rule_name">حالت بازی</string>
-    <string name="game_dashboard_dnd_summary">هنگام بازی فقط توسط افراد و برنامه های مهم مطلع شوید</string>
+    <string name="game_dashboard_dnd_rule_name">بازی</string>
+    <string name="game_dashboard_dnd_summary">هنگام انجام بازی فقط از افراد و برنامه های مهم مطلع شوید</string>
     <string name="game_dashboard_dnd_title">مزاحم نشوید برای بازی ها</string>
     <!-- Smart Pixels -->
-    <string name="smart_pixels_warning_text">پیکسل های هوشمند یک ویژگی صرفه جویی در مصرف انرژی است. بسته به تعداد پیکسل هایی که تصمیم دارید خاموش کنید، می توانید بهبود عمر باتری را مشاهده کنید. توجه داشته باشید که در برخی موارد می‌تواند منجر به ایجاد نواحی بی‌پاسخ روی صفحه لمسی شود</string>
+    <string name="smart_pixels_warning_text">پیکسل های هوشمند یک ویژگی صرفه جویی در مصرف انرژی است. بسته به تعداد پیکسل هایی که تصمیم به خاموش کردن آن دارید، می توانید شاهد بهبود عمر باتری باشید. توجه داشته باشید که در برخی موارد می‌تواند منجر به عدم پاسخگویی به نواحی روی صفحه لمسی شود</string>
     <string name="smart_pixels_title">پیکسل های هوشمند</string>
     <string name="smart_pixels_summary">با خاموش کردن برخی از پیکسل ها باعث مصرف کمتر باتری شوید</string>
-    <string name="smart_pixels_enable_title">فعال کردن حالت پیکسل های هوشمند</string>
-    <string name="smart_pixels_enable_summary">خاموش کردن پیکسل ها برای کاهش مصرف انرژی</string>
+    <string name="smart_pixels_enable_title">فعال کردن پیکسل های هوشمند</string>
+    <string name="smart_pixels_enable_summary">خاموش کردن مقداری از پیکسل ها برای کاهش مصرف انرژی</string>
     <string name="smart_pixels_on_power_save_title">فعال شدن خودکار با ذخیره کننده نیرو</string>
     <string name="smart_pixels_on_power_save_summary">فعال کردن پیکسل های هوشمند به طور خودکار هنگامی که حالت ذخیره باتری روشن میشود</string>
     <string name="smart_pixels_percent">تنظیم درصد پیکسل ها برای خاموش شدن</string>
-    <string name="smart_pixels_shift_title">محافظت از سوختگی پیکسل ها</string>
+    <string name="smart_pixels_shift_title">محافظت از سوختگی</string>
     <string name="smart_pixels_shift_summary">جلوگیری از سوختگی دستگاه های OLED با جابجایی هر چند وقت یکبار پیکسل ها</string>
     <!-- Black theme -->
-    <string name="system_black_theme_title">استفاده از تم مشکی</string>
+    <string name="system_black_theme_title">استفاده از پوسته مشکی</string>
     <string name="system_black_theme_summary">اجبار رنگ های مشکی پس‌زمینه</string>
     <!-- Material dismiss all button for notifications -->
     <string name="notification_material_dismiss_title">دکمه پاک کردن تمام اعلان‌ها</string>
     <string name="notification_material_dismiss_summary">جایگزین متن پاک کردن تمام اعلان با دکمه شناور سبک متریال</string>
     <!-- Back gesture animation -->
-    <string name="back_gesture_arrow_title">انیمیشن ژست حرکت عقب</string>
-    <string name="back_gesture_arrow_summary">نشان دادن یک پیکان انیمیشنی برای ژست عقب‌گرد</string>
+    <string name="back_gesture_arrow_title">انیمیشن حرکت برگشت</string>
+    <string name="back_gesture_arrow_summary">نشان دادن یک پیکان انیمیشنی برای حرکت برگشت</string>
     <!-- Back gesture haptic -->
-    <string name="back_gesture_haptic_title">حس لمسی ژست عقب</string>
-    <string name="back_gesture_haptic_summary">لرزش هنگام انجام یک ژست عقب</string>
+    <string name="back_gesture_haptic_title">لرزش حرکت بازگشت</string>
+    <string name="back_gesture_haptic_summary">لرزش هنگام انجام دادن حرکت برگشت</string>
     <!-- Battery health -->
-    <string name="current_battery_capacity">ظرفیت حال حاضر باتری</string>
-    <string name="designed_battery_capacity">ظرفیت باتری طراحی شده</string>
-    <string name="battery_charge_cycles">چرخه های کامل شده شارژ شدن</string>
+    <string name="current_battery_capacity">ظرفیت فعلی باتری</string>
+    <string name="designed_battery_capacity">ظرفیت طراحی شده باتری</string>
+    <string name="battery_charge_cycles">چرخه‌های شارژ کامل شده</string>
     <!-- Battery temperature -->
     <string name="battery_temperature">دمای باتری</string>
     <!-- QS Transparency -->
-    <string name="qs_opacity_title">شفافیت پس زمینه</string>
-    <string name="qs_opacity_summary">سطح شفافیت را برای پس زمینه QS تنظیم کنید</string>
+    <string name="qs_opacity_title">شفافیت پس‌زمینه</string>
+    <string name="qs_opacity_summary">تنظیم سطح شفافیت برای پس‌زمینه بخش تنظیم‌سریع</string>
     <!-- Data usage info in QS footer -->
-    <string name="qs_footer_datausage_title">مصرف داده‌ها</string>
+    <string name="qs_footer_datausage_title">مصرف داده</string>
     <string name="qs_footer_datausage_summary">نمایش خلاصه مصرف داده در پاورقی تنظیمات سریع</string>
     <!-- QS Tiles animation  -->
     <string name="qs_tile_animation_title">انیمیشن کاشی‌ها</string>
     <string name="qs_tile_animation_style_title">سبک انیمیشن</string>
-    <string name="qs_tile_animation_duration_title">مدت زمان انیمیشن</string>
-    <string name="qs_tile_animation_interpolator_title">میانجی انیمیشن</string>
+    <string name="qs_tile_animation_duration_title">مدت انیمیشن</string>
+    <string name="qs_tile_animation_interpolator_title">محدودکننده انیمیشن</string>
     <string name="qs_tile_animation_style_off">بدون انیمیشن</string>
-    <string name="qs_tile_animation_style_rotate">چرخشی</string>
-    <string name="qs_tile_animation_style_flipx">چرخش X (افقی)</string>
-    <string name="qs_tile_animation_style_flipy">چرخش Y (عمودی)</string>
+    <string name="qs_tile_animation_style_rotate">چرخش</string>
+    <string name="qs_tile_animation_style_flipx">چرخش X</string>
+    <string name="qs_tile_animation_style_flipy">چرخش Y</string>
+    <string name="qs_tile_animation_style_shake">لرزیدن</string>
+    <string name="qs_tile_animation_style_fade_in">محو شدن</string>
+    <string name="qs_tile_animation_style_bounce_x">اثر پرش (مقیاس X)</string>
+    <string name="qs_tile_animation_style_bounce_y">اثر پرش (مقیاس Y)</string>
+    <string name="qs_tile_animation_style_pulse_x">اثر پالس (مقیاس X)</string>
+    <string name="qs_tile_animation_style_pulse_y">اثر پالس (مقیاس Y)</string>
     <string name="qs_tile_animation_interpolator_linearInterpolator">خطی</string>
     <string name="qs_tile_animation_interpolator_accelerateInterpolator">شتاب دهنده</string>
     <string name="qs_tile_animation_interpolator_decelerateInterpolator">کاهش شتاب</string>
-    <string name="qs_tile_animation_interpolator_accelerateDecelerateInterpolator">تسریع کاهش سرعت</string>
+    <string name="qs_tile_animation_interpolator_accelerateDecelerateInterpolator">شتاب و کاستن</string>
     <string name="qs_tile_animation_interpolator_bounceInterpolator">پرش</string>
     <string name="qs_tile_animation_interpolator_overshootInterpolator">پرت شدن</string>
     <string name="qs_tile_animation_interpolator_anticipateInterpolator">سبقت گرفتن</string>
     <string name="qs_tile_animation_interpolator_anticipateOvershootInterpolator">پرت شدن با سبقت</string>
     <!-- Screenshot shutter sound  -->
-    <string name="screenshot_shutter_sound_title">صدای عکس صفحه</string>
-    <string name="screenshot_shutter_sound_summary">هنگامی که عکس از صفحه گرفته شد، صدا پخش کن</string>
+    <string name="screenshot_shutter_sound_title">صدا عکس از صفحه</string>
+    <string name="screenshot_shutter_sound_summary">پخش صدا هنگام عکس گرفتن از صفحه</string>
     <!-- QS tiles layout  -->
-    <string name="qs_layout_category_title">اندازه کاشی های نوار تنظیمات سریع</string>
-    <string name="qs_tile_label_hide_title">پنهان‌سازی برچسب‌ها</string>
+    <string name="qs_apply_change_button_title">اعمال تغییر</string>
+    <string name="qs_apply_change_failed">شکست در اعمال تغییر</string>
+    <string name="qs_layout_category_title">طرح کاشی های تنظیم‌سریع</string>
+    <string name="qs_layout_category_summary">سفارشی کردن طرح بندی کاشی ها در تنظیم‌سریع</string>
+    <string name="qs_tile_label_hide_title">پنهان کردن برچسب</string>
     <string name="qs_tile_label_size_title">اندازه قلم برچسب</string>
     <string name="qs_tile_label_hide_summary">فقط شکل کاشی ها را نمایش دهید</string>
     <string name="qs_tile_layout_title">چیدمان عمودی</string>
-    <string name="qs_tile_layout_summary">نام را در زیر آیکون به جای در کنار آن نمایش دهید</string>
-    <string name="qs_columns_portrait_title">ستون‌ها (عمودی)</string>
-    <string name="qs_columns_landscape_title">ستون‌ها(افقی)</string>
-    <string name="qqs_rows_portrait_title">ردیف QS سریع (پرتره)</string>
-    <string name="qqs_rows_landscape_title">ردیف QS سریع (منظره)</string>
+    <string name="qs_tile_layout_summary">نام را در زیر آیکون به جای کنار آن نمایش دهید</string>
+    <string name="qs_layout_columns_rows_title">ستون ها &amp; ردیف ها</string>
+    <string name="qs_layout_columns_rows_summary">ستون ها و ردیف های تنظیم‌سریع را سفارشی کنید</string>
+    <string name="qs_layout_columns_rows_footer_text">ردیف‌های ت.س باید مساوی یا بزرگ‌تر از ردیف‌های QQS باشند. از تعداد ستون های بیشتری برای سبک کاشی دایره / مربع (A11) ت.س استفاده کنید.</string>
+    <string name="qs_columns_portrait_title">ستونها (عمودی)</string>
+    <string name="qs_columns_landscape_title">ستون‌ها (افقی)</string>
+    <string name="qs_rows_portrait_title">ردیف‌ها (عمودی)</string>
+    <string name="qs_rows_landscape_title">ردیف‌ها (افقی)</string>
+    <string name="qqs_rows_portrait_title">ردیف ت.س سریع (عمودی)</string>
+    <string name="qqs_rows_landscape_title">ردیف ت.س سریع (افقی)</string>
     <!-- Statusbar Clock background chip -->
-    <string name="statusbar_clock_chip_title">پس زمینه</string>
-    <string name="statusbar_clock_chip_summary">نمایش پس زمینه برجسته پشت ساعت</string>
+    <string name="statusbar_clock_chip_title">تراشه پس‌زمینه</string>
+    <string name="statusbar_clock_chip_summary">نمایش تراشه پس‌زمینه برجسته پشت ساعت</string>
+    <string name="solid_accent">لهجه تک رنگ</string>
+    <string name="outline">برون نما</string>
+    <string name="solid_accent_gradient">گرادیان تاکیدی رنگ ثابت</string>
+    <string name="solid_gradient">سمت گرادیان جامد</string>
+    <string name="solid_gradient_corner">شیب لهجه گرادیان جامد تیز</string>
+    <string name="solid_gradient_void">گرادیان خالی</string>
+    <string name="solid_gradient_neumorph">گرادیان نئومورف</string>
+    <string name="solid_gradient_stroke">خط گرادیانی تیز</string>
+    <string name="solid_accent_transperent">لهجه شفاف</string>
+    <string name="solid_gradient_light">گرادیان روشن</string>
+    <string name="solid_gradient_shape">گوشه گرادیانی تیز</string>
+    <string name="solid_gradient_void_light">نور گرادیانی خالی</string>
     <!-- Weather -->
     <string name="weather_settings_title">تنظیمات آب و هوا</string>
-    <string name="weather_settings_summary">ترتیب پک آیکون و سرویس آب و هوا</string>
+    <string name="weather_settings_summary">تنظیم بسته نماد و سرویس آب و هوا</string>
     <string name="lockscreen_weather_category">آب و هوا</string>
-    <string name="lockscreen_weather_title">به روز رسانی آب و هوا</string>
-    <string name="lockscreen_weather_summary">نمایش به روز رسانی آب و هوای فعلی</string>
+    <string name="lockscreen_weather_title">به‌روز رسانی آب و هوا</string>
+    <string name="lockscreen_weather_summary">نمایش به‌‎روز رسانی آب و هوای فعلی</string>
     <string name="lockscreen_weather_enabled_info">نیازمند روشن بودن سرویس آب و هوا می باشد</string>
-    <string name="lockscreen_weather_location_title">موقعیت فعلی</string>
+    <string name="lockscreen_weather_location_title">مکان فعلی</string>
     <string name="lockscreen_weather_location_summary">نمایش مکان آب و هوای جاری</string>
     <string name="lockscreen_weather_text_title">وضعیت فعلی</string>
     <string name="lockscreen_weather_text_summary">نمایش خلاصه وضعیت آب و هوای فعلی</string>
     <string name="lockscreen_weather_style_title">سبک پیکسل</string>
-    <string name="lockscreen_weather_style_summary">Display weather as separate row</string>
+    <string name="lockscreen_weather_style_summary">نمایش وضعیت آب‌وهوا با ردیف جداگانه</string>
     <!-- Adaptive Playback -->
     <string name="adaptive_playback_title">پخش تطبیقی</string>
     <string name="adaptive_playback_summary">وقتی صدا قطع شد، رسانه را مکث کنید و با افزایش صدا در بازه زمانی، آن را از سر بگیرید</string>
     <string name="adaptive_playback_intro_text">به‌طور خودکار رسانه‌ها را با قطع صدا متوقف می‌کند و وقتی صدا در زمان تعیین‌شده بازیابی شد، به‌طور خودکار از سر گرفته می‌شود.</string>
-    <string name="adaptive_playback_timeout_title">مهلت پخش</string>
+    <string name="adaptive_playback_timeout_title">مدت زمان پخش</string>
     <!-- Custom logo -->
     <string name="status_bar_logo_title">آرم</string>
-    <string name="status_bar_logo_summary">Display a custom logo on left or right of the status bar</string>
+    <string name="status_bar_logo_summary">نمایش یک آرم سفارشی در سمت چپ یا راست نوار وضعیت</string>
     <string name="status_bar_logo_position_title">موقعیت آرم</string>
     <string name="status_bar_logo_style_title">سبک آرم</string>
     <string name="status_bar_logo_style_rising">risingOS</string>
     <string name="status_bar_logo_style_android">اندروید</string>
-    <string name="status_bar_logo_style_adidas">Adidas</string>
-    <string name="status_bar_logo_style_alien">Alien</string>
-    <string name="status_bar_logo_style_apple">Apple</string>
-    <string name="status_bar_logo_style_avengers">Avengers</string>
+    <string name="status_bar_logo_style_adidas">آدیداس</string>
+    <string name="status_bar_logo_style_alien">فضایی</string>
+    <string name="status_bar_logo_style_apple">اپل</string>
+    <string name="status_bar_logo_style_avengers">انتقام جویان</string>
     <string name="status_bar_logo_style_batman">بتمن</string>
-    <string name="status_bar_logo_style_batman_tdk">Batman The Dark Knight</string>
-    <string name="status_bar_logo_style_beats">Beats</string>
+    <string name="status_bar_logo_style_batman_tdk">بتمن: شوالیه تاریکی</string>
+    <string name="status_bar_logo_style_beats">بیتس</string>
     <string name="status_bar_logo_style_biohazard">خطر زیستی</string>
-    <string name="status_bar_logo_style_blackberry">BlackBerry</string>
-    <string name="status_bar_logo_style_cannabis">Cannabis</string>
+    <string name="status_bar_logo_style_blackberry">بلک‌بری</string>
+    <string name="status_bar_logo_style_cannabis">ماری‌جوآنا</string>
     <string name="status_bar_logo_style_emoticon_cool">شکلک باحال</string>
     <string name="status_bar_logo_style_emoticon_devil">شکلک شیطان</string>
     <string name="status_bar_logo_style_fire">آتش</string>
     <string name="status_bar_logo_style_heart">قلب</string>
-    <string name="status_bar_logo_style_nike">Nike</string>
-    <string name="status_bar_logo_style_pacman">Pac-man</string>
-    <string name="status_bar_logo_style_puma">Puma</string>
-    <string name="status_bar_logo_style_rog">ROG</string>
-    <string name="status_bar_logo_style_spiderman">Spider-Man</string>
+    <string name="status_bar_logo_style_nike">نایک</string>
+    <string name="status_bar_logo_style_pacman">پک من</string>
+    <string name="status_bar_logo_style_puma">پوما</string>
+    <string name="status_bar_logo_style_rog">راگ</string>
+    <string name="status_bar_logo_style_spiderman">مرد عنکبوتی</string>
     <string name="status_bar_logo_style_superman">سوپرمن</string>
     <string name="status_bar_logo_style_windows">ویندوز</string>
-    <string name="status_bar_logo_style_xbox">Xbox</string>
+    <string name="status_bar_logo_style_xbox">ایکس‌باکس</string>
     <string name="status_bar_logo_style_ghost">روح</string>
     <string name="status_bar_logo_style_ninja">نینجا</string>
     <string name="status_bar_logo_style_robot">ربات</string>
     <string name="status_bar_logo_style_ironman">مرد آهنی</string>
-    <string name="status_bar_logo_style_captain_america">کاپیتان آمریکایی</string>
-    <string name="status_bar_logo_style_flash">فلاش</string>
-    <string name="status_bar_logo_style_tux">Tux</string>
-    <string name="status_bar_logo_style_ubuntu">Ubuntu</string>
-    <string name="status_bar_logo_style_mint">Linux Mint</string>
+    <string name="status_bar_logo_style_captain_america">کاپیتان آمریکا</string>
+    <string name="status_bar_logo_style_flash">فلش</string>
+    <string name="status_bar_logo_style_tux">تاکس</string>
+    <string name="status_bar_logo_style_ubuntu">اوبونتو</string>
+    <string name="status_bar_logo_style_mint">لینوکس مینت</string>
     <!-- APK details on App info screen -->
     <string name="app_info_install_time">نصب شده: %1$s</string>
-    <string name="app_info_update_time">بروز رسانی شده: %1$s</string>
+    <string name="app_info_update_time">به‌روز شده: %1$s</string>
     <!-- Show clipboard overlay -->
-    <string name="show_clipboard_overlay_title">نمایش همپوشانی صفحه کلید</string>
-    <string name="show_clipboard_overlay_summary">Show an overlay in the left bottom corner of the screen when something is copied to the clipboard</string>
+    <string name="show_clipboard_overlay_title">نمایش هم‌پوشانی بریده‌دان</string>
+    <string name="show_clipboard_overlay_summary">نمایش هم‌پوشانی در گوشه پایین سمت چپ صفحه هنگام رونوشت محتوایی در بریده‌دان</string>
     <!-- Sensor block per-package -->
-    <string name="sensor_block_title">Sensor block</string>
-    <string name="sensor_block_summary">Block access to significant motion sensors for few battery intensive apps</string>
-    <string name="sensor_block_app_picker_title">سنسور ها را برای این برنامه ها غیر فعال کن</string>
-    <string name="add_sensor_block_package_title">افزودن برنامه برای مسدود کردن سنسور</string>
-    <string name="add_sensor_block_package_summary">حسگرهای حرکت قابل توجه، شتاب‌سنج، شتاب خطی برای این برنامه‌ها مسدود خواهند شد</string>
+    <string name="sensor_block_title">مسدود کردن حسگر برای هر برنامه</string>
+    <string name="sensor_block_summary">مسدود کردن دسترسی به حسگرهای معین برای بعضی برنامه ها به منظور ذخیره انرژی باتری</string>
+    <string name="sensor_block_app_picker_title">حسگرها را برای این برنامه‌ها غیر فعال کن</string>
+    <string name="add_sensor_block_package_title">افزودن برنامه برای مسدود سازی حسگرها</string>
+    <string name="add_sensor_block_package_summary">حسگرهای حرکتی، شتاب سنج و شتاب خطی برای این برنامه ها مسدود می شوند</string>
     <!-- Vibration patterns -->
-    <string name="vibration_pattern_title">الگوی لرزش در هنگام زنگ خوردن</string>
+    <string name="vibration_pattern_title">الگوی لرزش هنگام زنگ خوردن</string>
     <string name="pattern_custom">سفارشی</string>
-    <string name="custom_vibration_pattern_title">الگوی سفارشی</string>
-    <string name="custom_vibration_pattern_summary">یک الگوی لرزشی تنظیم کنید</string>
+    <string name="custom_vibration_pattern_title">الگوی دلخواه</string>
+    <string name="custom_vibration_pattern_summary">تنظیم الگوی سفارشی لرزش</string>
     <!-- Per-channel vibration pattern -->
-    <string name="notification_custom_vibrate_title">Custom vibration pattern</string>
-    <string name="notification_custom_vibrate_summary">Replaces the default pattern only\nApp set pattern takes precedence</string>
-    <string name="notification_custom_vibrate_slider1">Vibrate for</string>
-    <string name="notification_custom_vibrate_slider2">Pause for</string>
+    <string name="notification_custom_vibrate_title">الگوی سفارشی لرزش</string>
+    <string name="notification_custom_vibrate_summary">جایگزین کردن تنها الگوی پیش‌فرض\nالگوی تنظیم‌شده توسط برنامه اولویت دارد.</string>
+    <string name="notification_custom_vibrate_slider1">لرزیدن برای</string>
+    <string name="notification_custom_vibrate_slider2">مکث برای</string>
     <!-- Floating rotation button -->
-    <string name="floating_rotation_button_title">Floating rotate button</string>
-    <string name="floating_rotation_button_summary">Show a floating rotate button when device is rotated</string>
+    <string name="floating_rotation_button_title">دکمه چرخش شناور</string>
+    <string name="floating_rotation_button_summary">نمایش دکمه چرخش شناور هنگام چرخش دستگاه</string>
     <!-- Netflix Spoof -->
-    <string name="netflix_spoof_title">Netflix spoof</string>
-    <string name="netflix_spoof_summary">Spoof your device as different model for Netflix</string>
+    <string name="netflix_spoof_title">جعل نتفلیکس</string>
+    <string name="netflix_spoof_summary">دستگاه خود را به عنوان مدل های مختلف برای نتفلیکس جعل کنید</string>
     <!-- Captive portal -->
-    <string name="captive_portal_title">Connectivity check</string>
-    <string name="captive_portal_summary">Determine if the device can connect to the internet, by contacting Google. Also used to detect captive portals.</string>
+    <string name="captive_portal_title">بررسی اتصال</string>
+    <string name="captive_portal_summary">با ارتباط با گوگل، تعیین کنید که آیا دستگاه می‌تواند به اینترنت متصل شود. همچنین برای شناسایی پورتال‌های اجباری استفاده می شود.</string>
     <!-- Battery stats reset -->
-    <string name="battery_stats_reset">Reset stats?</string>
-    <string name="battery_stats_message">Battery usage data will be lost</string>
+    <string name="battery_stats_reset">بازنشانی آمار؟</string>
+    <string name="battery_stats_message">اطلاعات استفاده از باتری از دست خواهد رفت</string>
     <!-- Parallel space -->
-    <string name="laboratory_parallel_space_title">Parallel space</string>
-    <string name="laboratory_parallel_space_summary">Allow running multiple instances of the same application in parallel</string>
+    <string name="laboratory_parallel_space_title">فضای موازی</string>
+    <string name="laboratory_parallel_space_summary">اجازه دهید چندین نمونه از یک برنامه به صورت موازی اجرا شود</string>
     <!-- WiFi Standard icon -->
-    <string name="wifi_standard_icon_title">WiFi standard</string>
-    <string name="wifi_standard_icon_summary">Display WiFi standard next to WiFi signal</string>
+    <string name="wifi_standard_icon_title">استاندارد وای‌فای</string>
+    <string name="wifi_standard_icon_summary">نمایش استاندارد وای‌فای در کنار سیگنال WiFi</string>
     <!-- Google services -->
-    <string name="gms_enabled_title">Google services</string>
-    <string name="gms_enabled_summary">Control Google services and core apps</string>
-    <string name="gms_enabled_footer">Before disabling Google services and core apps, you should disable \"Find My Device\" and 2-step verification on your Google account. It is strongly recommended to keep this setting enabled else apps dependent on Google components will be affected. If you run into any issues after changing this setting, perform a factory reset.</string>
+    <string name="gms_enabled_title">خدمات گوگل</string>
+    <string name="gms_enabled_summary">کنترل خدمات گوگل و برنامه‌های اصلی</string>
+    <string name="gms_enabled_footer">قبل از غیرفعال کردن خدمات گوگل و برنامه‌های اصلی، باید ویژگی \"یافتن دستگاه من\" و احراز هویت دومرحله‌ای در حساب گوگل خود را غیرفعال کنید. اکیداً توصیه می‌شود که این تنظیمات فعال باقی بمانند، زیرا در غیر این صورت برنامه‌هایی که به مؤلفه‌های گوگل وابسته هستند تحت تأثیر قرار خواهند گرفت. اگر پس از تغییر این تنظیمات با مشکلی مواجه شدید، بازنشانی به تنظیمات کارخانه را انجام دهید.</string>
     <!-- Lockscreen bottom shortcuts -->
-    <string name="lockscreen_shortcut_category">Bottom shortcuts</string>
-    <string name="lockscreen_shortcut_start_title">Left shortcut</string>
-    <string name="lockscreen_shortcut_end_title">Right shortcut</string>
-    <string name="lockscreen_shortcut_wallet">Wallet</string>
-    <string name="lockscreen_shortcut_home">Home controls</string>
-    <string name="lockscreen_shortcut_flashlight">چراغ‌ قوه</string>
-    <string name="lockscreen_shortcut_qr">QR code scanner</string>
+    <string name="lockscreen_shortcut_category">میانبر های پایین</string>
+    <string name="lockscreen_shortcut_start_title">میانبر چپ</string>
+    <string name="lockscreen_shortcut_end_title">میانبر راست</string>
+    <string name="lockscreen_shortcut_wallet">کیف‌پول</string>
+    <string name="lockscreen_shortcut_home">کنترل خانه</string>
+    <string name="lockscreen_shortcut_flashlight">چراغ‌قوه</string>
+    <string name="lockscreen_shortcut_qr">اسکنر کد QR</string>
     <string name="lockscreen_shortcut_camera">دوربین</string>
-    <string name="lockscreen_shortcut_remote">Google TV Remote</string>
-    <string name="lockscreen_shortcut_dnd">مزاحم‌نشوید</string>
-    <string name="lockscreen_shortcut_none">هیچ کدام</string>
-    <string name="lockscreen_shortcut_enforce_title">میانبرها را اجرا کنید</string>
-    <string name="lockscreen_shortcut_enforce_summary">اگر میانبری انتخاب نشده ، میانبر دیگری نشان داده نشود</string>
+    <string name="lockscreen_shortcut_remote">کنترل تلویزیون گوگل</string>
+    <string name="lockscreen_shortcut_dnd">مزاحم‌نشو</string>
+    <string name="lockscreen_shortcut_none">هیچ</string>
+    <string name="lockscreen_shortcut_app">برنامه سفارشی</string>
+    <string name="lockscreen_shortcut_enforce_title">اجرای اجباری میانبرها</string>
+    <string name="lockscreen_shortcut_enforce_summary">گزینه میانبر بعدی را نمایش ندهید اگر میانبر انتخاب شده در دسترس نیست.</string>
+    <string name="lockscreen_shortcuts_summary">پیکربندی میانبرهای دسترسی سریع در صفحه قفل</string>
+    <string name="keyguard_shortcut_custom_app_enabled_left_title">فعال کردن برنامه‌ سفارشی (چپ)</string>
+    <string name="keyguard_shortcut_custom_app_enabled_right_title">فعال کردن برنامه‌ سفارشی (راست)</string>
+    <string name="keyguard_shortcut_custom_app_left_title">برنامه سفارشی چپ</string>
+    <string name="keyguard_shortcut_custom_app_right_title">برنامه سفارشی راست</string>
+    <string name="keyguard_shortcut_left_summary">عمل موردنظر برای میانبر سمت چپ را انتخاب کنید.</string>
+    <string name="keyguard_shortcut_right_summary">عمل موردنظر برای میانبر سمت راست را انتخاب کنید.</string>
+    <string name="keyguard_shortcut_custom_app_enabled_summary">فعال کردن برنامه‌های سفارشی برای میانبرهای سمت چپ و راست.</string>
+    <string name="keyguard_shortcut_custom_app_left_summary">یک برنامه سفارشی برای اجرا به عنوان میانبر سمت چپ انتخاب کنید.</string>
+    <string name="keyguard_shortcut_custom_app_right_summary">یک برنامه سفارشی برای اجرا به عنوان میانبر سمت راست انتخاب کنید.</string>
+    <string name="pick_package_left">بسته‌ای را برای میانبر سمت چپ انتخاب کنید</string>
+    <string name="pick_package_right">بسته‌ای را برای میانبر سمت راست انتخاب کنید</string>
+    <string name="toast_package_selected">انتخاب شده: %1$s</string>
     <!-- App lock -->
-    <string name="app_lock_title">App lock</string>
+    <string name="app_lock_title">قفل برنامه</string>
     <plurals name="app_lock_summary">
-        <item quantity="one"><xliff:g example="1" id="Number of applications">%1$d</xliff:g> application is protected</item>
-        <item quantity="other"><xliff:g example="10" id="Number of applications">%1$d</xliff:g> applications are protected</item>
+        <item quantity="one"><xliff:g example="1" id="Number of applications">%1$d</xliff:g> برنامه محافظت شده</item>
+        <item quantity="other"><xliff:g example="1" id="Number of applications">%1$d</xliff:g> برنامه محافظت شده</item>
     </plurals>
-    <string name="app_lock_authentication_dialog_title">بازکردن</string>
-    <string name="enable_debugging">Enable debugging</string>
-    <string name="disable_debugging">Disable debugging</string>
-    <string name="app_lock_packages_title">Protected apps</string>
-    <string name="app_lock_packages_summary">Select the apps to protect with biometrics or device credentials</string>
-    <string name="app_lock_timeout_title">Auto lock timeout</string>
-    <string name="app_lock_timeout_summary">Duration of time after which an unlocked app in background should be locked</string>
-    <string name="app_lock_notifications_title">Redact notifications</string>
-    <string name="app_lock_notifications_summary">Notification content will be hidden and collapsed for selected apps when they are locked. Heads up notifications will be automatically disabled.</string>
-    <string name="app_lock_notifications_disabled_summary">Protect an application first</string>
-    <string name="app_lock_biometrics_allowed_title">Enable biometrics for unlocking</string>
-    <string name="app_lock_footer_text">Bubbles will be automatically dismissed after timeout</string>
-    <string name="enable_protection">Enable protection</string>
-    <string name="hide_from_launcher_title">Hide from launcher</string>
-    <string name="hide_from_launcher_summary">Prevent this application from showing up in any launcher. Requires a launcher restart for changes to take effect.</string>
+    <string name="app_lock_authentication_dialog_title">بازکردن قفل</string>
+    <string name="enable_debugging">فعال‌کردن اشکال‌زدایی</string>
+    <string name="disable_debugging">غیرفعال‌کردن اشکال‌زدایی</string>
+    <string name="app_lock_packages_title">برنامه‌های محافظت شده</string>
+    <string name="app_lock_packages_summary">انتخاب برنامه‌هایی که می‌خواهید با احراز هویت زیست‌سنجی یا اطلاعات هویتی دستگاه محافظت شوند.</string>
+    <string name="app_lock_timeout_title">زمان قفل خودکار برنامه ها</string>
+    <string name="app_lock_timeout_summary">مدت زمانی که پس از آن یک برنامه قفل نشده در پس‌زمینه باید قفل شود</string>
+    <string name="app_lock_notifications_title">ویرایش اعلانات</string>
+    <string name="app_lock_notifications_summary">محتوای اعلان‌ها برای برنامه‌های انتخاب‌شده در زمانی که قفل هستند مخفی و فشرده می‌شود. اعلان‌های فوری به‌طور خودکار غیرفعال خواهند شد.</string>
+    <string name="app_lock_notifications_disabled_summary">ابتدا از یک برنامه محافظت کنید</string>
+    <string name="app_lock_biometrics_allowed_title">روشن کردن اثرانگشت برای بازکردن</string>
+    <string name="app_lock_footer_text">حباب‌ها به‌طور خودکار پس از اتمام زمان تعیین‌شده حذف خواهند شد.</string>
+    <string name="enable_protection">فعال‌سازی محافظت</string>
+    <string name="hide_from_launcher_title">مخفی کردن از راه‌انداز</string>
+    <string name="hide_from_launcher_summary">جلوگیری از نمایش این برنامه در هر راه‌اندازی. برای اعمال تغییرات، نیاز به راه‌اندازی مجدد راه‌انداز است.</string>
     <!-- Doze on charge -->
     <string name="doze_on_charge_title">همیشه هنگام شارژ نشان داده شود</string>
-    <string name="doze_on_charge_summary">Display device is charging</string>
+    <string name="doze_on_charge_summary">نمایش شارژشدن دستگاه</string>
     <!-- Volume link notification -->
-    <string name="volume_link_notification_title">Link ring &amp; notification volumes</string>
+    <string name="volume_link_notification_title">یکی کردن میزان صدای زنگ &amp; اعلانات</string>
     <!-- Radio Info -->
-    <string name="radio_info_title">Radio info</string>
+    <string name="radio_info_title">اطلاعات رادیو</string>
     <!-- QS Header -->
-    <string name="qs_header_image_title">Header image</string>
-    <string name="qs_header_image_summary">تصویر هدر پس زمینه QS را انتخاب کنید</string>
-    <string name="qs_header_daylight_pack_title">مجموعه تصاویر هدر</string>
-    <string name="qs_header_shadow_title">تنظیم کردن تصویر سربرگ</string>
-    <string name="qs_header_shadow_summary">برای دید بهتر از تصاویر روشن</string>
-    <string name="qs_header_static_provider_title">تصویر ایستا</string>
+    <string name="qs_header_image_title">تصویر سرصفحه</string>
+    <string name="qs_header_image_summary">انتخاب تصویر سرصفحه پس زمینه تنظیم‌سریع</string>
+    <string name="qs_header_daylight_pack_title">مجموعه تصاویر سربرگ</string>
+    <string name="qs_header_shadow_title">سایه تصویر سربرگ</string>
+    <string name="qs_header_shadow_summary">برای دید بهتر در تصاویر روشن</string>
+    <string name="qs_header_static_provider_title">تصویر ثابت</string>
     <string name="qs_header_daylight_provider_title">مجموعه عکس</string>
-    <string name="qs_header_file_provider_title">عکس سفارشی</string>
-    <string name="qs_header_provider_title">ارائه دهنده هدر</string>
+    <string name="qs_header_file_provider_title">تصویر سفارشی</string>
+    <string name="qs_header_provider_title">ارائه دهنده سربرگ</string>
     <string name="qs_header_browse_title">مرور سربرگ‌های نصب شده</string>
-    <string name="qs_header_browse_summary">همه مجموعه‌های سرصفحه موجود را مرور کنید</string>
-    <string name="qs_header_pick_title">تصویر هدر را انتخاب کنید</string>
-    <string name="qs_header_pick_summary">طولانی فشار دهید روی هر تصویری که برای حالت استاتیک استفاده می شود</string>
+    <string name="qs_header_browse_summary">همه مجموعه‌هایسربرگ موجود را مرور کنید</string>
+    <string name="qs_header_pick_title">انتخاب تصویر سربرگ</string>
+    <string name="qs_header_pick_summary">انتخاب یک عکس برای استفاده از حالت ثابت</string>
     <string name="qs_header_file_select_title">انتخاب تصویر</string>
-    <string name="qs_header_file_select_summary">انتخاب برنامه سفارشی</string>
+    <string name="qs_header_file_select_summary">انتخاب تصویر سفارشی</string>
     <string name="qs_header_needs_gallery">شما باید یک برنامه گالری نصب کنید!</string>
-    <string name="qs_header_offset_title">نقطه شروع تصویر هدر</string>
-    <string name="qs_header_offset_summary">تنظیم اندازه هدر تصویر</string>
+    <string name="qs_header_offset_title">افست تصویر سربرگ</string>
+    <string name="qs_header_offset_summary">تنظیم اندازه تصویر سربرگ</string>
     <!-- Lockscreen Clock -->
-    <string name="kg_custom_clock_top_margin_title">Double-line clock position</string>
+    <string name="kg_custom_clock_top_margin_title">موقعیت ساعت دوخطی</string>
     <string name="kg_small_clock_text_size_title">اندازه ساعت کوچک</string>
-    <string name="kg_large_clock_text_size_title">Double-line clock size</string>
+    <string name="kg_large_clock_text_size_title">اندازه ساعت دوخطی</string>
     <!-- Island Notification -->
     <string name="island_notification_title">اعلانات جزیره</string>
-    <string name="island_notification_summary">نمایش اعلان هدآپ به سبک جزیره پویا</string>
-    <string name="island_notification_now_playing_title">در حال حاضر بازی</string>
+    <string name="island_notification_summary">نمایش اعلانات فوری به سبک جزیره پویا</string>
+    <string name="island_notification_now_playing_title">درحال پخش</string>
     <string name="island_notification_now_playing_summary">نمایش آهنگ در حال پخش به سبک جزیره پویا</string>
-    <string name="island_notification_footer_text">ویژگی اعلان جزیره، با الهام از جزیره پویا ios، اعلان‌های هدآپ اندروید را به ابزار اعلان دسترسی سریع و جمع و جور تبدیل می‌کند.\nisland control دسترسی سریع شامل ویژگی‌های زیر است:\n1. برای پاسخگویی سریع به تماس‌های تلفنی، روی اعلان جزیره ضربه بزنید.\n2. برای رد تماس‌های تلفنی، اعلان جزیره را فشار دهید.\n3. برای گسترش پیش نمایش اعلان جزیره، اعلان جزیره را طولانی فشار دهید.    </string>
+    <string name="island_notification_footer_text">        ویژگی اعلان جزیره که از ویژگی جزیره متحرک در iOS الهام گرفته شده است، اعلان‌های فوری در اندروید را به یک ابزار کاربردی فشرده و دسترسی سریع تبدیل می‌کند.\n\nکنترل‌های دسترسی سریع جزیره شامل امکانات زیر است:\n۱. ضربه زدن روی اعلان جزیره برای پاسخ سریع به تماس‌های تلفنی.\n۲. نگه داشتن طولانی روی اعلان جزیره برای رد کردن تماس‌های تلفنی.\n۳. نگه داشتن طولانی روی اعلان جزیره برای گسترش پیش‌نمایش اعلان جزیره.
+    </string>
     <!-- QS Dual Tone Colors -->
-    <string name="qs_dual_tone_title">Dual tone themed</string>
+    <string name="qs_dual_tone_title">طرح زمینه دوگانه</string>
     <string name="qs_dual_tone_summary">به جای رنگ تک رنگ AOSP از رنگ های پس زمینه دو رنگ استفاده کنید</string>
     <!-- QS Tiles Style -->
-    <string name="qs_tile_ui_style_title">سبک کاشی های QS</string>
-    <string name="qs_tile_ui_style_a11_circle">کاشی های دایره ای</string>
+    <string name="qs_tile_ui_style_title">سبک کاشی های تنظیم‌سریع</string>
+    <string name="qs_tile_ui_style_a11_circle">کاشی دایره ای</string>
     <string name="qs_tile_ui_style_a11_square">کاشی مربع</string>
     <string name="qs_tile_ui_style_a11_mix">دایره &amp; کاشی مربع</string>
     <!-- QS Panel Style -->
-    <string name="qs_panel_style_title">سبک پنل QS</string>
-    <string name="qs_panel_style_outline">طرح کلی</string>
+    <string name="qs_panel_style_title">سبک پنل تنظیم‌سریع</string>
+    <string name="qs_panel_style_outline">برون نما</string>
     <string name="qs_panel_style_two_tone">لهجه دو رنگ</string>
-    <string name="qs_panel_style_color_pop">پاپ رنگی</string>
+    <string name="qs_panel_style_color_pop">حباب رنگی</string>
     <string name="qs_panel_style_shaded">سایه دار</string>
     <string name="qs_panel_style_cyberpunk">سایبرپانک</string>
     <string name="qs_panel_style_neumorph">نئومورف</string>
@@ -1121,22 +1690,229 @@
     <!-- Label for a numbered SIM card.  [CHAR LIMIT=40] -->
     <!-- Volume Steps -->
     <string name="volume_steps_title">میزان صدا</string>
-    <string name="volume_steps_summary">دانه بندی هر جریان را کنترل کنید</string>
-    <string name="max_music_volume_title">رسانه ها</string>
+    <string name="volume_steps_summary">کنترل مقدار در هر بخش</string>
+    <string name="max_music_volume_title">رسانه</string>
     <string name="max_call_volume_title">تماس‌ها</string>
-    <string name="max_alarm_volume_title">زنگ هشدار</string>
-    <string name="steps_unit">مراحل</string>
+    <string name="max_alarm_volume_title">هشدارها</string>
+    <string name="steps_unit">قدم</string>
     <!-- AOD Schedule -->
-    <string name="always_on_display_schedule_title">نمایش برنامه</string>
-    <string name="always_on_display_schedule_summary">برنامه زمانی را برای همیشه در معرض نمایش تنظیم کنید</string>
+    <string name="always_on_display_schedule_title">نمایش برنامه زمانی</string>
+    <string name="always_on_display_schedule_summary">تنظیم زمان‌بندی برای صفحه همیشه روشن</string>
     <string name="always_on_display_schedule_sunset">غروب آفتاب</string>
-    <string name="always_on_display_schedule_sunrise">طلوع خورشید</string>
+    <string name="always_on_display_schedule_sunrise">طلوع آفتاب</string>
     <string name="always_on_display_schedule_mixed_sunset">از غروب آفتاب روشن می شود</string>
     <string name="always_on_display_schedule_mixed_sunrise">تا طلوع خورشید روشن می شود</string>
     <!-- IME Space -->
     <string name="navigation_bar_ime_space_title">فضای IME</string>
-    <string name="navigation_bar_ime_space_summary">وقتی راهنمایی پیمایش غیرفعال است، فضای زیر صفحه کلید اضافه کنید</string>
+    <string name="navigation_bar_ime_space_summary">اضافه کردن فضای زیر صفحه‌کلید هنگامی که راهنمای ناوبری غیرفعال است</string>
+    <!-- Haptics Settings -->
+    <string name="haptics_settings_title">لرزش‌های سیستم</string>
+    <string name="haptics_settings_summary">تغییر شدت لرزش‌های سیستم</string>
+    <string name="back_gesture_haptic_intensity_title">شدت بازخورد لرزش در حرکت برگشت</string>
+    <string name="brightness_slider_haptics_intensity_title">شدت بازخورد لرزش در لغزنده روشنایی</string>
+    <string name="edge_scrolling_haptics_intensity_title">شدت بازخورد لرزش در پیمایش حاشیه‌ای</string>
+    <string name="volume_slider_haptics_intensity_title">شدت بازخورد لرزش در لغزنده تنظیم صدا</string>
+    <string name="qs_panel_tile_haptic_intensity_title">شدت بازخورد لرزش در کاشی‌ تنظیم‌سریع</string>
+    <string name="qs_haptics_intensity_title">شدت بازخورد لرزش در پرتاب تنظیم‌سریع</string>
+    <!-- QuickSwitch -->
+    <string name="quickswitch_launcher_title">QuickSwitch</string>
+    <string name="quickswitch_launcher_summary">شخصی‌سازی برنامه پیش‌فرض صفحه اصلی</string>
+    <string name="nothing_launcher_customizations_title">سفارشی کردن راه‌انداز Nothing</string>
+    <string name="nothing_launcher_customizations_summary">سفارشی کردن برنامه صفحه اصلی راه‌انداز Nothing</string>
+    <string name="quickswitch_not_supported">QuickSwitch پشتیبانی نمی شود. سیستم فقط یک راه‌انداز دارد.</string>
+    <string name="quickswitch_footer_text">        توجه: \n\n
+        ۱. به دلیل مشکلات سازگاری با API فعلی اندروید، راه‌انداز Lawnchair از موارد اخیر راه‌انداز Ortus استفاده می‌کند و در صورت تنظیم به‌عنوان راه‌انداز فعال QuickSwitch، هر راه‌انداز ثالثی را نادیده خواهد گرفت. برای سازگاری بهتر با راه‌اندازهای ثالث، تنظیم راه‌انداز QuickSwitch به Ortus یا راه‌انداز پیکسل توصیه می‌شود.\n\n
+        ۲. ماژول‌ها/تغییرات راه‌انداز خارجی باید برای سازگاری با ساختار QuickSwitch تنظیم شوند.
+    </string>
+    <!-- Font styles -->
+    <string name="font_styles_title">سبک قلم</string>
+    <string name="font_styles_summary">تغییر سبک قلم سیستم</string>
+    <string name="font_preview_text">روباه قهوه‌ای\nسریع از روی\nسگ تنبل می پرد\n\nABCDEFGHIJKLM\nNOPQRSTUVWXYZ\nabcdefghijkl\nmnopqrstuvwxyz\n1234567890</string>
+    <string name="apply_button_text">اعمال</string>
+    <string name="font_picker_select_font">انتخاب قلم</string>
+    <!-- Sound Engine -->
+    <string name="ad_sound_engine_title">موتور صدا&#8482;</string>
+    <string name="ad_sound_engine_summary">تنظیم و بهینه سازی کیفیت صدا.</string>
+    <string name="loudness_gain_title">افزایش بلندی صدا</string>
+    <string name="bass_boost_title">سطح تقویت باس صدا</string>
+    <string name="sound_engine_surround_title">سطح صدای فراگیر (فقط هدست)</string>
+    <string name="sound_engine_title">موتور صدا</string>
+    <string name="sound_engine_summary">بهینه‌سازی کیفیت صدا</string>
+    <string name="sound_engine_profile_title">انتخاب نمایه صدا</string>
+    <string name="sound_engine_profile_music">موسیقی</string>
+    <string name="sound_engine_profile_music_desc">وفادارانه صداها و ضربات را بازتولید می کند.</string>
+    <string name="sound_engine_profile_smart">هوشمند</string>
+    <string name="sound_engine_profile_smart_desc">صدای بهینه را با توجه به پاسخ فرکانس صوتی اعمال می کند</string>
+    <string name="sound_engine_profile_game">بازی</string>
+    <string name="sound_engine_profile_game_desc">جزئیات پنهان در صداهای بازی را به ارمغان می آورد تا به شما این حس را بدهد که انگار در میدان مسابقه هستید.</string>
+    <string name="sound_engine_profile_theater">تئاتر</string>
+    <string name="sound_engine_profile_theater_desc">صدای فراگیر واقعی و صداهای واضح تر.</string>
+    <string name="sound_engine_profile_music_activated">موتور صدای تطبیقی: حالت موسیقی فعال شد</string>
+    <string name="sound_engine_profile_smart_activated">موتور صدای تطبیقی: حالت هوشمند فعال شد</string>
+    <string name="sound_engine_profile_game_activated">موتور صدای تطبیقی: حالت بازی فعال شد</string>
+    <string name="sound_engine_profile_theater_activated">موتور صدای تطبیقی: حالت تئاتر فعال شد</string>
+    <!-- UI styles -->
+    <string name="theme_customization_ui_style_title">سبک رابط</string>
+    <string name="theme_customization_ui_style_summary">تنظیم سبک سفارشی برای رابط شما</string>
+    <!-- Custom Clock Style -->
+    <string name="lockscreen_clock_category_title">ساعت صفحه‌قفل</string>
+    <string name="lockscreen_clock_category_summary">پیکربندی سبک‌های ساعت صفحه قفل</string>
+    <string name="custom_clock_style">سبک سفارشی ساعت</string>
+    <!-- Lockscreen widgets  -->
+    <string name="lockscreen_widgets_title">ابزارک‌ها</string>
+    <string name="lockscreen_widgets_enabled_title">فعال کردن ابزارک های صفحه‌قفل</string>
+    <string name="lockscreen_widgets_enabled_summary">افزودن ابزارک ها به صفحه‌قفل</string>
+    <string name="lockscreen_display_widgets_title">ابزارک اطلاعات دستگاه</string>
+    <string name="lockscreen_display_widgets_summary">نمایش ابزارک اطلاعات دستگاه در صفحه‌قفل</string>
+    <string name="large_widgets_category_title">ابزارک بزرگ</string>
+    <string name="main_custom_widgets1">ابزارک بزرگ ۱</string>
+    <string name="main_custom_widgets2">ابزارک بزرگ ۲</string>
+    <string name="mini_widgets_category_title">ابزارک کوچک</string>
+    <string name="custom_widgets1">ابزارک کوچک ۱</string>
+    <string name="custom_widgets2">ابزارک کوچک ۲</string>
+    <string name="custom_widgets3">ابزارک کوچک ۳</string>
+    <string name="custom_widgets4">ابزارک کوچک ۴</string>
+    <string name="camera">دوربین</string>
+    <string name="clock_timer">ساعت/تایمر</string>
+    <string name="calculator">ماشین حساب</string>
+    <string name="gallery">گالری</string>
+    <string name="media">پخش‌کننده رسانه</string>
+    <string name="torch">چراغ قوه</string>
+    <string name="controls_media_button_play">پخش</string>
+    <string name="weather">آب و هوا</string>
+    <string name="wifi">وای‌فای</string>
+    <string name="data">داده ها</string>
+    <string name="ringer">زنگ</string>
+    <string name="bt">بلوتوث</string>
+    <string name="hotspot">نقطه اتصال</string>
+    <string name="wallet">کیف پول</string>
+    <!-- Volume Styles -->
+    <string name="revamped_aosp_style">سبک بازطراحی‌شده رابط AOSP</string>
+    <string name="rui_style">سبک رایط ریلمی</string>
+    <string name="rising_style">سبک پیش‌فرض AOSP</string>
+    <string name="double_layer_style">سبک دو لایه</string>
+    <string name="gradient_style">سبک گرادیان</string>
+    <string name="neumorph_style">سبک نئومورفیسم</string>
+    <string name="neumorph_outline_style">سبک نئومورفیسم بیرون خطی</string>
+    <string name="outline_style">سبک بیرون خطی</string>
+    <string name="shaded_layer_style">سبک لایه سایه دار</string>
+    <string name="volume_style_title">سبک پنل صدا</string>
+    <!-- IME button space -->
+    <string name="navigation_bar_hide_ime_space_title">پنهان کردن فضای دکمه زیر صفحه کلید</string>
+    <string name="navigation_bar_hide_ime_space_summary">پنهان کردن فضای دکمه IME زیر صفحه‌کلید</string>
+    <!-- Status bar padding -->
+    <string name="statusbar_padding">حاشیه نوار وضعیت</string>
+    <string name="statusbar_top_padding">حاشیه بالا</string>
+    <string name="statusbar_left_padding">حاشیه چپ</string>
+    <string name="statusbar_right_padding">حاشیه راست</string>
+    <!-- Status bar max notification -->
+    <string name="statusbar_max_notifications_title">حداکثر تعداد آیکون‌های اعلان در نوار وضعیت</string>
+    <!-- Colored QS notification icons -->
+    <string name="qs_colored_icons_title">آیکون‌های اعلان رنگی در تنظیم‌سریع</string>
+    <string name="qs_colored_icons_summary">نمایش آیکون‌های اعلان رنگی به جای آیکون سیاه و سفید</string>
+    <!-- Vertical Mirror -->
+    <string name="pulse_vertical_mirror_title">آینه عمودی</string>
+    <string name="pulse_vertical_mirror_summary">ایجاد پالس دیگر و وارونه کردن به صورت عمودی</string>
+    <!-- Pulse Gravity and mirror options -->
+    <string name="pulse_custom_gravity_title">جاذبه</string>
+    <string name="pulse_custom_gravity_bottom">پایین</string>
+    <string name="pulse_custom_gravity_top">بالا</string>
+    <string name="pulse_custom_gravity_center">مرکز</string>
+    <string name="visualizer_center_mirrored_title">مرکز آینه‌ای</string>
+    <string name="visualizer_center_mirrored_summary">تنظیم بصری ساز در حالت آینه‌ای مرکزی</string>
+    <!-- Fingerprint customizations -->
+    <string name="lockscreen_fp_category_title">سفارشی سازی اثرانگشت</string>
+    <!-- Settings Styles -->
+    <string name="settings_ui_title">رابط تنظیمات</string>
+    <string name="settings_ui_summary">پیکربندی رابط کاربری برنامه تنظیمات</string>
+    <string name="settings_style_title">سبک آیکون تنظیمات</string>
+    <string name="settings_style_rising_ui_one">رابط ۱٫۰ Rising</string>
+    <string name="settings_style_rising_ui_two">رابط ۲٫۰ Rising</string>
+    <string name="settings_style_material">متریال</string>
+    <string name="settings_style_oos">سیستم‌عامل اکسیژن قدیمی</string>
+    <string name="settings_style_colorful">رنگارنگ</string>
+    <string name="settings_homepage_showcase_title">ابزارک نمایش دستگاه</string>
+    <string name="settings_homepage_showcase_summary">ابزارک نمایش دستگاه در صفحه اصلی</string>
+    <string name="search_bar_style_title">سبک نوار جستجو</string>
+    <string name="settings_sb_style_1">اندروید ۱۵ (بازطراحی‌شده)</string>
+    <!-- GMS Spoof -->
+    <string name="gms_spoof_title">فعال کردن جعل GMS</string>
+    <string name="gms_spoof_summary">جعل دستگاه شما برای عبور از تأییدیه گوگل پلی</string>
+    <string name="entryhooks_title">فعال کردن جعل Keybox</string>
+    <string name="entryhooks_summary">جعل Keybox دستگاه برای عبور از یکپارچگی گوگل</string>
+    <!-- Shake Gestures -->
+    <string name="shake_gestures_enabled_title">حرکت تکان دادن</string>
+    <string name="shake_gestures_enabled_summary">تکان دادن دستگاه برای انجام حرکت</string>
+    <string name="shake_gestures_action_title">اقدامات حرکات تکان دادن</string>
+    <string name="shake_gestures_toggle_flashlight">تغییر چراغ‌قوه</string>
+    <string name="shake_gestures_media_playback">پخش/رد رسانه</string>
+    <string name="shake_gestures_volume_panel">نمایش پانل صدا</string>
+    <string name="shake_gestures_screen_wake">خاموش/روشن کردن صفحه</string>
+    <string name="shake_gestures_clear_notifs">پاک‌کردن اعلان‌ها</string>
+    <string name="shake_gestures_toggle_ringer">تغییر حالت زنگ</string>
+    <string name="shake_gestures_screenshot">گرفتن عکس صفحه</string>
+    <string name="shake_gestures_intensity_title">شدت حرکت تکان دادن</string>
+    <string name="shake_gestures_intensity_summary">تنظیم حساسیت حرکت تکان دادن</string>
+    <!-- Adaptive Charging -->
+    <string name="adaptive_charging_enabled_title">شارژ بهینه</string>
+    <string name="adaptive_charging_enabled_summary">فعال‌سازی استراتژی تطبیقی انرژی هنگام شارژ دستگاه</string>
     <!-- QS Bluetooth auto on -->
-    <string name="qs_bt_auto_on_title">Automatic Bluetooth on</string>
-    <string name="qs_bt_auto_on_summary">Always turn on Bluetooth when pressing the Bluetooth QS tile</string>
+    <string name="qs_bt_auto_on_title">روشن کردن خودکار بلوتوث</string>
+    <string name="qs_bt_auto_on_summary">همیشه بلوتوث را هنگام فشار دادن کاشی بلوتوث تنظیم‌سریع فعال کن</string>
+    <!-- Enable all props -->
+    <string name="all_props_title">فعال کردن گزینه‌های جعل</string>
+    <string name="all_props_summary">تمام گزینه‌های جعل را با PixelProps فعال می‌کند</string>
+    <!-- Spoof google app props -->
+    <string name="google_spoof_title">جعل برنامه های گوگل</string>
+    <string name="google_spoof_summary">جعل کردن برنامه های گوگل به جدیدترین دستگاه پیکسل</string>
+    <string name="google_spoof_option_disabled">فعال کردن جعل برنامه‌های گوگل برای دستگاه فعلی مورد نیاز نیست</string>
+    <!-- Backup/Restore settings -->
+    <string name="backup_restore_title">پشتیبان‌گیری و بازیابی</string>
+    <string name="backup_restore_title_summary">پشتیبان‌گیری از تنظیمات شخصی‌سازی فعلی یا بازگرداندن تنظیمات قبلی</string>
+    <string name="backup_settings_title">پشتیبان‌گیری از تنظیمات شخصی‌سازی</string>
+    <string name="backup_settings_summary">ذخیره تنظیمات شخصی‌سازی شما در یک فایل</string>
+    <string name="restore_settings_title">بازیابی تنظیمات شخصی‌سازی</string>
+    <string name="restore_settings_summary">بازیابی تنظیمات شخصی‌سازی شما از یک فایل</string>
+    <string name="upload_backup_to_drive_title">آپلود پشتیبان‌گیری در درایو</string>
+    <string name="upload_backup_to_drive_summary">آپلود فایل پشتیبان در گوگل درایو</string>
+    <string name="download_backup_from_drive_title">بارگیری پشتیبان‌گیری از درایو</string>
+    <string name="download_backup_from_drive_summary">بارگیری کردن فایل پشتیبان از گوگل درایو برای بازیابی تنظیمات</string>
+    <string name="gdrive_not_installed">برنامه گوگل درایو نصب نیست.</string>
+    <string name="backup_success">تنظیمات شخصی‌سازی با موفقیت پشتیبان‌گیری شد!</string>
+    <string name="backup_failed">شکست در پشتیبان‌گیری تنظیمات</string>
+    <string name="backup_restore_success">تنظیمات شخصی‌سازی با موفقیت بازگردانی شد!</string>
+    <string name="backup_restore_failed">تنظیمات بازیابی نشد</string>
+    <string name="json_read_failed">خطا در خواندن محتوای JSON.</string>
+    <string name="backup_upload_failed">خطا در آپلود فایل در گوگل درایو.</string>
+    <string name="backup_file_name_warning">لطفاً فایل درست را انتخاب کنید: personalization_settings_backup.json.</string>
+    <!-- Boot Animation Preview Strings -->
+    <string name="boot_animation_preview_desc">پیش نمایش انیمیشن بوت انتخاب شده</string>
+    <string name="boot_animation_preview_summary">پیش نمایشی از انیمیشن بوت انتخاب شده فعلی را نمایش می دهد</string>
+    <string name="boot_animation_preview_title">پیش نمایش انیمیشن بوت</string>
+    <!-- Boot Animation Style Strings -->
+    <string name="boot_animation_styles_summary">یک سبک برای انیمیشن بوت خود انتخاب کنید</string>
+    <!-- Carrier name on lockscreen -->
+    <string name="lockscreen_show_carrier_title">نام اپراتور</string>
+    <string name="lockscreen_show_carrier_summary">نام اپراتور را در نوار وضعیت نمایش دهید</string>
+    <!-- System Animation styles -->
+    <string name="system_animation_style_title">سبک پویانمایی سیستم</string>
+    <string name="pie_system_animation_style">اندروید P</string>
+    <string name="scale_system_animation_style">مقیاس</string>
+    <!-- Selected app spoofing -->
+    <string name="select_apps_to_spoof">انتخاب برنامه برای جعل</string>
+    <string name="app_spoof_selector_title">انتخابگر جعل برنامه</string>
+    <string name="app_spoof_selector_summary">برنامه‌هایی را برای جعل ویژگی‌هایشان انتخاب کنید</string>
+    <string name="toggle_system_apps">تغییر وضعیت برنامه‌های سیستمی</string>
+    <string name="toast_app_spoofing_success_add">%1$s به لیست جعل اضافه شد.</string>
+    <string name="toast_app_spoofing_success_remove">%1$s از لیست جعل حذف شد.</string>
+    <string name="toast_app_spoofing_default_package">بسته پیش‌فرض نمی‌تواند غیرفعال شود.</string>
+    <!-- Idle manager -->
+    <string name="idle_manager_title">مدیریت وضعیت بیکار</string>
+    <string name="idle_manager_summary">متوقف کردن تمامی فرآیندهای غیرضروری پس‌زمینه زمانی که دستگاه در حالت بیکاری قرار دارد</string>
+    <!-- Settings New design Circle cards  -->
+    <string name="battery_fully_charged">شارژ کامل</string>
+    <string name="battery_charging">درحال شارژ</string>
+    <string name="battery_discharging">درحال تخلیه</string>
+    <string name="storage_card_used">پر</string>
+    <string name="storage_available">در دسترس</string>
 </resources>
