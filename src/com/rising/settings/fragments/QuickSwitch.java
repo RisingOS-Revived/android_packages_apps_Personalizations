@@ -40,13 +40,13 @@ import java.util.List;
 import com.android.internal.util.android.SystemRestartUtils;
 
 @SearchIndexable
-public class QuickSwitch extends SettingsPreferenceFragment 
+public class QuickSwitch extends SettingsPreferenceFragment
     implements Preference.OnPreferenceChangeListener, Indexable {
-    
+
     private static final String TAG = "QuickSwitch";
 
     private static final String QUICKSWITCH_KEY = "persist.sys.default_launcher";
-    
+
     private ListPreference quickSwitchPref;
 
     @Override
@@ -72,11 +72,6 @@ public class QuickSwitch extends SettingsPreferenceFragment
         if (SystemProperties.getInt("persist.sys.quickswitch_pixel_shipped", 0) != 0) {
             quickSwitchEntries.add(launcherEntries[1]);
             quickSwitchValues.add(launcherValues[1]);
-        }
-
-        if (SystemProperties.getInt("persist.sys.quickswitch_lawnchair_shipped", 0) != 0) {
-            quickSwitchEntries.add(launcherEntries[2]);
-            quickSwitchValues.add(launcherValues[2]);
         }
 
         quickSwitchPref.setEntries(quickSwitchEntries.toArray(new CharSequence[0]));

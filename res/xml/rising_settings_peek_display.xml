@@ -44,17 +44,7 @@
          android:entryValues="@array/peek_display_location_values"
          android:summary="%s"
          android:defaultValue="1"
-         android:dependency="peek_display_notifications"/>
-
-    <com.android.settings.preferences.SecureSettingSeekBarPreference
-        android:key="peek_display_bottom_margin"
-        android:title="@string/peek_display_bottom_margin_title"
-        android:dependency="peek_display_notifications"
-        android:max="200"
-        settings:min="0"
-        settings:interval="1"
-        settings:units="dp"
-        android:defaultValue="64"
-        lineage:position="bottom" />
+         android:dependency="peek_display_notifications"
+         lineage:position="bottom" />
 
 </PreferenceScreen>

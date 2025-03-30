@@ -40,17 +40,7 @@
         android:title="@string/lockscreen_widgets_style_title"
         android:entries="@array/lockscreen_widgets_style_entries"
         android:entryValues="@array/lockscreen_widgets_style_values" 
-        android:summary="%s" />
-
-    <com.android.settings.preferences.SystemSettingSeekBarPreference
-        android:key="lockscreen_widgets_transparency"
-        android:title="@string/lockscreen_widgets_transparency_title"
-        android:summary="@string/lockscreen_widgets_transparency_summary"
-        android:defaultValue="100"
-        settings:interval="1"
-        settings:units="%"
-        android:max="100"
-        android:min="0"
+        android:summary="%s"
         lineage:position="bottom" />
 
     <com.android.settings.preferences.SystemSettingListPreference
