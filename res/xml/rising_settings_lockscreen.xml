@@ -43,12 +43,6 @@
             lineage:position="top"
             />
 
-        <com.android.settings.preferences.ui.AdaptivePreference
-            android:key="lockscreen_shortcuts"
-            android:title="@string/lockscreen_shortcut_category"
-            android:summary="@string/lockscreen_shortcuts_summary"
-            android:fragment="com.rising.settings.fragments.lockscreen.LockscreenShortcuts" />
-
         <com.android.settings.preferences.SystemSettingSwitchPreference
             android:key="lockscreen_show_carrier"
             android:title="@string/lockscreen_show_carrier_title"
