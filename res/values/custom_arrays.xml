@@ -15,6 +15,38 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Apps list to hide from Cutout force fullscreen setting -->
+    <string-array name="cutout_force_fullscreen_hidden_apps" translatable="false">
+        <item>android</item>
+        <item>com.android.documentsui</item>
+        <item>com.android.fmradio</item>
+        <item>com.android.stk</item>
+        <item>com.android.systemui</item>
+        <item>com.android.vending</item>
+        <item>com.caf.fmradio</item>
+        <item>com.google.android.apps.messaging</item>
+        <item>com.google.android.apps.wallpaper</item>
+        <item>com.google.android.as</item>
+        <item>com.google.android.calculator</item>
+        <item>com.google.android.calendar</item>
+        <item>com.google.android.contacts</item>
+        <item>com.google.android.deskclock</item>
+        <item>com.google.android.documentsui</item>
+        <item>com.google.android.googlequicksearchbox</item>
+    </string-array>
+
+    <!-- Wi-Fi MAC address randomization -->
+    <string-array name="wifi_privacy_entries_ext">
+        <item>@string/wifi_per_connection_random_mac_addr</item>
+        <item>@string/wifi_per_network_random_mac_addr</item>
+        <item>@string/wifi_device_mac_addr</item>
+    </string-array>
+
+    <string-array name="wifi_privacy_values_ext" translatable="false">
+        <item>100</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
 
      <!-- Settings dashboard styles-->
     <string-array name="settings_dashboard_style_entries" translatable="false">
