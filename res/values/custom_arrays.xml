@@ -1418,12 +1418,12 @@
    <string-array name="quickswitch_launcher_entries">
         <item>Ortus Launcher</item>
         <item>Pixel Launcher</item>
-        <!-- <item>Lawnchair Launcher</item> -->
+        <item>Lawnchair Launcher</item>
     </string-array>
     <string-array name="quickswitch_launcher_values" translatable="false">
         <item>0</item>
         <item>1</item>
-        <!-- <item>2</item> -->
+        <item>2</item>
     </string-array>
     
     <string-array name="clock_style_entries">
