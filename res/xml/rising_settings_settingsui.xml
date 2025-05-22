@@ -36,6 +36,13 @@
             android:entryValues="@array/settings_dashboard_style_values"
             android:defaultValue="0" />
 
+        <com.android.settings.preferences.SystemSettingSwitchPreference
+            android:key="expressive_design"
+            android:title="@string/expressive_design_title"
+            android:summary="@string/expressive_design_summary"
+            android:defaultValue="false"
+            android:persistent="true" />
+
         <com.android.settings.preferences.SystemSettingListPreference
             android:key="search_bar_style"
             android:title="@string/search_bar_style_title"

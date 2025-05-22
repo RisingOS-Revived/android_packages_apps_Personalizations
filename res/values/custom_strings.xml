@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Interface / Expressive Design -->
+    <string name="expressive_design_title">Expressive Design</string>
+    <string name="expressive_design_summary">Enable Expressive Design preview</string>
+
     <!-- Wifi Display settings. The title of a menu item to disable mirroring confimration [CHAR LIMIT=40] -->
     <string name="mirroring_confirmation_disable_menu_item">Disable mirroring confirmation</string>
 

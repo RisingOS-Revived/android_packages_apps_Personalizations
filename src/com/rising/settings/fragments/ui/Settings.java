@@ -18,6 +18,7 @@ package com.rising.settings.fragments.ui;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 
 import androidx.preference.Preference;
@@ -25,6 +26,7 @@ import androidx.preference.Preference.OnPreferenceChangeListener;
 
 import com.android.internal.util.android.SystemRestartUtils;
 import com.android.settings.preferences.SystemSettingListPreference;
+import com.android.settings.preferences.SystemSettingSwitchPreference;
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -43,12 +45,21 @@ public class Settings extends SettingsPreferenceFragment implements
 
     private static final String TAG = "Settings";
 
+    private static final String KEY_EXPRESSIVE_DESIGN = "expressive_design";
+    private static final String PROP_EXPRESSIVE_DESIGN = "persist.sys.is_expressive_design_enabled";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.rising_settings_settingsui);
         mSettingsDashBoardStyle = (SystemSettingListPreference) findPreference(SETTINGS_DASHBOARD_STYLE);
         mSettingsDashBoardStyle.setOnPreferenceChangeListener(this);
+
+        SystemSettingSwitchPreference expressiveDesign = findPreference(KEY_EXPRESSIVE_DESIGN);
+        if (expressiveDesign != null) {
+            expressiveDesign.setChecked(SystemProperties.getBoolean(PROP_EXPRESSIVE_DESIGN, false));
+            expressiveDesign.setOnPreferenceChangeListener(this);
+        }
     }
 
     @Override
@@ -60,6 +71,11 @@ public class Settings extends SettingsPreferenceFragment implements
         final String key = preference.getKey();
         ContentResolver resolver = getActivity().getContentResolver();
 	if (preference == mSettingsDashBoardStyle){
+            SystemRestartUtils.showSettingsRestartDialog(getContext());
+            return true;
+        } else if (preference.getKey().equals(KEY_EXPRESSIVE_DESIGN)) {
+            boolean boolValue = (Boolean) objValue;
+            SystemProperties.set(PROP_EXPRESSIVE_DESIGN, boolValue ? "1" : "0");
             SystemRestartUtils.showSettingsRestartDialog(getContext());
             return true;
             }
