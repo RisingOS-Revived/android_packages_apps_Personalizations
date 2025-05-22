@@ -34,6 +34,12 @@
             android:defaultValue="true" />
 
         <com.android.settings.preferences.SystemPropertySwitchPreference
+            android:key="persist.sys.spoof.vending_sdk32"
+            android:title="@string/spoofing_vending_32_title"
+            android:summary="@string/spoofing_vending_32_summary"
+            android:defaultValue="false" />
+
+        <com.android.settings.preferences.SystemPropertySwitchPreference
             android:key="persist.sys.features.tensor"
             android:title="@string/tensor_spoof_title"
             android:summary="@string/tensor_spoof_summary"

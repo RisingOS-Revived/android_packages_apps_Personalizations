@@ -78,6 +78,7 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
     private static final String KEY_UPDATE_JSON_BUTTON = "update_pif_json";
     private static final String SYS_ENABLE_TENSOR_FEATURES = "persist.sys.features.tensor";
     private static final String SYS_APP_SPOOF_SELECTOR = "app_spoof_selector";
+    private static final String SYS_VENDING_32_SPOOF = "persist.sys.spoof.vending_sdk32";
 
     private boolean isPixelDevice;
     private boolean includeSystemApps = false;
@@ -93,6 +94,7 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
     private Preference mUpdateJsonButton;
     private Preference mTensorFeaturesToggle;
     private Preference mAppSpoofSelector;
+    private Preference mVending32Spoof;
 
     private Handler mHandler;
 
@@ -112,6 +114,7 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
         mUpdateJsonButton = findPreference(KEY_UPDATE_JSON_BUTTON);
         mTensorFeaturesToggle = findPreference(SYS_ENABLE_TENSOR_FEATURES);
         mAppSpoofSelector = findPreference(SYS_APP_SPOOF_SELECTOR);
+        mVending32Spoof = findPreference(SYS_VENDING_32_SPOOF);
 
         String model = SystemProperties.get("ro.product.model");
         isPixelDevice = SystemProperties.get("ro.soc.manufacturer").equals("Google");
@@ -146,6 +149,7 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
         mGphotosSpoof.setOnPreferenceChangeListener(this);
         mGamePropsSpoof.setOnPreferenceChangeListener(this);
         mTensorFeaturesToggle.setOnPreferenceChangeListener(this);
+        mVending32Spoof.setOnPreferenceChangeListener(this);
 
         mPifJsonFilePreference.setOnPreferenceClickListener(preference -> {
             openFileSelector(10001);
@@ -219,7 +223,9 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
                 "persist.sys.pihooks_MODEL",
                 "persist.sys.pihooks_PRODUCT",
                 "persist.sys.pihooks_SECURITY_PATCH",
-                "persist.sys.pihooks_DEVICE_INITIAL_SDK_INT"
+                "persist.sys.pihooks_DEVICE_INITIAL_SDK_INT",
+                "persist.sys.pihooks_RELEASE",
+                "persist.sys.pihooks_SDK_INT"
             };
             for (String key : keys) {
                 String value = SystemProperties.get(key, null);
@@ -443,7 +449,8 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
             || preference == mPropOptions
             || preference == mGoogleSpoof
             || preference == mGphotosSpoof
-            || preference == mGamePropsSpoof) {
+            || preference == mGamePropsSpoof
+            || preference == mVending32Spoof) {
             SystemRestartUtils.showSystemRestartDialog(getContext());
             return true;
         }

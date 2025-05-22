@@ -144,6 +144,10 @@
     <string name="tensor_spoof_summary">Unlock tensor/pixel features</string>
     <string name="tensor_spoof_option_disabled">Tensor features are always enabled on this device</string>
 
+    <!-- SDK spoof -->
+    <string name="spoofing_vending_32_title">Spoof playstore to SDK 32</string>
+    <string name="spoofing_vending_32_summary">Spoof playstore to SDK 32 to get legacy attestation</string>
+
     <!-- AOD Settings -->
     <string name="aod_display_category_title">Always-On-Display</string>
     <string name="aod_pulse_category_title">Pulse/Doze</string>
