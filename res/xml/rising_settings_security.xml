@@ -33,19 +33,19 @@
             android:summary="@string/hide_applist_summary"
             android:fragment="com.rising.settings.fragments.HideAppListSettings" />
 
-        <com.android.settings.preferences.SystemSettingSwitchPreference
+        <com.android.settings.preferences.GlobalSettingSwitchPreference
             android:key="hide_screen_capture_status"
             android:title="@string/hide_screen_capture_status_title"
             android:summary="@string/hide_screen_capture_status_summary"
             android:defaultValue="false"/>
 
-        <com.android.settings.preferences.SecureSettingSwitchPreference
+        <com.android.settings.preferences.GlobalSettingSwitchPreference
             android:key="window_ignore_secure"
             android:title="@string/laboratory_ignore_window_secure_title"
             android:summary="@string/laboratory_ignore_window_secure_summary"
             android:defaultValue="false" />
 
-        <com.android.settings.preferences.SystemSettingSwitchPreference
+        <com.android.settings.preferences.GlobalSettingSwitchPreference
             android:key="no_storage_restrict"
             android:title="@string/no_storage_restrict_title"
             android:summary="@string/no_storage_restrict_summary"
