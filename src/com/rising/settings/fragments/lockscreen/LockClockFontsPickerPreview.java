@@ -48,6 +48,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.utils.SystemRestartUtils;
 import com.rising.settings.fragments.ui.fonts.FontArrayAdapter;
 import com.rising.settings.fragments.ui.fonts.FontManager;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -168,26 +169,7 @@ public class LockClockFontsPickerPreview extends SettingsPreferenceFragment {
         }
 
         applyFab = rootView.findViewById(R.id.apply_extended_fab);
-        applyFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String fontPackage = fontPackageNames.get(mCurrentFontPosition);
-                if (!isStaticClockStyle(mClockPosition)) {
-                    applyFontToAllPreviews(fontPackage);
-                    fontManager.enableFontPackage(mCurrentFontPosition);
-                }
-                Settings.Secure.putIntForUser(getContext().getContentResolver(), 
-                    "clock_style", mClockPosition, UserHandle.USER_CURRENT);
-                Settings.Secure.putIntForUser(getContext().getContentResolver(), 
-                    "lock_screen_custom_clock_face", 0, UserHandle.USER_CURRENT);
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                       updateClockOverlays(mClockPosition);
-                    }
-                }, 1250);
-            }
-        });
+        setupApplyButton(fontPackageNames);
 
         highlightGuide = rootView.findViewById(R.id.highlight_guide);
         if (isFirstTime()) {
@@ -222,6 +204,112 @@ public class LockClockFontsPickerPreview extends SettingsPreferenceFragment {
         });
 
         return rootView;
+    }
+    
+    private void setupApplyButton(List<String> fontPackageNames) {
+        applyFab.setOnClickListener(new View.OnClickListener() {
+            private long lastClickTime = 0;
+            
+            @Override
+            public void onClick(View view) {
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastClickTime < 2000) {
+                    return;
+                }
+                lastClickTime = currentTime;
+                
+                if (mCurrentFontPosition < 0 || mCurrentFontPosition >= fontPackageNames.size()) {
+                    Toast.makeText(getContext(), "Please select a font first", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
+                String fontPackage = fontPackageNames.get(mCurrentFontPosition);
+                
+                if (!isStaticClockStyle(mClockPosition)) {
+                    applyFontToAllPreviews(fontPackage);
+                    fontManager.enableFontPackage(mCurrentFontPosition);
+                }
+                
+                Settings.Secure.putIntForUser(getContext().getContentResolver(), 
+                    "clock_style", mClockPosition, UserHandle.USER_CURRENT);
+                Settings.Secure.putIntForUser(getContext().getContentResolver(), 
+                    "lock_screen_custom_clock_face", 0, UserHandle.USER_CURRENT);
+                
+                applyChangesAndRestart();
+            }
+        });
+    }
+    
+    private void applyChangesAndRestart() {
+        if (applyFab != null) {
+            applyFab.setEnabled(false);
+            applyFab.setText("Applying...");
+        }
+        
+        updateClockOverlays(mClockPosition);
+        
+        final Context appContext = getActivity() != null ? getActivity().getApplicationContext() : null;
+        final Context fragmentContext = getContext();
+        
+        if (appContext != null && fragmentContext != null && isAdded() && getActivity() != null && !getActivity().isFinishing()) {
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        SystemRestartUtils.restartSystemUI(appContext);
+                        showSuccessMessage();
+                        
+                    } catch (Exception e) {
+                        if (isAdded() && getContext() != null && getActivity() != null && !getActivity().isFinishing()) {
+                            try {
+                                SystemRestartUtils.restartSystemUI(getContext());
+                                showSuccessMessage();
+                            } catch (Exception ex) {
+                                showFailureMessage();
+                            }
+                        } else {
+                            showFailureMessage();
+                        }
+                    }
+                }
+            }, 1000);
+        } else {
+            showFailureMessage();
+        }
+    }
+    
+    private void showSuccessMessage() {
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), 
+                            "Settings applied successfully!", 
+                            Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+    
+    private void showFailureMessage() {
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (applyFab != null) {
+                        applyFab.setEnabled(true);
+                        applyFab.setText("Apply");
+                    }
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), 
+                            "Settings saved. Please restart SystemUI manually if changes don't appear.", 
+                            Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
     }
     
     private boolean isNightMode() {
@@ -304,7 +392,6 @@ public class LockClockFontsPickerPreview extends SettingsPreferenceFragment {
     private void applyFontToAllPreviews(String font) {
         Typeface typeface = fontManager.getTypeface(getContext(), font);
         int childCount = viewPager.getChildCount();
-        //Log.d(TAG, "Total number of children in viewPager: " + childCount);
         if (typeface != null) {
             for (int i = 0; i < childCount; i++) {
                 View currentLayout = viewPager.getChildAt(i);
@@ -312,14 +399,9 @@ public class LockClockFontsPickerPreview extends SettingsPreferenceFragment {
                 if (currentLayout != null) {
                     if (!isStaticClockStyle(currentPosition)) {
                         updateAllTextViews(currentLayout, typeface);
-                        //Log.d(TAG, "Applied font to layout at position: " + currentPosition);
-                    } else {
-                        //Log.d(TAG, "Skipped applying font to static layout at position: " + currentPosition);
                     }
                 }
             }
-        } else {
-            Log.d(TAG, "Failed to apply font");
         }
     }
 
@@ -345,6 +427,20 @@ public class LockClockFontsPickerPreview extends SettingsPreferenceFragment {
                 updateAllTextViews(child, typeface);
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler = null;
     }
 
     @Override
