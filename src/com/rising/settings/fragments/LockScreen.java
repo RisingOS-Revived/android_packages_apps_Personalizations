@@ -46,7 +46,7 @@ import lineageos.providers.LineageSettings;
 
 import com.android.settings.preferences.ui.PreferenceUtils;
 
-import com.android.internal.util.android.SystemRestartUtils;
+import com.android.settings.utils.SystemRestartUtils;
 
 @SearchIndexable
 public class LockScreen extends SettingsPreferenceFragment
@@ -120,6 +120,9 @@ public class LockScreen extends SettingsPreferenceFragment
         }
 
         mWeather = (Preference) findPreference(KEY_WEATHER);
+        if (mWeather != null) {
+            mWeather.setOnPreferenceChangeListener(this);
+        }
         mWeatherClient = new OmniJawsClient(getContext());
         updateWeatherSettings();
         
@@ -139,6 +142,14 @@ public class LockScreen extends SettingsPreferenceFragment
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        String key = preference.getKey();
+        
+        if (KEY_WEATHER.equals(key)) {
+            // Restart SystemUI when weather preference changes
+            SystemRestartUtils.restartSystemUI(getContext());
+            return true;
+        }
+        
         return false;
     }
 
