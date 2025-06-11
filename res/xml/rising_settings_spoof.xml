@@ -20,49 +20,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/spoofing_title">
 
-        <com.android.settings.preferences.SystemPropertySwitchPreference
-            android:key="persist.sys.pixelprops.all"
-            android:title="@string/all_props_title"
-            android:summary="@string/all_props_summary"
-            android:defaultValue="true"
-            app:position="top" />
+        <Preference
+            android:key="clear_keybox"
+            android:title="@string/clear_keybox_title"
+            android:summary="@string/clear_keybox_summary" />
 
-        <com.android.settings.preferences.SystemPropertySwitchPreference
-            android:key="persist.sys.pixelprops.google"
-            android:title="@string/google_spoof_title"
-            android:summary="@string/google_spoof_summary"
-            android:defaultValue="true" />
+        <Preference
+            android:key="convert_keybox"
+            android:title="@string/convert_keybox_title"
+            android:summary="@string/convert_keybox_summary" />
 
-        <com.android.settings.preferences.SystemPropertySwitchPreference
-            android:key="persist.sys.spoof.vending_sdk32"
-            android:title="@string/spoofing_vending_32_title"
-            android:summary="@string/spoofing_vending_32_summary"
-            android:defaultValue="false" />
-
-        <com.android.settings.preferences.SystemPropertySwitchPreference
-            android:key="persist.sys.features.tensor"
-            android:title="@string/tensor_spoof_title"
-            android:summary="@string/tensor_spoof_summary"
-            android:defaultValue="false" />
-
-        <com.android.settings.preferences.SystemPropertySwitchPreference
-            android:key="persist.sys.gameprops.enabled"
-            android:title="@string/gameprops_title"
-            android:summary="@string/gameprops_summary"
-            android:defaultValue="false" />
-
-        <com.android.settings.preferences.ui.AdaptivePreference
-            android:key="game_props_json_file_preference"
-            android:title="@string/gameprops_load_json_title"
-            android:dependency="persist.sys.gameprops.enabled"
-            android:summary="@string/gameprops_load_json_summary" />
+        <Preference
+            android:key="import_keybox"
+            android:title="@string/import_keybox_title"
+            android:summary="@string/import_keybox_summary" />
 
         <!-- GMS spoof -->
         <com.android.settings.preferences.SystemPropertySwitchPreference
             android:key="persist.sys.pixelprops.gms"
             android:title="@string/gms_spoof_title"
             android:summary="@string/gms_spoof_summary"
-            android:defaultValue="true"/>
+            android:defaultValue="true"
+            app:position="top"/>
 
         <com.android.settings.preferences.ui.AdaptivePreference
             android:key="show_pif_properties"
@@ -88,12 +67,21 @@
             android:title="@string/use_photos_spoof_title"
             android:summary="@string/use_photos_spoof_summary"
             android:defaultValue="true" />
-
-    <com.android.settings.preferences.ui.AdaptivePreference
-        android:key="app_spoof_selector"
-        android:title="@string/app_spoof_selector_title"
-        android:summary="@string/app_spoof_selector_summary"
-        app:position="bottom" />
+            
+        <!-- Games spoof -->
+        <com.android.settings.preferences.SystemPropertySwitchPreference
+            android:key="persist.sys.gameprops.enable"
+            android:title="@string/use_games_spoof_title"
+            android:summary="@string/use_games_spoof_summary"
+            android:defaultValue="false" />
+            
+        <!-- Netflix spoof -->
+        <com.android.settings.preferences.SystemPropertySwitchPreference
+            android:key="persist.sys.pixelprops.netflix"
+            android:title="@string/netflix_spoof_title"
+            android:summary="@string/netflix_spoof_summary"
+            android:defaultValue="false"
+            app:position="bottom"/>
 
     <PreferenceCategory
         android:title="@string/help_section_title"
