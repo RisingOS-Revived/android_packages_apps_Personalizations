@@ -41,15 +41,26 @@
             android:title="@string/doze_title"
             android:summary="@string/doze_summary" />
 
-        <com.android.settings.preferences.SecureSettingSwitchPreference
-            android:key="doze_always_on"
-            android:title="@string/doze_always_on_title"
-            android:summary="@string/doze_always_on_summary" />
-
         <com.android.settings.preferences.SystemSettingSwitchPreference
-            android:key="doze_always_on_charge_mode"
+            android:key="screen_off_aod_enabled"
+            android:title="@string/screen_off_aod_enabled_title"
+            android:summary="@string/screen_off_aod_enabled_summary"
+            android:defaultValue="true"
+            settings:position="none" />
+
+        <com.android.settingslib.RestrictedSwitchPreference
+            android:key="ambient_display_always_on"
+            android:title="@string/doze_always_on_title"
+            android:summary="@string/doze_always_on_summary"
+            settings:keywords="@string/keywords_always_show_time_info"
+            settings:controller="com.android.settings.display.AmbientDisplayAlwaysOnPreferenceController"
+            settings:userRestriction="no_ambient_display" />
+
+        <com.android.settings.preferences.SecureSettingSwitchPreference
+            android:key="doze_on_charge"
             android:title="@string/doze_on_charge_title"
-            android:summary="@string/doze_on_charge_summary" />
+            android:summary="@string/doze_on_charge_summary"
+            android:defaultValue="false" />
 
         <com.android.settings.preferences.ui.AdaptivePreference
             android:key="always_on_display_schedule"
