@@ -26,7 +26,7 @@
     <string name="clear_success">Keybox cleared successfully</string>
     <string name="clear_failed">Failed to clear keybox</string>
     <string name="convert_keybox_title">Convert Keybox</string>
-    <string name="convert_keybox_summary">Convert keybox for axion keybox spoofing compatibility</string>
+    <string name="convert_keybox_summary">Convert keybox for rising keybox spoofing compatibility</string>
 
     <!-- Screen off AOD -->
     <string name="screen_off_aod_enabled_title">Screen Off AOD</string>
