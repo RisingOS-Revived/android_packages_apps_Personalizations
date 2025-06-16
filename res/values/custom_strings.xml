@@ -15,6 +15,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- QuickSettings Refactor -->
+    <string name="qs_refactor_title">QuickSettings Refactor</string>
+    <string name="qs_refactor_summary">Some features will not work on the new QS</string>
+    <string name="qs_main_category">QS Refactor</string>
+
     <!-- Keybox import -->
     <string name="import_keybox_title">Import Keybox</string>
     <string name="import_keybox_summary">Import custom keybox for keybox spoofing</string>

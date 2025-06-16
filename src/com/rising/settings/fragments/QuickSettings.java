@@ -36,6 +36,7 @@ import com.android.internal.util.android.ThemeUtils;
 
 import com.android.settings.preferences.CustomSeekBarPreference;
 import com.android.settings.preferences.SystemSettingSeekBarPreference;
+import com.android.settings.preferences.SecureSettingSwitchPreference;
 
 import com.android.settings.utils.SystemRestartUtils;
 
@@ -52,6 +53,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements
     private static final String KEY_PREF_TILE_ANIM_STYLE = "qs_tile_animation_style";
     private static final String KEY_PREF_TILE_ANIM_DURATION = "qs_tile_animation_duration";
     private static final String KEY_PREF_TILE_ANIM_INTERPOLATOR = "qs_tile_animation_interpolator";
+    private static final String KEY_QS_REFACTOR_ENABLED = "qs_refactor_enabled";
 
     private ListPreference mQsUI;
     private ListPreference mQsPanelStyle;
@@ -59,6 +61,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements
     private ListPreference mTileAnimationInterpolator;
     private CustomSeekBarPreference mTileAnimationDuration;
     private Preference mSplitShadePref;
+    private SecureSettingSwitchPreference mQsRefactorEnabled;
     
     private SystemSettingSeekBarPreference mNotificationCornerRadius;
 
@@ -84,6 +87,9 @@ public class QuickSettings extends SettingsPreferenceFragment implements
 
         mSplitShadePref = (Preference) findPreference("qs_split_shade_enabled");
         mSplitShadePref.setOnPreferenceChangeListener(this);
+
+        mQsRefactorEnabled = (SecureSettingSwitchPreference) findPreference(KEY_QS_REFACTOR_ENABLED);
+        mQsRefactorEnabled.setOnPreferenceChangeListener(this);
 
         mTileAnimationStyle = (ListPreference) findPreference(KEY_PREF_TILE_ANIM_STYLE);
         mTileAnimationDuration = (CustomSeekBarPreference) findPreference(KEY_PREF_TILE_ANIM_DURATION);
@@ -128,6 +134,10 @@ public class QuickSettings extends SettingsPreferenceFragment implements
             Settings.System.putIntForUser(resolver,
                    "qs_split_shade_enabled", value, UserHandle.USER_CURRENT);
             updateSplitShadeEnabled(getActivity());
+            return true;
+        } else if (preference == mQsRefactorEnabled) {
+            // QS Refactor setting changed - restart SystemUI
+            SystemRestartUtils.restartSystemUI(getContext());
             return true;
         } else if (preference.getKey().equals("notification_corner_radius")) {
             int newRadius = (int) newValue;
