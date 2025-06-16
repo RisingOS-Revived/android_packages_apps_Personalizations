@@ -15,6 +15,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- QuickSettings Refactor -->
+    <string name="qs_refactor_title">QuickSettings Refactor</string>
+    <string name="qs_refactor_summary">Some features will not work on the new QS</string>
+    <string name="qs_main_category">QS Refactor</string>
+
     <!-- Miscellaneous/Spoofing -->
     <string name="spoofing_system_wide_category">System-Wide</string>
     <string name="spoofing_pixel_props_title">Pixel props</string>
