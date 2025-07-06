@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Pocket mode -->
+    <string name="proximity_wake_title">Prevent accidental wake-up</string>
+    <string name="proximity_wake_summary">Check the proximity sensor prior to waking up screen</string>
+
     <!-- Power Menu Styles -->
     <string name="power_menu_type_title">Power menu style</string>
     <string name="power_menu_type_lite">Lite (A12)</string>
@@ -847,6 +851,7 @@
     <string name="hardware_keys_action_last_app">Last app</string>
     <string name="hardware_keys_action_split_screen">Split screen</string>
     <string name="hardware_keys_action_close_app">Kill app</string>
+    <string name="hardware_keys_action_play_pause_music">Play/pause music playback</string>
     <string name="hardware_keys_action_torch">Toggle torch</string>
     <string name="hardware_keys_action_screenshot">Take screenshot</string>
     <string name="hardware_keys_action_volume_panel">Toggle volume panel</string>

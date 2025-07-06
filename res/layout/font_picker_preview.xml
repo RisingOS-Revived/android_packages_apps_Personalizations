@@ -1,5 +1,6 @@
 <!--
      Copyright (C) 2023 the risingOS Android Project
+     Copyright (C) 2025 the RisingOS Revived Android Project
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
@@ -15,15 +16,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="76dp">
+            android:paddingBottom="24dp">
+            
             <TextView
                 android:id="@+id/font_preview_text"
                 android:layout_width="match_parent"
@@ -35,6 +39,7 @@
                 android:layout_marginBottom="24dp"
                 android:layout_marginHorizontal="24dp"
                 android:padding="24dp" />
+            
             <TextView
                 android:id="@+id/font_selector"
                 android:layout_width="wrap_content"
@@ -48,21 +53,35 @@
                 android:textSize="16sp"
                 android:drawableEnd="@drawable/ic_dropdown"
                 android:drawablePadding="8dp" />
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="32dp"
+                android:layout_marginHorizontal="24dp">
+                
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+                
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/apply_extended_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/apply_button_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/settingslib_btn_colored_text_material"
+                    android:theme="@style/Theme.CollapsingToolbar.Settings"
+                    style="@style/op_control_text_style_h6"
+                    app:backgroundTint="@color/settingslib_btn_colored_background_material"
+                    app:iconTint="@color/settingslib_btn_colored_text_material"
+                    app:fabSize="normal"
+                    app:icon="@drawable/ic_check_24dp" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/apply_extended_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/apply_button_text"
-        android:textAllCaps="false"
-        android:textColor="@color/settingslib_btn_colored_text_material"
-        android:theme="@style/Theme.CollapsingToolbar.Settings"
-        android:layout_marginEnd="24dp"
-        android:layout_gravity="bottom|right"
-        style="@style/op_control_text_style_h6"
-        app:backgroundTint="@color/settingslib_btn_colored_background_material"
-        app:iconTint="@color/settingslib_btn_colored_text_material"
-        app:fabSize="normal"
-        app:icon="@drawable/ic_check_24dp"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

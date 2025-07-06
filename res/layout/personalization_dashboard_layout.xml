@@ -137,7 +137,7 @@
                 android:alpha="0.5"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/rattan"/>
+                app:lottie_rawRes="@raw/peach"/>
                  <View
                     android:id="@+id/system_themes_divider"
                     android:layout_width="2dp"
