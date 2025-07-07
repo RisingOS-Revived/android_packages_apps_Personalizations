@@ -123,8 +123,10 @@
 
     <!-- Custom settings dashboard style -->
     <string name="settings_dashboard_style_title">Settings Styles</string>
-    <string name="settings_dashboard_style_1">Rising Style</string>
-    <string name="settings_dashboard_style_2">Simple Style</string>
+    <string name="settings_dashboard_style_1">Rising Style (A15)</string>
+    <string name="settings_dashboard_style_2">Simple Style (A15)</string>
+    <string name="settings_dashboard_style_3">Expressive Simple Style (A16)</string>
+    <string name="settings_dashboard_style_4">Expressive Rising Style (A16)</string>
 
     <!-- Nowbar height -->
     <string name="notification_corner_radius_title">Notification corner radius</string>
@@ -2299,7 +2301,7 @@
     <string name="settings_homepage_showcase_title">Device showcase widget</string>
     <string name="settings_homepage_showcase_summary">Show device showcase on homepage</string>
     <string name="search_bar_style_title">Search Bar Style</string>
-    <string name="settings_sb_style_1">Android 15 (Revamped)</string>
+    <string name="settings_sb_style_1">Android 16 (Revamped)</string>
 
     <!-- GMS Spoof -->
     <string name="gms_spoof_title">Enable GMS spoof</string>
