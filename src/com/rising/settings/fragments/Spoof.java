@@ -17,10 +17,11 @@ package com.rising.settings.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import android.os.SystemProperties;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -36,19 +38,19 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.provider.Settings;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.preference.Preference;
+import androidx.preference.Preference.OnPreferenceChangeListener;
+import androidx.preference.PreferenceCategory;
+import androidx.preference.PreferenceScreen;
 
-import com.android.internal.logging.nano.MetricsProto;
+import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.util.android.SystemRestartUtils;
-import com.android.internal.util.android.PropsHooksUtils;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
+import com.android.settings.SettingsPreferenceFragment;
 import com.android.settingslib.search.SearchIndexable;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -64,37 +66,47 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.android.settings.preferences.KeyboxDataPreference;
+import com.android.settings.preferences.SystemPropertySwitchPreference;
+import com.android.settings.utils.DeviceUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @SearchIndexable
-public class Spoof extends SettingsPreferenceFragment implements Preference.OnPreferenceChangeListener {
+public class Spoof extends SettingsPreferenceFragment implements
+        Preference.OnPreferenceChangeListener {
 
-    public static final String TAG = "Spoof";
-    private static final String SYS_GMS_SPOOF = "persist.sys.pixelprops.gms";
-    private static final String SYS_GOOGLE_SPOOF = "persist.sys.pixelprops.google";
-    private static final String SYS_PROP_OPTIONS = "persist.sys.pixelprops.all";
-    private static final String SYS_GAMEPROP_ENABLED = "persist.sys.gameprops.enabled";
-    private static final String SYS_GPHOTOS_SPOOF = "persist.sys.pixelprops.gphotos";
+    private static final String TAG = "Spoof";
+
     private static final String KEY_PIF_JSON_FILE_PREFERENCE = "pif_json_file_preference";
-    private static final String KEY_GAME_PROPS_JSON_FILE_PREFERENCE = "game_props_json_file_preference";
+    private static final String KEY_SYSTEM_WIDE_CATEGORY = "spoofing_system_wide_category";
     private static final String KEY_UPDATE_JSON_BUTTON = "update_pif_json";
+    private static final String SYS_GMS_SPOOF = "persist.sys.pixelprops.gms";
+    private static final String SYS_GOOGLE_SPOOF = "persist.sys.pixelprops";
+    private static final String SYS_GAMEPROP_SPOOF = "persist.sys.pixelprops.games";
+    private static final String SYS_GPHOTOS_SPOOF = "persist.sys.pixelprops.gphotos";
+    private static final String SYS_QSB_SPOOF = "persist.sys.pixelprops.qsb";
+    private static final String SYS_SNAP_SPOOF = "persist.sys.pixelprops.snap";
+    private static final String SYS_VENDING_SPOOF = "persist.sys.pixelprops.vending";
     private static final String SYS_ENABLE_TENSOR_FEATURES = "persist.sys.features.tensor";
-    private static final String SYS_APP_SPOOF_SELECTOR = "app_spoof_selector";
-    private static final String SYS_VENDING_32_SPOOF = "persist.sys.spoof.vending_sdk32";
+    private static final String KEYBOX_DATA_KEY = "keybox_data_setting";
 
-    private boolean isPixelDevice;
-    private boolean includeSystemApps = false;
-
-    private Preference mGmsSpoof;
-    private Preference mGoogleSpoof;
-    private Preference mGphotosSpoof;
-    private Preference mPropOptions;
+    private ActivityResultLauncher<Intent> mKeyboxFilePickerLauncher;
+    private KeyboxDataPreference mKeyboxDataPreference;
     private Preference mPifJsonFilePreference;
-    private Preference mGamePropsJsonFilePreference;
-    private Preference mGamePropsSpoof;
-    private Preference mWikiLink;
     private Preference mUpdateJsonButton;
-    private Preference mTensorFeaturesToggle;
-    private Preference mAppSpoofSelector;
-    private Preference mVending32Spoof;
+    private PreferenceCategory mSystemWideCategory;
+    private SystemPropertySwitchPreference mGmsSpoof;
+    private SystemPropertySwitchPreference mGoogleSpoof;
+    private SystemPropertySwitchPreference mGamePropsSpoof;
+    private SystemPropertySwitchPreference mGphotosSpoof;
+    private SystemPropertySwitchPreference mQsbSpoof;
+    private SystemPropertySwitchPreference mSnapSpoof;
+    private SystemPropertySwitchPreference mVendingSpoof;
+    private SystemPropertySwitchPreference mTensorFeaturesToggle;
+    private Preference mWikiLink;
 
     private Handler mHandler;
 
@@ -104,60 +116,67 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
         mHandler = new Handler();
         addPreferencesFromResource(R.xml.rising_settings_spoof);
 
-        mGamePropsSpoof = findPreference(SYS_GAMEPROP_ENABLED);
-        mGphotosSpoof = findPreference(SYS_GPHOTOS_SPOOF);
-        mGmsSpoof = findPreference(SYS_GMS_SPOOF);
-        mGoogleSpoof = findPreference(SYS_GOOGLE_SPOOF);
-        mPropOptions = findPreference(SYS_PROP_OPTIONS);
+        final Context context = getContext();
+        final ContentResolver resolver = context.getContentResolver();
+        final PreferenceScreen prefScreen = getPreferenceScreen();
+        final Resources resources = context.getResources();
+
+        mSystemWideCategory = (PreferenceCategory) findPreference(KEY_SYSTEM_WIDE_CATEGORY);
+        mGamePropsSpoof = (SystemPropertySwitchPreference) findPreference(SYS_GAMEPROP_SPOOF);
+        mGphotosSpoof = (SystemPropertySwitchPreference) findPreference(SYS_GPHOTOS_SPOOF);
+        mGmsSpoof = (SystemPropertySwitchPreference) findPreference(SYS_GMS_SPOOF);
+        mGoogleSpoof = (SystemPropertySwitchPreference) findPreference(SYS_GOOGLE_SPOOF);
         mPifJsonFilePreference = findPreference(KEY_PIF_JSON_FILE_PREFERENCE);
-        mGamePropsJsonFilePreference = findPreference(KEY_GAME_PROPS_JSON_FILE_PREFERENCE);
+        mQsbSpoof = (SystemPropertySwitchPreference) findPreference(SYS_QSB_SPOOF);
+        mSnapSpoof = (SystemPropertySwitchPreference) findPreference(SYS_SNAP_SPOOF);
+        mVendingSpoof = (SystemPropertySwitchPreference) findPreference(SYS_VENDING_SPOOF);
         mUpdateJsonButton = findPreference(KEY_UPDATE_JSON_BUTTON);
-        mTensorFeaturesToggle = findPreference(SYS_ENABLE_TENSOR_FEATURES);
-        mAppSpoofSelector = findPreference(SYS_APP_SPOOF_SELECTOR);
-        mVending32Spoof = findPreference(SYS_VENDING_32_SPOOF);
+        mTensorFeaturesToggle = (SystemPropertySwitchPreference) findPreference(SYS_ENABLE_TENSOR_FEATURES);
 
         String model = SystemProperties.get("ro.product.model");
-        isPixelDevice = SystemProperties.get("ro.soc.manufacturer").equals("Google");
         boolean isTensorDevice = model.matches("Pixel [6-9][a-zA-Z ]*");
+        boolean isPixelGmsEnabled = SystemProperties.getBoolean(SYS_GMS_SPOOF, true); // Default to Pixel GMS
 
-        mGmsSpoof.setDependency(SYS_PROP_OPTIONS);
-        mGphotosSpoof.setDependency(SYS_PROP_OPTIONS);
-
-        if (isPixelDevice) {
+        if (DeviceUtils.isCurrentlySupportedPixel()) {
             mGoogleSpoof.setDefaultValue(false);
             if (isMainlineTensorModel(model)) {
-                mGoogleSpoof.setEnabled(false);
-                mGoogleSpoof.setSummary(R.string.google_spoof_option_disabled);
+                mSystemWideCategory.removePreference(mGoogleSpoof);
             }
         }
 
         if (isTensorDevice) {
-            mTensorFeaturesToggle.setEnabled(false);
-            mTensorFeaturesToggle.setSummary(R.string.tensor_spoof_option_disabled);
-        }
-
-        if (mAppSpoofSelector != null) {
-            mAppSpoofSelector.setOnPreferenceClickListener(preference -> {
-                showAppSelectionDialog();
-                return true;
-            });
+            mSystemWideCategory.removePreference(mTensorFeaturesToggle);
         }
 
         mGmsSpoof.setOnPreferenceChangeListener(this);
-        mPropOptions.setOnPreferenceChangeListener(this);
         mGoogleSpoof.setOnPreferenceChangeListener(this);
         mGphotosSpoof.setOnPreferenceChangeListener(this);
         mGamePropsSpoof.setOnPreferenceChangeListener(this);
+        mQsbSpoof.setOnPreferenceChangeListener(this);
+        mSnapSpoof.setOnPreferenceChangeListener(this);
+        mVendingSpoof.setOnPreferenceChangeListener(this);
         mTensorFeaturesToggle.setOnPreferenceChangeListener(this);
-        mVending32Spoof.setOnPreferenceChangeListener(this);
+
+        mKeyboxFilePickerLauncher = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        result -> {
+            if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+            Uri uri = result.getData().getData();
+            Preference pref = findPreference(KEYBOX_DATA_KEY);
+            if (pref instanceof KeyboxDataPreference) {
+                ((KeyboxDataPreference) pref).handleFileSelected(uri);
+            }
+        }
+    }
+    );
 
         mPifJsonFilePreference.setOnPreferenceClickListener(preference -> {
             openFileSelector(10001);
             return true;
         });
 
-        mGamePropsJsonFilePreference.setOnPreferenceClickListener(preference -> {
-            openFileSelector(10002);
+        mUpdateJsonButton.setOnPreferenceClickListener(preference -> {
+            updatePropertiesFromUrl("https://raw.githubusercontent.com/RisingOS-Revived/risingOS_wiki/refs/heads/fifteen/spoofing/PlayIntergrity/pif.json");
             return true;
         });
 
@@ -170,11 +189,6 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
                 return true;
             });
         }
-
-        mUpdateJsonButton.setOnPreferenceClickListener(preference -> {
-            updatePropertiesFromUrl("https://raw.githubusercontent.com/RisingOS-Revived/risingOS_wiki/refs/heads/fifteen/spoofing/PlayIntergrity/pif.json");
-            return true;
-        });
 
         Preference showPropertiesPref = findPreference("show_pif_properties");
         if (showPropertiesPref != null) {
@@ -196,6 +210,15 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mKeyboxDataPreference = findPreference(KEYBOX_DATA_KEY);
+        if (mKeyboxDataPreference != null) {
+            mKeyboxDataPreference.setFilePickerLauncher(mKeyboxFilePickerLauncher);
+        }
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && data != null) {
@@ -203,8 +226,6 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
             if (uri != null) {
                 if (requestCode == 10001) {
                     loadPifJson(uri);
-                } else if (requestCode == 10002) {
-                    loadGameSpoofingJson(uri);
                 }
             }
         }
@@ -304,153 +325,17 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
         }, 1250);
     }
 
-    private void loadGameSpoofingJson(Uri uri) {
-        Log.d(TAG, "Loading Game Props JSON from URI: " + uri.toString());
-        try (InputStream inputStream = getActivity().getContentResolver().openInputStream(uri)) {
-            if (inputStream != null) {
-                String json = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-                Log.d(TAG, "Game Props JSON data: " + json);
-                JSONObject jsonObject = new JSONObject(json);
-                for (Iterator<String> it = jsonObject.keys(); it.hasNext(); ) {
-                    String key = it.next();
-                    if (key.startsWith("PACKAGES_") && !key.endsWith("_DEVICE")) {
-                        String deviceKey = key + "_DEVICE";
-                        if (jsonObject.has(deviceKey)) {
-                            JSONObject deviceProps = jsonObject.getJSONObject(deviceKey);
-                            JSONArray packages = jsonObject.getJSONArray(key);
-                            for (int i = 0; i < packages.length(); i++) {
-                                String packageName = packages.getString(i);
-                                Log.d(TAG, "Spoofing package: " + packageName);
-                                setGameProps(packageName, deviceProps);
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error reading Game Props JSON or setting properties", e);
-        }
-        mHandler.postDelayed(() -> {
-            SystemRestartUtils.showSystemRestartDialog(getContext());
-        }, 1250);
-    }
-
-    private void setGameProps(String packageName, JSONObject deviceProps) {
-        try {
-            for (Iterator<String> it = deviceProps.keys(); it.hasNext(); ) {
-                String key = it.next();
-                String value = deviceProps.getString(key);
-                String systemPropertyKey = "persist.sys.gameprops." + packageName + "." + key;
-                SystemProperties.set(systemPropertyKey, value);
-                Log.d(TAG, "Set system property: " + systemPropertyKey + " = " + value);
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, "Error parsing device properties", e);
-        }
-    }
-
-    private void showAppSelectionDialog() {
-        new Thread(() -> {
-            PackageManager pm = getContext().getPackageManager();
-            List<ApplicationInfo> allApps = pm.getInstalledApplications(0);
-            List<ApplicationInfo> filteredApps = allApps.stream()
-                    .filter(app -> includeSystemApps || (app.flags & ApplicationInfo.FLAG_SYSTEM) == 0)
-                    .filter(app -> (app.flags & ApplicationInfo.FLAG_HAS_CODE) != 0)
-                    .filter(app -> !app.packageName.equals(app.loadLabel(pm).toString())) // auto generated overlays usually use the package name as app label
-                    .sorted(Comparator.comparing(app -> app.loadLabel(pm).toString()))
-                    .collect(Collectors.toList());
-            Set<String> selectedPackages = new HashSet<>(Arrays.asList(SystemProperties.get("persist.sys.spoof.extra", "").split(",")));
-            Set<String> defaultPackages = new HashSet<>(Arrays.asList(PropsHooksUtils.DEFAULT_PACKAGES_TO_SPOOF));
-            selectedPackages.addAll(defaultPackages);
-            mHandler.post(() -> {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle(R.string.select_apps_to_spoof);
-                LinearLayout layout = new LinearLayout(getContext());
-                layout.setOrientation(LinearLayout.VERTICAL);
-                layout.setPadding(32, 32, 32, 32);
-                EditText searchBar = new EditText(getContext());
-                searchBar.setHint(R.string.search_apps);
-                layout.addView(searchBar);
-                ListView listView = new ListView(getContext());
-                layout.addView(listView);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_multiple_choice);
-                listView.setAdapter(adapter);
-                listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-                Map<String, ApplicationInfo> appMap = new HashMap<>();
-                for (ApplicationInfo app : filteredApps) {
-                    String label = app.loadLabel(pm).toString();
-                    adapter.add(label);
-                    appMap.put(label, app);
-                }
-                for (int i = 0; i < adapter.getCount(); i++) {
-                    String label = adapter.getItem(i);
-                    ApplicationInfo app = appMap.get(label);
-                    if (app != null && selectedPackages.contains(app.packageName)) {
-                        listView.setItemChecked(i, true);
-                    }
-                }
-                searchBar.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        String query = s.toString().toLowerCase();
-                        adapter.clear();
-                        for (ApplicationInfo app : filteredApps) {
-                            if (app.loadLabel(pm).toString().toLowerCase().contains(query)) {
-                                adapter.add(app.loadLabel(pm).toString());
-                            }
-                        }
-                    }
-                    @Override
-                    public void afterTextChanged(Editable s) {}
-                });
-                listView.setOnItemClickListener((parent, view, position, id) -> {
-                    String label = adapter.getItem(position);
-                    ApplicationInfo app = appMap.get(label);
-                    if (app != null) {
-                        String packageName = app.packageName;
-                        if (defaultPackages.contains(packageName)) {
-                            Toast.makeText(getContext(), R.string.toast_app_spoofing_default_package, Toast.LENGTH_SHORT).show();
-                            listView.setItemChecked(position, true);
-                        } else {
-                            if (listView.isItemChecked(position)) {
-                                PropsHooksUtils.addExtraPackage(packageName);
-                                selectedPackages.add(packageName);
-                                Toast.makeText(getContext(), getString(R.string.toast_app_spoofing_success_add, label), Toast.LENGTH_SHORT).show();
-                            } else {
-                                PropsHooksUtils.removeExtraPackage(packageName);
-                                selectedPackages.remove(packageName);
-                                Toast.makeText(getContext(), getString(R.string.toast_app_spoofing_success_remove, label), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
-                builder.setView(layout);
-                builder.setPositiveButton(R.string.save, (dialog, which) -> SystemRestartUtils.showSystemRestartDialog(getContext()));
-                builder.setNegativeButton(android.R.string.cancel, null);
-                builder.setNeutralButton(R.string.toggle_system_apps, (dialog, which) -> {
-                    includeSystemApps = !includeSystemApps;
-                    showAppSelectionDialog();
-                });
-                builder.show();
-            });
-        }).start();
-    }
-
-    private void showAppSelectionDialogWithSystemApps(boolean showSystemApps) {
-        includeSystemApps = showSystemApps;
-        showAppSelectionDialog();
-    }
-
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        final Context context = getContext();
+        final ContentResolver resolver = context.getContentResolver();
         if (preference == mGmsSpoof
-            || preference == mPropOptions
             || preference == mGoogleSpoof
             || preference == mGphotosSpoof
             || preference == mGamePropsSpoof
-            || preference == mVending32Spoof) {
+            || preference == mQsbSpoof
+            || preference == mSnapSpoof
+            || preference == mVendingSpoof) {
             SystemRestartUtils.showSystemRestartDialog(getContext());
             return true;
         }
@@ -465,20 +350,18 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
 
     @Override
     public int getMetricsCategory() {
-        return MetricsProto.MetricsEvent.VIEW_UNKNOWN;
+        return MetricsEvent.VIEW_UNKNOWN;
     }
 
-    /**
-     * For search
-     */
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
-            new BaseSearchIndexProvider(R.xml.rising_settings_spoof) {
+        new BaseSearchIndexProvider(R.xml.rising_settings_spoof) {
 
-                @Override
-                public List<String> getNonIndexableKeys(Context context) {
-                    List<String> keys = super.getNonIndexableKeys(context);
+            @Override
+            public List<String> getNonIndexableKeys(Context context) {
+                List<String> keys = super.getNonIndexableKeys(context);
+                final Resources resources = context.getResources();
 
-                    return keys;
-                }
-            };
+                return keys;
+            }
+        };
 }
