@@ -56,11 +56,11 @@
             android:defaultValue="false"
             android:dependency="heads_up_notifications_enabled" />
 
-        <com.android.settings.preferences.SystemSettingSwitchPreference
-            android:key="ongoing_action_chip"
-            android:title="@string/ongoing_action_chip_title"
-            android:summary="@string/ongoing_action_chip_summary"
-            android:defaultValue="true" /> 
+        <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="ongoing_progress_settings"
+            android:title="@string/ongoing_progress_settings_title"
+            android:summary="@string/ongoing_progress_settings_summary"
+            android:fragment="com.rising.settings.fragments.OngoingProgressBar" />
 
         <!-- Island notification -->
         <com.android.settings.preferences.ui.AdaptivePreference
