@@ -97,11 +97,15 @@
     <string-array name="freeform_launch_mode_entries">
         <item>@string/freeform_launch_mode_1</item>
         <item>@string/freeform_launch_mode_2</item>
+        <item>@string/freeform_launch_mode_3</item>
+        <item>@string/freeform_launch_mode_4</item>
     </string-array>
 
     <string-array name="freeform_launch_mode_values" translatable="false">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
 
     <!-- Apps list to hide from Hide developer status setting -->
