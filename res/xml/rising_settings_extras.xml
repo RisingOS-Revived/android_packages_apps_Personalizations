@@ -79,6 +79,13 @@
             android:summary="%s"
          />
 
+        <!-- PopUP View -->
+        <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="pop_up_view_settings"
+            android:title="@string/pop_up_view_title" 
+            android:summary="@string/pop_up_view_info" 
+            android:fragment="com.rising.settings.fragments.popup.PopUpViewSettingsFragment"/>
+
         <!-- Sidebar -->
         <com.android.settings.preferences.ui.AdaptivePreference
             android:key="sidebar"
