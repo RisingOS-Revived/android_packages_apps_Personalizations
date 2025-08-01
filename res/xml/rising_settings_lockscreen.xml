@@ -197,12 +197,20 @@
         android:key="lockscreen_misc_category"
         android:title="@string/misc_title">
 
+        <!-- AOD wallpaper -->
+        <com.android.settings.preferences.OverlaySwitchPreference
+            android:key="com.android.aod.wallpaper"
+            android:title="@string/aod_wallpaper_title"
+            android:summary="@string/aod_wallpaper_summary"
+            android:defaultValue="false"
+            lineage:position="top" />
+
         <com.android.settings.preferences.SystemSettingSwitchPreference
                android:key="lockscreen_enable_power_menu"
                android:title="@string/lockscreen_enable_power_menu_title"
                android:summary="@string/lockscreen_enable_power_menu_summary"
                android:defaultValue="true"
-               lineage:position="solo" />
+               lineage:position="bottom" />
 
     </PreferenceCategory>
 

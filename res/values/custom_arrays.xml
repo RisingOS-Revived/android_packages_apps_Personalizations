@@ -15,6 +15,12 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Base attributes available to OverlaySwitchPreference. -->
+    <declare-styleable name="OverlaySwitchPreference">
+        <attr name="dkey" format="string" />
+        <attr name="dkeyNightOnly" format="boolean" />
+    </declare-styleable>
+
     <!-- Pop-Up View -->
     <string-array name="pop_up_view_tap_action_entries">
         <item>@string/pop_up_view_action_enter_pinned</item>

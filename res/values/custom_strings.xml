@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- AOD wallpaper -->
+    <string name="aod_wallpaper_title">AOD wallpaper</string>
+    <string name="aod_wallpaper_summary">Show wallpaper when aod on</string>
+
     <!-- Per-app configs -->
     <string name="per_app_config_empty_text">No installed apps support current settings</string>
     <string name="per_app_config_no_result_text">No apps found matching \"%1$s\"</string>
