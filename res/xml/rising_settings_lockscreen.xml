@@ -205,6 +205,12 @@
             android:defaultValue="false"
             lineage:position="top" />
 
+        <com.android.settings.preferences.SecureSettingSwitchPreference
+            android:key="keyguard_affordance_single_tap"
+            android:title="@string/keyguard_affordance_single_tap_title"
+            android:summary="@string/keyguard_affordance_single_tap_summary"
+            android:defaultValue="false" />
+
         <com.android.settings.preferences.SystemSettingSwitchPreference
                android:key="lockscreen_enable_power_menu"
                android:title="@string/lockscreen_enable_power_menu_title"

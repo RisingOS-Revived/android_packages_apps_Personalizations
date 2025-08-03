@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Single tap for keyguard affordance -->
+    <string name="keyguard_affordance_single_tap_title">Keyguard affordance single tap</string>
+    <string name="keyguard_affordance_single_tap_summary">Toggle keyguard affordances with a single tap</string>
+
     <!-- AOD wallpaper -->
     <string name="aod_wallpaper_title">AOD wallpaper</string>
     <string name="aod_wallpaper_summary">Show wallpaper when aod on</string>
