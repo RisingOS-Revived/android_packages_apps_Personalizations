@@ -56,6 +56,12 @@
             android:defaultValue="false"
             android:dependency="heads_up_notifications_enabled" />
 
+        <com.android.settings.preferences.SystemSettingSwitchPreference
+            android:key="small_landscape_notification"
+            android:title="@string/small_landscape_notification_title"
+            android:summary="@string/small_landscape_notification_summary"
+            android:defaultValue="true" />
+
         <com.android.settings.preferences.ui.AdaptivePreference
             android:key="ongoing_progress_settings"
             android:title="@string/ongoing_progress_settings_title"
