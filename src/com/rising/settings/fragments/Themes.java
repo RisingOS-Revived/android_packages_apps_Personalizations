@@ -31,6 +31,9 @@ import com.android.settingslib.search.SearchIndexable;
 
 import com.android.internal.util.android.ThemeUtils;
 
+import com.android.settings.preferences.GlobalSettingListPreference;
+import com.android.settings.utils.SystemRestartUtils;
+
 import java.util.List;
 
 @SearchIndexable
@@ -42,6 +45,8 @@ public class Themes extends SettingsPreferenceFragment implements
     private static final String KEY_NOTIF_STYLE = "notification_style";
     private static final String KEY_POWERMENU_STYLE = "powermenu_style";
     private static final String KEY_HIDE_IME_STYLE = "hide_ime_space_style";
+    private static final String KEY_LOCK_SOUND = "lock_sound";
+    private static final String KEY_UNLOCK_SOUND = "unlock_sound";
 
     private static final String[] POWER_MENU_OVERLAYS = {
             "com.android.theme.powermenu.cyberpunk",
@@ -74,6 +79,8 @@ public class Themes extends SettingsPreferenceFragment implements
     private Preference mNotificationStylePref;
     private Preference mPowerMenuStylePref;
     private Preference mHideImePref;
+    private GlobalSettingListPreference mLockSound;
+    private GlobalSettingListPreference mUnlockSound;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,6 +100,11 @@ public class Themes extends SettingsPreferenceFragment implements
         mHideImePref = findPreference(KEY_HIDE_IME_STYLE);
         mHideImePref.setOnPreferenceChangeListener(this);
 
+        mLockSound = (GlobalSettingListPreference) findPreference(KEY_LOCK_SOUND);
+        mLockSound.setOnPreferenceChangeListener(this);
+        mUnlockSound = (GlobalSettingListPreference) findPreference(KEY_UNLOCK_SOUND);
+        mUnlockSound.setOnPreferenceChangeListener(this);
+
         com.android.settingslib.widget.LayoutPreference highlightPref = getPreferenceScreen().findPreference("themes_highlight_dashboard");
         if (highlightPref != null) {
             java.util.Map<Integer, String> highlightClickMap = new java.util.HashMap<>();
@@ -104,7 +116,7 @@ public class Themes extends SettingsPreferenceFragment implements
         }
     }
 
-    private void updateStyle(String key, String category, String target, 
+    private void updateStyle(String key, String category, String target,
             int defaultValue, String[] overlayPackages, boolean restartSystemUI) {
         final int style = Settings.System.getIntForUser(
                 getContext().getContentResolver(),
@@ -142,8 +154,12 @@ public class Themes extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        int value = Integer.parseInt((String) newValue);
+        if (preference == mLockSound || preference == mUnlockSound) {
+            SystemRestartUtils.showSystemUIRestartDialog(getContext());
+            return true;
+        }
 
+        int value = Integer.parseInt((String) newValue);
         if (preference == mProgressBarPref) {
             Settings.System.putIntForUser(getActivity().getContentResolver(),
                     KEY_PGB_STYLE, value, UserHandle.USER_CURRENT);
