@@ -17,10 +17,12 @@ package com.rising.settings
 
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.animation.TimeInterpolator
 import android.content.Context
 import android.os.Build
 import android.os.Handler
 import android.os.SystemProperties
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.preference.PreferenceScreen
@@ -29,10 +31,23 @@ import com.android.settingslib.core.AbstractPreferenceController
 import com.android.settingslib.widget.LayoutPreference
 import com.android.settings.utils.DeviceInfoUtil
 
+class InOutExpoInterpolator : TimeInterpolator {
+    override fun getInterpolation(t: Float): Float {
+        return when {
+            t == 0f -> 0f
+            t == 1f -> 1f
+            t < 0.5f -> (Math.pow(2.0, (20 * t - 10).toDouble()) / 2).toFloat()
+            else -> ((2 - Math.pow(2.0, (-20 * t + 10).toDouble())) / 2f).toFloat()
+        }
+    }
+}
+
 class riseInfoPreferenceController(context: Context) : AbstractPreferenceController(context) {
 
     private val defaultFallback = mContext.getString(R.string.device_info_default)
-    private var firmwareVersionTextView: TextView? = null
+    private var versionTextView1: TextView? = null
+    private var versionTextView2: TextView? = null
+    private var isTextView1Visible = true
 
     private val handler = Handler()
     private val updateTextRunnable = object : Runnable {
@@ -45,9 +60,7 @@ class riseInfoPreferenceController(context: Context) : AbstractPreferenceControl
 
     private val versionMessages = listOf(
         "#${getProp(PROP_RISING_CODE)}",
-        "${getProp(PROP_RISING_CODE)}?",
-        "v ${getRisingVersion()}",
-        "${getRisingVersion() + 1} soon?"
+        "v ${getRisingVersion()}"
     )
 
     private fun getProp(propName: String): String {
@@ -108,8 +121,13 @@ class riseInfoPreferenceController(context: Context) : AbstractPreferenceControl
             maintainerTextView?.text = risingMaintainer
             maintainerTextView?.isSelected = true
 
-            firmwareVersionTextView = swPref.findViewById(R.id.firmware_version)
-            firmwareVersionTextView?.text = versionMessages[currentMessageIndex]
+            versionTextView1 = swPref.findViewById(R.id.firmware_version_1)
+            versionTextView2 = swPref.findViewById(R.id.firmware_version_2)
+
+            // Set the initial text and visibility
+            versionTextView1?.text = versionMessages[currentMessageIndex]
+            versionTextView1?.visibility = View.VISIBLE
+            versionTextView2?.visibility = View.GONE
 
             swPref.findViewById<TextView>(R.id.firmware_status)?.text = getRisingBuildStatus(releaseType).lowercase()
             swPref.findViewById<ImageView>(R.id.firmware_status_icon)?.setImageResource(
@@ -130,19 +148,43 @@ class riseInfoPreferenceController(context: Context) : AbstractPreferenceControl
     }
 
     private fun animateTextChange() {
-        firmwareVersionTextView?.let { textView ->
-            val fadeOut = ObjectAnimator.ofFloat(textView, "alpha", 1f, 0f)
-            fadeOut.duration = 300
-            fadeOut.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: android.animation.Animator) {
-                    currentMessageIndex = (currentMessageIndex + 1) % versionMessages.size
-                    textView.text = versionMessages[currentMessageIndex]
-                    val fadeIn = ObjectAnimator.ofFloat(textView, "alpha", 0f, 1f)
-                    fadeIn.duration = 300
-                    fadeIn.start()
+        val outView = if (isTextView1Visible) versionTextView1 else versionTextView2
+        val inView = if (isTextView1Visible) versionTextView2 else versionTextView1
+        val inOutExpoInterpolator = InOutExpoInterpolator()
+
+        outView?.let { outTv ->
+            inView?.let { inTv ->
+                val width = outTv.width.takeIf { it > 0 }?.toFloat() ?: 200f // fallback width if not measured yet
+                currentMessageIndex = (currentMessageIndex + 1) % versionMessages.size
+                inTv.text = versionMessages[currentMessageIndex]
+
+                // Prepare the incoming view
+                inTv.alpha = 0f
+                inTv.translationX = width
+                inTv.visibility = View.VISIBLE
+
+                // Animate outgoing view: fade out and move left
+                outTv.animate()
+                .alpha(0f)
+                .translationX(-width / 2)
+                .setDuration(600)
+                .setInterpolator(inOutExpoInterpolator)
+                .start()
+
+                // Animate incoming view: fade in and move to center from right
+                inTv.animate()
+                .alpha(1f)
+                .translationX(0f)
+                .setDuration(600)
+                .setInterpolator(inOutExpoInterpolator)
+                .withEndAction {
+                    outTv.visibility = View.GONE
+                    outTv.alpha = 1f
+                    outTv.translationX = 0f
+                    isTextView1Visible = !isTextView1Visible
                 }
-            })
-            fadeOut.start()
+                .start()
+            }
         }
     }
 
