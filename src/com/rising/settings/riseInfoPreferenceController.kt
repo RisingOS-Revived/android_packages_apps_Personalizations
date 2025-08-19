@@ -31,14 +31,10 @@ import com.android.settingslib.core.AbstractPreferenceController
 import com.android.settingslib.widget.LayoutPreference
 import com.android.settings.utils.DeviceInfoUtil
 
-class InOutExpoInterpolator : TimeInterpolator {
+class OutExpoInterpolator : TimeInterpolator {
     override fun getInterpolation(t: Float): Float {
-        return when {
-            t == 0f -> 0f
-            t == 1f -> 1f
-            t < 0.5f -> (Math.pow(2.0, (20 * t - 10).toDouble()) / 2).toFloat()
-            else -> ((2 - Math.pow(2.0, (-20 * t + 10).toDouble())) / 2f).toFloat()
-        }
+        return if (t == 1f) 1f
+        else (1 - Math.pow(2.0, (-10 * t).toDouble())).toFloat()
     }
 }
 
@@ -150,7 +146,7 @@ class riseInfoPreferenceController(context: Context) : AbstractPreferenceControl
     private fun animateTextChange() {
         val outView = if (isTextView1Visible) versionTextView1 else versionTextView2
         val inView = if (isTextView1Visible) versionTextView2 else versionTextView1
-        val inOutExpoInterpolator = InOutExpoInterpolator()
+        val outExpoInterpolator = OutExpoInterpolator()
 
         outView?.let { outTv ->
             inView?.let { inTv ->
@@ -168,7 +164,7 @@ class riseInfoPreferenceController(context: Context) : AbstractPreferenceControl
                 .alpha(0f)
                 .translationX(-width / 2)
                 .setDuration(600)
-                .setInterpolator(inOutExpoInterpolator)
+                .setInterpolator(outExpoInterpolator)
                 .start()
 
                 // Animate incoming view: fade in and move to center from right
@@ -176,7 +172,7 @@ class riseInfoPreferenceController(context: Context) : AbstractPreferenceControl
                 .alpha(1f)
                 .translationX(0f)
                 .setDuration(600)
-                .setInterpolator(inOutExpoInterpolator)
+                .setInterpolator(outExpoInterpolator)
                 .withEndAction {
                     outTv.visibility = View.GONE
                     outTv.alpha = 1f
