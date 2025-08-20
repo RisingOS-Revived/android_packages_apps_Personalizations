@@ -2447,6 +2447,7 @@
     <string name="system_animation_style_title">System animation style</string>
     <string name="pie_system_animation_style">Android P</string>
     <string name="scale_system_animation_style">Scale</string>
+    <string name="slide_system_animation_style">Slide</string>
 
     <!-- Selected app spoofing -->
     <string name="select_apps_to_spoof">Select Apps to Spoof</string>
