@@ -15,6 +15,21 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!--Brightness Slider Shape -->
+    <string-array name="qs_brightness_slider_shape_entries">
+        <item>@string/default_value</item>
+        <item>@string/quick_settings_tile_shape_circle</item>
+        <item>@string/quick_settings_tile_shape_rounded_square</item>
+        <item>@string/quick_settings_tile_shape_square</item>
+    </string-array>
+
+    <string-array name="qs_brightness_slider_shape_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <!-- Themes - Lock/Unlock Sounds -->
     <string-array name="themes_lock_unlock_sounds_entries" translatable="false">
         <item>Default</item>
