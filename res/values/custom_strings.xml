@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Notification Row -->
+    <string name="notification_row_transparency_title">Notification row transparency</string>
+    <string name="notification_row_transparency_summary">Show translucent quicksettings notifications</string>
+
     <!-- NT Three finger -->
     <string name="nt_gesture_three_finger_swipe">Three finger swipe</string>
     <string name="nt_gesture_three_finger_swipe_summary">Swipe down with three fingers to perform actions.</string>
