@@ -15,6 +15,12 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Brightness Slider Style -->
+    <string name="qs_brightness_slider_shape_title">New QS Brightness slider shape</string>
+    <string name="quick_settings_tile_shape_circle">Circle</string>
+    <string name="quick_settings_tile_shape_rounded_square">Rounded square</string>
+    <string name="quick_settings_tile_shape_square">Square</string>
+
     <!-- Power off verify -->
     <string name="power_off_verify_footer">Power off verification protects your device by preventing others from turning it off immediately after it\'s lost, increasing the chances of recovery. You only need to enter your lock screen password when powering off or restarting the phone from the lock screen.</string>
     <string name="power_off_verify_summary">When your device is locked, you\'ll need to use your password to power off or restart.</string>
