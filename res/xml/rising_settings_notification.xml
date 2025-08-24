@@ -29,7 +29,14 @@
         android:title="@string/notification_sound_vib_screen_on_title"
         android:summary="@string/notification_sound_vib_screen_on_summary"
         android:defaultValue="true"
-        lineage:position="solo" />
+        lineage:position="top" />
+
+    <com.android.settings.preferences.SecureSettingSwitchPreference
+        android:key="notification_row_transparency"
+        android:title="@string/notification_row_transparency_title"
+        android:summary="@string/notification_row_transparency_summary"
+        android:defaultValue="false"
+        lineage:position="bottom" />
 
     <PreferenceCategory
         android:key="heads_up"
