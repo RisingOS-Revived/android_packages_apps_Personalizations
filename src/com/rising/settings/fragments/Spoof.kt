@@ -117,7 +117,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         mTensorFeaturesToggle = findPreference(SYS_ENABLE_TENSOR_FEATURES)
 
         val model = SystemProperties.get("ro.product.model")
-        val isTensorDevice = model.matches(Regex("Pixel [6-9][a-zA-Z ]*"))
+        val isTensorDevice = model.matches(Regex("Pixel (6|7|8|9|10)[a-zA-Z ]*"))
         val isPixelGmsEnabled = SystemProperties.getBoolean(SYS_GMS_SPOOF, true) // Default to Pixel GMS
 
         if (DeviceUtils.isCurrentlySupportedPixel()) {
@@ -178,7 +178,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
     }
 
     private fun isMainlineTensorModel(model: String): Boolean {
-        return model.matches(Regex("Pixel [8-9][a-zA-Z ]*"))
+        return model.matches(Regex("Pixel (8|9|10)[a-zA-Z ]*"))
     }
 
     private fun openFileSelector(requestCode: Int) {
