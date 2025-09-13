@@ -20,20 +20,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/extras_toolbox_title">
 
-        <com.android.settings.preferences.ui.AdaptivePreference
-            android:key="ai_assistant"
-            android:title="@string/ai_assistant_title"
-            android:summary="@string/ai_assistant_summary"
-            android:fragment="com.rising.settings.fragments.Assistant"
-            app:position="top" />
-
         <!-- Floating rotation button -->
         <com.android.settings.preferences.SecureSettingSwitchPreference
             android:key="show_rotation_suggestions"
             android:title="@string/floating_rotation_button_title"
             android:summary="@string/floating_rotation_button_summary"
             android:defaultValue="true"
-            />
+            app:position="top" />
 
         <!-- Idle manager -->
         <com.android.settings.preferences.SystemSettingSwitchPreference
