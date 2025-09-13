@@ -36,8 +36,8 @@
             android:title="@string/shake_gestures_action_title"
             android:summary="%s"
             android:dialogTitle="@string/shake_gestures_action_title"
-            android:entries="@array/hardware_keys_action_entries"
-            android:entryValues="@array/hardware_keys_action_values"
+            android:entries="@array/gesture_actions_entries"
+            android:entryValues="@array/gesture_actions_values"
             android:defaultValue="0"
             app:isLineageSettings="true"
             android:dependency="shake_gestures_enabled" />
@@ -67,28 +67,13 @@
         android:key="three_finger_gestures"
         android:title="@string/three_finger_gestures_title">
 
-        <!-- Three fingers swipe action -->
-        <com.android.settings.preferences.SystemSettingListPreference
-            android:key="three_fingers_swipe_action"
-            android:dialogTitle="@string/three_finger_gesture_action_dialog_title"
-            android:title="@string/three_finger_gesture_action_title"
-            android:entries="@array/hardware_keys_action_entries"
-            android:entryValues="@array/hardware_keys_action_values"
-            android:defaultValue="0"
-            app:isLineageSettings="true"
-            app:position="top" />
-            
-        <!-- Three-fingers long press gestures -->
-        <com.android.settings.preferences.SystemSettingListPreference
-            android:key="three_finger_long_press_action"
-            android:title="@string/three_finger_long_press_action_title"
-            android:summary="%s"
-            android:dialogTitle="@string/three_finger_long_press_action_dialog_title"
-            android:entries="@array/hardware_keys_action_entries"
-            android:entryValues="@array/hardware_keys_action_values"
-            android:defaultValue="0"
-            app:isLineageSettings="true"
-            app:position="bottom" />
+        <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="gesture_three_fingers_swipe_action"
+            android:title="@string/nt_gesture_three_finger_swipe"
+            android:summary="@string/nt_gesture_three_finger_swipe_summary"
+            android:fragment="com.android.settings.gestures.ThreeFingerSwipeSettings"
+            settings:searchable="false"
+            settings:controller="com.android.settings.gestures.ThreeFingerSwipePreferenceController" />
 
     </PreferenceCategory>
 
