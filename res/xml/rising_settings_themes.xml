@@ -105,6 +105,14 @@
              android:summary="%s"
              android:defaultValue="0" />
 
+        <!-- Icon pack style -->
+        <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="android.theme.customization.icon_pack.android"
+            android:icon="@drawable/ic_themes"
+            android:title="@string/theme_customization_icon_pack_title"
+            android:summary="@string/theme_customization_icon_pack_summary"
+            android:fragment="com.rising.settings.fragments.ui.StatusbarIcons"/>
+
         <!-- Signal icon style -->
         <com.android.settings.preferences.ui.AdaptivePreference
             android:key="android.theme.customization.signal_icon"
