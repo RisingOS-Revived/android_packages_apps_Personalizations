@@ -340,6 +340,12 @@
     <string name="peek_display_notifications_summary">Minimal lockscreen notification style</string>
     <string name="peek_display_location_title">Peek display location</string>
     <string name="peek_display_bottom_margin_title">Peek display (bottom) top margin</string>
+    <string name="peek_display_vertical_offset_title">Vertical offset</string>
+    <string name="peek_display_vertical_offset_summary">Adjust the vertical position of peek display notifications</string>
+    <string name="peek_display_always_visible_title">Always visible</string>
+    <string name="peek_display_always_visible_summary">Keep peek display notifications visible until manually dismissed</string>
+    <string name="peek_display_timeout_title">Auto dismiss timeout</string>
+    <string name="peek_display_timeout_summary">Time in seconds before peek display notifications automatically disappear</string>
 
     <!-- Dashboard Revamped -->
     <string name="colors_title">Colours</string>

@@ -28,6 +28,9 @@ import com.android.settingslib.widget.LayoutPreference
 
 class PersonalizationSettingsController(context: Context) : AbstractPreferenceController(context) {
 
+    // Cache for findViewById results to improve performance
+    private val viewCache = mutableMapOf<Int, View?>()
+    
     override fun displayPreference(screen: PreferenceScreen) {
         super.displayPreference(screen)
         screen.findPreference<LayoutPreference>(KEY_PERSONALIZATIONS)?.let { personalizationPref ->
@@ -51,9 +54,19 @@ class PersonalizationSettingsController(context: Context) : AbstractPreferenceCo
             R.id.clock_face to "com.android.settings.Settings\$PersonalizationsClockFacesActivity",
             R.id.whats_new to "com.rising.settings.fragments.about.ChangelogActivity"
         )
+        
         personalizationsClickMap.forEach { (viewId, activityName) ->
-            preference.findViewById<View>(viewId)?.setOnClickListener {
-                mContext.startActivity(createIntent(activityName))
+            // Use cached findViewById to improve performance
+            val view = viewCache.getOrPut(viewId) { 
+                preference.findViewById<View>(viewId) 
+            }
+            view?.setOnClickListener {
+                try {
+                    mContext.startActivity(createIntent(activityName))
+                } catch (e: Exception) {
+                    // Graceful error handling for missing activities
+                    android.util.Log.w("PersonalizationController", "Failed to start activity: $activityName", e)
+                }
             }
         }
     }
