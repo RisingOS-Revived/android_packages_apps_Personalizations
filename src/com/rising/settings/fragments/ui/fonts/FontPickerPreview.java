@@ -41,13 +41,13 @@ import androidx.fragment.app.Fragment;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.List;
 
-public class FontPickerPreview extends SettingsPreferenceFragment {
+public class FontPickerPreview extends OptimizedSettingsFragment {
 
     private TextView fontSelector;
     private TextView previewText;
@@ -86,9 +86,9 @@ public class FontPickerPreview extends SettingsPreferenceFragment {
         
         List<String> fontPackageNames = fontManager.getAllFontPackages();
 
-        int backgroundColor = ContextCompat.getColor(getContext(), 
+        int backgroundColor = ContextCompat.getColor(getSafeContext(), 
                 isNightMode() ? R.color.font_drop_down_bg_dark : R.color.font_drop_down_bg_light);
-        fontSelector.setTextColor(ContextCompat.getColor(getContext(), isNightMode() 
+        fontSelector.setTextColor(ContextCompat.getColor(getSafeContext(), isNightMode() 
                 ? R.color.font_drop_down_bg_light 
                 : R.color.font_drop_down_bg_dark));
         fontSelector.setBackgroundTintList(ColorStateList.valueOf(backgroundColor));
@@ -111,7 +111,7 @@ public class FontPickerPreview extends SettingsPreferenceFragment {
                 currentFontPosition = position;
                 String fontPackage = fontPackageNames.get(currentFontPosition);
                 applyFontToPreview(fontPackage);
-                fontSelector.setText(fontManager.getLabel(getContext(), fontPackage));
+                fontSelector.setText(fontManager.getLabel(getSafeContext(), fontPackage));
                 popupWindow.dismiss();
             });
 
@@ -136,7 +136,7 @@ public class FontPickerPreview extends SettingsPreferenceFragment {
         String currentFontPackage = fontManager.getCurrentFontPackage();
         currentFontPosition = fontPackageNames.indexOf(currentFontPackage);
         if (currentFontPosition != -1) {
-            fontSelector.setText(fontManager.getLabel(getContext(), fontPackageNames.get(currentFontPosition)));
+            fontSelector.setText(fontManager.getLabel(getSafeContext(), fontPackageNames.get(currentFontPosition)));
             applyFontToPreview(fontPackageNames.get(currentFontPosition));
         }
 
@@ -144,12 +144,12 @@ public class FontPickerPreview extends SettingsPreferenceFragment {
     }
 
     private boolean isNightMode() {
-        int nightModeFlags = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        int nightModeFlags = getSafeContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
     }
 
     private void applyFontToPreview(String fontPackage) {
-        Typeface typeface = fontManager.getTypeface(getContext(), fontPackage);
+        Typeface typeface = fontManager.getTypeface(getSafeContext(), fontPackage);
         if (typeface != null) {
             previewText.setTypeface(typeface);
         } else {

@@ -18,13 +18,13 @@ import androidx.preference.PreferenceScreen;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settingslib.search.SearchIndexable;
 
 import java.util.List;
 
 @SearchIndexable
-public class IslandSettings extends SettingsPreferenceFragment implements
+public class IslandSettings extends OptimizedSettingsFragment implements
         Preference.OnPreferenceChangeListener {
 
     private static final String TAG = "IslandSettings";
@@ -34,7 +34,9 @@ public class IslandSettings extends SettingsPreferenceFragment implements
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.island_settings);
 
-        final Context context = getContext();
+        final Context context = getSafeContext();
+        if (context == null) return;
+        
         final ContentResolver resolver = context.getContentResolver();
         final PreferenceScreen prefScreen = getPreferenceScreen();
         final Resources resources = context.getResources();
@@ -42,7 +44,9 @@ public class IslandSettings extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        final Context context = getContext();
+        final Context context = getSafeContext();
+        if (context == null) return false;
+        
         final ContentResolver resolver = context.getContentResolver();
         return false;
     }

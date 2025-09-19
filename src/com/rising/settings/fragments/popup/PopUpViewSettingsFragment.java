@@ -14,12 +14,12 @@ import com.android.internal.logging.nano.MetricsProto;
 import com.android.internal.util.android.PopUpSettingsHelper;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
 import com.android.settings.preferences.SystemSettingListPreference;
 import com.android.settings.preferences.SystemSettingSwitchPreference;
 
-public class PopUpViewSettingsFragment extends SettingsPreferenceFragment implements
+public class PopUpViewSettingsFragment extends OptimizedSettingsFragment implements
         Preference.OnPreferenceChangeListener {
 
     private static final String KEY_KEEP_MUTE = "pop_up_keep_mute_in_mini";
@@ -43,12 +43,12 @@ public class PopUpViewSettingsFragment extends SettingsPreferenceFragment implem
         addPreferencesFromResource(R.xml.pop_up_view_settings);
 
 
-        mKeepMuteInMini = (SystemSettingSwitchPreference) findPreference(KEY_KEEP_MUTE);
-        mSingleTapAction = (SystemSettingListPreference) findPreference(KEY_SINGLE_TAP_ACTION);
-        mDoubleTapAction = (SystemSettingListPreference) findPreference(KEY_DOUBLE_TAP_ACTION);
-        mNotifPortrait = (SystemSettingSwitchPreference) findPreference(KEY_NOTIFICATION_PORTRAIT);
-        mNotifLandscape = (SystemSettingSwitchPreference) findPreference(KEY_NOTIFICATION_LANDSCAPE);
-        mNotifBlacklist = (Preference) findPreference(KEY_NOTIFICATION_BLACKLIST);
+        mKeepMuteInMini = (SystemSettingSwitchPreference) findCachedPreference(KEY_KEEP_MUTE);
+        mSingleTapAction = (SystemSettingListPreference) findCachedPreference(KEY_SINGLE_TAP_ACTION);
+        mDoubleTapAction = (SystemSettingListPreference) findCachedPreference(KEY_DOUBLE_TAP_ACTION);
+        mNotifPortrait = (SystemSettingSwitchPreference) findCachedPreference(KEY_NOTIFICATION_PORTRAIT);
+        mNotifLandscape = (SystemSettingSwitchPreference) findCachedPreference(KEY_NOTIFICATION_LANDSCAPE);
+        mNotifBlacklist = (Preference) findCachedPreference(KEY_NOTIFICATION_BLACKLIST);
 
         mSingleTapAction.setOnPreferenceChangeListener(this);
 

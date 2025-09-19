@@ -34,7 +34,7 @@ import androidx.preference.Preference.OnPreferenceChangeListener;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
 import com.android.settings.preferences.CustomSeekBarPreference;
 import com.android.settings.preferences.SystemSettingListPreference;
@@ -44,7 +44,7 @@ import java.util.Date;
 import lineageos.preference.LineageSystemSettingListPreference;
 import lineageos.providers.LineageSettings;
 
-public class Clock extends SettingsPreferenceFragment
+public class Clock extends OptimizedSettingsFragment
             implements Preference.OnPreferenceChangeListener  {
 
     private static final String TAG = "Clock";
@@ -75,7 +75,7 @@ public class Clock extends SettingsPreferenceFragment
         ContentResolver resolver = getActivity().getContentResolver();
 
         mStatusBarAmPm =
-                (LineageSystemSettingListPreference) findPreference(STATUS_BAR_AM_PM);
+                (LineageSystemSettingListPreference) findCachedPreference(STATUS_BAR_AM_PM);
 
         if (DateFormat.is24HourFormat(getActivity())) {
             mStatusBarAmPm.setEnabled(false);
@@ -85,18 +85,18 @@ public class Clock extends SettingsPreferenceFragment
         int dateDisplay = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_CLOCK_DATE_DISPLAY, 0, UserHandle.USER_CURRENT);
 
-        mClockDateDisplay = (SystemSettingListPreference) findPreference(CLOCK_DATE_DISPLAY);
+        mClockDateDisplay = (SystemSettingListPreference) findCachedPreference(CLOCK_DATE_DISPLAY);
         mClockDateDisplay.setOnPreferenceChangeListener(this);
 
-        mClockDatePosition = (SystemSettingListPreference) findPreference(CLOCK_DATE_POSITION);
+        mClockDatePosition = (SystemSettingListPreference) findCachedPreference(CLOCK_DATE_POSITION);
         mClockDatePosition.setEnabled(dateDisplay > 0);
         mClockDatePosition.setOnPreferenceChangeListener(this);
 
-        mClockDateStyle = (SystemSettingListPreference) findPreference(CLOCK_DATE_STYLE);
+        mClockDateStyle = (SystemSettingListPreference) findCachedPreference(CLOCK_DATE_STYLE);
         mClockDateStyle.setEnabled(dateDisplay > 0);
         mClockDateStyle.setOnPreferenceChangeListener(this);
 
-        mClockDateFormat = (ListPreference) findPreference(CLOCK_DATE_FORMAT);
+        mClockDateFormat = (ListPreference) findCachedPreference(CLOCK_DATE_FORMAT);
         if (mClockDateFormat.getValue() == null) {
             mClockDateFormat.setValue("EEE");
         }

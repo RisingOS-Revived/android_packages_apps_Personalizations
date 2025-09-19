@@ -22,7 +22,7 @@ import androidx.preference.Preference;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
@@ -31,7 +31,7 @@ import com.android.settings.utils.SystemRestartUtils;
 import java.util.List;
 
 @SearchIndexable
-public class Notifications extends SettingsPreferenceFragment implements Preference.OnPreferenceChangeListener {
+public class Notifications extends OptimizedSettingsFragment implements Preference.OnPreferenceChangeListener {
 
     public static final String TAG = "Notifications";
     
@@ -44,14 +44,19 @@ public class Notifications extends SettingsPreferenceFragment implements Prefere
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.rising_settings_notification);
-        mCompactHUNPref = findPreference(COMPACT_HUN_KEY);
-        mCompactHUNPref.setOnPreferenceChangeListener(this);
+        mCompactHUNPref = findCachedPreference(COMPACT_HUN_KEY);
+        if (mCompactHUNPref != null) {
+            mCompactHUNPref.setOnPreferenceChangeListener(this);
+        }
     }
     
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mCompactHUNPref) {
-            SystemRestartUtils.showSystemUIRestartDialog(getContext());
+            Context context = getSafeContext();
+            if (context != null) {
+                SystemRestartUtils.showSystemUIRestartDialog(context);
+            }
             return true;
         }
         return false;

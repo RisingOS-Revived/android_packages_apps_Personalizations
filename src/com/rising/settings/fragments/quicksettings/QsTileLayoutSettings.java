@@ -27,11 +27,11 @@ import androidx.preference.Preference;
 import com.android.internal.logging.nano.MetricsProto;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
 import com.android.settingslib.widget.LayoutPreference;
 
-public class QsTileLayoutSettings extends SettingsPreferenceFragment
+public class QsTileLayoutSettings extends OptimizedSettingsFragment
         implements Preference.OnPreferenceChangeListener {
 
     @Override

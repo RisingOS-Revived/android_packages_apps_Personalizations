@@ -28,12 +28,12 @@ import androidx.preference.Preference.OnPreferenceChangeListener;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settingslib.widget.MainSwitchPreference;
 
 import com.android.settings.preferences.colorpicker.ColorPickerPreference;
 
-public class AdaptivePlayback extends SettingsPreferenceFragment implements
+public class AdaptivePlayback extends OptimizedSettingsFragment implements
         Preference.OnPreferenceChangeListener, OnCheckedChangeListener {
 
     private static final String TAG = AdaptivePlayback.class.getSimpleName();
@@ -48,8 +48,8 @@ public class AdaptivePlayback extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.adaptive_playback_settings);
 
-        mEnable = (MainSwitchPreference) findPreference(PREF_KEY_ENABLE);
-        boolean enable = Settings.System.getIntForUser(getContext().getContentResolver(),
+        mEnable = (MainSwitchPreference) findCachedPreference(PREF_KEY_ENABLE);
+        boolean enable = Settings.System.getIntForUser(getSafeContext().getContentResolver(),
                 Settings.System.ADAPTIVE_PLAYBACK_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
         mEnable.setChecked(enable);
         mEnable.addOnSwitchChangeListener(this);
@@ -64,10 +64,10 @@ public class AdaptivePlayback extends SettingsPreferenceFragment implements
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         mEnable.setChecked(isChecked);
         if (isChecked) {
-            Settings.System.putIntForUser(getContext().getContentResolver(),
+            Settings.System.putIntForUser(getSafeContext().getContentResolver(),
                 Settings.System.ADAPTIVE_PLAYBACK_ENABLED, 1, UserHandle.USER_CURRENT);
         } else {
-            Settings.System.putIntForUser(getContext().getContentResolver(),
+            Settings.System.putIntForUser(getSafeContext().getContentResolver(),
                 Settings.System.ADAPTIVE_PLAYBACK_ENABLED, 0, UserHandle.USER_CURRENT);
         }
     }

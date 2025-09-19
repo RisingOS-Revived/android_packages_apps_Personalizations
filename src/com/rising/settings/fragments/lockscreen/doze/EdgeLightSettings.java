@@ -20,9 +20,9 @@ import android.os.Bundle;
 import com.android.internal.logging.nano.MetricsProto;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
-public class EdgeLightSettings extends SettingsPreferenceFragment {
+public class EdgeLightSettings extends OptimizedSettingsFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

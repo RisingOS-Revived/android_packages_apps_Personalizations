@@ -33,9 +33,9 @@ import androidx.preference.SwitchPreference;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
-public class SmartPixels extends SettingsPreferenceFragment {
+public class SmartPixels extends OptimizedSettingsFragment {
 
     private static final String TAG = "SmartPixels";
 
@@ -47,7 +47,7 @@ public class SmartPixels extends SettingsPreferenceFragment {
 
         addPreferencesFromResource(R.xml.smart_pixels);
 
-        findPreference(SMART_PIXELS_FOOTER).setTitle(R.string.smart_pixels_warning_text);
+        findCachedPreference(SMART_PIXELS_FOOTER).setTitle(R.string.smart_pixels_warning_text);
     }
 
     @Override

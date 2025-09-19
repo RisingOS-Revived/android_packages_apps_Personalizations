@@ -24,14 +24,14 @@ import android.os.UserHandle;
 import android.provider.Settings;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
 import com.android.internal.logging.nano.MetricsProto;
 
 @SearchIndexable
-public class Navigation extends SettingsPreferenceFragment {
+public class Navigation extends OptimizedSettingsFragment {
 
     public static final String TAG = "Navigation";
 

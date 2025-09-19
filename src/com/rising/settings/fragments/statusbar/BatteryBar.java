@@ -31,12 +31,12 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
 import com.android.settings.preferences.colorpicker.ColorPickerPreference;
 import com.android.settings.preferences.CustomSeekBarPreference;
 
-public class BatteryBar extends SettingsPreferenceFragment
+public class BatteryBar extends OptimizedSettingsFragment
             implements Preference.OnPreferenceChangeListener  {
 
     private static final String PREF_BATT_BAR = "statusbar_battery_bar";
@@ -44,7 +44,6 @@ public class BatteryBar extends SettingsPreferenceFragment
     private SwitchPreferenceCompat mBatteryBar;
 
     private boolean mIsBarSwitchingMode = false;
-    private Handler mHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,8 +57,7 @@ public class BatteryBar extends SettingsPreferenceFragment
         int intColor;
         String hexColor;
 
-        mBatteryBar = (SwitchPreferenceCompat) findPreference(PREF_BATT_BAR);
-        mHandler = new Handler();
+        mBatteryBar = (SwitchPreferenceCompat) findCachedPreference(PREF_BATT_BAR);
 
         boolean showing = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUSBAR_BATTERY_BAR, 0, UserHandle.USER_CURRENT) != 0;
@@ -78,13 +76,14 @@ public class BatteryBar extends SettingsPreferenceFragment
             boolean value = ((Boolean)newValue);
             Settings.System.putIntForUser(resolver, Settings.System.STATUSBAR_BATTERY_BAR,
                     value ? 1 : 0, UserHandle.USER_CURRENT);
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mIsBarSwitchingMode = false;
+            postDelayedSafe(() -> {
+                mIsBarSwitchingMode = false;
+                if (isFragmentReady()) {
                     boolean showing = Settings.System.getIntForUser(resolver,
                             Settings.System.STATUSBAR_BATTERY_BAR, 0, UserHandle.USER_CURRENT) != 0;
-                    mBatteryBar.setChecked(showing);
+                    if (mBatteryBar != null) {
+                        mBatteryBar.setChecked(showing);
+                    }
                 }
             }, 1500);
             return true;

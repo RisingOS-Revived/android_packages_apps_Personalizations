@@ -30,7 +30,7 @@ import androidx.preference.Preference;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
@@ -39,7 +39,7 @@ import com.android.internal.util.android.SystemRestartUtils;
 import java.util.List;
 
 @SearchIndexable
-public class Security extends SettingsPreferenceFragment implements Preference.OnPreferenceChangeListener {
+public class Security extends OptimizedSettingsFragment implements Preference.OnPreferenceChangeListener {
 
     private final static String HIDE_SCREEN_CAPTURE_STATUS_KEY = "hide_screen_capture_status";
     private final static String NO_STORAGE_RESTRICT_KEY = "no_storage_restrict";

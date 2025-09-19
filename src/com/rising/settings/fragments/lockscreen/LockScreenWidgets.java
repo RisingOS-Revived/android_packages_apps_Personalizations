@@ -40,7 +40,7 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.utils.SystemRestartUtils;
 import com.android.settingslib.search.SearchIndexable;
@@ -53,7 +53,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @SearchIndexable
-public class LockScreenWidgets extends SettingsPreferenceFragment implements Preference.OnPreferenceChangeListener {
+public class LockScreenWidgets extends OptimizedSettingsFragment implements Preference.OnPreferenceChangeListener {
 
     public static final String TAG = "LockScreenWidgets";
 

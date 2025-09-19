@@ -27,7 +27,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.Utils;
 import com.android.settings.search.BaseSearchIndexProvider;
@@ -40,7 +40,7 @@ import java.util.List;
 import com.android.internal.util.android.SystemRestartUtils;
 
 @SearchIndexable
-public class QuickSwitch extends SettingsPreferenceFragment
+public class QuickSwitch extends OptimizedSettingsFragment
     implements Preference.OnPreferenceChangeListener, Indexable {
 
     private static final String TAG = "QuickSwitch";

@@ -51,7 +51,7 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.Indexable;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
 import com.bumptech.glide.Glide;
 
@@ -67,7 +67,7 @@ import java.util.Arrays;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-public class NavbarStyles extends SettingsPreferenceFragment {
+public class NavbarStyles extends OptimizedSettingsFragment {
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
@@ -82,7 +82,7 @@ public class NavbarStyles extends SettingsPreferenceFragment {
         getActivity().setTitle(R.string.theme_customization_navbar_title);
 
         mThemeUtils = ThemeUtils.getInstance(getActivity());
-        mLauncherPackage = Utils.isPackageInstalled(getContext(), "com.google.android.apps.nexuslauncher", false)
+        mLauncherPackage = Utils.isPackageInstalled(getSafeContext(), "com.google.android.apps.nexuslauncher", false)
                 ? "com.google.android.apps.nexuslauncher"
                 : "com.android.launcher3";
 

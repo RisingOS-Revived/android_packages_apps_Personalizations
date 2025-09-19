@@ -20,6 +20,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import java.lang.ref.WeakReference;
 import android.os.UserHandle;
 import android.provider.Settings;
 
@@ -64,7 +66,30 @@ public class QuickSettings extends SettingsPreferenceFragment implements
     
     private ThemeUtils mThemeUtils;
     
-    private Handler mHandler = new Handler();
+    // Use WeakReference to prevent memory leaks
+    private static class SafeHandler extends Handler {
+        private final WeakReference<QuickSettings> mFragmentRef;
+        
+        SafeHandler(QuickSettings fragment) {
+            super(Looper.getMainLooper());
+            mFragmentRef = new WeakReference<>(fragment);
+        }
+        
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            QuickSettings fragment = mFragmentRef.get();
+            if (fragment != null && fragment.isAdded()) {
+                super.handleMessage(msg);
+            }
+        }
+    }
+    
+    private SafeHandler mHandler;
+    
+    // Cache for overlay operations to prevent redundant calls
+    private String mLastQsUIStyle = null;
+    private String mLastQsPanelStyle = null;
+    private boolean mLastSplitShadeEnabled = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +98,9 @@ public class QuickSettings extends SettingsPreferenceFragment implements
         addPreferencesFromResource(R.xml.rising_settings_qs);
         
         final Context mContext = getActivity().getApplicationContext();
+        
+        // Initialize handler with weak reference
+        mHandler = new SafeHandler(this);
         
         mThemeUtils = ThemeUtils.getInstance(getActivity());
         
@@ -153,12 +181,18 @@ public class QuickSettings extends SettingsPreferenceFragment implements
         if (mThemeUtils == null) {
             mThemeUtils = ThemeUtils.getInstance(context);
         }
-        mHandler.postDelayed(() -> {
-            mThemeUtils.setOverlayEnabled(splitShadeStyleCategory, overlayThemeTarget, overlayThemeTarget);
-            if (splitShadeEnabled) {
-                mThemeUtils.setOverlayEnabled(splitShadeStyleCategory, overlayThemePackage, overlayThemeTarget);
-            }
-        }, 1250);
+        // Optimize: Only apply if state actually changed
+        if (splitShadeEnabled != mLastSplitShadeEnabled) {
+            mLastSplitShadeEnabled = splitShadeEnabled;
+            mHandler.postDelayed(() -> {
+                if (isAdded() && mThemeUtils != null) {
+                    mThemeUtils.setOverlayEnabled(splitShadeStyleCategory, overlayThemeTarget, overlayThemeTarget);
+                    if (splitShadeEnabled) {
+                        mThemeUtils.setOverlayEnabled(splitShadeStyleCategory, overlayThemePackage, overlayThemeTarget);
+                    }
+                }
+            }, 1250);
+        }
     }
 
     private void updateQsStyle(Context context) {
@@ -166,6 +200,14 @@ public class QuickSettings extends SettingsPreferenceFragment implements
 
         boolean isA11Style = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_TILE_UI_STYLE , 0, UserHandle.USER_CURRENT) != 0;
+        
+        String currentStyle = isA11Style ? "A11" : "default";
+        
+        // Optimize: Only apply if style actually changed
+        if (currentStyle.equals(mLastQsUIStyle)) {
+            return;
+        }
+        mLastQsUIStyle = currentStyle;
 
 	    String qsUIStyleCategory = "android.theme.customization.qs_ui";
         String overlayThemeTarget  = "com.android.systemui";
@@ -188,6 +230,14 @@ public class QuickSettings extends SettingsPreferenceFragment implements
 
         int qsPanelStyle = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_PANEL_STYLE, 0, UserHandle.USER_CURRENT);
+        
+        String currentPanelStyle = String.valueOf(qsPanelStyle);
+        
+        // Optimize: Only apply if style actually changed
+        if (currentPanelStyle.equals(mLastQsPanelStyle)) {
+            return;
+        }
+        mLastQsPanelStyle = currentPanelStyle;
 
         String qsPanelStyleCategory = "android.theme.customization.qs_panel";
         String overlayThemeTarget  = "com.android.systemui";
@@ -270,4 +320,26 @@ public class QuickSettings extends SettingsPreferenceFragment implements
                     return keys;
                 }
             };
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Cleanup to prevent memory leaks
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler = null;
+        }
+        mThemeUtils = null;
+        mLastQsUIStyle = null;
+        mLastQsPanelStyle = null;
+    }
+    
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        // Additional cleanup
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
+    }
 }

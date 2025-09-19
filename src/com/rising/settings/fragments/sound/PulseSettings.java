@@ -33,11 +33,11 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
 import com.android.settings.preferences.colorpicker.ColorPickerPreference;
 
-public class PulseSettings extends SettingsPreferenceFragment implements
+public class PulseSettings extends OptimizedSettingsFragment implements
         Preference.OnPreferenceChangeListener {
 
     private static final String TAG = PulseSettings.class.getSimpleName();
@@ -78,36 +78,36 @@ public class PulseSettings extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.pulse_settings);
 
-        ContentResolver resolver = getContext().getContentResolver();
+        ContentResolver resolver = getSafeContext().getContentResolver();
 
-        mLockscreenPulse = (SwitchPreferenceCompat) findPreference(LOCKSCREEN_PULSE_ENABLED_KEY);
+        mLockscreenPulse = (SwitchPreferenceCompat) findCachedPreference(LOCKSCREEN_PULSE_ENABLED_KEY);
         boolean lockscreenPulse = Settings.Secure.getIntForUser(resolver,
                 Settings.Secure.LOCKSCREEN_PULSE_ENABLED, 1, UserHandle.USER_CURRENT) != 0;
         mLockscreenPulse.setChecked(lockscreenPulse);
         mLockscreenPulse.setOnPreferenceChangeListener(this);
 
-        mAmbientPulse = (SwitchPreferenceCompat) findPreference(AMBIENT_PULSE_ENABLED_KEY);
+        mAmbientPulse = (SwitchPreferenceCompat) findCachedPreference(AMBIENT_PULSE_ENABLED_KEY);
         boolean ambientPulse = Settings.Secure.getIntForUser(resolver,
                 Settings.Secure.AMBIENT_PULSE_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
         mAmbientPulse.setChecked(ambientPulse);
         mAmbientPulse.setOnPreferenceChangeListener(this); 
 
-        mColorModePref = (ListPreference) findPreference(PULSE_COLOR_MODE_KEY);
-        mColorPickerPref = (ColorPickerPreference) findPreference(PULSE_COLOR_MODE_CHOOSER_KEY);
-        mLavaSpeedPref = findPreference(PULSE_COLOR_MODE_LAVA_SPEED_KEY);
+        mColorModePref = (ListPreference) findCachedPreference(PULSE_COLOR_MODE_KEY);
+        mColorPickerPref = (ColorPickerPreference) findCachedPreference(PULSE_COLOR_MODE_CHOOSER_KEY);
+        mLavaSpeedPref = findCachedPreference(PULSE_COLOR_MODE_LAVA_SPEED_KEY);
         mColorModePref.setOnPreferenceChangeListener(this);
 
-        mRenderMode = findPreference(PULSE_RENDER_MODE_KEY);
+        mRenderMode = findCachedPreference(PULSE_RENDER_MODE_KEY);
         mRenderMode.setOnPreferenceChangeListener(this);
 
-        mFadingBarsCat = (PreferenceCategory) findPreference(
+        mFadingBarsCat = (PreferenceCategory) findCachedPreference(
                 PULSE_RENDER_CATEGORY_FADING);
-        mSolidBarsCat = (PreferenceCategory) findPreference(
+        mSolidBarsCat = (PreferenceCategory) findCachedPreference(
                 PULSE_RENDER_CATEGORY_SOLID);
 
-        mPulseSmoothing = (SwitchPreferenceCompat) findPreference(PULSE_SMOOTHING_KEY);
+        mPulseSmoothing = (SwitchPreferenceCompat) findCachedPreference(PULSE_SMOOTHING_KEY);
 
-        mFooterPref = findPreference(PULSE_SETTINGS_FOOTER);
+        mFooterPref = findCachedPreference(PULSE_SETTINGS_FOOTER);
         mFooterPref.setTitle(R.string.pulse_help_policy_notice_summary);
 
         updateAllPrefs();
@@ -115,7 +115,7 @@ public class PulseSettings extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        ContentResolver resolver = getContext().getContentResolver();
+        ContentResolver resolver = getSafeContext().getContentResolver();
         if (preference == mLockscreenPulse) {
             boolean val = (Boolean) newValue;
             Settings.Secure.putIntForUser(resolver,
@@ -139,7 +139,7 @@ public class PulseSettings extends SettingsPreferenceFragment implements
     }
 
     private void updateAllPrefs() {
-        ContentResolver resolver = getContext().getContentResolver();
+        ContentResolver resolver = getSafeContext().getContentResolver();
 
         boolean lockscreenPulse = Settings.Secure.getIntForUser(resolver,
                 Settings.Secure.LOCKSCREEN_PULSE_ENABLED, 1, UserHandle.USER_CURRENT) != 0;

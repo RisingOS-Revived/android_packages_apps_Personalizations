@@ -22,7 +22,7 @@ import androidx.preference.Preference;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
@@ -33,7 +33,7 @@ import java.util.List;
 import com.android.settings.utils.SystemRestartUtils;
 
 @SearchIndexable
-public class Wallpaper extends SettingsPreferenceFragment 
+public class Wallpaper extends OptimizedSettingsFragment 
             implements Preference.OnPreferenceChangeListener {
 
     public static final String TAG = "Wallpaper";
@@ -59,6 +59,12 @@ public class Wallpaper extends SettingsPreferenceFragment
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        // Use safe context access
+        Context context = getSafeContext();
+        if (context == null) {
+            return false;
+        }
+        
         if (preference == mBlurWpPref 
                 || preference == mBlurWpStylePref 
                 || preference == mDimPref 
@@ -66,7 +72,7 @@ public class Wallpaper extends SettingsPreferenceFragment
           if (preference == mDimLvlPref) {
               android.os.SystemProperties.set("persist.sys.wallpaper.dim_level", newValue.toString());
           }
-          SystemRestartUtils.showSystemUIRestartDialog(getContext());
+          SystemRestartUtils.showSystemUIRestartDialog(context);
           return true;
         }
         return false;

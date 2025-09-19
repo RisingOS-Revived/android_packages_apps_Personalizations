@@ -52,7 +52,8 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.Indexable;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
+import java.lang.ref.WeakReference;
 
 import com.android.internal.util.android.ThemeUtils;
 
@@ -68,7 +69,7 @@ import java.util.Arrays;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-public class UIStyles extends SettingsPreferenceFragment {
+public class UIStyles extends OptimizedSettingsFragment {
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
@@ -77,7 +78,6 @@ public class UIStyles extends SettingsPreferenceFragment {
     private List<String> mPkgs;
 
     private ExecutorService mExecutor = Executors.newSingleThreadExecutor();
-    private Handler mHandler = new Handler();
     private final AtomicBoolean mApplyingOverlays = new AtomicBoolean(false);
 
     Map<String, String> overlayMap = new HashMap<String, String>();
@@ -91,8 +91,12 @@ public class UIStyles extends SettingsPreferenceFragment {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.theme_customization_ui_style_title);
 
-        mThemeUtils = ThemeUtils.getInstance(getActivity());
-        mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, "android");
+        if (getActivity() != null) {
+            mThemeUtils = ThemeUtils.getInstance(getActivity());
+        }
+        if (mThemeUtils != null) {
+            mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, "android");
+        }
     }
 
     @Override
@@ -108,6 +112,24 @@ public class UIStyles extends SettingsPreferenceFragment {
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Cleanup executor
+        if (mExecutor != null && !mExecutor.isShutdown()) {
+            mExecutor.shutdown();
+        }
+        mThemeUtils = null;
+        mApplyingOverlays.set(false);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        // Additional cleanup
+        mApplyingOverlays.set(false);
     }
 
     @Override
@@ -218,7 +240,7 @@ public class UIStyles extends SettingsPreferenceFragment {
             for (Map.Entry<String, String> entry : overlayMap.entrySet()) {
                 enableOverlay(entry.getValue(), entry.getKey(), pattern);
             }
-            mHandler.post(() -> mApplyingOverlays.set(false));
+            postDelayedSafe(() -> mApplyingOverlays.set(false), 0);
         });
     }
 

@@ -50,7 +50,7 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.Indexable;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
 import com.bumptech.glide.Glide;
 
@@ -65,7 +65,7 @@ import java.util.Arrays;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-public class SignalIcons extends SettingsPreferenceFragment {
+public class SignalIcons extends OptimizedSettingsFragment {
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
@@ -132,7 +132,7 @@ public class SignalIcons extends SettingsPreferenceFragment {
             holder.image3.setBackgroundDrawable(getDrawable(holder.image3.getContext(), iconPkg, "ic_signal_cellular_3_5_bar"));
             holder.image4.setBackgroundDrawable(getDrawable(holder.image4.getContext(), iconPkg, "ic_signal_cellular_5_5_bar"));
 
-            String currentPackageName = mThemeUtils.getOverlayInfos(mCategory).stream()
+            String currentPackageName = mThemeUtils.getOverlayInfos(mCategory, "android").stream()
                 .filter(info -> info.isEnabled())
                 .map(info -> info.packageName)
                 .findFirst()

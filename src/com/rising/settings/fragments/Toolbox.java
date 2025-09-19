@@ -20,14 +20,14 @@ import android.os.Bundle;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
 import java.util.List;
 
 @SearchIndexable
-public class Toolbox extends SettingsPreferenceFragment {
+public class Toolbox extends OptimizedSettingsFragment {
 
     public static final String TAG = "Toolbox";
 

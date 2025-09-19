@@ -23,10 +23,10 @@ import android.os.UserHandle;
 import android.provider.Settings;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.internal.logging.nano.MetricsProto;
 
-public class NetworkTrafficSettings extends SettingsPreferenceFragment {
+public class NetworkTrafficSettings extends OptimizedSettingsFragment {
 
     private static final String TAG = "NetworkTrafficSettings";
 

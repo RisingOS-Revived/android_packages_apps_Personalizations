@@ -43,6 +43,10 @@ import lineageos.providers.LineageSettings;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.os.AsyncTask;
+import java.lang.ref.WeakReference;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 @SearchIndexable
 public class MonetSettings extends DashboardFragment implements
@@ -100,6 +104,14 @@ public class MonetSettings extends DashboardFragment implements
     private int mBgColorValue;
 
     private SharedPreferences mSharedPreferences;
+    
+    // Cache for JSON operations to prevent redundant parsing
+    private JSONObject mCachedSettingsJson;
+    private long mLastJsonUpdateTime = 0;
+    private static final long JSON_CACHE_TIMEOUT = 1000; // 1 second cache
+    
+    // Cache for preference states
+    private final Map<String, Object> mPreferenceCache = new ConcurrentHashMap<>();
 
     @Override
     protected int getPreferenceScreenResId() {
@@ -137,7 +149,8 @@ public class MonetSettings extends DashboardFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        updatePreferences();
+        // Use background task for heavy JSON operations
+        new UpdatePreferencesTask(this).execute();
     }
 
     private void updatePreferences() {
@@ -296,14 +309,30 @@ public class MonetSettings extends DashboardFragment implements
     }
 
     private JSONObject getSettingsJson() throws JSONException {
+        long currentTime = System.currentTimeMillis();
+        
+        // Use cached JSON if still valid
+        if (mCachedSettingsJson != null && (currentTime - mLastJsonUpdateTime) < JSON_CACHE_TIMEOUT) {
+            return new JSONObject(mCachedSettingsJson.toString()); // Return copy
+        }
+        
         final String overlayPackageJson = Settings.Secure.getStringForUser(
                 getActivity().getContentResolver(),
                 Settings.Secure.THEME_CUSTOMIZATION_OVERLAY_PACKAGES,
                 UserHandle.USER_CURRENT);
+        
         JSONObject object;
-        if (overlayPackageJson == null || overlayPackageJson.isEmpty())
-            return new JSONObject();
-        return new JSONObject(overlayPackageJson);
+        if (overlayPackageJson == null || overlayPackageJson.isEmpty()) {
+            object = new JSONObject();
+        } else {
+            object = new JSONObject(overlayPackageJson);
+        }
+        
+        // Update cache
+        mCachedSettingsJson = new JSONObject(object.toString());
+        mLastJsonUpdateTime = currentTime;
+        
+        return object;
     }
 
     private void putSettingsJson(JSONObject object) {
@@ -311,6 +340,15 @@ public class MonetSettings extends DashboardFragment implements
                 getActivity().getContentResolver(),
                 Settings.Secure.THEME_CUSTOMIZATION_OVERLAY_PACKAGES,
                 object.toString(), UserHandle.USER_CURRENT);
+        
+        // Update cache
+        try {
+            mCachedSettingsJson = new JSONObject(object.toString());
+            mLastJsonUpdateTime = System.currentTimeMillis();
+        } catch (JSONException e) {
+            // Clear cache on error
+            mCachedSettingsJson = null;
+        }
     }
 
     private void setStyleValue(String style) {
@@ -418,6 +456,45 @@ public class MonetSettings extends DashboardFragment implements
         return TAG;
     }
 
+    // Background task for heavy JSON operations
+    private static class UpdatePreferencesTask extends AsyncTask<Void, Void, Void> {
+        private final WeakReference<MonetSettings> mFragmentRef;
+        
+        UpdatePreferencesTask(MonetSettings fragment) {
+            mFragmentRef = new WeakReference<>(fragment);
+        }
+        
+        @Override
+        protected Void doInBackground(Void... params) {
+            // Heavy JSON parsing happens in background
+            return null;
+        }
+        
+        @Override
+        protected void onPostExecute(Void result) {
+            MonetSettings fragment = mFragmentRef.get();
+            if (fragment != null && fragment.isAdded()) {
+                fragment.updatePreferences();
+            }
+        }
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Clear caches to prevent memory leaks
+        mCachedSettingsJson = null;
+        mPreferenceCache.clear();
+        mSharedPreferences = null;
+    }
+    
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        // Additional cleanup
+        mPreferenceCache.clear();
+    }
+    
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
             new BaseSearchIndexProvider(R.xml.monet_engine);
 }

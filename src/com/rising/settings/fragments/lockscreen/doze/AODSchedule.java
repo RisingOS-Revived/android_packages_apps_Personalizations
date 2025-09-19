@@ -30,14 +30,14 @@ import androidx.preference.PreferenceScreen;
 import com.android.internal.logging.nano.MetricsProto;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
 import com.android.settings.preferences.SecureSettingListPreference;
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalTime;
 
-public class AODSchedule extends SettingsPreferenceFragment implements
+public class AODSchedule extends OptimizedSettingsFragment implements
         Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
     private static final String TAG = "AODSchedule";

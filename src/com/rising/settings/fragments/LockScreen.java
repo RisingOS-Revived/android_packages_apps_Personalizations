@@ -36,7 +36,7 @@ import com.android.internal.util.android.OmniJawsClient;
 import com.android.internal.util.android.Utils;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
@@ -49,7 +49,7 @@ import com.android.settings.preferences.ui.PreferenceUtils;
 import com.android.settings.utils.SystemRestartUtils;
 
 @SearchIndexable
-public class LockScreen extends SettingsPreferenceFragment
+public class LockScreen extends OptimizedSettingsFragment
             implements Preference.OnPreferenceChangeListener  {
 
     public static final String TAG = "LockScreen";
@@ -65,6 +65,11 @@ public class LockScreen extends SettingsPreferenceFragment
     private static final String SCREEN_OFF_UDFPS_ENABLED = "screen_off_udfps_enabled";
     private static final String KEY_FP_SUCCESS = "fp_success_vibrate";
     private static final String KEY_FP_FAIL = "fp_error_vibrate";
+    
+    // Now Bar settings keys
+    private static final String KEY_NOW_BAR_ENABLED = "keyguard_now_bar_enabled";
+    private static final String KEY_NOW_BAR_MARGIN_BOTTOM = "nowbar_margin_bottom";
+    private static final int DEFAULT_NOW_BAR_MARGIN = 18;
 
     private Preference mUdfpsIcons;
     private Preference mUdfpsAnimation;
@@ -73,6 +78,11 @@ public class LockScreen extends SettingsPreferenceFragment
     private Preference mScreenOffUdfps;
     private Preference mFpSuccess;
     private Preference mFpFail;
+    
+    // Now Bar preferences and position management
+    private Preference mNowBarEnabled;
+    private com.android.settings.preferences.SystemSettingSeekBarPreference mNowBarMargin;
+    private int mLastValidNowBarMargin = DEFAULT_NOW_BAR_MARGIN;
     
     private OmniJawsClient mWeatherClient;
 
@@ -85,14 +95,24 @@ public class LockScreen extends SettingsPreferenceFragment
         PreferenceCategory udfpsCategory = (PreferenceCategory) findPreference(LOCKSCREEN_UDFPS_CATEGORY);
         PreferenceCategory fpCategory = (PreferenceCategory) findPreference(LOCKSCREEN_FP_CATEGORY);
 
-        FingerprintManager mFingerprintManager = (FingerprintManager)
-                getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
-        mUdfpsIcons = (Preference) findPreference(KEY_UDFPS_ICONS);
-        mUdfpsAnimation = (Preference) findPreference(KEY_UDFPS_ANIMATIONS);
-        mRippleEffect = (Preference) findPreference(KEY_RIPPLE_EFFECT);
-        mScreenOffUdfps = (Preference) findPreference(SCREEN_OFF_UDFPS_ENABLED);
-        mFpSuccess = (Preference) findPreference(KEY_FP_SUCCESS);
-        mFpFail = (Preference) findPreference(KEY_FP_FAIL);
+        // Use safe context access and cached preferences
+        Context context = getSafeContext();
+        FingerprintManager mFingerprintManager = context != null ? 
+                (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE) : null;
+        
+        mUdfpsIcons = findCachedPreference(KEY_UDFPS_ICONS);
+        mUdfpsAnimation = findCachedPreference(KEY_UDFPS_ANIMATIONS);
+        mRippleEffect = findCachedPreference(KEY_RIPPLE_EFFECT);
+        mScreenOffUdfps = findCachedPreference(SCREEN_OFF_UDFPS_ENABLED);
+        mFpSuccess = findCachedPreference(KEY_FP_SUCCESS);
+        mFpFail = findCachedPreference(KEY_FP_FAIL);
+        
+        // Initialize Now Bar preferences
+        mNowBarEnabled = findCachedPreference(KEY_NOW_BAR_ENABLED);
+        mNowBarMargin = findCachedPreference(KEY_NOW_BAR_MARGIN_BOTTOM);
+        
+        // Initialize Now Bar position management
+        initializeNowBarPosition();
 
         if (mFingerprintManager == null || !mFingerprintManager.isHardwareDetected()) {
             if (udfpsCategory != null) {
@@ -106,8 +126,20 @@ public class LockScreen extends SettingsPreferenceFragment
                 if (mFpFail != null) fpCategory.removePreference(mFpFail);
             }
         } else {
-            final boolean udfpsAnimationInstalled = Utils.isPackageInstalled(getContext(), "com.crdroid.udfps.animations");
-            final boolean udfpsIconsInstalled = Utils.isPackageInstalled(getContext(), "com.crdroid.udfps.icons");
+            // Cache package installation checks to avoid repeated calls
+            final boolean udfpsAnimationInstalled = isOperationCached("udfps_anim_installed") ? 
+                    (Boolean) getCachedOperation("udfps_anim_installed") : 
+                    Utils.isPackageInstalled(context, "com.crdroid.udfps.animations");
+            if (!isOperationCached("udfps_anim_installed")) {
+                cacheOperation("udfps_anim_installed", udfpsAnimationInstalled);
+            }
+            
+            final boolean udfpsIconsInstalled = isOperationCached("udfps_icons_installed") ? 
+                    (Boolean) getCachedOperation("udfps_icons_installed") : 
+                    Utils.isPackageInstalled(context, "com.crdroid.udfps.icons");
+            if (!isOperationCached("udfps_icons_installed")) {
+                cacheOperation("udfps_icons_installed", udfpsIconsInstalled);
+            }
             if (!udfpsAnimationInstalled && udfpsCategory != null && mUdfpsAnimation != null) {
                 udfpsCategory.removePreference(mUdfpsAnimation);
             }
@@ -119,24 +151,39 @@ public class LockScreen extends SettingsPreferenceFragment
             }
         }
 
-        mWeather = (Preference) findPreference(KEY_WEATHER);
+        mWeather = findCachedPreference(KEY_WEATHER);
         if (mWeather != null) {
             mWeather.setOnPreferenceChangeListener(this);
         }
-        mWeatherClient = new OmniJawsClient(getContext());
-        updateWeatherSettings();
+        
+        // Set up Now Bar preference listeners
+        if (mNowBarEnabled != null) {
+            mNowBarEnabled.setOnPreferenceChangeListener(this);
+        }
+        if (mNowBarMargin != null) {
+            mNowBarMargin.setOnPreferenceChangeListener(this);
+        }
+        
+        // Initialize weather client with null check
+        if (context != null) {
+            mWeatherClient = new OmniJawsClient(context);
+            updateWeatherSettings();
+        }
         
         PreferenceScreen screen = getPreferenceScreen();
-        PreferenceUtils.hideEmptyCategory(udfpsCategory, screen);
-        PreferenceUtils.hideEmptyCategory(fpCategory, screen);
-        com.android.settingslib.widget.LayoutPreference lockHighlightPref = screen.findPreference("lockscreen_highlight_dashboard");
-        if (lockHighlightPref != null) {
-            java.util.Map<Integer, String> lockHighlightClickMap = new java.util.HashMap<>();
-            lockHighlightClickMap.put(R.id.lockscreen_widgets_tile, "PersonalizationsWidgetsActivity");
-            lockHighlightClickMap.put(R.id.peek_display_tile, "PersonalizationsPDActivity");
-            lockHighlightClickMap.put(R.id.aod_tile, "PersonalizationsAODActivity");
-            lockHighlightClickMap.put(R.id.dw_tile, "PersonalizationsDWActivity");
-            com.android.settings.utils.HighlightPrefUtils.Companion.setupHighlightPref(getContext(), lockHighlightPref, lockHighlightClickMap);
+        if (screen != null) {
+            PreferenceUtils.hideEmptyCategory(udfpsCategory, screen);
+            PreferenceUtils.hideEmptyCategory(fpCategory, screen);
+            
+            com.android.settingslib.widget.LayoutPreference lockHighlightPref = screen.findPreference("lockscreen_highlight_dashboard");
+            if (lockHighlightPref != null && context != null) {
+                java.util.Map<Integer, String> lockHighlightClickMap = new java.util.HashMap<>();
+                lockHighlightClickMap.put(R.id.lockscreen_widgets_tile, "PersonalizationsWidgetsActivity");
+                lockHighlightClickMap.put(R.id.peek_display_tile, "PersonalizationsPDActivity");
+                lockHighlightClickMap.put(R.id.aod_tile, "PersonalizationsAODActivity");
+                lockHighlightClickMap.put(R.id.dw_tile, "PersonalizationsDWActivity");
+                com.android.settings.utils.HighlightPrefUtils.Companion.setupHighlightPref(context, lockHighlightPref, lockHighlightClickMap);
+            }
         }
     }
 
@@ -146,8 +193,20 @@ public class LockScreen extends SettingsPreferenceFragment
         
         if (KEY_WEATHER.equals(key)) {
             // Restart SystemUI when weather preference changes
-            SystemRestartUtils.restartSystemUI(getContext());
+            Context context = getSafeContext();
+            if (context != null) {
+                SystemRestartUtils.restartSystemUI(context);
+            }
             return true;
+        } else if (KEY_NOW_BAR_ENABLED.equals(key)) {
+            // Handle Now Bar enable/disable
+            boolean enabled = (Boolean) newValue;
+            handleNowBarEnabledChange(enabled);
+            return true;
+        } else if (KEY_NOW_BAR_MARGIN_BOTTOM.equals(key)) {
+            // Handle Now Bar margin changes with position stability
+            int newMargin = (Integer) newValue;
+            return handleNowBarMarginChange(newMargin);
         }
         
         return false;
@@ -165,12 +224,122 @@ public class LockScreen extends SettingsPreferenceFragment
     @Override
     public void onResume() {
         super.onResume();
-        updateWeatherSettings();
+        // Use safe method to update weather settings
+        if (isFragmentReady()) {
+            updateWeatherSettings();
+            // Check and restore Now Bar position to prevent drift
+            checkAndRestoreNowBarPosition();
+        }
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Cleanup weather client
+        mWeatherClient = null;
     }
 
     @Override
     public int getMetricsCategory() {
         return MetricsProto.MetricsEvent.VIEW_UNKNOWN;
+    }
+    
+    /**
+     * Initialize Now Bar position management
+     */
+    private void initializeNowBarPosition() {
+        Context context = getSafeContext();
+        if (context == null || mNowBarMargin == null) return;
+        
+        ContentResolver resolver = context.getContentResolver();
+        
+        // Load cached position
+        int currentMargin = Settings.System.getInt(resolver, 
+            KEY_NOW_BAR_MARGIN_BOTTOM, DEFAULT_NOW_BAR_MARGIN);
+        mLastValidNowBarMargin = currentMargin;
+    }
+    
+    /**
+     * Handle Now Bar enabled/disabled changes
+     */
+    private void handleNowBarEnabledChange(boolean enabled) {
+        Context context = getSafeContext();
+        if (context == null) return;
+        
+        // Restart SystemUI when Now Bar is enabled/disabled to apply changes
+        postDelayedSafe(() -> {
+            SystemRestartUtils.restartSystemUI(context);
+        }, 100);
+    }
+    
+    /**
+     * Handle Now Bar margin changes with position stability
+     */
+    private boolean handleNowBarMarginChange(int newMargin) {
+        Context context = getSafeContext();
+        if (context == null) return false;
+        
+        // Validate margin range (0-210 as defined in XML)
+        if (newMargin < 0) newMargin = 0;
+        if (newMargin > 210) newMargin = 210;
+        
+        // Cache the new valid position
+        mLastValidNowBarMargin = newMargin;
+        
+        // Apply the setting with stability
+        ContentResolver resolver = context.getContentResolver();
+        Settings.System.putInt(resolver, KEY_NOW_BAR_MARGIN_BOTTOM, newMargin);
+        
+        // Notify SystemUI of the change with a slight delay for stability
+        postDelayedSafe(() -> {
+            resolver.notifyChange(Settings.System.getUriFor(KEY_NOW_BAR_MARGIN_BOTTOM), null);
+        }, 50);
+        
+        return true;
+    }
+    
+    /**
+     * Check and restore Now Bar position to prevent drift after idle periods
+     * This is the key method to fix the position drift issue
+     */
+    private void checkAndRestoreNowBarPosition() {
+        if (mNowBarMargin == null) return;
+        
+        Context context = getSafeContext();
+        if (context == null) return;
+        
+        ContentResolver resolver = context.getContentResolver();
+        
+        // Check if Now Bar is enabled
+        boolean nowBarEnabled = Settings.System.getInt(resolver, 
+            KEY_NOW_BAR_ENABLED, 0) == 1;
+        
+        if (!nowBarEnabled) {
+            return; // No need to check position if Now Bar is disabled
+        }
+        
+        int currentMargin = Settings.System.getInt(resolver, 
+            KEY_NOW_BAR_MARGIN_BOTTOM, DEFAULT_NOW_BAR_MARGIN);
+        
+        // Check if position has drifted (tolerance of 2 units)
+        if (Math.abs(currentMargin - mLastValidNowBarMargin) > 2) {
+            // Position has drifted - restore stable position
+            postDelayedSafe(() -> {
+                Settings.System.putInt(resolver, KEY_NOW_BAR_MARGIN_BOTTOM, mLastValidNowBarMargin);
+                if (mNowBarMargin != null) {
+                    mNowBarMargin.setValue(mLastValidNowBarMargin);
+                }
+                
+                // Notify SystemUI of the position correction
+                resolver.notifyChange(Settings.System.getUriFor(KEY_NOW_BAR_MARGIN_BOTTOM), null);
+                
+                android.util.Log.d(TAG, "Now Bar position drift detected and corrected: " + 
+                    currentMargin + " -> " + mLastValidNowBarMargin);
+            }, 100);
+        } else {
+            // Position is stable - update cache
+            mLastValidNowBarMargin = currentMargin;
+        }
     }
 
     /**

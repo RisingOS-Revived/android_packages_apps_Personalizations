@@ -31,14 +31,14 @@ import androidx.preference.Preference.OnPreferenceClickListener;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
 import java.util.List;
 
 @SearchIndexable
-public class Assistant extends SettingsPreferenceFragment {
+public class Assistant extends OptimizedSettingsFragment {
 
     private static final String TAG = "Assistant";
     
@@ -50,9 +50,10 @@ public class Assistant extends SettingsPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.rising_settings_ai_assistant);
-        mAiAssistantKeyPreference = findPreference(KEY_AI_ASSISTANT_GEMINI_KEY);
+        mAiAssistantKeyPreference = findCachedPreference(KEY_AI_ASSISTANT_GEMINI_KEY);
         if (mAiAssistantKeyPreference != null) {
-            String currentKey = Settings.System.getString(getContext().getContentResolver(), KEY_AI_ASSISTANT_GEMINI_KEY);
+            Context context = getSafeContext();
+            String currentKey = context != null ? Settings.System.getString(context.getContentResolver(), KEY_AI_ASSISTANT_GEMINI_KEY) : null;
             mAiAssistantKeyPreference.setSummary(TextUtils.isEmpty(currentKey) ? getString(R.string.ai_assistant_gemini_key_summary) : currentKey);
             mAiAssistantKeyPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
@@ -63,7 +64,7 @@ public class Assistant extends SettingsPreferenceFragment {
             });
         }
         
-        Preference mWikiLink = findPreference("wiki_link_assistant");
+        Preference mWikiLink = findCachedPreference("wiki_link_assistant");
         if (mWikiLink != null) {
             mWikiLink.setOnPreferenceClickListener(preference -> {
                 Uri uri = Uri.parse("https://github.com/RisingOS-Revived/risingOS_wiki/blob/fifteen/assistant/Risa/README.md");
@@ -75,13 +76,16 @@ public class Assistant extends SettingsPreferenceFragment {
     }
 
     private void showApiKeyDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        Context context = getSafeContext();
+        if (context == null) return;
+        
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.ai_assistant_gemini_key_dialog_title);
 
-        final EditText input = new EditText(getContext());
+        final EditText input = new EditText(context);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
 
-        String currentKey = Settings.System.getString(getContext().getContentResolver(), KEY_AI_ASSISTANT_GEMINI_KEY);
+        String currentKey = Settings.System.getString(context.getContentResolver(), KEY_AI_ASSISTANT_GEMINI_KEY);
         if (!TextUtils.isEmpty(currentKey)) {
             input.setText(currentKey);
             input.setSelection(currentKey.length());
@@ -93,7 +97,10 @@ public class Assistant extends SettingsPreferenceFragment {
             public void onClick(DialogInterface dialog, int which) {
                 String newApiKey = input.getText().toString();
                 if (!TextUtils.isEmpty(newApiKey)) {
-                    Settings.System.putString(getContext().getContentResolver(), KEY_AI_ASSISTANT_GEMINI_KEY, newApiKey);
+                    Context ctx = getSafeContext();
+                    if (ctx != null) {
+                        Settings.System.putString(ctx.getContentResolver(), KEY_AI_ASSISTANT_GEMINI_KEY, newApiKey);
+                    }
                     mAiAssistantKeyPreference.setSummary(newApiKey);
                 }
             }

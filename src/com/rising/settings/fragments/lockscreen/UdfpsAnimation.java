@@ -49,6 +49,11 @@ import com.android.settings.SettingsActivity;
 import com.android.settings.SettingsPreferenceFragment;
 
 import java.util.Arrays;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
+import android.os.Handler;
+import android.os.Looper;
+import java.lang.ref.WeakReference;
 
 public class UdfpsAnimation extends SettingsPreferenceFragment {
 
@@ -63,29 +68,49 @@ public class UdfpsAnimation extends SettingsPreferenceFragment {
     private String[] mTitles;
 
     private UdfpsAnimAdapter mUdfpsAnimAdapter;
+    
+    // Cache for drawable resources to prevent repeated loading
+    private final Map<String, Drawable> mDrawableCache = new ConcurrentHashMap<>();
+    
+    // Handler for animation cleanup
+    private Handler mAnimationHandler;
+    
+    // Track active animations to prevent memory leaks
+    private AnimationDrawable mCurrentAnimation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.udfps_recog_animation_effect_title);
+        if (getActivity() != null) {
+            getActivity().setTitle(R.string.udfps_recog_animation_effect_title);
+        }
+        
+        // Initialize handler for animation management
+        mAnimationHandler = new Handler(Looper.getMainLooper());
 
         loadResources();
     }
 
     private void loadResources() {
+        if (getActivity() == null) {
+            return;
+        }
+        
         try {
             PackageManager pm = getActivity().getPackageManager();
             udfpsRes = pm.getResourcesForApplication(mPkg);
+            
+            if (udfpsRes != null) {
+                mAnims = udfpsRes.getStringArray(udfpsRes.getIdentifier("udfps_animation_styles",
+                        "array", mPkg));
+                mAnimPreviews = udfpsRes.getStringArray(udfpsRes.getIdentifier("udfps_animation_previews",
+                        "array", mPkg));
+                mTitles = udfpsRes.getStringArray(udfpsRes.getIdentifier("udfps_animation_titles",
+                        "array", mPkg));
+            }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
-        mAnims = udfpsRes.getStringArray(udfpsRes.getIdentifier("udfps_animation_styles",
-                "array", mPkg));
-        mAnimPreviews = udfpsRes.getStringArray(udfpsRes.getIdentifier("udfps_animation_previews",
-                "array", mPkg));
-        mTitles = udfpsRes.getStringArray(udfpsRes.getIdentifier("udfps_animation_titles",
-                "array", mPkg));
     }
 
     @Override
@@ -132,12 +157,20 @@ public class UdfpsAnimation extends SettingsPreferenceFragment {
 
         @Override
         public void onBindViewHolder(UdfpsAnimViewHolder holder, final int position) {
+            if (position >= mAnims.length || position >= mAnimPreviews.length || position >= mTitles.length) {
+                return;
+            }
+            
             String animName = mAnims[position];
 
-            Glide.with(holder.image.getContext())
-                    .load("")
-                    .placeholder(getDrawable(holder.image.getContext(), mAnimPreviews[position]))
-                    .into(holder.image);
+            // Use cached drawable if available
+            Drawable previewDrawable = getCachedDrawable(holder.image.getContext(), mAnimPreviews[position]);
+            if (previewDrawable != null) {
+                Glide.with(holder.image.getContext())
+                        .load("")
+                        .placeholder(previewDrawable)
+                        .into(holder.image);
+            }
 
             holder.name.setText(mTitles[position]);
 
@@ -149,19 +182,34 @@ public class UdfpsAnimation extends SettingsPreferenceFragment {
                 }
             }
 
-            holder.itemView.setActivated(animName == mSelectedAnim);
+            holder.itemView.setActivated(animName.equals(mSelectedAnim));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // Stop current animation before starting new one
+                    stopCurrentAnimation();
+                    
                     updateActivatedStatus(mSelectedAnim, false);
                     updateActivatedStatus(animName, true);
                     mSelectedAnim = animName;
-                    holder.image.setBackgroundDrawable(getDrawable(v.getContext(), mAnims[position]));
-                    animation = (AnimationDrawable) holder.image.getBackground();
-                    animation.setOneShot(true);
-                    animation.start();
-                    Settings.System.putInt(getActivity().getContentResolver(),
-                            Settings.System.UDFPS_ANIM_STYLE, position);
+                    
+                    Drawable animDrawable = getCachedDrawable(v.getContext(), mAnims[position]);
+                    if (animDrawable != null) {
+                        holder.image.setBackgroundDrawable(animDrawable);
+                        mCurrentAnimation = (AnimationDrawable) holder.image.getBackground();
+                        if (mCurrentAnimation != null) {
+                            mCurrentAnimation.setOneShot(true);
+                            mCurrentAnimation.start();
+                            
+                            // Auto-stop animation after reasonable time to prevent memory leaks
+                            mAnimationHandler.postDelayed(() -> stopCurrentAnimation(), 5000);
+                        }
+                    }
+                    
+                    if (getActivity() != null) {
+                        Settings.System.putInt(getActivity().getContentResolver(),
+                                Settings.System.UDFPS_ANIM_STYLE, position);
+                    }
                 }
             });
         }
@@ -193,6 +241,26 @@ public class UdfpsAnimation extends SettingsPreferenceFragment {
         }
     }
 
+    // Optimized drawable loading with caching
+    private Drawable getCachedDrawable(Context context, String drawableName) {
+        if (drawableName == null || context == null) {
+            return null;
+        }
+        
+        // Check cache first
+        Drawable cached = mDrawableCache.get(drawableName);
+        if (cached != null) {
+            return cached;
+        }
+        
+        // Load and cache drawable
+        Drawable drawable = getDrawable(context, drawableName);
+        if (drawable != null) {
+            mDrawableCache.put(drawableName, drawable);
+        }
+        return drawable;
+    }
+    
     public Drawable getDrawable(Context context, String drawableName) {
         try {
             PackageManager pm = context.getPackageManager();
@@ -203,5 +271,32 @@ public class UdfpsAnimation extends SettingsPreferenceFragment {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    private void stopCurrentAnimation() {
+        if (mCurrentAnimation != null && mCurrentAnimation.isRunning()) {
+            mCurrentAnimation.stop();
+        }
+        mCurrentAnimation = null;
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Cleanup animations and caches
+        stopCurrentAnimation();
+        if (mAnimationHandler != null) {
+            mAnimationHandler.removeCallbacksAndMessages(null);
+        }
+        mDrawableCache.clear();
+        udfpsRes = null;
+    }
+    
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        // Additional cleanup
+        stopCurrentAnimation();
+        mDrawableCache.clear();
     }
 }

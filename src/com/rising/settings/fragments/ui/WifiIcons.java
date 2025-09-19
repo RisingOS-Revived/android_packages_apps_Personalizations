@@ -50,7 +50,7 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.Indexable;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
 import com.bumptech.glide.Glide;
 
@@ -65,7 +65,7 @@ import java.util.Arrays;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-public class WifiIcons extends SettingsPreferenceFragment {
+public class WifiIcons extends OptimizedSettingsFragment {
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;

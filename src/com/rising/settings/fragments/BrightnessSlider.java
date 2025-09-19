@@ -51,7 +51,7 @@
  import com.android.settings.R;
  import com.android.settings.search.BaseSearchIndexProvider;
  import com.android.settingslib.search.Indexable;
- import com.android.settings.SettingsPreferenceFragment;
+ import com.rising.settings.fragments.OptimizedSettingsFragment;
 
  import com.bumptech.glide.Glide;
 
@@ -66,7 +66,7 @@
  import org.json.JSONObject;
  import org.json.JSONException;
 
- public class BrightnessSlider extends SettingsPreferenceFragment {
+ public class BrightnessSlider extends OptimizedSettingsFragment {
 
      private RecyclerView mRecyclerView;
      private ThemeUtils mThemeUtils;
@@ -79,8 +79,13 @@
          super.onCreate(savedInstanceState);
          getActivity().setTitle(R.string.theme_customization_brightness_slider_title);
 
-         mThemeUtils = ThemeUtils.getInstance(getActivity());
-         mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, "com.android.systemui");
+         Context context = getSafeContext();
+        if (context != null) {
+            mThemeUtils = ThemeUtils.getInstance(context);
+        }
+         if (mThemeUtils != null) {
+            mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, "com.android.systemui");
+        }
      }
 
      @Override
@@ -188,9 +193,8 @@
              Resources res = pm.getResourcesForApplication(pkg);
              int resId = res.getIdentifier(drawableName, "drawable", pkg);
              return res.getDrawable(resId);
-         }
-         catch (PackageManager.NameNotFoundException e) {
-             e.printStackTrace();
+         } catch (PackageManager.NameNotFoundException e) {
+             // Handle silently - package not found
          }
          return null;
      }
@@ -201,12 +205,23 @@
              return pm.getApplicationInfo(pkg, 0)
                      .loadLabel(pm).toString();
          } catch (PackageManager.NameNotFoundException e) {
-             e.printStackTrace();
-         }
+            // Handle silently - package not found
+        } 
          return pkg;
      }
 
      public void enableOverlays(int position) {
-         mThemeUtils.setOverlayEnabled(mCategory, mPkgs.get(position), "com.android.systemui");
+         if (mThemeUtils != null && mPkgs != null && position < mPkgs.size()) {
+             mThemeUtils.setOverlayEnabled(mCategory, mPkgs.get(position), "com.android.systemui");
+         }
+     }
+     
+     @Override
+     public void onDestroy() {
+         super.onDestroy();
+         mThemeUtils = null;
+         if (mPkgs != null) {
+             mPkgs.clear();
+         }
      }
  }

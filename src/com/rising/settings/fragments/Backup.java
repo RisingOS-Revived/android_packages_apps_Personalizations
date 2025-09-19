@@ -39,7 +39,9 @@ import androidx.preference.PreferenceScreen;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 import com.android.settings.preferences.ui.AdaptiveListPreference;
@@ -68,7 +70,7 @@ import java.util.List;
 import java.util.Map;
 
 @SearchIndexable
-public class Backup extends SettingsPreferenceFragment {
+public class Backup extends OptimizedSettingsFragment {
 
     private static final String TAG = "Backup";
     private static final String BACKUP_PERSONALIZATION_SETTINGS = "backup_personalization_settings";
@@ -80,6 +82,9 @@ public class Backup extends SettingsPreferenceFragment {
     private ActivityResultLauncher<Intent> restoreLauncher;
     private ActivityResultLauncher<Intent> uploadLauncher;
     private ActivityResultLauncher<Intent> downloadLauncher;
+    
+    // Background executor for file operations
+    private ExecutorService mFileExecutor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,7 +92,11 @@ public class Backup extends SettingsPreferenceFragment {
         addPreferencesFromResource(R.xml.rising_settings_backup);
 
         final PreferenceScreen prefScreen = getPreferenceScreen();
-        Context mContext = getActivity().getApplicationContext();
+        Context mContext = getSafeContext();
+        if (mContext == null) return;
+        
+        // Initialize background executor
+        mFileExecutor = Executors.newSingleThreadExecutor();
 
         // Initialize ActivityResultLaunchers for file selection
         backupLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -95,7 +104,10 @@ public class Backup extends SettingsPreferenceFragment {
                 Uri uri = result.getData().getData();
                 if (uri != null) {
                     Log.d(TAG, "Backup URI: " + uri.toString());
-                    backupSettings(mContext, uri);
+                    // Perform backup in background thread
+                    if (mFileExecutor != null && !mFileExecutor.isShutdown()) {
+                        mFileExecutor.execute(() -> backupSettings(mContext, uri));
+                    }
                 } else {
                     Log.e(TAG, "Backup URI is null");
                 }
@@ -109,7 +121,10 @@ public class Backup extends SettingsPreferenceFragment {
                 Uri uri = result.getData().getData();
                 if (uri != null) {
                     Log.d(TAG, "Restore URI: " + uri.toString());
-                    restoreSettings(mContext, uri);
+                    // Perform restore in background thread
+                    if (mFileExecutor != null && !mFileExecutor.isShutdown()) {
+                        mFileExecutor.execute(() -> restoreSettings(mContext, uri));
+                    }
                 } else {
                     Log.e(TAG, "Restore URI is null");
                 }
@@ -138,7 +153,10 @@ public class Backup extends SettingsPreferenceFragment {
                 Uri uri = result.getData().getData();
                 if (uri != null) {
                     Log.d(TAG, "Download URI: " + uri.toString());
-                    restoreSettings(mContext, uri);
+                    // Perform restore in background thread
+                    if (mFileExecutor != null && !mFileExecutor.isShutdown()) {
+                        mFileExecutor.execute(() -> restoreSettings(mContext, uri));
+                    }
                 } else {
                     Log.e(TAG, "Download URI is null");
                 }
@@ -148,7 +166,7 @@ public class Backup extends SettingsPreferenceFragment {
         });
 
         // Backup settings
-        Preference backupPref = findPreference(BACKUP_PERSONALIZATION_SETTINGS);
+        Preference backupPref = findCachedPreference(BACKUP_PERSONALIZATION_SETTINGS);
         if (backupPref != null) {
                 backupPref.setOnPreferenceClickListener(preference -> {
                         Log.d(TAG, "Backup option clicked");
@@ -158,7 +176,7 @@ public class Backup extends SettingsPreferenceFragment {
         }
 
         // Restore settings
-        Preference restorePref = findPreference(RESTORE_PERSONALIZATION_SETTINGS);
+        Preference restorePref = findCachedPreference(RESTORE_PERSONALIZATION_SETTINGS);
         if (restorePref != null) {
                 restorePref.setOnPreferenceClickListener(preference -> {
                         Log.d(TAG, "Restore option clicked");
@@ -168,7 +186,7 @@ public class Backup extends SettingsPreferenceFragment {
         }
 
         // Upload backup to Google Drive
-        Preference uploadToDrivePref = findPreference(UPLOAD_BACKUP_TO_DRIVE);
+        Preference uploadToDrivePref = findCachedPreference(UPLOAD_BACKUP_TO_DRIVE);
         uploadToDrivePref.setOnPreferenceClickListener(preference -> {
             Log.d(TAG, "Upload to Drive option clicked");
             chooseFileForUpload();
@@ -176,7 +194,7 @@ public class Backup extends SettingsPreferenceFragment {
         });
 
         // Download backup from Google Drive
-        Preference downloadFromDrivePref = findPreference(DOWNLOAD_BACKUP_FROM_DRIVE);
+        Preference downloadFromDrivePref = findCachedPreference(DOWNLOAD_BACKUP_FROM_DRIVE);
         downloadFromDrivePref.setOnPreferenceClickListener(preference -> {
             Log.d(TAG, "Download from Drive option clicked");
             downloadBackupFromDrive();
@@ -265,12 +283,22 @@ public class Backup extends SettingsPreferenceFragment {
                     try (OutputStream os = new FileOutputStream(backupFile)) {
                         os.write(json.toString().getBytes(StandardCharsets.UTF_8));
                     }
-                    Toast.makeText(getActivity(), "Personalization settings backed up successfully!", Toast.LENGTH_SHORT).show();
+                    postDelayedSafe(() -> {
+                        Context ctx = getSafeContext();
+                        if (ctx != null) {
+                            Toast.makeText(ctx, "Personalization settings backed up successfully!", Toast.LENGTH_SHORT).show();
+                        }
+                    }, 0);
                 }
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
-            Toast.makeText(getActivity(), "Failed to backup settings", Toast.LENGTH_SHORT).show();
+            postDelayedSafe(() -> {
+                Context ctx = getSafeContext();
+                if (ctx != null) {
+                    Toast.makeText(ctx, "Failed to backup settings", Toast.LENGTH_SHORT).show();
+                }
+            }, 0);
         }
     }
 
@@ -355,11 +383,21 @@ public class Backup extends SettingsPreferenceFragment {
                 context.getContentResolver().notifyChange(Settings.Secure.CONTENT_URI, null);
                 context.getContentResolver().notifyChange(Settings.Global.CONTENT_URI, null);
 
-                Toast.makeText(getActivity(), "Personalization settings restored successfully!", Toast.LENGTH_SHORT).show();
+                postDelayedSafe(() -> {
+                    Context ctx = getSafeContext();
+                    if (ctx != null) {
+                        Toast.makeText(ctx, "Personalization settings restored successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                }, 0);
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
-            Toast.makeText(getActivity(), "Failed to restore settings", Toast.LENGTH_SHORT).show();
+            postDelayedSafe(() -> {
+                Context ctx = getSafeContext();
+                if (ctx != null) {
+                    Toast.makeText(ctx, "Failed to restore settings", Toast.LENGTH_SHORT).show();
+                }
+            }, 0);
         }
     }
 
@@ -397,4 +435,13 @@ public class Backup extends SettingsPreferenceFragment {
                     return keys;
                 }
             };
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Cleanup background executor
+        if (mFileExecutor != null && !mFileExecutor.isShutdown()) {
+            mFileExecutor.shutdown();
+        }
+    }
 }

@@ -20,7 +20,7 @@ import android.os.Bundle;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
@@ -29,7 +29,7 @@ import com.android.settings.preferences.CustomSeekBarPreference;
 import java.util.List;
 
 @SearchIndexable
-public class StatusBar extends SettingsPreferenceFragment {
+public class StatusBar extends OptimizedSettingsFragment {
 
     public static final String TAG = "StatusBar";
     
@@ -43,17 +43,24 @@ public class StatusBar extends SettingsPreferenceFragment {
 
         addPreferencesFromResource(R.xml.rising_settings_status_bar);
 
-        CustomSeekBarPreference leftSeekBar = findPreference(KEY_STATUSBAR_LEFT_PADDING);
-        int defaultLeftPadding = getResources().getDimensionPixelSize(com.android.internal.R.dimen.status_bar_padding_start);
-        leftSeekBar.setDefaultValue(defaultLeftPadding, true);
+        // Use cached preference lookup for better performance
+        CustomSeekBarPreference leftSeekBar = findCachedPreference(KEY_STATUSBAR_LEFT_PADDING);
+        if (leftSeekBar != null && getResources() != null) {
+            int defaultLeftPadding = getResources().getDimensionPixelSize(com.android.internal.R.dimen.status_bar_padding_start);
+            leftSeekBar.setDefaultValue(defaultLeftPadding, true);
+        }
         
-        CustomSeekBarPreference rightSeekBar = findPreference(KEY_STATUSBAR_RIGHT_PADDING);
-        int defaultRightPadding = getResources().getDimensionPixelSize(com.android.internal.R.dimen.status_bar_padding_end);
-        rightSeekBar.setDefaultValue(defaultRightPadding, true);
+        CustomSeekBarPreference rightSeekBar = findCachedPreference(KEY_STATUSBAR_RIGHT_PADDING);
+        if (rightSeekBar != null && getResources() != null) {
+            int defaultRightPadding = getResources().getDimensionPixelSize(com.android.internal.R.dimen.status_bar_padding_end);
+            rightSeekBar.setDefaultValue(defaultRightPadding, true);
+        }
 
-        CustomSeekBarPreference topSeekbar = findPreference(KEY_STATUSBAR_TOP_PADDING);
-        int defaultTopPadding = getResources().getDimensionPixelSize(com.android.internal.R.dimen.status_bar_padding_top);
-        topSeekbar.setDefaultValue(defaultTopPadding, true);
+        CustomSeekBarPreference topSeekbar = findCachedPreference(KEY_STATUSBAR_TOP_PADDING);
+        if (topSeekbar != null && getResources() != null) {
+            int defaultTopPadding = getResources().getDimensionPixelSize(com.android.internal.R.dimen.status_bar_padding_top);
+            topSeekbar.setDefaultValue(defaultTopPadding, true);
+        }
     }
 
     @Override

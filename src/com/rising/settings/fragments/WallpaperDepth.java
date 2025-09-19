@@ -40,7 +40,7 @@ import androidx.preference.SwitchPreferenceCompat;
 import com.android.internal.logging.nano.MetricsProto;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
@@ -49,8 +49,7 @@ import com.android.settings.utils.ImageUtils;
 import java.util.List;
 
 @SearchIndexable
-public class WallpaperDepth extends SettingsPreferenceFragment
-            implements Preference.OnPreferenceChangeListener  {
+public class WallpaperDepth extends OptimizedSettingsFragment implements Preference.OnPreferenceChangeListener  {
 
     public static final String TAG = "WallpaperDepth";
     

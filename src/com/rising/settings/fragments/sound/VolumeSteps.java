@@ -27,11 +27,11 @@ import androidx.preference.Preference.OnPreferenceChangeListener;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
 import com.android.settings.preferences.CustomSeekBarPreference;
 
-public class VolumeSteps extends SettingsPreferenceFragment implements
+public class VolumeSteps extends OptimizedSettingsFragment implements
         OnPreferenceChangeListener {
 
     private static final String TAG = "VolumeSteps";

@@ -20,9 +20,9 @@ import android.os.Bundle;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 
-public class SoundEngine extends SettingsPreferenceFragment {
+public class SoundEngine extends OptimizedSettingsFragment {
 
     private static final String TAG = "SoundEngine";
 

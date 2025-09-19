@@ -35,6 +35,8 @@ import com.android.settings.preferences.GlobalSettingListPreference;
 import com.android.settings.utils.SystemRestartUtils;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 @SearchIndexable
 public class Themes extends SettingsPreferenceFragment implements
@@ -81,12 +83,23 @@ public class Themes extends SettingsPreferenceFragment implements
     private Preference mHideImePref;
     private GlobalSettingListPreference mLockSound;
     private GlobalSettingListPreference mUnlockSound;
+    
+    // Cache for style states to prevent redundant operations
+    private final Map<String, Integer> mStyleCache = new ConcurrentHashMap<>();
+    private static final String CACHE_KEY_PROGRESS_BAR = "progress_bar_style";
+    private static final String CACHE_KEY_NOTIFICATION = "notification_style";
+    private static final String CACHE_KEY_POWER_MENU = "powermenu_style";
+    private static final String CACHE_KEY_HIDE_IME = "hide_ime_style";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.rising_settings_themes);
-        mThemeUtils = ThemeUtils.getInstance(getActivity());
+        
+        // Initialize ThemeUtils with null check
+        if (getActivity() != null) {
+            mThemeUtils = ThemeUtils.getInstance(getActivity());
+        }
 
         mProgressBarPref = findPreference(KEY_PGB_STYLE);
         mProgressBarPref.setOnPreferenceChangeListener(this);
@@ -105,14 +118,17 @@ public class Themes extends SettingsPreferenceFragment implements
         mUnlockSound = (GlobalSettingListPreference) findPreference(KEY_UNLOCK_SOUND);
         mUnlockSound.setOnPreferenceChangeListener(this);
 
-        com.android.settingslib.widget.LayoutPreference highlightPref = getPreferenceScreen().findPreference("themes_highlight_dashboard");
-        if (highlightPref != null) {
-            java.util.Map<Integer, String> highlightClickMap = new java.util.HashMap<>();
-            highlightClickMap.put(R.id.boot_styles_tile, "PersonalizationsBSActivity");
-            highlightClickMap.put(R.id.icon_pack_tile, "PersonalizationsIconPackActivity");
-            highlightClickMap.put(R.id.settings_tile, "PersonalizationsSettingsUIActivity");
-            highlightClickMap.put(R.id.wallpaper_styles_tile, "PersonalizationsWSActivity");
-            com.android.settings.utils.HighlightPrefUtils.Companion.setupHighlightPref(getContext(), highlightPref, highlightClickMap);
+        // Initialize highlight preferences with null checks
+        if (getPreferenceScreen() != null) {
+            com.android.settingslib.widget.LayoutPreference highlightPref = getPreferenceScreen().findPreference("themes_highlight_dashboard");
+            if (highlightPref != null && getContext() != null) {
+                java.util.Map<Integer, String> highlightClickMap = new java.util.HashMap<>();
+                highlightClickMap.put(R.id.boot_styles_tile, "PersonalizationsBSActivity");
+                highlightClickMap.put(R.id.icon_pack_tile, "PersonalizationsIconPackActivity");
+                highlightClickMap.put(R.id.settings_tile, "PersonalizationsSettingsUIActivity");
+                highlightClickMap.put(R.id.wallpaper_styles_tile, "PersonalizationsWSActivity");
+                com.android.settings.utils.HighlightPrefUtils.Companion.setupHighlightPref(getContext(), highlightPref, highlightClickMap);
+            }
         }
     }
 
@@ -124,14 +140,28 @@ public class Themes extends SettingsPreferenceFragment implements
                 defaultValue,
                 UserHandle.USER_CURRENT
         );
-        if (mThemeUtils == null) {
+        
+        // Check cache to avoid redundant operations
+        Integer cachedStyle = mStyleCache.get(key);
+        if (cachedStyle != null && cachedStyle == style) {
+            return; // Style hasn't changed, skip update
+        }
+        
+        // Update cache
+        mStyleCache.put(key, style);
+        
+        if (mThemeUtils == null && getContext() != null) {
             mThemeUtils = ThemeUtils.getInstance(getContext());
         }
-        mThemeUtils.setOverlayEnabled(category, target, target);
-        if (style > 0 && style <= overlayPackages.length) {
-            mThemeUtils.setOverlayEnabled(category, overlayPackages[style - 1], target);
+        
+        if (mThemeUtils != null) {
+            mThemeUtils.setOverlayEnabled(category, target, target);
+            if (style > 0 && style <= overlayPackages.length) {
+                mThemeUtils.setOverlayEnabled(category, overlayPackages[style - 1], target);
+            }
         }
-        if (restartSystemUI) {
+        
+        if (restartSystemUI && getContext() != null) {
             SystemRestartUtils.restartSystemUI(getContext());
         }
     }
@@ -202,4 +232,19 @@ public class Themes extends SettingsPreferenceFragment implements
                     return keys;
                 }
             };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Clear cache and cleanup resources
+        mStyleCache.clear();
+        mThemeUtils = null;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        // Additional cleanup
+        mStyleCache.clear();
+    }
 }

@@ -32,10 +32,10 @@ import com.android.internal.logging.nano.MetricsProto;
 import androidx.preference.Preference;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.utils.ImageUtils;
 
-public class AODSettings extends SettingsPreferenceFragment {
+public class AODSettings extends OptimizedSettingsFragment {
 
     private static final String CUSTOM_IMAGE_REQUEST_CODE_KEY = "lockscreen_custom_image";
     private static final int CUSTOM_IMAGE_REQUEST_CODE = 1001;
@@ -46,8 +46,9 @@ public class AODSettings extends SettingsPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.rising_aod_settings);
-        mCustomImagePreference = findPreference(CUSTOM_IMAGE_REQUEST_CODE_KEY);
-        int clockStyle = Settings.Secure.getIntForUser(getContext().getContentResolver(), "clock_style", 0, UserHandle.USER_CURRENT);
+        mCustomImagePreference = findCachedPreference(CUSTOM_IMAGE_REQUEST_CODE_KEY);
+        Context context = getSafeContext();
+        int clockStyle = context != null ? Settings.Secure.getIntForUser(context.getContentResolver(), "clock_style", 0, UserHandle.USER_CURRENT) : 0;
         String imagePath = Settings.System.getString(getContext().getContentResolver(), "custom_aod_image_uri");
         if (imagePath != null && clockStyle > 0) {
             mCustomImagePreference.setSummary(imagePath);

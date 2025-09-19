@@ -46,7 +46,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
+import java.lang.ref.WeakReference;
 import com.android.settings.utils.SystemRestartUtils;
 
 import com.android.internal.util.android.ThemeUtils;
@@ -56,7 +57,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 import java.util.List;
 
-public class LockClockFontsPickerPreview extends SettingsPreferenceFragment {
+public class LockClockFontsPickerPreview extends OptimizedSettingsFragment {
 
     private static final String TAG = "LockClockFontsPickerPreview";
     private static final String PREF_FIRST_TIME = "first_time_clock_face_access";
@@ -72,7 +73,6 @@ public class LockClockFontsPickerPreview extends SettingsPreferenceFragment {
     private int mClockPosition = 0;
 
     private ThemeUtils mThemeUtils;
-    private Handler mHandler = new Handler();
 
     private final static int[] mCenterClocks = {2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16};
 
@@ -101,7 +101,9 @@ public class LockClockFontsPickerPreview extends SettingsPreferenceFragment {
         super.onCreate(savedInstanceState);
         fontManager = new FontManager(getActivity(), true);
         getActivity().setTitle(getActivity().getString(R.string.theme_customization_lock_clock_title));
-        mThemeUtils = ThemeUtils.getInstance(getActivity());
+        if (getActivity() != null) {
+            mThemeUtils = ThemeUtils.getInstance(getActivity());
+        }
     }
 
     @Nullable
@@ -291,9 +293,7 @@ public class LockClockFontsPickerPreview extends SettingsPreferenceFragment {
         final Context fragmentContext = getContext();
 
         if (appContext != null && fragmentContext != null && isAdded() && getActivity() != null && !getActivity().isFinishing()) {
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
+            postDelayedSafe(() -> {
                     try {
                         SystemRestartUtils.restartSystemUI(appContext);
                         showSuccessMessage();
@@ -310,7 +310,6 @@ public class LockClockFontsPickerPreview extends SettingsPreferenceFragment {
                             showFailureMessage();
                         }
                     }
-                }
             }, 1000);
         } else {
             showFailureMessage();
@@ -528,15 +527,14 @@ public class LockClockFontsPickerPreview extends SettingsPreferenceFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mHandler != null) {
-            mHandler.removeCallbacksAndMessages(null);
-        }
+        // Cleanup handled by OptimizedSettingsFragment
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mHandler = null;
+        // Cleanup ThemeUtils
+        mThemeUtils = null;
     }
 
     @Override

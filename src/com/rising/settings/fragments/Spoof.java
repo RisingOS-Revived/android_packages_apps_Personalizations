@@ -49,7 +49,10 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.util.android.SystemRestartUtils;
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
+import java.lang.ref.WeakReference;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import com.android.settingslib.search.SearchIndexable;
 
 import java.io.InputStream;
@@ -75,7 +78,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 @SearchIndexable
-public class Spoof extends SettingsPreferenceFragment implements
+public class Spoof extends OptimizedSettingsFragment implements
         Preference.OnPreferenceChangeListener {
 
     private static final String TAG = "Spoof";
@@ -108,12 +111,19 @@ public class Spoof extends SettingsPreferenceFragment implements
     private SystemPropertySwitchPreference mTensorFeaturesToggle;
     private Preference mWikiLink;
 
-    private Handler mHandler;
+    // Background executor for network operations
+    private ExecutorService mNetworkExecutor;
+    
+    // Cache for expensive operations
+    private final Map<String, Boolean> mDeviceCheckCache = new HashMap<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mHandler = new Handler();
+        
+        // Initialize background executor for network operations
+        mNetworkExecutor = Executors.newSingleThreadExecutor();
+        
         addPreferencesFromResource(R.xml.rising_settings_spoof);
 
         final Context context = getContext();
@@ -133,11 +143,21 @@ public class Spoof extends SettingsPreferenceFragment implements
         mUpdateJsonButton = findPreference(KEY_UPDATE_JSON_BUTTON);
         mTensorFeaturesToggle = (SystemPropertySwitchPreference) findPreference(SYS_ENABLE_TENSOR_FEATURES);
 
+        // Cache expensive device checks
         String model = SystemProperties.get("ro.product.model");
-        boolean isTensorDevice = model.matches("Pixel [6-9][a-zA-Z ]*");
-        boolean isPixelGmsEnabled = SystemProperties.getBoolean(SYS_GMS_SPOOF, true); // Default to Pixel GMS
+        boolean isTensorDevice = isOperationCached("is_tensor_device") ? 
+                (Boolean) getCachedOperation("is_tensor_device") : 
+                model.matches("Pixel [6-9][a-zA-Z ]*");
+        cacheOperation("is_tensor_device", isTensorDevice);
+        
+        boolean isPixelGmsEnabled = SystemProperties.getBoolean(SYS_GMS_SPOOF, true);
+        
+        boolean isCurrentlySupportedPixel = isOperationCached("is_supported_pixel") ? 
+                (Boolean) getCachedOperation("is_supported_pixel") : 
+                DeviceUtils.isCurrentlySupportedPixel();
+        cacheOperation("is_supported_pixel", isCurrentlySupportedPixel);
 
-        if (DeviceUtils.isCurrentlySupportedPixel()) {
+        if (isCurrentlySupportedPixel) {
             mGoogleSpoof.setDefaultValue(false);
             if (isMainlineTensorModel(model)) {
                 mSystemWideCategory.removePreference(mGoogleSpoof);
@@ -268,7 +288,8 @@ public class Spoof extends SettingsPreferenceFragment implements
     }
 
     private void updatePropertiesFromUrl(String urlString) {
-        new Thread(() -> {
+        if (mNetworkExecutor != null && !mNetworkExecutor.isShutdown()) {
+            mNetworkExecutor.execute(() -> {
             try {
                 URL url = new URL(urlString);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -283,24 +304,34 @@ public class Spoof extends SettingsPreferenceFragment implements
                         Log.d(TAG, "Setting property: persist.sys.pihooks_" + key + " = " + value);
                         SystemProperties.set("persist.sys.pihooks_" + key, value);
                     }
-                    mHandler.post(() -> {
-                        String toastMessage = getString(R.string.toast_spoofing_success, spoofedModel);
-                        Toast.makeText(getContext(), toastMessage, Toast.LENGTH_LONG).show();
-                    });
+                    postDelayedSafe(() -> {
+                        Context context = getSafeContext();
+                        if (context != null) {
+                            String toastMessage = getString(R.string.toast_spoofing_success, spoofedModel);
+                            Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
+                        }
+                    }, 0);
 
                 } finally {
                     urlConnection.disconnect();
                 }
             } catch (Exception e) {
                 Log.e(TAG, "Error downloading JSON or setting properties", e);
-                mHandler.post(() -> {
-                    Toast.makeText(getContext(), R.string.toast_spoofing_failure, Toast.LENGTH_LONG).show();
-                });
+                postDelayedSafe(() -> {
+                    Context context = getSafeContext();
+                    if (context != null) {
+                        Toast.makeText(context, R.string.toast_spoofing_failure, Toast.LENGTH_LONG).show();
+                    }
+                }, 0);
             }
-            mHandler.postDelayed(() -> {
-                SystemRestartUtils.showSystemRestartDialog(getContext());
+            postDelayedSafe(() -> {
+                Context context = getSafeContext();
+                if (context != null) {
+                    SystemRestartUtils.showSystemRestartDialog(context);
+                }
             }, 1250);
-        }).start();
+        });
+        }
     }
 
     private void loadPifJson(Uri uri) {
@@ -320,8 +351,11 @@ public class Spoof extends SettingsPreferenceFragment implements
         } catch (Exception e) {
             Log.e(TAG, "Error reading PIF JSON or setting properties", e);
         }
-        mHandler.postDelayed(() -> {
-            SystemRestartUtils.showSystemRestartDialog(getContext());
+        postDelayedSafe(() -> {
+            Context context = getSafeContext();
+            if (context != null) {
+                SystemRestartUtils.showSystemRestartDialog(context);
+            }
         }, 1250);
     }
 
@@ -364,4 +398,21 @@ public class Spoof extends SettingsPreferenceFragment implements
                 return keys;
             }
         };
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Cleanup network executor
+        if (mNetworkExecutor != null && !mNetworkExecutor.isShutdown()) {
+            mNetworkExecutor.shutdown();
+        }
+        mDeviceCheckCache.clear();
+    }
+    
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        // Additional cleanup
+        mDeviceCheckCache.clear();
+    }
 }

@@ -16,6 +16,7 @@
 
 package com.rising.settings.fragments.lockscreen;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -54,7 +55,7 @@ import com.bumptech.glide.Glide;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.Indexable;
 
@@ -65,7 +66,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class UdfpsIconPicker extends SettingsPreferenceFragment {
+public class UdfpsIconPicker extends OptimizedSettingsFragment {
 
     private RecyclerView mRecyclerView;
 
@@ -78,17 +79,22 @@ public class UdfpsIconPicker extends SettingsPreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.udfps_icon_picker_title);
+        Context context = getSafeContext();
+        if (context instanceof Activity) {
+            ((Activity) context).setTitle(R.string.udfps_icon_picker_title);
+        }
 
         loadResources();
     }
 
     private void loadResources() {
         try {
-            PackageManager pm = getActivity().getPackageManager();
-            udfpsRes = pm.getResourcesForApplication(mPkg);
+            Context context = getSafeContext();
+            if (context != null) {
+                udfpsRes = context.getPackageManager().getResourcesForApplication(mPkg);
+            }
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            // Handle silently - package not found
         }
 
         mIcons = udfpsRes.getStringArray(udfpsRes.getIdentifier("udfps_icons",
@@ -211,8 +217,15 @@ public class UdfpsIconPicker extends SettingsPreferenceFragment {
             return ctx.getDrawable(res.getIdentifier(drawableName, "drawable", mPkg));
         }
         catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            // Handle silently - package not found
         }
         return null;
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        udfpsRes = null;
+        mIcons = null;
     }
 }

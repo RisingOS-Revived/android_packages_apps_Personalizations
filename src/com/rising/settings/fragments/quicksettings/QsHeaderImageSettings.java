@@ -36,7 +36,7 @@ import androidx.preference.Preference.OnPreferenceChangeListener;
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settingslib.search.SearchIndexable;
 
 import com.android.settings.utils.ImageUtils;
@@ -48,7 +48,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SearchIndexable
-public class QsHeaderImageSettings extends SettingsPreferenceFragment implements
+public class QsHeaderImageSettings extends OptimizedSettingsFragment implements
         OnPreferenceChangeListener {
 
     private static final String CUSTOM_HEADER_BROWSE = "custom_header_browse";
@@ -73,10 +73,10 @@ public class QsHeaderImageSettings extends SettingsPreferenceFragment implements
 
         ContentResolver resolver = getActivity().getContentResolver();
 
-        mHeaderBrowse = findPreference(CUSTOM_HEADER_BROWSE);
+        mHeaderBrowse = findCachedPreference(CUSTOM_HEADER_BROWSE);
         mHeaderBrowse.setEnabled(isBrowseHeaderAvailable());
 
-        mDaylightHeaderPack = (ListPreference) findPreference(DAYLIGHT_HEADER_PACK);
+        mDaylightHeaderPack = (ListPreference) findCachedPreference(DAYLIGHT_HEADER_PACK);
 
         List<String> entries = new ArrayList<String>();
         List<String> values = new ArrayList<String>();
@@ -95,14 +95,14 @@ public class QsHeaderImageSettings extends SettingsPreferenceFragment implements
         }
         mHeaderBrowse.setEnabled(isBrowseHeaderAvailable() && !providerName.equals(mFileHeaderProvider));
 
-        mHeaderProvider = (ListPreference) findPreference(CUSTOM_HEADER_PROVIDER);
+        mHeaderProvider = (ListPreference) findCachedPreference(CUSTOM_HEADER_PROVIDER);
         int valueIndex = mHeaderProvider.findIndexOfValue(providerName);
         mHeaderProvider.setValueIndex(valueIndex >= 0 ? valueIndex : 0);
         mHeaderProvider.setSummary(mHeaderProvider.getEntry());
         mHeaderProvider.setOnPreferenceChangeListener(this);
         mDaylightHeaderPack.setEnabled(providerName.equals(mDaylightHeaderProvider));
 
-        mFileHeader = findPreference(FILE_HEADER_SELECT);
+        mFileHeader = findCachedPreference(FILE_HEADER_SELECT);
         mFileHeader.setEnabled(providerName.equals(mFileHeaderProvider));
     }
 
@@ -154,7 +154,7 @@ public class QsHeaderImageSettings extends SettingsPreferenceFragment implements
                 intent.setType("image/*");
                 startActivityForResult(intent, 10001);
             } catch(Exception e) {
-                Toast.makeText(getContext(), R.string.qs_header_needs_gallery, Toast.LENGTH_LONG).show();
+                Toast.makeText(getSafeContext(), R.string.qs_header_needs_gallery, Toast.LENGTH_LONG).show();
             }
             return true;
         }
@@ -215,9 +215,9 @@ public class QsHeaderImageSettings extends SettingsPreferenceFragment implements
             }
             final Uri imgUri = result.getData();
             if (imgUri != null) {
-                String savedImagePath = ImageUtils.saveImageToInternalStorage(getContext(), imgUri, "qs_header_image", "QS_HEADER_IMAGE");
+                String savedImagePath = ImageUtils.saveImageToInternalStorage(getSafeContext(), imgUri, "qs_header_image", "QS_HEADER_IMAGE");
                 if (savedImagePath != null) {
-                    ContentResolver resolver = getContext().getContentResolver();
+                    ContentResolver resolver = getSafeContext().getContentResolver();
                     Settings.System.putStringForUser(resolver, Settings.System.STATUS_BAR_FILE_HEADER_IMAGE, savedImagePath, UserHandle.USER_CURRENT);
                 }
             }

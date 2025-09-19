@@ -55,7 +55,7 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.Indexable;
-import com.android.settings.SettingsPreferenceFragment;
+import com.rising.settings.fragments.OptimizedSettingsFragment;
 import com.android.settingslib.Utils;
 
 import com.bumptech.glide.Glide;
@@ -69,7 +69,7 @@ import java.util.Arrays;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-public class IconShapes extends SettingsPreferenceFragment {
+public class IconShapes extends OptimizedSettingsFragment {
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
