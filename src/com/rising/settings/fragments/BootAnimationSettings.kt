@@ -48,7 +48,7 @@ import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.ArrayList
-import android.os.AsyncTask
+import java.util.concurrent.Future
 import java.lang.ref.WeakReference
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -117,7 +117,7 @@ class BootAnimationSettings : SettingsPreferenceFragment(), OnPreferenceChangeLi
 
     private fun handleSelectedFile(uri: Uri) {
         // Perform file operations in background to avoid blocking UI
-        CopyFileTask(this, uri, true).execute()
+        performCopyOperation(uri, 5, true)
     }
     
     private fun copyProductFile(style: Int) {
@@ -142,7 +142,7 @@ class BootAnimationSettings : SettingsPreferenceFragment(), OnPreferenceChangeLi
         }
         
         // Perform file operations in background
-        CopyFileTask(this, productFilePath, style, false).execute()
+        performCopyOperation(productFilePath, style, false)
     }
 
     private fun updateBootAnimationPreview() {
@@ -154,83 +154,62 @@ class BootAnimationSettings : SettingsPreferenceFragment(), OnPreferenceChangeLi
         return MetricsProto.MetricsEvent.VIEW_UNKNOWN
     }
 
-    // Background task for file operations
-    private class CopyFileTask : AsyncTask<Void, Void, Boolean> {
-        private val mFragmentRef: WeakReference<BootAnimationSettings>
-        private val mSource: Any // Uri or String path
-        private val mStyle: Int
-        private val mIsCustomFile: Boolean
-        private var mErrorMessage: String? = null
-        
-        // Constructor for custom file (Uri)
-        constructor(fragment: BootAnimationSettings, uri: Uri, isCustom: Boolean) {
-            mFragmentRef = WeakReference(fragment)
-            mSource = uri
-            mStyle = 5 // Custom style
-            mIsCustomFile = isCustom
+    /**
+     * Modern ExecutorService-based file copy operation replacing deprecated AsyncTask
+     */
+    private fun performCopyOperation(source: Any, style: Int, isCustomFile: Boolean) {
+        mFileExecutor?.execute {
+            val success = performFileCopy(source)
+            
+            // Update UI on main thread
+            activity?.runOnUiThread {
+                if (!isAdded) return@runOnUiThread
+                
+                if (success) {
+                    SystemProperties.set(BOOTANIMATION_STYLE_KEY, style.toString())
+                    updateBootAnimationPreview()
+                    mBootAnimationStyle?.value = style.toString()
+                    Toast.makeText(context, R.string.boot_animation_applied, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Failed to apply boot animation", Toast.LENGTH_LONG).show()
+                }
+            }
         }
-        
-        // Constructor for product file (String path)
-        constructor(fragment: BootAnimationSettings, path: String, style: Int, isCustom: Boolean) {
-            mFragmentRef = WeakReference(fragment)
-            mSource = path
-            mStyle = style
-            mIsCustomFile = isCustom
-        }
-        
-        override fun doInBackground(vararg params: Void): Boolean {
-            val fragment = mFragmentRef.get()
-            if (fragment == null || !fragment.isAdded) {
+    }
+    
+    /**
+     * Perform the actual file copy operation in background thread
+     */
+    private fun performFileCopy(source: Any): Boolean {
+        return try {
+            val inputStream: InputStream? = when (source) {
+                is Uri -> context?.contentResolver?.openInputStream(source)
+                is String -> FileInputStream(File(source))
+                else -> null
+            }
+            
+            if (inputStream == null) {
+                Log.e(TAG, "Failed to open input stream")
                 return false
             }
             
-            try {
-                val inputStream: InputStream? = when (mSource) {
-                    is Uri -> fragment.context?.contentResolver?.openInputStream(mSource)
-                    is String -> FileInputStream(File(mSource))
-                    else -> null
-                }
-                
-                if (inputStream == null) {
-                    mErrorMessage = "Failed to open input stream"
-                    return false
-                }
-                
-                val customBootAnimation = File(CUSTOM_BOOTANIMATION_FILE)
-                customBootAnimation.parentFile?.mkdirs()
-                
-                FileOutputStream(customBootAnimation).use { outputStream ->
-                    val buffer = ByteArray(8192) // Larger buffer for better performance
-                    var length: Int
-                    while (inputStream.read(buffer).also { length = it } > 0) {
-                        outputStream.write(buffer, 0, length)
-                    }
-                    outputStream.flush()
-                }
-                inputStream.close()
-                
-                return true
-            } catch (e: Exception) {
-                mErrorMessage = "Error copying bootanimation: ${e.message}"
-                Log.e(TAG, mErrorMessage, e)
-                return false
-            }
-        }
-        
-        override fun onPostExecute(success: Boolean) {
-            val fragment = mFragmentRef.get()
-            if (fragment == null || !fragment.isAdded) {
-                return
-            }
+            val customBootAnimation = File(CUSTOM_BOOTANIMATION_FILE)
+            customBootAnimation.parentFile?.mkdirs()
             
-            if (success) {
-                SystemProperties.set(BOOTANIMATION_STYLE_KEY, mStyle.toString())
-                fragment.updateBootAnimationPreview()
-                fragment.mBootAnimationStyle?.value = mStyle.toString()
-                Toast.makeText(fragment.context, R.string.boot_animation_applied, Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(fragment.context, "Failed to apply boot animation: $mErrorMessage", Toast.LENGTH_LONG).show()
+            FileOutputStream(customBootAnimation).use { outputStream ->
+                val buffer = ByteArray(8192) // Larger buffer for better performance
+                var length: Int
+                while (inputStream.read(buffer).also { length = it } > 0) {
+                    outputStream.write(buffer, 0, length)
+                }
+                outputStream.flush()
             }
+            inputStream.close()
+            
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error copying bootanimation: ${e.message}", e)
+            false
         }
     }
     

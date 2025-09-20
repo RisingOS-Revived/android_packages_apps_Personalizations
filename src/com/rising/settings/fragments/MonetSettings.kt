@@ -18,7 +18,6 @@ package com.rising.settings.fragments
 import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.UserHandle
 import android.provider.Settings

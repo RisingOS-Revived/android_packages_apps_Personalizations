@@ -16,7 +16,8 @@
  */
 package com.rising.settings.fragments.about
 
-import android.os.AsyncTask
+import java.util.concurrent.Executors
+import java.util.concurrent.ExecutorService
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
@@ -57,14 +58,14 @@ class ChangelogFragment : PreferenceFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         textView = view.findViewById(R.id.changelog_text)
-        FetchReadmeTask().execute(README_URL)
+        fetchReadmeContent(README_URL)
     }
 
-    private inner class FetchReadmeTask : AsyncTask<String, Void, String>() {
-
-        override fun doInBackground(vararg params: String): String {
-            val readmeUrl = params[0]
-            return try {
+    private val executor: ExecutorService = Executors.newSingleThreadExecutor()
+    
+    private fun fetchReadmeContent(readmeUrl: String) {
+        executor.execute {
+            val content = try {
                 val url = URL(readmeUrl)
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
@@ -81,31 +82,41 @@ class ChangelogFragment : PreferenceFragment() {
             } catch (e: IOException) {
                 ""
             }
-        }
-
-        override fun onPostExecute(result: String?) {
-            if (result != null) {
-                val pattern = Pattern.compile("\\*\\*(.*?)\\*\\*")
-                val matcher = pattern.matcher(result)
-                val spannableBuilder = SpannableStringBuilder()
-                var lastEnd = 0
-                while (matcher.find()) {
-                    val start = matcher.start()
-                    val end = matcher.end()
-                    val matchedText = matcher.group(1)
-                    spannableBuilder.append(result.subSequence(lastEnd, start))
-                    spannableBuilder.append(
-                        matchedText,
-                        StyleSpan(android.graphics.Typeface.BOLD),
-                        SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    lastEnd = end
+            
+            // Update UI on main thread
+            activity?.runOnUiThread {
+                if (isAdded && content.isNotEmpty()) {
+                    updateTextView(content)
                 }
-                spannableBuilder.append(result.subSequence(lastEnd, result.length))
-                textView.text = spannableBuilder
-                textView.movementMethod = LinkMovementMethod.getInstance()
             }
         }
+    }
+    
+    private fun updateTextView(content: String) {
+        val pattern = Pattern.compile("\\*\\*(.*?)\\*\\*")
+        val matcher = pattern.matcher(content)
+        val spannableBuilder = SpannableStringBuilder()
+        var lastEnd = 0
+        while (matcher.find()) {
+            val start = matcher.start()
+            val end = matcher.end()
+            val matchedText = matcher.group(1)
+            spannableBuilder.append(content.subSequence(lastEnd, start))
+            spannableBuilder.append(
+                matchedText,
+                StyleSpan(android.graphics.Typeface.BOLD),
+                SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            lastEnd = end
+        }
+        spannableBuilder.append(content.subSequence(lastEnd, content.length))
+        textView.text = spannableBuilder
+        textView.movementMethod = LinkMovementMethod.getInstance()
+    }
+    
+    override fun onDestroy() {
+        super.onDestroy()
+        executor.shutdown()
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
