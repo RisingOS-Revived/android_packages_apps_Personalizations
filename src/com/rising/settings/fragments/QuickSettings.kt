@@ -285,20 +285,24 @@ class QuickSettings : SettingsPreferenceFragment(), Preference.OnPreferenceChang
         val resolver = context.contentResolver
         val isA11Style = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_TILE_UI_STYLE, 0, UserHandle.USER_CURRENT)
-        val qsPanelStyle = Settings.System.getIntForUser(resolver,
+        val qsPanelStyleValue = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_PANEL_STYLE, 0, UserHandle.USER_CURRENT)
 
         // Update summaries
         mQsUI?.let { qsUI ->
             val index = qsUI.findIndexOfValue(isA11Style.toString())
-            qsUI.value = isA11Style.toString()
-            qsUI.summary = qsUI.entries[index]
+            if (index >= 0 && index < qsUI.entries.size) {
+                qsUI.value = isA11Style.toString()
+                qsUI.summary = qsUI.entries[index]
+            }
         }
 
-        mQsPanelStyle?.let { qsPanelStyle ->
-            val index = qsPanelStyle.findIndexOfValue(qsPanelStyle.toString())
-            qsPanelStyle.value = qsPanelStyle.toString()
-            qsPanelStyle.summary = qsPanelStyle.entries[index]
+        mQsPanelStyle?.let { qsPanelStylePref ->
+            val index = qsPanelStylePref.findIndexOfValue(qsPanelStyleValue.toString())
+            if (index >= 0 && index < qsPanelStylePref.entries.size) {
+                qsPanelStylePref.value = qsPanelStyleValue.toString()
+                qsPanelStylePref.summary = qsPanelStylePref.entries[index]
+            }
         }
     }
 
