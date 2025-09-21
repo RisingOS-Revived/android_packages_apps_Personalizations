@@ -216,14 +216,14 @@ class MonetSettings : DashboardFragment(), OnPreferenceChangeListener {
                     lumin < 1.0 -> -1 * Math.round((1f - lumin) * 100f)
                     else -> 0
                 }
-                mLuminancePref?.value = luminV
+                mLuminancePref?.setValue(luminV)
                 
                 val chromaV = when {
                     chroma > 1.0 -> Math.round((chroma - 1f) * 100f)
                     chroma < 1.0 -> -1 * Math.round((1f - chroma) * 100f)
                     else -> 0
                 }
-                mChromaPref?.value = chromaV
+                mChromaPref?.setValue(chromaV)
                 
                 mWholePalettePref?.isChecked = wholePalette
                 mTintBackgroundPref?.isChecked = tintBG
@@ -237,8 +237,8 @@ class MonetSettings : DashboardFragment(), OnPreferenceChangeListener {
             // Reflect default values in every preference
             mThemeStylePref?.setValueIndex(0)
             mColorSourcePref?.setValueIndex(0)
-            mLuminancePref?.value = 0
-            mChromaPref?.value = 0
+            mLuminancePref?.setValue(0)
+            mChromaPref?.setValue(0)
             mAccentBackgroundPref?.isChecked = false
             mWholePalettePref?.isChecked = false
             mTintBackgroundPref?.isChecked = false

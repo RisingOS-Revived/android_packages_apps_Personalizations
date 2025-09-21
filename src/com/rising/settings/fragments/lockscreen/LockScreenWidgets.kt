@@ -144,7 +144,9 @@ class LockScreenWidgets : OptimizedSettingsFragment(), Preference.OnPreferenceCh
             mApplyChange.isEnabled = false
 
             // Restart SystemUI to apply changes
-            SystemRestartUtils.restartSystemUI(context)
+            context?.let { ctx ->
+                SystemRestartUtils.restartSystemUI(ctx)
+            }
         }
     }
 

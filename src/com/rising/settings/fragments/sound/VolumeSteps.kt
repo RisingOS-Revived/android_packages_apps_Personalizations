@@ -54,7 +54,7 @@ class VolumeSteps : OptimizedSettingsFragment(), OnPreferenceChangeListener {
             val value = Settings.System.getIntForUser(resolver, key, def, UserHandle.USER_CURRENT)
             val sbPref = pref as CustomSeekBarPreference
             // Set default value - property may not exist in this version
-            sbPref.value = value
+            sbPref.setValue(value)
             sbPref.onPreferenceChangeListener = this
         }
     }

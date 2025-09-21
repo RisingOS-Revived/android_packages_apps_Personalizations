@@ -81,7 +81,9 @@ class AODSettings : OptimizedSettingsFragment() {
         if (requestCode == CUSTOM_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && result != null) {
             val imgUri = result.data
             if (imgUri != null) {
-                val savedImagePath = ImageUtils.saveImageToInternalStorage(context, imgUri, "lockscreen_aod_image", "LOCKSCREEN_CUSTOM_AOD_IMAGE")
+                val savedImagePath = context?.let { ctx ->
+                    ImageUtils.saveImageToInternalStorage(ctx, imgUri, "lockscreen_aod_image", "LOCKSCREEN_CUSTOM_AOD_IMAGE")
+                }
                 if (savedImagePath != null) {
                     val resolver = context?.contentResolver
                     Settings.System.putStringForUser(resolver, "custom_aod_image_uri", savedImagePath, UserHandle.USER_CURRENT)

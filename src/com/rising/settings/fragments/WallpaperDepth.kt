@@ -88,9 +88,11 @@ class WallpaperDepth : OptimizedSettingsFragment(), Preference.OnPreferenceChang
 
             val imgUri = result?.data
             if (imgUri != null) {
-                val savedImagePath = ImageUtils.saveImageToInternalStorage(
-                    context, imgUri, "depthwallpaper", "DEPTH_WALLPAPER_SUBJECT"
-                )
+                val savedImagePath = context?.let { ctx ->
+                    ImageUtils.saveImageToInternalStorage(
+                        ctx, imgUri, "depthwallpaper", "DEPTH_WALLPAPER_SUBJECT"
+                    )
+                }
                 if (savedImagePath != null) {
                     val resolver = context?.contentResolver
                     resolver?.let {

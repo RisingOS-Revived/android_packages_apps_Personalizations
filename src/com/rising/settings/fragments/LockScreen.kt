@@ -346,7 +346,7 @@ class LockScreen : OptimizedSettingsFragment(), Preference.OnPreferenceChangeLis
             // Position has drifted - restore stable position
             postDelayedSafe(100) {
                 Settings.System.putInt(resolver, KEY_NOW_BAR_MARGIN_BOTTOM, mLastValidNowBarMargin)
-                nowBarMargin.value = mLastValidNowBarMargin
+                nowBarMargin.setValue(mLastValidNowBarMargin)
                 
                 // Notify SystemUI of the position correction
                 resolver.notifyChange(Settings.System.getUriFor(KEY_NOW_BAR_MARGIN_BOTTOM), null)

@@ -237,7 +237,7 @@ class PeekDisplay : OptimizedSettingsFragment(), Preference.OnPreferenceChangeLi
                 // Reset offset when location changes to prevent position conflicts
                 postDelayedSafe(POSITION_UPDATE_DELAY.toLong()) {
                     mVerticalOffset?.let { offset ->
-                        offset.value = DEFAULT_VERTICAL_OFFSET
+                        offset.setValue(DEFAULT_VERTICAL_OFFSET)
                         mLastValidOffset = DEFAULT_VERTICAL_OFFSET
                     }
                 }
@@ -360,7 +360,7 @@ class PeekDisplay : OptimizedSettingsFragment(), Preference.OnPreferenceChangeLi
                     // Position has drifted - restore stable position
                     postDelayedSafe(100) {
                         Settings.Secure.putInt(resolver, KEY_PEEK_DISPLAY_VERTICAL_OFFSET, mLastValidOffset)
-                        verticalOffset.value = mLastValidOffset
+                        verticalOffset.setValue(mLastValidOffset)
                     }
                 } else {
                     mLastValidOffset = currentOffset
