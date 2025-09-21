@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Status bar - Icon tinting -->
+    <string name="status_bar_tint_icons_title">Tint status bar icons</string>
+    <string name="status_bar_tint_icons_summary">Tint status bar icons with system accent color</string>
+
     <!-- Block attestation even with Keybox Data -->
     <string name="pi_gmscertchain_title">Disable forcing strong integrity</string>
     <string name="pi_gmscertchain_summary">When enabled, do not enforce strong integrity from valid custom keybox and depend on Google Play Integrity spoof to fix apps like Google Pay</string>
