@@ -88,11 +88,11 @@
             android:defaultValue="false" />
 
         <!-- Play Store -->
-        <com.android.settings.preferences.SystemPropertySwitchPreference
+         <!--<com.android.settings.preferences.SystemPropertySwitchPreference
             android:key="persist.sys.pixelprops.vending"
             android:title="@string/spoofing_vending_title"
             android:summary="@string/spoofing_vending_summary"
-            android:defaultValue="false" />
+            android:defaultValue="false" />-->
 
         <!-- Google Photos -->
         <com.android.settings.preferences.SystemPropertySwitchPreference

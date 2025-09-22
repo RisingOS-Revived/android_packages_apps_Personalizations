@@ -65,8 +65,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         private const val SYS_GPHOTOS_SPOOF = "persist.sys.pixelprops.gphotos"
         private const val SYS_QSB_SPOOF = "persist.sys.pixelprops.qsb"
         private const val SYS_SNAP_SPOOF = "persist.sys.pixelprops.snap"
-        private const val SYS_VENDING_SPOOF = "persist.sys.pixelprops.vending"
-        private const val SYS_ENABLE_TENSOR_FEATURES = "persist.sys.features.tensor"
+        private const val SYS_TENSOR_SPOOF = "persist.sys.features.tensor"
         private const val KEYBOX_DATA_KEY = "keybox_data_setting"
 
         @JvmField
@@ -88,8 +87,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
     private var mGphotosSpoof: SystemPropertySwitchPreference? = null
     private var mQsbSpoof: SystemPropertySwitchPreference? = null
     private var mSnapSpoof: SystemPropertySwitchPreference? = null
-    private var mVendingSpoof: SystemPropertySwitchPreference? = null
-    private var mTensorFeaturesToggle: SystemPropertySwitchPreference? = null
+    private var mTensorSpoof: SystemPropertySwitchPreference? = null
     private var mWikiLink: Preference? = null
 
     private lateinit var mHandler: Handler
@@ -112,9 +110,8 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         mPifJsonFilePreference = findPreference(KEY_PIF_JSON_FILE_PREFERENCE)
         mQsbSpoof = findPreference(SYS_QSB_SPOOF)
         mSnapSpoof = findPreference(SYS_SNAP_SPOOF)
-        mVendingSpoof = findPreference(SYS_VENDING_SPOOF)
+        mTensorSpoof = findPreference(SYS_TENSOR_SPOOF)
         mUpdateJsonButton = findPreference(KEY_UPDATE_JSON_BUTTON)
-        mTensorFeaturesToggle = findPreference(SYS_ENABLE_TENSOR_FEATURES)
 
         val model = SystemProperties.get("ro.product.model")
         val isTensorDevice = model.matches(Regex("Pixel (6|7|8|9|10)[a-zA-Z ]*"))
@@ -128,7 +125,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         }
 
         if (isTensorDevice) {
-            mTensorFeaturesToggle?.let { mSystemWideCategory?.removePreference(it as Preference) }
+            mTensorSpoof?.let { mSystemWideCategory?.removePreference(it as Preference) }
         }
 
         mGmsSpoof?.onPreferenceChangeListener = this
@@ -137,8 +134,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         mGamePropsSpoof?.onPreferenceChangeListener = this
         mQsbSpoof?.onPreferenceChangeListener = this
         mSnapSpoof?.onPreferenceChangeListener = this
-        mVendingSpoof?.onPreferenceChangeListener = this
-        mTensorFeaturesToggle?.onPreferenceChangeListener = this
+        mTensorSpoof?.onPreferenceChangeListener = this
 
         mKeyboxFilePickerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -314,13 +310,13 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         
         when (preference) {
             mGmsSpoof, mGoogleSpoof, mGphotosSpoof, mGamePropsSpoof, 
-            mQsbSpoof, mSnapSpoof, mVendingSpoof -> {
+            mQsbSpoof, mSnapSpoof -> {
                 SystemRestartUtils.showSystemRestartDialog(requireContext())
                 return true
             }
-            mTensorFeaturesToggle -> {
+            mTensorSpoof -> {
                 val enabled = newValue as Boolean
-                SystemProperties.set(SYS_ENABLE_TENSOR_FEATURES, if (enabled) "true" else "false")
+                SystemProperties.set(SYS_TENSOR_SPOOF, if (enabled) "true" else "false")
                 SystemRestartUtils.showSystemRestartDialog(requireContext())
                 return true
             }
