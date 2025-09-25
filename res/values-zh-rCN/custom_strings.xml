@@ -68,7 +68,7 @@
     <string name="pop_up_view_keep_mute_mini_summary_on">当应用切换至迷你小窗时自动静音</string>
     <string name="pop_up_view_keep_mute_mini_summary_off">应用在切换回浮动模式时自动取消静音</string>
     <string name="pop_up_view_non_window_area_title">非窗口区域</string>
-    <string name="pop_up_view_single_tap_non_window_title">单季操作</string>
+    <string name="pop_up_view_single_tap_non_window_title">单击操作</string>
     <string name="pop_up_view_double_tap_non_window_title">双击操作</string>
     <string name="pop_up_view_action_enter_pinned">切换至迷你小窗</string>
     <string name="pop_up_view_action_exit">关闭浮动窗口</string>
