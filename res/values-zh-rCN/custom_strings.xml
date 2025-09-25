@@ -68,7 +68,7 @@
     <string name="pop_up_view_keep_mute_mini_summary_on">当应用切换至迷你小窗时自动静音</string>
     <string name="pop_up_view_keep_mute_mini_summary_off">应用在切换回浮动模式时自动取消静音</string>
     <string name="pop_up_view_non_window_area_title">非窗口区域</string>
-    <string name="pop_up_view_single_tap_non_window_title">单机操作</string>
+    <string name="pop_up_view_single_tap_non_window_title">单季操作</string>
     <string name="pop_up_view_double_tap_non_window_title">双击操作</string>
     <string name="pop_up_view_action_enter_pinned">切换至迷你小窗</string>
     <string name="pop_up_view_action_exit">关闭浮动窗口</string>
@@ -79,7 +79,7 @@
     <string name="pop_up_view_light_weight_notificiation_landscape_title">打开通知(横屏)</string>
     <string name="pop_up_view_light_weight_notificiation_landscape_summary">在横屏下使用浮动窗口打开通知</string>
     <string name="pop_up_view_light_weight_notificiation_blacklist_title">黑名单应用</string>
-    <string name="pop_up_view_light_weight_notificiation_blacklist_summary">在打开这些程序的通知时不使用浮动窗口</string>
+    <string name="pop_up_view_light_weight_notificiation_blacklist_summary">在打开来自这些程序的通知时不使用浮动窗口</string>
 
     <!-- Pocket mode -->
     <string name="proximity_wake_title">防止意外唤醒</string>
@@ -471,9 +471,9 @@
     <string name="device_power_mode">电源模式</string>
 
     <!-- Per-app spoofing -->
-    <string name="gameprops_title">启用每个应用的伪装</string>
-    <string name="gameprops_summary">在 PixelProps 中启用每个应用程序的伪装选项</string>
-    <string name="gameprops_load_json_title">选择每个应用程序的 JSON 属性文件</string>
+    <string name="gameprops_title">对特定应用的伪装</string>
+    <string name="gameprops_summary">在 PixelProps 中启用针对特定应用程序的伪装选项</string>
+    <string name="gameprops_load_json_title">选择用于这些应用的 JSON 属性文件</string>
     <string name="gameprops_load_json_summary">选择用于伪装游戏的 JSON 文件</string>
 
     <!-- PIF spoofing -->
