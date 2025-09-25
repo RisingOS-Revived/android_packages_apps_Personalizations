@@ -52,6 +52,7 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
         private val NOTIF_OVERLAYS = arrayOf(
             "com.android.theme.notification.cyberpunk",
             "com.android.theme.notification.duoline",
+            "com.android.theme.powermenu.fluid",
             "com.android.theme.notification.ios",
             "com.android.theme.notification.layers"
         )
