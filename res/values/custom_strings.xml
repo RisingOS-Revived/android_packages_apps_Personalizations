@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- GMS cert chain -->
+    <string name="gms_cert_chain_title">Disable forcing strong integrity</string>
+    <string name="gms_cert_chain_summary">Forcing strong integrity breaks apps like Google Pay, enabling this option fixes such apps.</string>
+
     <!-- Brightness Slider Style -->
     <string name="qs_brightness_slider_shape_title">New QS Brightness slider shape</string>
     <string name="quick_settings_tile_shape_circle">Circle</string>
