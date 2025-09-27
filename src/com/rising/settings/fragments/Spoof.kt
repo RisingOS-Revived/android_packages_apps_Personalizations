@@ -252,8 +252,11 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         try {
             val am = requireContext().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             val packages = arrayOf(
+                "com.google.android.apps.photos",
                 "com.google.android.gms",
-                "com.android.vending"
+                "com.google.android.googlequicksearchbox",
+                "com.android.vending",
+                "com.snapchat.android"
             )
             for (pkg in packages) {
                 am.javaClass
@@ -333,12 +336,11 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         val resolver = context.contentResolver
         
         when (preference) {
-            mGmsSpoof -> {
+            mGmsSpoof, mGphotosSpoof, mQsbSpoof, mSnapSpoof -> {
                 killGMSPackages()
                 return true
             }
-            mGoogleSpoof, mGphotosSpoof, mGamePropsSpoof, 
-            mQsbSpoof, mSnapSpoof -> {
+            mGoogleSpoof, mGamePropsSpoof -> {
                 SystemRestartUtils.showSystemRestartDialog(requireContext())
                 return true
             }
