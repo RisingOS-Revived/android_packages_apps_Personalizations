@@ -16,6 +16,7 @@
 package com.rising.settings.fragments
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.Context
@@ -240,6 +241,27 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
             .show()
     }
 
+    /**
+     * Kill packages that need to be restarted to pick up new PIF properties
+     */
+    private fun killGMSPackages() {
+        try {
+            val am = requireContext().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val packages = arrayOf(
+                "com.google.android.gms",
+                "com.android.vending"
+            )
+            for (pkg in packages) {
+                am.javaClass
+                    .getMethod("forceStopPackage", String::class.java)
+                    .invoke(am, pkg)
+                Log.i(TAG, "$pkg process killed")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to kill packages", e)
+        }
+    }
+
     private fun updatePropertiesFromUrl(urlString: String) {
         Thread {
             try {
@@ -263,6 +285,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
                         mHandler.post {
                             val toastMessage = getString(R.string.toast_spoofing_success, spoofedModel)
                             Toast.makeText(requireContext(), toastMessage, Toast.LENGTH_LONG).show()
+                            killGMSPackages()
                         }
                     }
                 } finally {
@@ -274,9 +297,6 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
                     Toast.makeText(requireContext(), R.string.toast_spoofing_failure, Toast.LENGTH_LONG).show()
                 }
             }
-            mHandler.postDelayed({
-                SystemRestartUtils.showSystemRestartDialog(requireContext())
-            }, 1250)
         }.start()
     }
 
@@ -295,13 +315,13 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
                     Log.d(TAG, "Setting PIF property: persist.sys.pihooks_$key = $value")
                     SystemProperties.set("persist.sys.pihooks_$key", value)
                 }
+                killGMSPackages()
+                Toast.makeText(requireContext(), "PIF JSON loaded and packages refreshed", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error reading PIF JSON or setting properties", e)
+            Toast.makeText(requireContext(), "Error loading PIF JSON", Toast.LENGTH_SHORT).show()
         }
-        mHandler.postDelayed({
-            SystemRestartUtils.showSystemRestartDialog(requireContext())
-        }, 1250)
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
@@ -309,7 +329,11 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         val resolver = context.contentResolver
         
         when (preference) {
-            mGmsSpoof, mGoogleSpoof, mGphotosSpoof, mGamePropsSpoof, 
+            mGmsSpoof -> {
+                killGMSPackages()
+                return true
+            }
+            mGoogleSpoof, mGphotosSpoof, mGamePropsSpoof, 
             mQsbSpoof, mSnapSpoof -> {
                 SystemRestartUtils.showSystemRestartDialog(requireContext())
                 return true
