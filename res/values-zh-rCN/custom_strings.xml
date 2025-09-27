@@ -515,8 +515,8 @@
     <string name="apply_change_button_title">应用</string>
 
     <!-- Volume Panel -->
-    <string name="volume_sound_haptics_title">音量声音触觉</string>
-    <string name="volume_sound_haptics_summary">调整音量时启用声音反馈</string>
+    <string name="volume_sound_haptics_title">音量触觉</string>
+    <string name="volume_sound_haptics_summary">调整音量时启用震动反馈</string>
     <string name="volume_panel_expandable_title">可展开的音量条</string>
     <string name="volume_panel_expandable_summary">展开音量条，而不是从底部显示</string>
     <string name="volume_panel_media_output_title">媒体输出图标</string>
@@ -599,10 +599,10 @@
     <string name="network_highlight_settings_summary">设置网络和互联网连接</string>
     <string name="bt_highlight_settings_title">设置连接的设备</string>
     <string name="bt_highlight_settings_summary">添加、配对蓝牙并配置设备连接</string>
-    <string name="rising_settings_title">risingOS 个性化</string>
+    <string name="rising_settings_title">RisingOS 个性化</string>
     <string name="rising_settings_summary">更改图标、主题等</string>
     <string name="reset_settings_title">重置设置</string>
-    <string name="reset_settings_message">这将会重置当前用户大部分的 risingOS 设置为默认值。您要继续吗？</string>
+    <string name="reset_settings_message">这将会重置当前用户大部分的 RisingOS 设置为默认值。您要继续吗？</string>
     <string name="search_homepage">搜索</string>
 
     <!-- Changelog -->
@@ -633,8 +633,8 @@
     <string name="security_settings_footer_text">注意：虽然绕过某些限制可能会带来便利，但也可能导致潜在的隐私风险</string>
 
      <!-- Device Info screen -->
-    <string name="firmware_name_text">risingOS</string>
-    <string name="firmware_name_version">risingOS 版本</string>
+    <string name="firmware_name_text">RisingOS</string>
+    <string name="firmware_name_version">RisingOS 版本</string>
     <string name="firmware_build_type_title">构建类型</string>
     <string name="firmware_build_summary_title">由维护者</string>
     <string name="build_is_official_title">#官方</string>
@@ -726,20 +726,20 @@
     <string name="bottom">底部</string>
     <string name="highlights_title">探索功能</string>
 
-    <!-- About risingOS -->
-    <string name="about_rising">关于 risingOS</string>
+    <!-- About RisingOS -->
+    <string name="about_rising">关于 RisingOS</string>
     <string name="about_device_name">设备</string>
 
-    <!-- Share risingOS -->
-    <string name="share_rising_title">分享 risingOS</string>
-    <string name="share_rising_summary">让更多人了解 risingOS</string>
-    <string name="share_message">查看 #risingOS Android 的全部内容 @ https://rising.net/</string>
-    <string name="share_chooser_title">分享 risingOS</string>
+    <!-- Share RisingOS -->
+    <string name="share_rising_title">分享 RisingOS</string>
+    <string name="share_rising_summary">让更多人了解 RisingOS</string>
+    <string name="share_message">查看 #RisingOS Android 的全部内容 @ https://rising.net/</string>
+    <string name="share_chooser_title">分享 RisingOS</string>
 
-    <!-- Sites risingOS -->
+    <!-- Sites RisingOS -->
     <string name="rising_source_title">GitHub</string>
     <string name="rising_source_summary">我们热爱开源，来看看我们的代码吧</string>
-    <string name="rising_telegram_title">risingOS 社区</string>
+    <string name="rising_telegram_title">RisingOS 社区</string>
     <string name="rising_telegram_summary">我们有 TG 群。加入我们！</string>
     <string name="rising_telegram_channel_title">更新频道</string>
     <string name="rising_telegram_channel_summary">在 Telegram 上获取更新通知</string>
@@ -752,10 +752,10 @@
     <!-- <string name="rising_buildserversponsor_title" translatable="false">InterServer</string> -->
     <string name="rising_buildserversponsor_summary">我们十分推荐这些服务器提供商</string>
 
-    <!-- Donate risingOS -->
+    <!-- Donate RisingOS -->
     <string name="donate_rising_title">支持我们</string>
     <string name="donate_rising_summary">捐赠以支持开发</string>
-    <string name="donate_team_title">risingOS 团队</string>
+    <string name="donate_team_title">RisingOS 团队</string>
     <string name="donate_team_summary">捐赠支持服务器托管，网站正常运行时间和整体管理</string>
 
     <!-- The Drill -->
@@ -1322,8 +1322,8 @@
     <string name="qs_footer_services_icon_title">运行中服务快捷方式</string>
     <string name="qs_footer_settings_icon_title">设置快捷方式</string>
 
-    <!-- Device Info screen. risingOS legal. -->
-    <string name="rising_license_title">risingOS 法律信息</string>
+    <!-- Device Info screen. RisingOS legal. -->
+    <string name="rising_license_title">RisingOS 法律信息</string>
 
     <!-- Quick Settings brightness slider -->
     <string name="qs_brightness_slider_category">亮度滑块</string>
@@ -1857,7 +1857,7 @@
     <string name="status_bar_logo_summary">在状态栏左侧或右侧显示自定义 Logo</string>
     <string name="status_bar_logo_position_title">Logo 位置</string>
     <string name="status_bar_logo_style_title">Logo 样式</string>
-    <string name="status_bar_logo_style_rising">risingOS</string>
+    <string name="status_bar_logo_style_rising">RisingOS</string>
     <string name="status_bar_logo_style_android">Android</string>
     <string name="status_bar_logo_style_adidas">阿迪达斯</string>
     <string name="status_bar_logo_style_alien">外星人</string>
