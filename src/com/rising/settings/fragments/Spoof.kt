@@ -67,6 +67,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         private const val SYS_QSB_SPOOF = "persist.sys.pixelprops.qsb"
         private const val SYS_SNAP_SPOOF = "persist.sys.pixelprops.snap"
         private const val SYS_TENSOR_SPOOF = "persist.sys.features.tensor"
+        private const val SYS_KEYBOX_CHECK_ENABLED = "persist.sys.keybox.check.enabled"
         private const val KEYBOX_DATA_KEY = "keybox_data_setting"
 
         @JvmField
@@ -89,6 +90,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
     private var mQsbSpoof: SystemPropertySwitchPreference? = null
     private var mSnapSpoof: SystemPropertySwitchPreference? = null
     private var mTensorSpoof: SystemPropertySwitchPreference? = null
+    private var mKeyboxCheckEnabled: SystemPropertySwitchPreference? = null
     private var mWikiLink: Preference? = null
 
     private lateinit var mHandler: Handler
@@ -113,6 +115,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         mSnapSpoof = findPreference(SYS_SNAP_SPOOF)
         mTensorSpoof = findPreference(SYS_TENSOR_SPOOF)
         mUpdateJsonButton = findPreference(KEY_UPDATE_JSON_BUTTON)
+        mKeyboxCheckEnabled = findPreference(SYS_KEYBOX_CHECK_ENABLED)
 
         val model = SystemProperties.get("ro.product.model")
         val isTensorDevice = model.matches(Regex("Pixel (6|7|8|9|10)[a-zA-Z ]*"))
@@ -136,6 +139,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         mQsbSpoof?.onPreferenceChangeListener = this
         mSnapSpoof?.onPreferenceChangeListener = this
         mTensorSpoof?.onPreferenceChangeListener = this
+        mKeyboxCheckEnabled?.onPreferenceChangeListener = this
 
         mKeyboxFilePickerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -342,6 +346,10 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
                 val enabled = newValue as Boolean
                 SystemProperties.set(SYS_TENSOR_SPOOF, if (enabled) "true" else "false")
                 SystemRestartUtils.showSystemRestartDialog(requireContext())
+                return true
+            }
+            mKeyboxCheckEnabled -> {
+                killGMSPackages()
                 return true
             }
         }
