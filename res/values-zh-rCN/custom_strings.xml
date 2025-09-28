@@ -213,7 +213,7 @@
      • 点击以打开正在进行传输的应用
  
      状态栏进度条将自动在媒体和下载进度中切换以确保您能获取最需要的信息"
-
+    </string>
 
     <!-- Notifications/Island notification -->
     <string name="notifications_island_notification_title">岛屿通知</string>
