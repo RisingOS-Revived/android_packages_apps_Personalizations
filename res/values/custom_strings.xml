@@ -51,10 +51,6 @@
     <string name="themes_lock_sound_title">Lock sound</string>
     <string name="themes_unlock_sound_title">Unlock sound</string>
 
-    <!-- Single tap for keyguard affordance -->
-    <string name="keyguard_affordance_single_tap_title">Keyguard affordance single tap</string>
-    <string name="keyguard_affordance_single_tap_summary">Toggle keyguard affordances with a single tap</string>
-
     <!-- AOD wallpaper -->
     <string name="aod_wallpaper_title">AOD wallpaper</string>
     <string name="aod_wallpaper_summary">Show wallpaper when aod on</string>
