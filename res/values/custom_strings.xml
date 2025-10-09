@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Dynamic charging animation -->
+    <string name="wireless_charging_dynamic_color_title">Dynamic charging color</string>
+    <string name="wireless_charging_dynamic_color_summary">Use battery level to determine charging ripple animation color</string>
+
     <!-- Brightness Slider Style -->
     <string name="qs_brightness_slider_shape_title">New QS Brightness slider shape</string>
     <string name="quick_settings_tile_shape_circle">Circle</string>
