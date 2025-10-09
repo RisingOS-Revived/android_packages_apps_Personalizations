@@ -30,9 +30,11 @@
     <string name="lock_screen_charging_time_title">Lock screen charging time</string>
     <string name="lock_screen_charging_time_summary">Display the remaining time for charging to finish</string>
 
-    <!-- Notification Row -->
-    <string name="notification_row_transparency_title">Notification row transparency</string>
-    <string name="notification_row_transparency_summary">Show translucent quicksettings notifications</string>
+    <!-- Notification row transparency -->
+    <string name="notification_row_transparency_title">Translucent notifications</string>
+    <string name="notification_row_transparency_summary">Set translucent background for notifications in QS</string>
+    <string name="notification_row_transparency_lockscreen_title">Translucent lockscreen notifications</string>
+    <string name="notification_row_transparency_lockscreen_summary">Set translucent background for notifications in lockscreen</string>
 
     <!-- NT Three finger -->
     <string name="nt_gesture_three_finger_swipe">Three finger swipe</string>
