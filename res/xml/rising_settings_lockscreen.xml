@@ -203,13 +203,20 @@
         android:key="lockscreen_misc_category"
         android:title="@string/misc_title">
 
+        <!-- Ambient Wallpaper -->
+        <com.android.settings.preferences.SecureSettingSwitchPreference
+            android:key="doze_always_on_wallpaper_enabled"
+            android:title="@string/doze_always_on_wallpaper_title"
+            android:summary="@string/doze_always_on_wallpaper_summary"
+            android:defaultValue="@*android:bool/config_dozeSupportsAodWallpaper"
+            lineage:position="top" />
+
         <!-- Dynamic charging animation -->
         <com.android.settings.preferences.SystemSettingSwitchPreference
             android:key="wireless_charging_dynamic_color"
             android:title="@string/wireless_charging_dynamic_color_title"
             android:summary="@string/wireless_charging_dynamic_color_summary"
-            android:defaultValue="true"
-            lineage:position="top" />
+            android:defaultValue="true" />
 
         <com.android.settings.preferences.SystemSettingSwitchPreference
                android:key="lockscreen_enable_power_menu"
