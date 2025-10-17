@@ -57,29 +57,29 @@
     <string name="pop_up_view_info">在一个浮动的小窗口中打开程序</string>
     <string name="pop_up_view_gesture_title">手势</string>
     <string name="pop_up_view_global_gesture_title">全局手势</string>
-    <string name="pop_up_view_global_gesture_summary">Open any apps with Pop-Up View by swiping from bottom corner of the screen to middle</string>
+    <string name="pop_up_view_global_gesture_summary">通过从屏幕下方角落向中心滑动来使用浮动窗口启动任意应用</string>
     <string name="pop_up_view_manage_apps_title">管理固定的应用</string>
     <string name="pop_up_view_manage_apps_summary">自定义在菜单中显示的应用</string>
     <string name="pop_up_view_more_circles_title">显示更多应用</string>
     <string name="pop_up_view_more_circles_summary">Add more quarter circles in gesture menu</string>
-    <string name="pop_up_view_global_gesture_warn">Digital assistant gesture will be disabled with Global Gesture enabled.</string>
+    <string name="pop_up_view_global_gesture_warn">当全局手势启用时，数字助理手势将被禁用</string>
     <string name="pop_up_view_mini_window_title">迷你窗口</string>
     <string name="pop_up_view_keep_mute_mini_title">自动静音</string>
     <string name="pop_up_view_keep_mute_mini_summary_on">当应用切换至迷你小窗时自动静音</string>
     <string name="pop_up_view_keep_mute_mini_summary_off">应用在切换回浮动模式时自动取消静音</string>
     <string name="pop_up_view_non_window_area_title">非窗口区域</string>
-    <string name="pop_up_view_single_tap_non_window_title">单机操作</string>
+    <string name="pop_up_view_single_tap_non_window_title">单击操作</string>
     <string name="pop_up_view_double_tap_non_window_title">双击操作</string>
     <string name="pop_up_view_action_enter_pinned">切换至迷你小窗</string>
     <string name="pop_up_view_action_exit">关闭浮动窗口</string>
     <string name="pop_up_view_no_action">无动作</string>
-    <string name="pop_up_view_light_weight_open_title">LightWeight open</string>
+    <string name="pop_up_view_light_weight_open_title">从通知启动</string>
     <string name="pop_up_view_light_weight_notificiation_portrait_title">打开通知(竖屏)</string>
     <string name="pop_up_view_light_weight_notificiation_portrait_summary">在竖屏下使用浮动窗口打开通知</string>
     <string name="pop_up_view_light_weight_notificiation_landscape_title">打开通知(横屏)</string>
     <string name="pop_up_view_light_weight_notificiation_landscape_summary">在横屏下使用浮动窗口打开通知</string>
     <string name="pop_up_view_light_weight_notificiation_blacklist_title">黑名单应用</string>
-    <string name="pop_up_view_light_weight_notificiation_blacklist_summary">在打开这些程序的通知时不使用浮动窗口</string>
+    <string name="pop_up_view_light_weight_notificiation_blacklist_summary">在打开来自这些程序的通知时不使用浮动窗口</string>
 
     <!-- Pocket mode -->
     <string name="proximity_wake_title">防止意外唤醒</string>
@@ -105,14 +105,55 @@
     <string name="spoofing_photos_summary">将设备伪装为Pixel XL</string>
     <string name="spoofing_snap_title">Snapchat</string>
     <string name="spoofing_snap_summary">将设备伪装为Pixel XL来修复可能存在的问题</string>
-    <string name="keybox_data_title">Keybox attestation override</string>
-    <string name="keybox_data_summary">Load a custom keybox XML to override device key attestation</string>
-    <string name="keybox_data_loaded_summary">Custom keybox XML loaded. Delete to clear.</string>
-    <string name="keybox_delete_content_description">Clear keybox data</string>
-    <string name="keybox_toast_invalid_file_selected">Not an XML file. Choose a valid keybox XML.</string>
-    <string name="keybox_toast_missing_data">Invalid keybox XML: required fields missing</string>
-    <string name="keybox_toast_file_loaded">Keybox loaded</string>
-    <string name="keybox_toast_file_cleared">Keybox cleared</string>
+    <string name="keybox_data_title">Keybox覆盖</string>
+    <string name="keybox_data_summary">加载一个自定义的Keybox.xml文件</string>
+    <string name="keybox_data_loaded_summary">自定义Keybox已加载，删除以清除</string>
+    <string name="keybox_delete_content_description">清除Keybox</string>
+    <string name="keybox_toast_invalid_file_selected">不是一个xml文件，请选择一个有效的Keybox.xml</string>
+    <string name="keybox_toast_missing_data">无效的Keybox.xml: 缺少必要的条目</string>
+    <string name="keybox_toast_file_loaded">keybx已加载</string>
+    <string name="keybox_toast_file_cleared">Keybox已清楚</string>
+
+    <!-- Wifi Display settings. The title of a menu item to disable mirroring confimration [CHAR LIMIT=40] -->
+    <string name="mirroring_confirmation_disable_menu_item">禁用投屏确认</string>
+
+    <!-- USB configuration -->
+    <string name="usb_default_config_title">USB设置</string>
+    <string name="usb_default_config_summary">选择通过USB连接设备时的默认行为</string>
+
+    <!-- fingerprint lockout -->
+    <string name="fingerprint_lockout_title">禁用指纹锁定</string>
+    <string name="fingerprint_lockout_summary">在30秒后或多次解锁失败时仍然保持指纹解锁可用</string>
+
+    <!-- Enforce DNS for VPN -->
+    <string name="vpn_enforce_dns_title">为VPN禁用</string>
+    <string name="vpn_enforce_dns_summary">当连接至VPN时自动禁用私人DNS\n将会在断开VPN后自动恢复</string>
+
+    <!-- Increasing ring tone volume -->
+    <string name="increasing_ring_volume_option_title">逐渐增加铃声音量</string>
+    <string name="increasing_ring_min_volume_title">开始音量</string>
+    <string name="increasing_ring_ramp_up_time_title">增加至最大音量的时间</string>
+
+    <!-- Wi-Fi MAC address randomization -->
+    <string name="wifi_per_connection_random_mac_addr">每次连接都使用随机的MAC (默认值)</string>
+    <string name="wifi_per_network_random_mac_addr">为每个网络使用不同的MAC</string>
+    <string name="wifi_device_mac_addr">使用设备MAC</string>
+
+    <!-- Battery saver refresh rate -->
+    <string name="battery_saver_refresh_rate_title">降低屏幕刷新率</string>
+    <string name="battery_saver_refresh_rate_summary">当省电模式启用时将屏幕刷新率降低至60hz</string>
+
+    <!-- Unlimit screenrecord -->
+    <string name="unlimit_screenrecord_title">无限制录屏</string>
+    <string name="unlimit_screenrecord_summary">移除单个屏幕录制的15GiB文件大小限制\n可能导致非常大的录制文件输出</string>
+
+    <!-- AOD/Extra dim schedule -->
+    <string name="extra_dim_schedule_title">根据时间表自动启用极暗</string>
+    <string name="string_disabled">禁用</string>
+
+    <!-- Long press navbar to search -->
+    <string name="navbar_long_press_gesture_title">长按搜索</string>
+    <string name="navbar_long_press_gesture_summary">按住home键或小白条以使用你的屏幕内容进行搜索</string>
 
     <!-- Statusbar Custom color -->
     <string name="status_bar_logo_use_custom_color_title">状态栏图标自定义颜色</string>
@@ -120,7 +161,7 @@
     <string name="status_bar_logo_custom_color_title">状态栏图标颜色设置</string>
     <string name="status_bar_logo_custom_color_summary">自定义状态栏图标的显示颜色</string>
 
-     <!-- Statusbar lyric -->
+    <!-- Statusbar lyric -->
     <string name="status_bar_lyric_title">状态栏歌词</string>
     <string name="status_bar_lyric_summary">在状态栏显示歌词 (需应用支持)</string>
     <string name="status_bar_lyric_options_title">歌词选项</string>
@@ -146,8 +187,33 @@
     <string name="back_gesture_style_classic_summary">在新的虚线背景和简单的箭头样式之间切换</string>
 
     <!-- Ongoing action chip -->
+    <string name="ongoing_progress_settings_title">状态栏进度条</string>
+    <string name="ongoing_progress_settings_summary">状态栏进度条设置</string>
     <string name="ongoing_action_chip_title">正在运行部件</string>
     <string name="ongoing_action_chip_summary">在状态栏中显示正在进行的活动 (如下载) 的进度指示器</string> 
+    <string name="ongoing_action_chip_opacity_title">进度条透明度</string>
+    <string name="ongoing_action_chip_opacity_summary">调整进度条部件的透明度</string>
+    <string name="compact_progress_mode_title">小型进度指示器</string>
+    <string name="compact_progress_mode_summary">在进度条中使用小型的环形指示器</string>
+    <string name="show_media_progress_title">显示媒体进度</string>
+    <string name="show_media_progress_summary">"在状态栏中显示媒体播放进度</string>
+    <string name="progress_footer_text">
+     "状态栏进度条将实时显示当前正在进行的媒体播放和上传/下载进度显示
+ 
+     - 🎵 显示媒体播放进度:
+     • 当音乐或视频正在播放时显示播放进度
+     • 点击可以打开播放控制(上一首/下一首音乐)
+     • 双击以切换播放/暂停
+     • 向左/向右滑动以切换至上一首/下一首曲目
+     • 长按可打开正在播放媒体的应用 
+ 
+     - 📥 显示下载/上传进度:
+     • 显示当前正在进行的上传/下载进度
+     • 当没有检测到活跃的传输活动时自动隐藏
+     • 点击以打开正在进行传输的应用
+ 
+     状态栏进度条将自动在媒体和下载进度中切换以确保您能获取最需要的信息"
+    </string>
 
     <!-- Notifications/Island notification -->
     <string name="notifications_island_notification_title">岛屿通知</string>
@@ -471,9 +537,9 @@
     <string name="device_power_mode">电源模式</string>
 
     <!-- Per-app spoofing -->
-    <string name="gameprops_title">启用每个应用的伪装</string>
-    <string name="gameprops_summary">在 PixelProps 中启用每个应用程序的伪装选项</string>
-    <string name="gameprops_load_json_title">选择每个应用程序的 JSON 属性文件</string>
+    <string name="gameprops_title">对特定应用的伪装</string>
+    <string name="gameprops_summary">在 PixelProps 中启用针对特定应用程序的伪装选项</string>
+    <string name="gameprops_load_json_title">选择用于这些应用的 JSON 属性文件</string>
     <string name="gameprops_load_json_summary">选择用于伪装游戏的 JSON 文件</string>
 
     <!-- PIF spoofing -->
@@ -515,8 +581,8 @@
     <string name="apply_change_button_title">应用</string>
 
     <!-- Volume Panel -->
-    <string name="volume_sound_haptics_title">音量声音触觉</string>
-    <string name="volume_sound_haptics_summary">调整音量时启用声音反馈</string>
+    <string name="volume_sound_haptics_title">音量触觉</string>
+    <string name="volume_sound_haptics_summary">调整音量时启用震动反馈</string>
     <string name="volume_panel_expandable_title">可展开的音量条</string>
     <string name="volume_panel_expandable_summary">展开音量条，而不是从底部显示</string>
     <string name="volume_panel_media_output_title">媒体输出图标</string>
@@ -599,10 +665,10 @@
     <string name="network_highlight_settings_summary">设置网络和互联网连接</string>
     <string name="bt_highlight_settings_title">设置连接的设备</string>
     <string name="bt_highlight_settings_summary">添加、配对蓝牙并配置设备连接</string>
-    <string name="rising_settings_title">risingOS 个性化</string>
+    <string name="rising_settings_title">RisingOS 个性化</string>
     <string name="rising_settings_summary">更改图标、主题等</string>
     <string name="reset_settings_title">重置设置</string>
-    <string name="reset_settings_message">这将会重置当前用户大部分的 risingOS 设置为默认值。您要继续吗？</string>
+    <string name="reset_settings_message">这将会重置当前用户大部分的 RisingOS 设置为默认值。您要继续吗？</string>
     <string name="search_homepage">搜索</string>
 
     <!-- Changelog -->
@@ -633,8 +699,8 @@
     <string name="security_settings_footer_text">注意：虽然绕过某些限制可能会带来便利，但也可能导致潜在的隐私风险</string>
 
      <!-- Device Info screen -->
-    <string name="firmware_name_text">risingOS</string>
-    <string name="firmware_name_version">risingOS 版本</string>
+    <string name="firmware_name_text">RisingOS</string>
+    <string name="firmware_name_version">RisingOS 版本</string>
     <string name="firmware_build_type_title">构建类型</string>
     <string name="firmware_build_summary_title">由维护者</string>
     <string name="build_is_official_title">#官方</string>
@@ -726,20 +792,20 @@
     <string name="bottom">底部</string>
     <string name="highlights_title">探索功能</string>
 
-    <!-- About risingOS -->
-    <string name="about_rising">关于 risingOS</string>
+    <!-- About RisingOS -->
+    <string name="about_rising">关于 RisingOS</string>
     <string name="about_device_name">设备</string>
 
-    <!-- Share risingOS -->
-    <string name="share_rising_title">分享 risingOS</string>
-    <string name="share_rising_summary">让更多人了解 risingOS</string>
-    <string name="share_message">查看 #risingOS Android 的全部内容 @ https://rising.net/</string>
-    <string name="share_chooser_title">分享 risingOS</string>
+    <!-- Share RisingOS -->
+    <string name="share_rising_title">分享 RisingOS</string>
+    <string name="share_rising_summary">让更多人了解 RisingOS</string>
+    <string name="share_message">查看 #RisingOS Android 的全部内容 @ https://rising.net/</string>
+    <string name="share_chooser_title">分享 RisingOS</string>
 
-    <!-- Sites risingOS -->
+    <!-- Sites RisingOS -->
     <string name="rising_source_title">GitHub</string>
     <string name="rising_source_summary">我们热爱开源，来看看我们的代码吧</string>
-    <string name="rising_telegram_title">risingOS 社区</string>
+    <string name="rising_telegram_title">RisingOS 社区</string>
     <string name="rising_telegram_summary">我们有 TG 群。加入我们！</string>
     <string name="rising_telegram_channel_title">更新频道</string>
     <string name="rising_telegram_channel_summary">在 Telegram 上获取更新通知</string>
@@ -752,10 +818,10 @@
     <!-- <string name="rising_buildserversponsor_title" translatable="false">InterServer</string> -->
     <string name="rising_buildserversponsor_summary">我们十分推荐这些服务器提供商</string>
 
-    <!-- Donate risingOS -->
+    <!-- Donate RisingOS -->
     <string name="donate_rising_title">支持我们</string>
     <string name="donate_rising_summary">捐赠以支持开发</string>
-    <string name="donate_team_title">risingOS 团队</string>
+    <string name="donate_team_title">RisingOS 团队</string>
     <string name="donate_team_summary">捐赠支持服务器托管，网站正常运行时间和整体管理</string>
 
     <!-- The Drill -->
@@ -1322,8 +1388,8 @@
     <string name="qs_footer_services_icon_title">运行中服务快捷方式</string>
     <string name="qs_footer_settings_icon_title">设置快捷方式</string>
 
-    <!-- Device Info screen. risingOS legal. -->
-    <string name="rising_license_title">risingOS 法律信息</string>
+    <!-- Device Info screen. RisingOS legal. -->
+    <string name="rising_license_title">RisingOS 法律信息</string>
 
     <!-- Quick Settings brightness slider -->
     <string name="qs_brightness_slider_category">亮度滑块</string>
@@ -1857,7 +1923,7 @@
     <string name="status_bar_logo_summary">在状态栏左侧或右侧显示自定义 Logo</string>
     <string name="status_bar_logo_position_title">Logo 位置</string>
     <string name="status_bar_logo_style_title">Logo 样式</string>
-    <string name="status_bar_logo_style_rising">risingOS</string>
+    <string name="status_bar_logo_style_rising">RisingOS</string>
     <string name="status_bar_logo_style_android">Android</string>
     <string name="status_bar_logo_style_adidas">阿迪达斯</string>
     <string name="status_bar_logo_style_alien">外星人</string>
