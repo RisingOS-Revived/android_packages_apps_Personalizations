@@ -35,6 +35,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceScreen
+import com.android.internal.util.android.KeyProviderManager;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent
 import com.android.internal.util.android.SystemRestartUtils
 import com.android.settings.R
@@ -61,6 +62,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         private const val KEY_SYSTEM_WIDE_CATEGORY = "spoofing_system_wide_category"
         private const val KEY_UPDATE_JSON_BUTTON = "update_pif_json"
         private const val SYS_GMS_SPOOF = "persist.sys.pixelprops.gms"
+        private const val SYS_GMS_CERT_SPOOF = "persist.sys.pixelprops.gmscertchain"
         private const val SYS_GOOGLE_SPOOF = "persist.sys.pixelprops"
         private const val SYS_GAMEPROP_SPOOF = "persist.sys.pixelprops.games"
         private const val SYS_GPHOTOS_SPOOF = "persist.sys.pixelprops.gphotos"
@@ -82,6 +84,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
     private var mPifJsonFilePreference: Preference? = null
     private var mUpdateJsonButton: Preference? = null
     private var mSystemWideCategory: PreferenceCategory? = null
+    private var mDisableForceIntegrity: SystemPropertySwitchPreference? = null
     private var mGmsSpoof: SystemPropertySwitchPreference? = null
     private var mGoogleSpoof: SystemPropertySwitchPreference? = null
     private var mGamePropsSpoof: SystemPropertySwitchPreference? = null
@@ -137,6 +140,9 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         mSnapSpoof?.onPreferenceChangeListener = this
         mTensorSpoof?.onPreferenceChangeListener = this
 
+        mDisableForceIntegrity = findPreference(SYS_GMS_CERT_SPOOF)
+        mDisableForceIntegrity?.isEnabled = KeyProviderManager.isKeyboxAvailable()
+
         mKeyboxFilePickerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
@@ -146,6 +152,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
                 if (uri != null && pref != null) {
                     pref.handleFileSelected(uri)
                 }
+                mDisableForceIntegrity?.isEnabled = KeyProviderManager.isKeyboxAvailable()
             }
         }
 
