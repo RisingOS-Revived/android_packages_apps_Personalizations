@@ -61,27 +61,41 @@ class LockClockFontsPickerPreview : OptimizedSettingsFragment() {
         private const val TAG = "LockClockFontsPickerPreview"
         private const val PREF_FIRST_TIME = "first_time_clock_face_access"
 
-        private val mCenterClocks = intArrayOf(2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16)
+        private val mCenterClocks = intArrayOf(2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27)
 
         private val CLOCK_LAYOUTS = intArrayOf(
-            R.layout.keyguard_clock_default,
-            R.layout.keyguard_clock_oos,
-            R.layout.keyguard_clock_center,
-            R.layout.keyguard_clock_simple,
-            R.layout.keyguard_clock_miui,
-            R.layout.keyguard_clock_ide,
-            R.layout.keyguard_clock_moto,
-            R.layout.keyguard_clock_stylish,
-            R.layout.keyguard_clock_stylish2,
-            R.layout.keyguard_clock_stylish3,
-            R.layout.keyguard_clock_stylish4,
-            R.layout.keyguard_clock_stylish5,
-            R.layout.keyguard_clock_stylish6,
-            R.layout.keyguard_clock_stylish7,
-            R.layout.keyguard_clock_stylish8,
-            R.layout.keyguard_clock_stylish9,
-            R.layout.keyguard_clock_stylish10
+            R.layout.keyguard_clock_default,      // 0
+            R.layout.keyguard_clock_oos,          // 1
+            R.layout.keyguard_clock_center,       // 2
+            R.layout.keyguard_clock_simple,       // 3
+            R.layout.keyguard_clock_miui,         // 4
+            R.layout.keyguard_clock_ide,          // 5
+            R.layout.keyguard_clock_moto,         // 6
+            R.layout.keyguard_clock_stylish,      // 7
+            R.layout.keyguard_clock_stylish2,     // 8
+            R.layout.keyguard_clock_stylish3,     // 9
+            R.layout.keyguard_clock_stylish4,     // 10
+            R.layout.keyguard_clock_stylish5,     // 11
+            R.layout.keyguard_clock_stylish6,     // 12
+            R.layout.keyguard_clock_stylish7,     // 13
+            R.layout.keyguard_clock_stylish8,     // 14
+            R.layout.keyguard_clock_stylish9,     // 15
+            R.layout.keyguard_clock_stylish10,    // 16
+            R.layout.keyguard_clock_small_cute,     // 17 - SmallCute
+            R.layout.keyguard_clock_thin_long,     // 18 - ThinLong
+            R.layout.keyguard_clock_more_more_thin,     // 19 - MoreMoreThin
+            R.layout.keyguard_clock_normal_time,     // 20 - NormalTime
+            R.layout.keyguard_clock_guoguo_type2,     // 21 - Guoguo2
+            R.layout.keyguard_clock_guoguo_type3,     // 22 - Guoguo3
+            R.layout.keyguard_clock_guoguo_type4,     // 23 - Guoguo4
+            R.layout.keyguard_clock_ntype,     // 24 - NType
+            R.layout.keyguard_clock_ndot,     // 25 - NDot
+            R.layout.keyguard_clock_graphic,     // 26 - Graphic
+            R.layout.keyguard_clock_london_ug      // 27 - LondonUG
         )
+
+        // Clock positions that don't support lockscreen customizations
+        private val LIMITED_CUSTOMIZATION_CLOCKS = intArrayOf(17, 18, 19, 20, 21, 22, 23)
     }
 
     private lateinit var viewPager: ViewPager
@@ -217,23 +231,34 @@ class LockClockFontsPickerPreview : OptimizedSettingsFragment() {
 
     private fun updateClockName(position: Int) {
         val clockNames = arrayOf(
-            "Default Clock",
-            "OnePlus Clock",
-            "IOS Clock",
-            "Simple Clock",
-            "MIUI Clock",
-            "IDE Clock",
-            "Moto Clock",
-            "Stylish Clock",
-            "Stylish Clock 2",
-            "Stylish Clock 3",
-            "Stylish Clock 4",
-            "Stylish Clock 5",
-            "Stylish Clock 6",
-            "Stylish Clock 7",
-            "Stylish Clock 8",
-            "Stylish Clock 9",
-            "Stylish Clock 10"
+            "Default Clock",         // 0
+            "OnePlus Clock",         // 1
+            "IOS Clock",             // 2
+            "Simple Clock",          // 3
+            "MIUI Clock",            // 4
+            "IDE Clock",             // 5
+            "Moto Clock",            // 6
+            "Stylish Clock",         // 7
+            "Stylish Clock 2",       // 8
+            "Stylish Clock 3",       // 9
+            "Stylish Clock 4",       // 10
+            "Stylish Clock 5",       // 11
+            "Stylish Clock 6",       // 12
+            "Stylish Clock 7",       // 13
+            "Stylish Clock 8",       // 14
+            "Stylish Clock 9",       // 15
+            "Stylish Clock 10",      // 16
+            "SmallCute",             // 17
+            "ThinLong",              // 18
+            "MoreMoreThin",          // 19
+            "NormalTime",            // 20
+            "Guoguo2",               // 21
+            "Guoguo3",               // 22
+            "Guoguo4",               // 23
+            "NType",                 // 24
+            "NDot",                  // 25
+            "Graphic",               // 26
+            "LondonUG"               // 27
         )
         if (position >= 0 && position < clockNames.size) {
             clockNameTextView.text = clockNames[position]
@@ -362,6 +387,10 @@ class LockClockFontsPickerPreview : OptimizedSettingsFragment() {
             return false
         }
         return false
+    }
+
+    private fun hasLimitedCustomization(clockPosition: Int): Boolean {
+        return LIMITED_CUSTOMIZATION_CLOCKS.contains(clockPosition)
     }
 
     private fun shouldScaleDown(position: Int): Boolean {
