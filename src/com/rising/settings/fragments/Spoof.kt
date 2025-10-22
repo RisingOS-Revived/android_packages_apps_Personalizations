@@ -61,14 +61,14 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         private const val KEY_PIF_JSON_FILE_PREFERENCE = "pif_json_file_preference"
         private const val KEY_SYSTEM_WIDE_CATEGORY = "spoofing_system_wide_category"
         private const val KEY_UPDATE_JSON_BUTTON = "update_pif_json"
-        private const val SYS_GMS_SPOOF = "persist.sys.pixelprops.gms"
-        private const val SYS_GMS_CERT_SPOOF = "persist.sys.pixelprops.gmscertchain"
-        private const val SYS_GOOGLE_SPOOF = "persist.sys.pixelprops"
-        private const val SYS_GAMEPROP_SPOOF = "persist.sys.pixelprops.games"
-        private const val SYS_GPHOTOS_SPOOF = "persist.sys.pixelprops.gphotos"
-        private const val SYS_QSB_SPOOF = "persist.sys.pixelprops.qsb"
-        private const val SYS_SNAP_SPOOF = "persist.sys.pixelprops.snap"
-        private const val SYS_TENSOR_SPOOF = "persist.sys.features.tensor"
+        private const val SYS_GMS_SPOOF = "persist.sys.pp.gms"
+        private const val SYS_GMS_CERT_SPOOF = "persist.sys.pp.gmscertchain"
+        private const val SYS_GOOGLE_SPOOF = "persist.sys.pp"
+        private const val SYS_GAMES_SPOOF = "persist.sys.pp.games"
+        private const val SYS_PHOTOS_SPOOF = "persist.sys.pp.photos"
+        private const val SYS_QSB_SPOOF = "persist.sys.pp.qsb"
+        private const val SYS_SNAPCHAT_SPOOF = "persist.sys.pp.snapchat"
+        private const val SYS_TENSOR_SPOOF = "persist.sys.pp.tensor"
         private const val KEYBOX_DATA_KEY = "keybox_data_setting"
 
         @JvmField
@@ -87,10 +87,10 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
     private var mDisableForceIntegrity: SystemPropertySwitchPreference? = null
     private var mGmsSpoof: SystemPropertySwitchPreference? = null
     private var mGoogleSpoof: SystemPropertySwitchPreference? = null
-    private var mGamePropsSpoof: SystemPropertySwitchPreference? = null
-    private var mGphotosSpoof: SystemPropertySwitchPreference? = null
+    private var mGamesSpoof: SystemPropertySwitchPreference? = null
+    private var mPhotosSpoof: SystemPropertySwitchPreference? = null
     private var mQsbSpoof: SystemPropertySwitchPreference? = null
-    private var mSnapSpoof: SystemPropertySwitchPreference? = null
+    private var mSnapchatSpoof: SystemPropertySwitchPreference? = null
     private var mTensorSpoof: SystemPropertySwitchPreference? = null
     private var mWikiLink: Preference? = null
 
@@ -107,13 +107,13 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         val resources = context.resources
 
         mSystemWideCategory = findPreference(KEY_SYSTEM_WIDE_CATEGORY)
-        mGamePropsSpoof = findPreference(SYS_GAMEPROP_SPOOF)
-        mGphotosSpoof = findPreference(SYS_GPHOTOS_SPOOF)
+        mGamesSpoof = findPreference(SYS_GAMES_SPOOF)
+        mPhotosSpoof = findPreference(SYS_PHOTOS_SPOOF)
         mGmsSpoof = findPreference(SYS_GMS_SPOOF)
         mGoogleSpoof = findPreference(SYS_GOOGLE_SPOOF)
         mPifJsonFilePreference = findPreference(KEY_PIF_JSON_FILE_PREFERENCE)
         mQsbSpoof = findPreference(SYS_QSB_SPOOF)
-        mSnapSpoof = findPreference(SYS_SNAP_SPOOF)
+        mSnapchatSpoof = findPreference(SYS_SNAPCHAT_SPOOF)
         mTensorSpoof = findPreference(SYS_TENSOR_SPOOF)
         mUpdateJsonButton = findPreference(KEY_UPDATE_JSON_BUTTON)
 
@@ -134,10 +134,10 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
 
         mGmsSpoof?.onPreferenceChangeListener = this
         mGoogleSpoof?.onPreferenceChangeListener = this
-        mGphotosSpoof?.onPreferenceChangeListener = this
-        mGamePropsSpoof?.onPreferenceChangeListener = this
+        mPhotosSpoof?.onPreferenceChangeListener = this
+        mGamesSpoof?.onPreferenceChangeListener = this
         mQsbSpoof?.onPreferenceChangeListener = this
-        mSnapSpoof?.onPreferenceChangeListener = this
+        mSnapchatSpoof?.onPreferenceChangeListener = this
         mTensorSpoof?.onPreferenceChangeListener = this
 
         mDisableForceIntegrity = findPreference(SYS_GMS_CERT_SPOOF)
@@ -339,11 +339,11 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         val resolver = context.contentResolver
         
         when (preference) {
-            mGmsSpoof, mGphotosSpoof, mQsbSpoof, mSnapSpoof -> {
+            mGmsSpoof, mPhotosSpoof, mQsbSpoof, mSnapchatSpoof -> {
                 killGMSPackages()
                 return true
             }
-            mGoogleSpoof, mGamePropsSpoof -> {
+            mGoogleSpoof, mGamesSpoof -> {
                 SystemRestartUtils.showSystemRestartDialog(requireContext())
                 return true
             }
