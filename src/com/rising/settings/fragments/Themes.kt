@@ -66,7 +66,7 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
 
         private val HIDE_IME_OVERLAYS = arrayOf(
             "com.android.system.theme.hide_ime_space_narrow",
-            "com.android.system.theme.hide_ime_space_no_space"
+            "com.android.system.theme.hide_ime_space_hidden"
         )
 
         // Cache keys
