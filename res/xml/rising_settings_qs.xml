@@ -62,12 +62,12 @@
             android:summary="@string/qs_colored_icons_summary"
             android:defaultValue="false" />
 
-        <!-- QS Media Player  -->
-        <com.android.settings.preferences.SystemSettingSwitchPreference
-            android:key="qs_compact_media_player_mode"
-            android:title="@string/qs_compact_media_player_mode_title"
-            android:summary="@string/qs_compact_media_player_mode_summary"
-            android:defaultValue="false"  />
+        <!-- QS Media Player Compact  -->
+         <com.android.settings.preferences.SecureSettingSwitchPreference
+             android:key="qs_media_always_show"
+             android:title="@string/qs_media_always_show_title"
+             android:summary="@string/qs_media_always_show_summary"
+             android:defaultValue="true" />
 
         <com.android.settings.preferences.SystemSettingSwitchPreference
             android:key="secure_lockscreen_qs_disabled"

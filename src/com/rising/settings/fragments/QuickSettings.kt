@@ -47,6 +47,7 @@ class QuickSettings : SettingsPreferenceFragment(), Preference.OnPreferenceChang
         private const val KEY_PREF_TILE_ANIM_DURATION = "qs_tile_animation_duration"
         private const val KEY_PREF_TILE_ANIM_INTERPOLATOR = "qs_tile_animation_interpolator"
         private const val KEY_QS_REFACTOR_ENABLED = "qs_refactor_enabled"
+        private const val KEY_QS_MEDIA_ALWAYS_SHOW = "qs_media_always_show"
 
         /**
          * For search
@@ -67,6 +68,7 @@ class QuickSettings : SettingsPreferenceFragment(), Preference.OnPreferenceChang
     private var mTileAnimationDuration: CustomSeekBarPreference? = null
     private var mSplitShadePref: Preference? = null
     private var mQsRefactorEnabled: SecureSettingSwitchPreference? = null
+    private var mQsMediaAlwaysShow: SecureSettingSwitchPreference? = null
     
     private var mThemeUtils: ThemeUtils? = null
     
@@ -116,6 +118,10 @@ class QuickSettings : SettingsPreferenceFragment(), Preference.OnPreferenceChang
         }
 
         mQsRefactorEnabled = findPreference<SecureSettingSwitchPreference>(KEY_QS_REFACTOR_ENABLED)?.apply {
+            onPreferenceChangeListener = this@QuickSettings
+        }
+
+        mQsMediaAlwaysShow = findPreference<SecureSettingSwitchPreference>(KEY_QS_MEDIA_ALWAYS_SHOW)?.apply {
             onPreferenceChangeListener = this@QuickSettings
         }
 
@@ -174,6 +180,12 @@ class QuickSettings : SettingsPreferenceFragment(), Preference.OnPreferenceChang
                 true
             }
             
+            mQsMediaAlwaysShow -> {
+                // Restart SystemUI to apply
+                context?.let { SystemRestartUtils.restartSystemUI(it) }
+                true
+            }
+
             else -> false
         }
     }
