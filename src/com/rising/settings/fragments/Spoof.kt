@@ -35,12 +35,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceScreen
-import com.android.internal.util.android.KeyProviderManager;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent
 import com.android.internal.util.android.SystemRestartUtils
 import com.android.settings.R
 import com.android.settings.SettingsPreferenceFragment
 import com.android.settings.preferences.KeyboxDataPreference
+import com.android.settings.preferences.SecureSettingSwitchPreference;
 import com.android.settings.preferences.SystemPropertySwitchPreference
 import com.android.settings.search.BaseSearchIndexProvider
 import com.android.settings.utils.DeviceUtils
@@ -62,7 +62,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         private const val KEY_SYSTEM_WIDE_CATEGORY = "spoofing_system_wide_category"
         private const val KEY_UPDATE_JSON_BUTTON = "update_pif_json"
         private const val SYS_GMS_SPOOF = "persist.sys.pp.gms"
-        private const val SYS_GMS_CERT_SPOOF = "persist.sys.pp.gmscertchain"
+        private const val KEY_CERT_CHAIN = "gms_cert_chain"
         private const val SYS_GOOGLE_SPOOF = "persist.sys.pp"
         private const val SYS_GAMES_SPOOF = "persist.sys.pp.games"
         private const val SYS_PHOTOS_SPOOF = "persist.sys.pp.photos"
@@ -84,7 +84,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
     private var mPifJsonFilePreference: Preference? = null
     private var mUpdateJsonButton: Preference? = null
     private var mSystemWideCategory: PreferenceCategory? = null
-    private var mDisableForceIntegrity: SystemPropertySwitchPreference? = null
+    private var mDisableForceIntegrity: SecureSettingSwitchPreference? = null
     private var mGmsSpoof: SystemPropertySwitchPreference? = null
     private var mGoogleSpoof: SystemPropertySwitchPreference? = null
     private var mGamesSpoof: SystemPropertySwitchPreference? = null
@@ -107,6 +107,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         val resources = context.resources
 
         mSystemWideCategory = findPreference(KEY_SYSTEM_WIDE_CATEGORY)
+        mDisableForceIntegrity = findPreference(KEY_CERT_CHAIN)
         mGamesSpoof = findPreference(SYS_GAMES_SPOOF)
         mPhotosSpoof = findPreference(SYS_PHOTOS_SPOOF)
         mGmsSpoof = findPreference(SYS_GMS_SPOOF)
@@ -139,9 +140,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         mQsbSpoof?.onPreferenceChangeListener = this
         mSnapchatSpoof?.onPreferenceChangeListener = this
         mTensorSpoof?.onPreferenceChangeListener = this
-
-        mDisableForceIntegrity = findPreference(SYS_GMS_CERT_SPOOF)
-        mDisableForceIntegrity?.isEnabled = KeyProviderManager.isKeyboxAvailable()
+        mDisableForceIntegrity?.onPreferenceChangeListener = this
 
         mKeyboxFilePickerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -152,7 +151,6 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
                 if (uri != null && pref != null) {
                     pref.handleFileSelected(uri)
                 }
-                mDisableForceIntegrity?.isEnabled = KeyProviderManager.isKeyboxAvailable()
             }
         }
 
@@ -255,7 +253,9 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         try {
             val am = requireContext().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             val packages = arrayOf(
+                "com.google.android.apps.nbu.paisa.user",
                 "com.google.android.apps.photos",
+                "com.google.android.apps.walletnfcrel",
                 "com.google.android.gms",
                 "com.google.android.googlequicksearchbox",
                 "com.android.vending",
@@ -339,7 +339,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         val resolver = context.contentResolver
         
         when (preference) {
-            mGmsSpoof, mPhotosSpoof, mQsbSpoof, mSnapchatSpoof -> {
+            mGmsSpoof, mDisableForceIntegrity, mPhotosSpoof, mQsbSpoof, mSnapchatSpoof -> {
                 killGMSPackages()
                 return true
             }

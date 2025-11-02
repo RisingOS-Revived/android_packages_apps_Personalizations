@@ -47,8 +47,8 @@
     <string name="status_bar_tint_icons_summary">Tint status bar icons with system accent color</string>
 
     <!-- Block attestation even with Keybox Data -->
-    <string name="pi_gmscertchain_title">Disable forcing strong integrity</string>
-    <string name="pi_gmscertchain_summary">When enabled, do not enforce strong integrity from valid custom keybox and depend on Google Play Integrity spoof to fix apps like Google Pay</string>
+    <string name="gms_cert_chain_title">Disable forcing strong integrity</string>
+    <string name="gms_cert_chain_summary">When enabled, do not enforce strong integrity from valid custom keybox and depend on Google Play Integrity spoof to fix apps like Google Pay</string>
 
     <!-- Ambient Wallpaper -->
     <string name="doze_always_on_wallpaper_title">Ambient wallpaper</string>
