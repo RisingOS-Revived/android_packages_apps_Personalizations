@@ -51,7 +51,7 @@ class PersonalizationSettingsController(context: Context) : AbstractPreferenceCo
             R.id.quicksettings to "com.android.settings.Settings\$PersonalizationsQuickSettingsActivity",
             R.id.status_bar to "com.android.settings.Settings\$PersonalizationsStatusBarActivity",
             R.id.gestures to "com.android.settings.Settings\$PersonalizationsGesturesActivity",
-            R.id.clock_face to "com.android.settings.Settings\$PersonalizationsClockFacesActivity",
+            R.id.clock_face to "com.rising.settings.fragments.lockscreen.LockscreenCustomizerActivity",
             R.id.whats_new to "com.rising.settings.fragments.about.ChangelogActivity"
         )
         

@@ -25,6 +25,30 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+                
+            <com.rising.settings.fragments.lockscreen.DummyWeatherImageView
+                android:id="@+id/weather_image"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:visibility="gone"
+                android:layout_marginEnd="2dp" />
+
+            <com.rising.settings.fragments.lockscreen.DummyWeatherTextView
+                android:id="@+id/weather_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:visibility="gone"
+                android:textSize="14sp" />
+        </LinearLayout>
+
         <TextClock
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

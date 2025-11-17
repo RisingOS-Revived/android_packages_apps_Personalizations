@@ -9,16 +9,14 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40.0dip"
-        android:layout_marginStart="25dp">
+        android:layout_height="wrap_content">
         <TextClock
-            android:textSize="70.0dip"
+            android:textSize="100.0dip"
             android:textColor="@android:color/white"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:fontFamily="@font/slim"
+            android:fontFamily="@*android:string/config_clockFontFamily"
             android:format12Hour="hh:mm"
             android:format24Hour="HH:mm"/>
         <TextClock
@@ -26,21 +24,50 @@
             android:textColor="@android:color/white"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-15.0dip"
             android:singleLine="true"
             android:textAlignment="viewStart"
-            android:fontFamily="@font/slim"
+            android:fontFamily="@*android:string/config_clockFontFamily"
             android:textAllCaps="true"
-    	    android:format12Hour="EEE"
-    	    android:format24Hour="EEE"/>      
+            android:format12Hour="EEE"
+            android:format24Hour="EEE"/>
         <TextClock
-            android:textSize="50.0dip"
+            android:id="@+id/miui_date"
+            android:textSize="60.0dip"
             android:textColor="@android:color/white"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-10.0dip"
             android:singleLine="true"
             android:textAlignment="viewStart"
-            android:fontFamily="@font/slim"
-            android:format12Hour="MM/dd "
-            android:format24Hour="MM/dd "/>
+            android:fontFamily="@*android:string/config_clockFontFamily"
+            android:format12Hour="MM/dd"
+            android:format24Hour="MM/dd"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start|center">
+            <com.rising.settings.fragments.lockscreen.DummyWeatherImageView
+                android:id="@+id/miui_weather_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@*android:string/config_clockFontFamily"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"
+                android:visibility="gone" />
+            <com.rising.settings.fragments.lockscreen.DummyWeatherTextView
+                android:id="@+id/miui_weather_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@*android:string/config_clockFontFamily"
+                android:textColor="@android:color/white"
+                android:textSize="20dp"
+                android:visibility="gone"
+                android:textAllCaps="true" />
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

@@ -9,8 +9,8 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:gravity="center"
         android:orientation="vertical"
@@ -91,18 +91,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <TextClock
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:format12Hour="hh • mm"
-                android:format24Hour="HH • mm"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:format12Hour="hh:mm"
+                android:format24Hour="HH:mm"
                 android:includeFontPadding="false"
                 android:tag="text1|nolineheight"
                 android:textColor="#FFFFFF"
+                android:layout_marginStart="8dp"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -115,37 +116,66 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center"
-                android:layout_marginHorizontal="12dp"
+                android:layout_marginHorizontal="10dp"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:includeFontPadding="false"
+                    android:textStyle="bold"
                     android:tag="text1|nolineheight|username"
                     android:text="Username"
                     android:textAlignment="viewEnd"
                     android:textColor="#FFFFFF" />
 
                 <TextView
+                    android:id="@+id/device_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
+                    android:layout_marginTop="4dp"
                     android:includeFontPadding="false"
+                    android:textStyle="bold"
                     android:tag="text1|device_name"
                     android:text="Device Name"
                     android:textAlignment="viewEnd"
-                    android:textColor="#A0FFFFFF" />
+                    android:textColor="#FFFFFF" />
+		        
+		<LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="4dp">
 
+                    <com.rising.settings.fragments.lockscreen.DummyWeatherImageView
+                        android:id="@+id/weather_image"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:visibility="gone"
+                        android:layout_marginEnd="2dp" />
+
+                    <com.rising.settings.fragments.lockscreen.DummyWeatherTextView
+                        android:id="@+id/weather_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:visibility="gone"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_gravity="end|center"
                 android:importantForAccessibility="no"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@drawable/lockscreen_clock_32_logo"
                 android:tag="profile_picture" />
 

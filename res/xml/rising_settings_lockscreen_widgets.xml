@@ -21,87 +21,29 @@
     android:title="@string/lockscreen_widgets_title">
 
     <com.android.settings.preferences.SystemSettingSwitchPreference
-        android:key="lockscreen_widgets_enabled"
-        android:title="@string/lockscreen_widgets_enabled_title"
-        android:summary="@string/lockscreen_widgets_enabled_summary"
+        android:key="lockscreen_info_widgets_enabled"
+        android:title="@string/lockscreen_display_widgets_title"
+        android:summary="@string/lockscreen_display_widgets_summary"
         android:defaultValue="false"
         lineage:position="top" />
 
-    <com.android.settings.preferences.SystemSettingSwitchPreference
-        android:key="lockscreen_info_widgets_enabled"
-        android:dependency="lockscreen_widgets_enabled"
-        android:title="@string/lockscreen_display_widgets_title"
-        android:summary="@string/lockscreen_display_widgets_summary"
-        android:defaultValue="false" />
-
     <com.android.settings.preferences.SystemSettingListPreference
         android:key="lockscreen_widgets_style"
-        android:dependency="lockscreen_widgets_enabled"
         android:title="@string/lockscreen_widgets_style_title"
         android:entries="@array/lockscreen_widgets_style_entries"
         android:entryValues="@array/lockscreen_widgets_style_values" 
-        android:summary="%s"
-        lineage:position="bottom" />
+        android:summary="%s" />
 
-    <com.android.settings.preferences.SystemSettingListPreference
-        android:entries="@array/widget_entries"
-        android:dependency="lockscreen_widgets_enabled"
-        android:icon="@drawable/widgets"
-        android:title="@string/main_custom_widgets1"
-        android:key="main_custom_widgets1"
-        android:entryValues="@array/widget_values" 
-        android:summary="%s"
-        lineage:position="top" />
-
-    <com.android.settings.preferences.SystemSettingListPreference
-        android:entries="@array/widget_entries"
-        android:dependency="lockscreen_widgets_enabled"
-        android:icon="@drawable/widgets"
-        android:title="@string/main_custom_widgets2"
-        android:key="main_custom_widgets2"
-        android:entryValues="@array/widget_values"
-        android:summary="%s"
-        lineage:position="bottom" />
-
-    <com.android.settings.preferences.SystemSettingListPreference
-        android:entries="@array/widget_entries"
-        android:dependency="lockscreen_widgets_enabled"
-        android:icon="@drawable/action_key"
-        android:title="@string/custom_widgets1"
-        android:key="custom_widgets1"
-        android:entryValues="@array/widget_values" 
-        android:summary="%s"
-        lineage:position="top" />
-
-    <com.android.settings.preferences.SystemSettingListPreference
-        android:entries="@array/widget_entries"
-        android:dependency="lockscreen_widgets_enabled"
-        android:icon="@drawable/action_key"
-        android:title="@string/custom_widgets2"
-        android:key="custom_widgets2"
-        android:entryValues="@array/widget_values"
-        android:summary="%s" 
-        lineage:position="middle" />
-
-    <com.android.settings.preferences.SystemSettingListPreference
-        android:entries="@array/widget_entries"
-        android:dependency="lockscreen_widgets_enabled"
-        android:icon="@drawable/action_key"
-        android:title="@string/custom_widgets3"
-        android:key="custom_widgets3"
-        android:entryValues="@array/widget_values" 
-        android:summary="%s"
-        lineage:position="middle" />
-
-    <com.android.settings.preferences.SystemSettingListPreference
-        android:entries="@array/widget_entries"
-        android:dependency="lockscreen_widgets_enabled"
-        android:icon="@drawable/action_key"
-        android:title="@string/custom_widgets4"
-        android:key="custom_widgets4"
-        android:entryValues="@array/widget_values" 
-        android:summary="%s"
-        lineage:position="bottom" />
+    <com.android.settings.preferences.ui.AdaptivePreference
+        android:key="lockscreen_customizer"
+        android:title="Widgets layout"
+        android:summary="Add or remove or edit the widgets"
+        lineage:position="bottom">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.android.settings"
+            android:targetClass="com.rising.settings.fragments.lockscreen.LockscreenCustomizerActivity" />
+    </com.android.settings.preferences.ui.AdaptivePreference>
 
     <com.android.settingslib.widget.LayoutPreference
         android:key="apply_change_button"

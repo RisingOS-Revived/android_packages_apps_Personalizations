@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -294,6 +295,45 @@
                     android:text="\u0022;"
                     android:textColor="@android:color/white"
                     android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@*android:string/config_clockFontFamily"
+                    android:text="\tweather =  \u0022"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.rising.settings.fragments.lockscreen.DummyWeatherTextView
+                    android:id="@+id/clockWeather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@*android:string/config_clockFontFamily"
+                    android:gravity="center"
+                    android:letterSpacing="0.3"
+                    android:textColor="#ff0000"
+                    android:singleLine="true"
+                    android:textAllCaps="true"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@*android:string/config_clockFontFamily"
+                    android:paddingStart="-0.5dip"
+                    android:text="\u0022;"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
 

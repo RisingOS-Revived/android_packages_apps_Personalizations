@@ -15,6 +15,9 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Widget string -->
+    <string name="widgets_title">Widgets</string>
+
     <!-- Fonts Screen -->
     <string name="font_title">Font</string>
     <string name="font_style">Font style</string>
@@ -1236,8 +1239,8 @@
     <string name="theme_customization_wifi_icon_summary">Set custom wifi icon style</string>
     <string name="theme_customization_navbar_title">Navbar style</string>
     <string name="theme_customization_navbar_summary">Set custom navigation bar style</string>
-    <string name="theme_customization_lock_clock_title">Clock face</string>
-    <string name="theme_customization_lock_clock_summary">Modify lockscreen clock appearance</string>
+    <string name="theme_customization_lock_clock_title">LockScreen Customizer</string>
+    <string name="theme_customization_lock_clock_summary">The LockScreen Customizer written in compose</string>
     <string name="theme_customization_brightness_slider_title">Brightness slider style</string>
     <string name="theme_customization_brightness_slider_summary">Set custom brightness slider style</string>
 
