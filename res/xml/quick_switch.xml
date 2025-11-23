@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2023 the risingOS Android Project
-
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
@@ -19,17 +18,12 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/quickswitch_launcher_title" >
-
-    <com.android.settings.preferences.SystemPropertyListPreference
+    
+    <com.android.settings.preferences.LauncherIconPreference
         android:key="persist.sys.default_launcher"
-        android:icon="@drawable/ic_home"
         android:title="@string/quickswitch_launcher_title"
-        android:entries="@array/quickswitch_launcher_entries"
-        android:entryValues="@array/quickswitch_launcher_values"
-        android:summary="%s"
-        app:position="solo"
-        />
-
+        app:position="solo" />
+        
     <com.android.settingslib.widget.FooterPreference
         android:key="quickswitch_footer"
         android:title="@string/quickswitch_footer_text"

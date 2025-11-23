@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources>
+    <!-- Launcher card dimensions -->
+    <dimen name="launcher_card_stroke_selected">4dp</dimen>
+    <dimen name="launcher_card_elevation">2dp</dimen>
+    <dimen name="launcher_card_elevation_selected">6dp</dimen>
 
     <!-- Oval preview size -->
     <dimen name="oval_notification_size">26dp</dimen>
