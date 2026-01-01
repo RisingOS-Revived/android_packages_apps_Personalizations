@@ -3129,10 +3129,10 @@
     <string name="navigation_bar_hide_ime_space_summary">Hide IME button space below keyboard</string>
 
     <!-- Status bar padding -->
-    <string name="statusbar_padding">Status bar padding</string>
-    <string name="statusbar_top_padding">Top padding</string>
-    <string name="statusbar_left_padding">Left padding</string>
-    <string name="statusbar_right_padding">Right padding</string>
+    <string name="statusbar_extra_padding_category">Extra padding</string>
+    <string name="statusbar_extra_padding_start_title">Start padding</string>
+    <string name="statusbar_extra_padding_top_title">Top padding</string>
+    <string name="statusbar_extra_padding_end_title">End padding</string>
 
     <!-- Status bar max notification -->
     <string name="statusbar_max_notifications_title">Status bar max notification icons</string>
