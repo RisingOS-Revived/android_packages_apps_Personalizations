@@ -52,6 +52,12 @@
                 <intent android:action="com.android.settings.action.STATUS_BAR_TUNER" />
         </com.android.settings.preferences.ui.AdaptivePreference>
 
+        <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="dynamic_bar"
+            android:title="@string/dynamic_bar"
+            android:summary="@string/dynamic_bar_enable_summary"
+            android:fragment="com.rising.settings.fragments.statusbar.DynamicBar" />
+
         <com.android.settings.preferences.SecureSettingSwitchPreference
             android:key="enable_camera_privacy_indicator"
             android:title="@string/mic_camera_privacy_indicator_title"
