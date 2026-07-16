@@ -35,6 +35,12 @@
             android:summary="@string/idle_manager_summary"
             android:defaultValue="false" />
 
+        <com.android.settings.preferences.SystemSettingSwitchPreference
+            android:key="screenshot_clipboard_only"
+            android:title="@string/screenshot_clipboard_only_title"
+            android:summary="@string/screenshot_clipboard_only_summary"
+            android:defaultValue="true" />
+
         <!-- Gaming mode -->
         <com.android.settings.preferences.ui.AdaptivePreference
             android:key="gaming_mode"
