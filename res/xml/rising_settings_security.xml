@@ -27,6 +27,12 @@
             android:defaultValue="false"
             app:position="top" />
 
+        <com.android.settings.preferences.SystemSettingSwitchPreference
+            android:key="hide_status_bar_in_screenshot"
+            android:title="@string/hide_status_bar_in_screenshot_title"
+            android:summary="@string/hide_status_bar_in_screenshot_summary"
+            android:defaultValue="false" />
+
         <com.android.settings.preferences.GlobalSettingSwitchPreference
             android:key="window_ignore_secure"
             android:title="@string/laboratory_ignore_window_secure_title"
