@@ -91,6 +91,13 @@
             android:title="@string/spoofing_snap_title"
             android:summary="@string/spoofing_snap_summary"
             android:defaultValue="false" />
+
+        <!-- Reset -->
+        <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="spoofing_reset_defaults"
+            android:title="@string/spoofing_reset_defaults_title"
+            android:summary="@string/spoofing_reset_defaults_summary"
+            android:persistent="false" />
     </PreferenceCategory>
 
     <PreferenceCategory

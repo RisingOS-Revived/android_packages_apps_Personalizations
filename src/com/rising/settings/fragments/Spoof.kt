@@ -24,6 +24,7 @@ import android.os.Looper
 import android.os.SystemProperties
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent
@@ -45,6 +46,7 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         private const val PI_PHOTOS_SPOOF = "pi_photos_spoof"
         private const val PI_SNAPCHAT_SPOOF = "pi_snapchat_spoof"
         private const val KEY_TENSOR_TARGETS = "tensor_targets_settings"
+        private const val KEY_RESET_DEFAULTS = "spoofing_reset_defaults"
 
         private const val PHOTOS_PACKAGE = "com.google.android.apps.photos"
         private const val SNAPCHAT_PACKAGE = "com.snapchat.android"
@@ -74,13 +76,39 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         mSnapchatSpoof = findPreference(PI_SNAPCHAT_SPOOF)
         mTensorTargets = findPreference(KEY_TENSOR_TARGETS)
 
+        // Tensor targets: only relevant on non-Tensor devices
         val model = SystemProperties.get("ro.product.model")
         val isTensorDevice = model.matches(Regex("Pixel (6|7|8|9|10)[a-zA-Z ]*"))
-        if (mTensorTargets != null && isTensorDevice) {
-            mFeaturesCategory?.removePreference(mTensorTargets!!)
+        mTensorTargets?.let {
+            if (isTensorDevice) mFeaturesCategory?.removePreference(it)
         }
         mPhotosSpoof = initAppSpoof(mPhotosSpoof, PHOTOS_PACKAGE)
         mSnapchatSpoof = initAppSpoof(mSnapchatSpoof, SNAPCHAT_PACKAGE)
+
+        findPreference<Preference>(KEY_RESET_DEFAULTS)?.setOnPreferenceClickListener {
+            showResetDefaultsDialog()
+            true
+        }
+    }
+
+    private fun showResetDefaultsDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.spoofing_reset_defaults_dialog_title)
+            .setMessage(R.string.spoofing_reset_defaults_dialog_message)
+            .setPositiveButton(R.string.spoofing_reset_defaults_confirm) { _, _ ->
+                try {
+                    TrickyStore.resetAllSpoofDefaults(requireContext())
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.spoofing_reset_defaults_done,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to reset spoof defaults", e)
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     /**
