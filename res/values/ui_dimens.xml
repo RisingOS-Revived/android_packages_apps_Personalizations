@@ -66,6 +66,9 @@
     <dimen name="card_height_oos">70.0dp</dimen>
     <dimen name="card_highlight_margin_end">12dp</dimen>
     <dimen name="card_highlight_margin_start">12dp</dimen>
+    <dimen name="search_bar_margin_start">21dp</dimen>
+    <dimen name="search_bar_margin_end">21dp</dimen>
+    <dimen name="search_bar_bottom_margin">16dp</dimen>
     <dimen name="card_margin_start_aqua">20dp</dimen>
     <dimen name="card_margin_end_aqua">20dp</dimen>
     <dimen name="default_margin">16dp</dimen>
