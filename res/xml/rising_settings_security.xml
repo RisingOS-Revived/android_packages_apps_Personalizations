@@ -49,6 +49,18 @@
             android:key="pm_downgrade_allowed"
             android:title="@string/miscellaneous_app_downgrade_title"
             android:summary="@string/miscellaneous_app_downgrade_summary"
+            android:defaultValue="false" />
+
+        <com.android.settings.preferences.GlobalSettingSwitchPreference
+            android:key="window_block_screenshot_detection"
+            android:title="@string/miscellaneous_block_screenshot_detection_title"
+            android:summary="@string/miscellaneous_block_screenshot_detection_summary"
+            android:defaultValue="false" />
+
+        <com.android.settings.preferences.GlobalSettingSwitchPreference
+            android:key="window_block_screenrecord_detection"
+            android:title="@string/miscellaneous_block_screenrecord_detection_title"
+            android:summary="@string/miscellaneous_block_screenrecord_detection_summary"
             android:defaultValue="false"
             app:position="bottom" />
 

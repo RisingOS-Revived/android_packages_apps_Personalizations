@@ -991,6 +991,12 @@
     <string name="miscellaneous_app_downgrade_title">Allow application downgrade</string>
     <string name="miscellaneous_app_downgrade_summary">Allow downgrading system applications, which may result in crashes and data loss</string>
 
+    <!-- Block Screenshot/ScreenRecording Detection -->
+    <string name="miscellaneous_block_screenshot_detection_title">Block screenshot detection</string>
+    <string name="miscellaneous_block_screenshot_detection_summary">Prevent apps from knowing when their content has been screenshot</string>
+    <string name="miscellaneous_block_screenrecord_detection_title">Block screen recording detection</string>
+    <string name="miscellaneous_block_screenrecord_detection_summary">Prevent apps from knowing when their content is being screen recorded</string>
+
     <!-- Depth Wallpaper -->
     <string name="dw_file_header_select_title">Select Depth Wallpaper Subject</string>
     <string name="dw_file_header_select_summary">Select depth wallpaper subject image from storage.</string>
