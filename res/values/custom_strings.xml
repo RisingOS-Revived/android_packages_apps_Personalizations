@@ -1296,6 +1296,7 @@
     <string name="hardware_keys_action_split_screen">Split screen</string>
     <string name="hardware_keys_action_close_app">Kill app</string>
     <string name="hardware_keys_action_play_pause_music">Play/pause music playback</string>
+    <string name="hardware_keys_action_partial_screenshot" translatable="false">Partial screenshot</string>
     <string name="hardware_keys_action_torch">Toggle torch</string>
     <string name="hardware_keys_action_screenshot">Take screenshot</string>
     <string name="hardware_keys_action_volume_panel">Toggle volume panel</string>
@@ -2170,8 +2171,8 @@
     </plurals>
 
     <!-- Disable QS -->
-    <string name="disable_qs_title">Hide QS on secure lock screen</string>
-    <string name="disable_qs_summary">Prevent access to QS tiles on secure lock screen</string>
+    <string name="quick_settings_secure_lock_screen_title">QS pull on secure lock screen</string>
+    <string name="quick_settings_secure_lock_screen_summary">Allow swiping down on the lock screen to open quick settings</string>
 
     <!-- Power menu on secure lockscreen -->
     <string name="lockscreen_enable_power_menu_title">Power menu</string>

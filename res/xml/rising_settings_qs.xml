@@ -35,10 +35,12 @@
             android:fragment="com.rising.settings.fragments.quicksettings.QsHeaderImageSettings"
             lineage:position="top" />
 
-        <com.android.settings.preferences.SystemSettingSwitchPreference
-            android:key="secure_lockscreen_qs_disabled"
-            android:title="@string/disable_qs_title"
-            android:summary="@string/disable_qs_summary"
+        <!-- Hide on secure lock screen -->
+        <com.android.settings.preferences.SecureSettingSwitchPreference
+            android:key="enable_lockscreen_quick_settings"
+            android:title="@string/quick_settings_secure_lock_screen_title"
+            android:summary="@string/quick_settings_secure_lock_screen_summary"
+            android:defaultValue="true"
             lineage:position="bottom" />
 
     </PreferenceCategory>
