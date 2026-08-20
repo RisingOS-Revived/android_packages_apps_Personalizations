@@ -19,7 +19,6 @@ import android.content.Context
 import android.os.Bundle
 import com.android.internal.logging.nano.MetricsProto
 import com.android.settings.R
-import com.android.settings.preferences.CustomSeekBarPreference
 import com.android.settings.search.BaseSearchIndexProvider
 import com.android.settingslib.search.SearchIndexable
 
@@ -28,10 +27,6 @@ class StatusBar : OptimizedSettingsFragment() {
 
     companion object {
         const val TAG = "StatusBar"
-        
-        private const val KEY_STATUSBAR_TOP_PADDING = "statusbar_top_padding"
-        private const val KEY_STATUSBAR_LEFT_PADDING = "statusbar_left_padding"
-        private const val KEY_STATUSBAR_RIGHT_PADDING = "statusbar_right_padding"
 
         /**
          * For search
@@ -49,31 +44,6 @@ class StatusBar : OptimizedSettingsFragment() {
         super.onCreate(savedInstanceState)
 
         addPreferencesFromResource(R.xml.rising_settings_status_bar)
-
-        // Use cached preference lookup for better performance
-        val leftSeekBar = findCachedPreference<CustomSeekBarPreference>(KEY_STATUSBAR_LEFT_PADDING)
-        leftSeekBar?.let { seekBar ->
-            resources?.let { res ->
-                val defaultLeftPadding = res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_padding_start)
-                seekBar.setDefaultValue(defaultLeftPadding, true)
-            }
-        }
-        
-        val rightSeekBar = findCachedPreference<CustomSeekBarPreference>(KEY_STATUSBAR_RIGHT_PADDING)
-        rightSeekBar?.let { seekBar ->
-            resources?.let { res ->
-                val defaultRightPadding = res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_padding_end)
-                seekBar.setDefaultValue(defaultRightPadding, true)
-            }
-        }
-
-        val topSeekbar = findCachedPreference<CustomSeekBarPreference>(KEY_STATUSBAR_TOP_PADDING)
-        topSeekbar?.let { seekBar ->
-            resources?.let { res ->
-                val defaultTopPadding = res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_padding_top)
-                seekBar.setDefaultValue(defaultTopPadding, true)
-            }
-        }
     }
 
     override fun getMetricsCategory(): Int {

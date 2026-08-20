@@ -41,13 +41,6 @@
         android:fragment="com.rising.settings.fragments.sound.PulseSettings"
          />
 
-    <!-- Volume steps -->
-    <com.android.settings.preferences.ui.AdaptivePreference
-        android:key="volume_steps"
-        android:title="@string/volume_steps_title"
-        android:summary="@string/volume_steps_summary"
-        android:fragment="com.rising.settings.fragments.sound.VolumeSteps" />
-
     <!-- Screenshot Sound  -->
     <com.android.settings.preferences.SystemSettingSwitchPreference
         android:key="screenshot_shutter_sound"
@@ -66,28 +59,8 @@
             android:key="volume_panel_on_left"
             android:title="@string/volume_panel_on_left_title"
             android:summary="@string/volume_panel_on_left_summary"
-            lineage:position="top"
+            lineage:position="solo"
             lineage:isLineageSettings="true" />
-
-        <com.android.settings.preferences.SystemSettingSwitchPreference
-            android:key="volume_panel_expandable"
-            android:title="@string/volume_panel_expandable_title"
-            android:summary="@string/volume_panel_expandable_summary"
-            android:defaultValue="true"/>
-
-        <com.android.settings.preferences.SystemSettingSwitchPreference
-            android:key="volume_panel_media_output"
-            android:title="@string/volume_panel_media_output_title"
-            android:summary="@string/volume_panel_media_output_summary"
-            android:defaultValue="true"/>
-
-        <com.android.settings.preferences.SystemSettingSwitchPreference
-            android:key="volume_sound_haptics"
-            android:title="@string/volume_sound_haptics_title"
-            android:summary="@string/volume_sound_haptics_summary"
-            android:defaultValue="false"
-            android:dependency="volume_panel_expandable"
-            lineage:position="bottom"/>
     </PreferenceCategory>
 
     <!-- In-call feedback -->

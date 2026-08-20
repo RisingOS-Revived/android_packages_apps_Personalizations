@@ -58,25 +58,6 @@
         android:key="gen_ui"
         android:title="@string/gen_ui_settings_title">
 
-        <!-- Brightness Bar Styles -->      
-        <com.android.settings.preferences.ui.AdaptivePreference
-            android:key="android.theme.customization.brightness_slider"
-            android:icon="@drawable/ic_brightness"
-            android:title="@string/theme_customization_brightness_slider_title"
-            android:summary="@string/theme_customization_brightness_slider_summary"
-            android:fragment="com.rising.settings.fragments.BrightnessSlider"
-            lineage:position="top" />
-
-        <!-- Hide NavBar -->      
-        <com.android.settings.preferences.SystemSettingListPreference
-             android:key="hide_ime_space_style"
-             android:title="@string/hide_ime_space_style_title"
-             android:icon="@drawable/ic_navbar_mode"
-             android:entries="@array/hide_ime_space_style_entries"
-             android:entryValues="@array/hide_ime_space_style_values"
-             android:summary="%s"
-             android:defaultValue="0" />
-
         <!-- Navbar Style -->
         <com.android.settings.preferences.ui.AdaptivePreference
             android:key="android.theme.customization.navbar"
@@ -84,44 +65,6 @@
             android:title="@string/theme_customization_navbar_title"
             android:summary="@string/theme_customization_navbar_summary"
             android:fragment="com.rising.settings.fragments.ui.NavbarStyles" />
-
-        <!-- Notification Styles -->      
-        <com.android.settings.preferences.SystemSettingListPreference
-             android:key="notification_style"
-             android:title="@string/notif_style_title"
-             android:icon="@drawable/ic_styles_notification"
-             android:entries="@array/notif_style_entries"
-             android:entryValues="@array/notif_style_values"
-             android:summary="%s"
-             android:defaultValue="0" />
-
-        <!-- Power Menu Styles -->      
-        <com.android.settings.preferences.SystemSettingListPreference
-             android:key="powermenu_style"
-             android:title="@string/powermenu_style_title"
-             android:icon="@drawable/ic_settings_powermenu"
-             android:entries="@array/powermenu_style_entries"
-             android:entryValues="@array/powermenu_style_values"
-             android:summary="%s"
-             android:defaultValue="0" />
-
-        <!-- Signal icon style -->
-        <com.android.settings.preferences.ui.AdaptivePreference
-            android:key="android.theme.customization.signal_icon"
-            android:icon="@drawable/ic_signal"
-            android:title="@string/theme_customization_signal_icon_title"
-            android:summary="@string/theme_customization_signal_icon_summary"
-            android:fragment="com.rising.settings.fragments.ui.SignalIcons"/>
-
-        <!-- Progress Bar Styles -->      
-        <com.android.settings.preferences.SystemSettingListPreference
-             android:key="progress_bar_style"
-             android:title="@string/progress_bar_style_title"
-             android:icon="@drawable/ic_styles_progress"
-             android:entries="@array/progress_bar_style_entries"
-             android:entryValues="@array/progress_bar_style_values"
-             android:summary="%s"
-             android:defaultValue="0" />
 
         <!-- Screen Off animation -->
         <com.android.settings.preferences.SystemSettingListPreference
@@ -147,15 +90,13 @@
             android:summary="%s"
             />
 
-        <!-- Volume Styles -->      
-        <com.android.settings.preferences.SystemSettingListPreference
-             android:key="custom_volume_styles"
-             android:title="@string/volume_style_title"
-             android:icon="@drawable/ic_settings_sound"
-             android:entries="@array/volume_styles_entries"
-             android:entryValues="@array/volume_styles_values"
-             android:summary="%s"
-             android:defaultValue="0" />
+        <!-- Signal icon style -->
+        <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="android.theme.customization.signal_icon"
+            android:icon="@drawable/ic_signal"
+            android:title="@string/theme_customization_signal_icon_title"
+            android:summary="@string/theme_customization_signal_icon_summary"
+            android:fragment="com.rising.settings.fragments.ui.SignalIcons"/>
 
         <!-- Wifi icon style -->
         <com.android.settings.preferences.ui.AdaptivePreference

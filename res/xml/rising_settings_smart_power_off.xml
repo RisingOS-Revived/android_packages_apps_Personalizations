@@ -25,7 +25,7 @@
             android:title="@string/smart_power_off_title"
             android:summary="@string/smart_power_off_summary"
             android:defaultValue="false"
-            app:position="solo" />
+            app:position="top" />
 
         <com.android.settings.preferences.ui.AdaptivePreference
             android:key="power_off_time_preference"
@@ -33,7 +33,7 @@
             android:title="@string/smart_power_off_time_title"
             android:dependency="smart_power_off_enabled"
             android:summary="@string/smart_power_off_time_summary"
-            app:position="solo" />
+            app:position="bottom" />
             
         <com.android.settingslib.widget.FooterPreference
             android:key="smart_power_off_footer_text"

@@ -72,14 +72,6 @@ class LockScreen : OptimizedSettingsFragment() {
                     if (!Utils.isPackageInstalled(context, "com.crdroid.udfps.icons")) {
                         keys.add(KEY_UDFPS_ICONS)
                     }
-                    val resources = context.resources
-                    val screenOffUdfpsAvailable = resources.getBoolean(
-                        com.android.internal.R.bool.config_supportScreenOffUdfps) ||
-                        !TextUtils.isEmpty(resources.getString(
-                            com.android.internal.R.string.config_dozeUdfpsLongPressSensorType))
-                    if (!screenOffUdfpsAvailable) {
-                        keys.add(SCREEN_OFF_UDFPS_ENABLED)
-                    }
                 }
                 return keys
             }

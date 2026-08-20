@@ -53,14 +53,6 @@
             android:min="1"
             app:position="bottom" />
 
-        <com.android.settings.preferences.SystemSettingSwitchPreference
-            android:key="back_gesture_style_classic"
-            android:title="@string/back_gesture_style_classic_title"
-            android:summary="@string/back_gesture_style_classic_summary"
-            android:defaultValue="false"
-            settings:controller="com.android.settings.gestures.BackGestureStylePreferenceController"  
-            app:position="solo" />
-
     </PreferenceCategory>
 
     <PreferenceCategory

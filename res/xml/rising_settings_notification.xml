@@ -74,20 +74,7 @@
             android:key="small_landscape_notification"
             android:title="@string/small_landscape_notification_title"
             android:summary="@string/small_landscape_notification_summary"
-            android:defaultValue="true" />
-
-        <com.android.settings.preferences.ui.AdaptivePreference
-            android:key="ongoing_progress_settings"
-            android:title="@string/ongoing_progress_settings_title"
-            android:summary="@string/ongoing_progress_settings_summary"
-            android:fragment="com.rising.settings.fragments.OngoingProgressBar" />
-
-        <!-- Island notification -->
-        <com.android.settings.preferences.ui.AdaptivePreference
-            android:key="island_notification"
-            android:title="@string/notifications_island_notification_title"
-            android:summary="@string/notifications_island_notification_summary"
-            android:fragment="com.rising.settings.fragments.IslandSettings"
+            android:defaultValue="true"
             lineage:position="bottom" />
 
     </PreferenceCategory>

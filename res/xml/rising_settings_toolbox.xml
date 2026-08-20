@@ -29,13 +29,6 @@
             lineage:position="top" />
 
         <com.android.settings.preferences.ui.AdaptivePreference
-            android:key="navigation"
-            android:icon="@drawable/ic_navbar"
-            android:title="@string/nav_settings_title"
-            android:summary="@string/nav_settings_summary"
-            android:fragment="com.rising.settings.fragments.Navigation" />
-
-        <com.android.settings.preferences.ui.AdaptivePreference
             android:key="security"
             android:icon="@drawable/ic_security"
             android:title="@string/security_title"
