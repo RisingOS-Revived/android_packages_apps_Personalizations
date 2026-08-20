@@ -983,6 +983,10 @@
     <string name="laboratory_ignore_window_secure_title">Ignore window secure flags</string>
     <string name="laboratory_ignore_window_secure_summary">Removes screenshots and screenrecords limits for all applications.</string>
 
+    <!-- PairIP license check blocker -->
+    <string name="miscellaneous_pairip_activity_block_title">Block PairIP license verification</string>
+    <string name="miscellaneous_pairip_activity_block_summary">Prevent Play Store apps from launching the \"Get this app from Play\" screen when not installed by the Play Store</string>
+
     <!-- Depth Wallpaper -->
     <string name="dw_file_header_select_title">Select Depth Wallpaper Subject</string>
     <string name="dw_file_header_select_summary">Select depth wallpaper subject image from storage.</string>
