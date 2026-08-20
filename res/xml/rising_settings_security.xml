@@ -43,8 +43,14 @@
             android:key="persist.sys.pairip.activity.block"
             android:title="@string/miscellaneous_pairip_activity_block_title"
             android:summary="@string/miscellaneous_pairip_activity_block_summary"
+            android:defaultValue="false" />
+
+        <com.android.settings.preferences.GlobalSettingSwitchPreference
+            android:key="pm_downgrade_allowed"
+            android:title="@string/miscellaneous_app_downgrade_title"
+            android:summary="@string/miscellaneous_app_downgrade_summary"
             android:defaultValue="false"
-            app:position="bottom"/>
+            app:position="bottom" />
 
         <com.android.settingslib.widget.FooterPreference
             android:key="security_settings_footer"
