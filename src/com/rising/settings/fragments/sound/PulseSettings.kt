@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2024 crDroid Android Project
+ * Copyright (C) 2016-2026 crDroid Android Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,12 @@
  */
 package com.rising.settings.fragments.sound
 
-import android.content.Context
-import android.content.ContentResolver
-import android.content.DialogInterface
-import android.content.res.Resources
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.UserHandle
 import android.provider.Settings
 
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
-import androidx.preference.PreferenceScreen
-import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.SwitchPreferenceCompat
 
 import com.android.internal.logging.nano.MetricsProto
@@ -36,168 +28,132 @@ import com.android.settings.R
 import com.rising.settings.fragments.OptimizedSettingsFragment
 
 import com.android.settings.preferences.colorpicker.ColorPickerPreference
+import com.android.settings.utils.DeviceUtils
 
 class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChangeListener {
 
     companion object {
         private val TAG = PulseSettings::class.java.simpleName
 
-        private const val LOCKSCREEN_PULSE_ENABLED_KEY = "lockscreen_pulse_enabled"
-        private const val AMBIENT_PULSE_ENABLED_KEY = "ambient_pulse_enabled"
-        private const val PULSE_SMOOTHING_KEY = "pulse_smoothing_enabled"
-        private const val PULSE_COLOR_MODE_KEY = "pulse_color_mode"
-        private const val PULSE_COLOR_MODE_CHOOSER_KEY = "pulse_color_user"
-        private const val PULSE_COLOR_MODE_LAVA_SPEED_KEY = "pulse_lavalamp_speed"
-        private const val PULSE_RENDER_CATEGORY_SOLID = "pulse_2"
-        private const val PULSE_RENDER_CATEGORY_FADING = "pulse_fading_bars_category"
-        private const val PULSE_RENDER_MODE_KEY = "pulse_render_style"
-        private const val RENDER_STYLE_FADING_BARS = 0
-        private const val RENDER_STYLE_SOLID_LINES = 1
-        private const val COLOR_TYPE_ACCENT = 0
-        private const val COLOR_TYPE_USER = 1
-        private const val COLOR_TYPE_LAVALAMP = 2
-        private const val COLOR_TYPE_AUTO = 3
-
-        private const val PULSE_SETTINGS_FOOTER = "pulse_settings_footer"
+        private const val KEY_PULSE_BASS_HAPTICS = "pulse_bass_haptics"
+        private const val KEY_PULSE_RENDERER = "pulse_renderer"
+        private const val KEY_PULSE_COLOR = "pulse_color"
+        private const val KEY_PULSE_CUSTOM_COLOR = "pulse_custom_color"
+        private const val KEY_PULSE_CAPTURE_MODE = "pulse_capture_mode"
+        private const val KEY_PULSE_ROUND_OUTPUT = "pulse_rounded_bars"
     }
 
-    private lateinit var mLockscreenPulse: SwitchPreferenceCompat
-    private lateinit var mAmbientPulse: SwitchPreferenceCompat
-    private lateinit var mPulseSmoothing: SwitchPreferenceCompat
-    private lateinit var mRenderMode: Preference
-    private lateinit var mColorModePref: ListPreference
-    private lateinit var mColorPickerPref: ColorPickerPreference
-    private lateinit var mLavaSpeedPref: Preference
-    private lateinit var mFooterPref: Preference
-
-    private lateinit var mFadingBarsCat: PreferenceCategory
-    private lateinit var mSolidBarsCat: PreferenceCategory
+    private lateinit var mPulseRenderer: ListPreference
+    private lateinit var mPulseColor: ListPreference
+    private lateinit var mPulseBassHaptics: ListPreference
+    private lateinit var mPulseCaptureMode: ListPreference
+    private lateinit var mPulseCustomColor: ColorPickerPreference
+    private lateinit var mPulseRoundOutput: SwitchPreferenceCompat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         addPreferencesFromResource(R.xml.pulse_settings)
 
-        val resolver = requireContext().contentResolver
+        mPulseRenderer = findCachedPreference<ListPreference>(KEY_PULSE_RENDERER)!!
+        mPulseColor = findCachedPreference<ListPreference>(KEY_PULSE_COLOR)!!
+        mPulseCustomColor = findCachedPreference<ColorPickerPreference>(KEY_PULSE_CUSTOM_COLOR)!!
+        mPulseCaptureMode = findCachedPreference<ListPreference>(KEY_PULSE_CAPTURE_MODE)!!
+        mPulseBassHaptics = findCachedPreference<ListPreference>(KEY_PULSE_BASS_HAPTICS)!!
+        mPulseRoundOutput = findCachedPreference<SwitchPreferenceCompat>(KEY_PULSE_ROUND_OUTPUT)!!
 
-        mLockscreenPulse = findCachedPreference<SwitchPreferenceCompat>(LOCKSCREEN_PULSE_ENABLED_KEY)!!
-        val lockscreenPulse = Settings.Secure.getIntForUser(resolver,
-                Settings.Secure.LOCKSCREEN_PULSE_ENABLED, 1, UserHandle.USER_CURRENT) != 0
-        mLockscreenPulse.isChecked = lockscreenPulse
-        mLockscreenPulse.onPreferenceChangeListener = this
+        mPulseRenderer.onPreferenceChangeListener = this
+        updatePreferenceVisibility(getCurrentRenderer(), getCurrentColorMode(), getCurrentCaptureMode())
 
-        mAmbientPulse = findCachedPreference<SwitchPreferenceCompat>(AMBIENT_PULSE_ENABLED_KEY)!!
-        val ambientPulse = Settings.Secure.getIntForUser(resolver,
-                Settings.Secure.AMBIENT_PULSE_ENABLED, 0, UserHandle.USER_CURRENT) != 0
-        mAmbientPulse.isChecked = ambientPulse
-        mAmbientPulse.onPreferenceChangeListener = this
+        mPulseColor.onPreferenceChangeListener = this
+        updatePreferenceVisibility(getCurrentRenderer(), getCurrentColorMode(), getCurrentCaptureMode())
 
-        mColorModePref = findCachedPreference<ListPreference>(PULSE_COLOR_MODE_KEY)!!
-        mColorPickerPref = findCachedPreference<ColorPickerPreference>(PULSE_COLOR_MODE_CHOOSER_KEY)!!
-        mLavaSpeedPref = findCachedPreference(PULSE_COLOR_MODE_LAVA_SPEED_KEY)!!
-        mColorModePref.onPreferenceChangeListener = this
+        val hapticAvailable = DeviceUtils.hasVibrator(requireContext())
+        if (!hapticAvailable) {
+            mPulseBassHaptics.isVisible = false
+        }
 
-        mRenderMode = findCachedPreference(PULSE_RENDER_MODE_KEY)!!
-        mRenderMode.onPreferenceChangeListener = this
-
-        mFadingBarsCat = findCachedPreference<PreferenceCategory>(PULSE_RENDER_CATEGORY_FADING)!!
-        mSolidBarsCat = findCachedPreference<PreferenceCategory>(PULSE_RENDER_CATEGORY_SOLID)!!
-
-        mPulseSmoothing = findCachedPreference<SwitchPreferenceCompat>(PULSE_SMOOTHING_KEY)!!
-
-        mFooterPref = findCachedPreference(PULSE_SETTINGS_FOOTER)!!
-        mFooterPref.setTitle(R.string.pulse_help_policy_notice_summary)
-
-        updateAllPrefs()
+        mPulseCaptureMode.onPreferenceChangeListener = this
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
-        val resolver = requireContext().contentResolver
         when (preference) {
-            mLockscreenPulse -> {
-                val value = newValue as Boolean
-                Settings.Secure.putIntForUser(resolver,
-                    Settings.Secure.LOCKSCREEN_PULSE_ENABLED, if (value) 1 else 0, UserHandle.USER_CURRENT)
-                updateAllPrefs()
+            mPulseRenderer -> {
+                val value = newValue as String
+                updatePreferenceVisibility(value, getCurrentColorMode(), getCurrentCaptureMode())
                 return true
             }
-            mAmbientPulse -> {
-                val value = newValue as Boolean
-                Settings.Secure.putIntForUser(resolver,
-                    Settings.Secure.AMBIENT_PULSE_ENABLED, if (value) 1 else 0, UserHandle.USER_CURRENT)
-                updateAllPrefs()
+            mPulseColor -> {
+                val value = newValue as String
+                updatePreferenceVisibility(getCurrentRenderer(), value, getCurrentCaptureMode())
                 return true
             }
-            mColorModePref -> {
-                updateColorPrefs(newValue.toString().toInt())
-                return true
-            }
-            mRenderMode -> {
-                updateRenderCategories(newValue.toString().toInt())
+            mPulseCaptureMode -> {
+                val value = newValue as String
+                updatePreferenceVisibility(getCurrentRenderer(), getCurrentColorMode(), value)
                 return true
             }
         }
         return false
     }
 
-    private fun updateAllPrefs() {
-        val resolver = getSafeContext()?.contentResolver
-
-        val lockscreenPulse = Settings.Secure.getIntForUser(resolver,
-                Settings.Secure.LOCKSCREEN_PULSE_ENABLED, 1, UserHandle.USER_CURRENT) != 0
-
-        val ambientPulse = Settings.Secure.getIntForUser(resolver,
-                Settings.Secure.AMBIENT_PULSE_ENABLED, 0, UserHandle.USER_CURRENT) != 0
-
-        mPulseSmoothing.isEnabled = lockscreenPulse || ambientPulse
-
-        mColorModePref.isEnabled = lockscreenPulse || ambientPulse
-        if (lockscreenPulse || ambientPulse) {
-            val colorMode = Settings.Secure.getIntForUser(resolver,
-                Settings.Secure.PULSE_COLOR_MODE, COLOR_TYPE_LAVALAMP, UserHandle.USER_CURRENT)
-            updateColorPrefs(colorMode)
-        } else {
-            mColorPickerPref.isEnabled = false
-            mLavaSpeedPref.isEnabled = false
+    private fun updatePreferenceVisibility(
+        rendererValue: String?,
+        colorValue: String?,
+        captureModeValue: String?
+    ) {
+        if (captureModeValue != null) {
+            setBassHapticPreference(captureModeValue != "1")
         }
 
-        mRenderMode.isEnabled = lockscreenPulse || ambientPulse
-        if (lockscreenPulse || ambientPulse) {
-            val renderMode = Settings.Secure.getIntForUser(resolver,
-                Settings.Secure.PULSE_RENDER_STYLE, RENDER_STYLE_SOLID_LINES, UserHandle.USER_CURRENT)
-            updateRenderCategories(renderMode)
-        } else {
-            mFadingBarsCat.isEnabled = false
-            mSolidBarsCat.isEnabled = false
-        }
-
-        mFooterPref.isEnabled = lockscreenPulse || ambientPulse
-    }
-
-    private fun updateColorPrefs(value: Int) {
-        when (value) {
-            COLOR_TYPE_ACCENT -> {
-                mColorPickerPref.isEnabled = false
-                mLavaSpeedPref.isEnabled = false
+        if (rendererValue != null) {
+            var supportsColoring = false
+            var supportsRounding = false
+            when (rendererValue) {
+                "minimal", "solid" -> {
+                    supportsRounding = true
+                    supportsColoring = true
+                }
+                "fading", "matrix", "neon", "particle",
+                "sparkle", "waveform", "dotwave" -> {
+                    supportsColoring = true
+                }
             }
-            COLOR_TYPE_USER -> {
-                mColorPickerPref.isEnabled = true
-                mLavaSpeedPref.isEnabled = false
-            }
-            COLOR_TYPE_LAVALAMP -> {
-                mColorPickerPref.isEnabled = false
-                mLavaSpeedPref.isEnabled = true
-            }
-            COLOR_TYPE_AUTO -> {
-                mColorPickerPref.isEnabled = false
-                mLavaSpeedPref.isEnabled = false
-            }
+            mPulseRoundOutput.isVisible = supportsRounding
+            mPulseColor.isVisible = supportsColoring
+            mPulseCustomColor.isVisible = supportsColoring && colorValue == "custom"
         }
     }
 
-    private fun updateRenderCategories(mode: Int) {
-        mFadingBarsCat.isEnabled = mode == RENDER_STYLE_FADING_BARS
-        mSolidBarsCat.isEnabled = mode == RENDER_STYLE_SOLID_LINES
+    private fun getCurrentRenderer(): String? {
+        return Settings.Secure.getStringForUser(
+                requireContext().contentResolver,
+                Settings.Secure.PULSE_RENDERER,
+                UserHandle.USER_CURRENT)
+    }
+
+    private fun getCurrentColorMode(): String? {
+        return Settings.Secure.getStringForUser(
+                requireContext().contentResolver,
+                Settings.Secure.PULSE_COLOR,
+                UserHandle.USER_CURRENT)
+    }
+
+    private fun getCurrentCaptureMode(): String? {
+        return Settings.Secure.getStringForUser(
+                requireContext().contentResolver,
+                Settings.Secure.PULSE_CAPTURE_MODE,
+                UserHandle.USER_CURRENT)
+    }
+
+    private fun setBassHapticPreference(enabled: Boolean) {
+        mPulseBassHaptics.isEnabled = enabled
+        if (enabled) {
+            mPulseBassHaptics.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
+        } else {
+            mPulseBassHaptics.summaryProvider = null
+            mPulseBassHaptics.setSummary(R.string.pulse_bass_haptics_disabled_amplitude)
+        }
     }
 
     override fun getMetricsCategory(): Int {
