@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 crDroid Android Project
+ * Copyright (C) 2018-2026 crDroid Android Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.rising.settings.fragments.ui
 
 import android.content.Context
-import android.content.ContentResolver
-import android.content.res.Resources
-import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.os.UserHandle
 import android.provider.Settings
-
-import androidx.preference.ListPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceScreen
-import androidx.preference.Preference.OnPreferenceChangeListener
-import androidx.preference.SwitchPreference
 
 import com.android.internal.logging.nano.MetricsProto
 import com.android.settings.R
@@ -39,15 +28,20 @@ class SmartPixels : OptimizedSettingsFragment() {
 
     companion object {
         private const val TAG = "SmartPixels"
-        private const val SMART_PIXELS_FOOTER = "smart_pixels_footer"
+
+        fun reset(context: Context) {
+            val resolver = context.contentResolver
+            Settings.Secure.putIntForUser(resolver,
+                    Settings.Secure.SMART_PIXEL_FILTER_ENABLED, 0, UserHandle.USER_CURRENT)
+            Settings.Secure.putIntForUser(resolver,
+                    Settings.Secure.SMART_PIXEL_FILTER_PERCENT, 25, UserHandle.USER_CURRENT)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         addPreferencesFromResource(R.xml.smart_pixels)
-
-        findCachedPreference<Preference>(SMART_PIXELS_FOOTER)?.setTitle(R.string.smart_pixels_warning_text)
     }
 
     override fun getMetricsCategory(): Int {
