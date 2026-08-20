@@ -15,6 +15,18 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="emoji_style_entries">
+        <item>@string/emoji_style_stock</item>
+        <item>@string/emoji_style_ios</item>
+        <item>@string/emoji_style_samsung</item>
+    </string-array>
+
+    <string-array name="emoji_style_values">
+        <item>android</item>
+        <item>ios</item>
+        <item>samsung</item>
+    </string-array>
+
     <!-- Locale Picker -->
     <array name="global_locales">
         <item>en</item>

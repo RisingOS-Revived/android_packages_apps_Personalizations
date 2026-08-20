@@ -104,10 +104,19 @@
             android:icon="@drawable/ic_wifi"
             android:title="@string/theme_customization_wifi_icon_title"
             android:summary="@string/theme_customization_wifi_icon_summary"
-            android:fragment="com.rising.settings.fragments.ui.WifiIcons"
+            android:fragment="com.rising.settings.fragments.ui.WifiIcons" />
+
+        <!-- Emoji style -->
+        <com.android.settings.preferences.SystemPropertyListPreference
+            android:key="persist.sys.ax_emoji_style"
+            android:icon="@drawable/ic_themes"
+            android:title="@string/emoji_style_title"
+            android:summary="%s"
+            android:entries="@array/emoji_style_entries"
+            android:entryValues="@array/emoji_style_values"
+            android:defaultValue="android"
             lineage:position="bottom"/>
 
     </PreferenceCategory>
-
 
 </PreferenceScreen>

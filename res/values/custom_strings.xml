@@ -15,6 +15,13 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Emoji style -->
+    <string name="emoji_style_title">Emoji style</string>
+    <string name="emoji_style_summary">Choose the system emoji pack without changing text fonts</string>
+    <string name="emoji_style_stock">Stock</string>
+    <string name="emoji_style_ios">iOS</string>
+    <string name="emoji_style_samsung">Samsung</string>
+
     <!-- Now Playing -->
     <string name="lockscreen_now_playing_title">Now Playing</string>
     <string name="lockscreen_now_playing_summary">Shows which media is now playing right now on lockscreen</string>

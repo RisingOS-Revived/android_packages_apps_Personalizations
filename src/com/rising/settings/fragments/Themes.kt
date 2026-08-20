@@ -23,6 +23,7 @@ import com.android.internal.util.android.SystemRestartUtils;
 import com.android.settings.R
 import com.android.settings.SettingsPreferenceFragment
 import com.android.settings.preferences.GlobalSettingListPreference
+import com.android.settings.preferences.SystemPropertyListPreference
 import com.android.settings.search.BaseSearchIndexProvider
 import com.android.settingslib.search.SearchIndexable
 
@@ -33,6 +34,7 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
         const val TAG = "Themes"
         private const val KEY_LOCK_SOUND = "lock_sound"
         private const val KEY_UNLOCK_SOUND = "unlock_sound"
+        private const val KEY_EMOJI_STYLE = "persist.sys.ax_emoji_style"
 
         /**
          * For search
@@ -48,6 +50,7 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
 
     private var mLockSound: GlobalSettingListPreference? = null
     private var mUnlockSound: GlobalSettingListPreference? = null
+    private var mEmojiStyle: SystemPropertyListPreference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +60,8 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
         mLockSound?.onPreferenceChangeListener = this
         mUnlockSound = findPreference<GlobalSettingListPreference>(KEY_UNLOCK_SOUND)
         mUnlockSound?.onPreferenceChangeListener = this
+        mEmojiStyle = findPreference<SystemPropertyListPreference>(KEY_EMOJI_STYLE)
+        mEmojiStyle?.onPreferenceChangeListener = this
 
         // Initialize highlight preferences with null checks
         preferenceScreen?.let { screen ->
@@ -79,6 +84,11 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
         return when (preference) {
             mLockSound, mUnlockSound -> {
                 context?.let { SystemRestartUtils.showSystemUIRestartDialog(it) }
+                true
+            }
+
+            mEmojiStyle -> {
+                context?.let { SystemRestartUtils.showSystemRestartDialog(it) }
                 true
             }
 
