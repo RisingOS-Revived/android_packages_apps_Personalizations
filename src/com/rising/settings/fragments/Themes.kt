@@ -19,11 +19,11 @@ import android.content.Context
 import android.os.Bundle
 import androidx.preference.Preference
 import com.android.internal.logging.nano.MetricsProto
+import com.android.internal.util.android.SystemRestartUtils;
 import com.android.settings.R
 import com.android.settings.SettingsPreferenceFragment
 import com.android.settings.preferences.GlobalSettingListPreference
 import com.android.settings.search.BaseSearchIndexProvider
-import com.android.settings.utils.SystemRestartUtils
 import com.android.settingslib.search.SearchIndexable
 
 @SearchIndexable

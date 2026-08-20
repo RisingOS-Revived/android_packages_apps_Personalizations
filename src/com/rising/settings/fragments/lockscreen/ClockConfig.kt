@@ -51,58 +51,111 @@ import kotlinx.coroutines.launch
 
 data class ClockConfig(
     val style: Int = 0,
-    val fontPackage: String = "default"
+    val fontPackage: String = "default",
+    // Color
+    val useAlbumArtColor: Boolean = false,
+    val colorMode: String = "default",
+    val customColorArgb: Int = DEFAULT_CLOCK_COLOR,
+    // Gradient
+    val gradientEnabled: Boolean = false,
+    val gradientColorStartArgb: Int = DEFAULT_GRADIENT_START,
+    val gradientColorEndArgb: Int = DEFAULT_GRADIENT_END,
+    val gradientAnchorY: Int = 50,
+    val gradientRadius: Int = 100,
+    // Layout
+    val sizeScale: Int = 100,
+    val opacity: Int = 100,
+    val marginTop: Int = 15,
+    val marginStart: Int = 0,
+    // Animation
+    val wobbleOnCharge: Boolean = true,
+    val aodAnim: Boolean = true
 ) {
     companion object {
-        private val CLOCK_LAYOUTS = intArrayOf(
-            R.layout.keyguard_clock_default,      // 0
-            R.layout.keyguard_clock_oos,          // 1
-            R.layout.keyguard_clock_center,       // 2
-            R.layout.keyguard_clock_simple,       // 3
-            R.layout.keyguard_clock_miui,         // 4
-            R.layout.keyguard_clock_ide,          // 5
-            R.layout.keyguard_clock_moto,         // 6
-            R.layout.keyguard_clock_stylish,      // 7
-            R.layout.keyguard_clock_stylish2,     // 8
-            R.layout.keyguard_clock_stylish3,     // 9
-            R.layout.keyguard_clock_stylish4,     // 10
-            R.layout.keyguard_clock_stylish5,     // 11
-            R.layout.keyguard_clock_stylish6,     // 12
-            R.layout.keyguard_clock_stylish7,     // 13
-            R.layout.keyguard_clock_stylish8,     // 14
-            R.layout.keyguard_clock_stylish9,     // 15
-            R.layout.keyguard_clock_stylish10,    // 16
-            R.layout.keyguard_clock_small_cute,   // 17
-            R.layout.keyguard_clock_thin_long,    // 18
-            R.layout.keyguard_clock_more_more_thin, // 19
-            R.layout.keyguard_clock_normal_time,  // 20
-            R.layout.keyguard_clock_guoguo_type2, // 21
-            R.layout.keyguard_clock_guoguo_type3, // 22
-            R.layout.keyguard_clock_guoguo_type4, // 23
-            R.layout.keyguard_clock_ntype,        // 24
-            R.layout.keyguard_clock_ndot,         // 25
-            R.layout.keyguard_clock_graphic,      // 26
-            R.layout.keyguard_clock_london_ug     // 27
+        const val DEFAULT_CLOCK_COLOR = -0x1 // 0xFFFFFFFF, matches ClockColorPickerDialogFragment.DEFAULT_COLOR_ARGB
+        const val DEFAULT_GRADIENT_START = -0xFF1A01 // 0xFF00E5FF
+        const val DEFAULT_GRADIENT_END = -0xD256 // 0xFFFF2DAA
+
+        val COLOR_MODE_OPTIONS = listOf(
+            "default" to "Default",
+            "accent" to "Accent",
+            "custom" to "Custom"
         )
-        
-        private val CLOCK_NAMES = arrayOf(
-            "Default", "OnePlus", "IOS", "Simple", "MIUI", "IDE", "Moto",
-            "Stylish", "Stylish 2", "Stylish 3", "Stylish 4", "Stylish 5",
-            "Stylish 6", "Stylish 7", "Stylish 8", "Stylish 9", "Stylish 10",
-            "SmallCute", "ThinLong", "MoreMoreThin", "NormalTime",
-            "Guoguo2", "Guoguo3", "Guoguo4", "NType", "NDot", "Graphic", "LondonUG"
-        )
-        
-        private val UNSUPPORTED_CLOCKS = intArrayOf(17, 18, 19, 20, 21, 22, 23)
-        private val UNSUPPORTED_CLOCK_FONT = intArrayOf(17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27)
+
+        private val CLOCK_LAYOUTS: IntArray
+            get() = com.android.settings.utils.ClockUtils.CLOCK_LAYOUTS
+        private val CLOCK_NAMES: Array<String>
+            get() = com.android.settings.utils.ClockUtils.getClockNames()
 
         fun load(context: Context): ClockConfig {
-            val style = Settings.Secure.getInt(
-                context.contentResolver,
-                "clock_style",
-                0
+            val cr = context.contentResolver
+            val style = Settings.Secure.getInt(cr, "lock_screen_custom_clock_style", 0)
+            val fontPackage = Settings.Secure.getString(cr, "lock_screen_clock_font_package") ?: "default"
+
+            val useAlbumArtColor = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_album_art_color", 0
+            ) == 1
+            val colorMode = Settings.Secure.getString(
+                cr, "lock_screen_custom_clock_color_mode"
+            ) ?: "default"
+            val customColorArgb = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_custom_color", DEFAULT_CLOCK_COLOR
             )
-            return ClockConfig(style = style)
+
+            val gradientEnabled = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_gradient_enabled", 0
+            ) == 1
+            val gradientColorStartArgb = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_gradient_color_start", DEFAULT_GRADIENT_START
+            )
+            val gradientColorEndArgb = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_gradient_color_end", DEFAULT_GRADIENT_END
+            )
+            val gradientAnchorY = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_gradient_anchor_y", 50
+            )
+            val gradientRadius = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_gradient_radius", 100
+            )
+
+            val sizeScale = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_size_scale", 100
+            )
+            val opacity = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_opacity", 100
+            )
+            val marginTop = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_margin_top", 15
+            )
+            val marginStart = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_margin_start", 0
+            )
+
+            val wobbleOnCharge = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_wobble_on_charge", 1
+            ) == 1
+            val aodAnim = Settings.Secure.getInt(
+                cr, "lock_screen_custom_clock_aod_anim", 1
+            ) == 1
+
+            return ClockConfig(
+                style = style,
+                fontPackage = fontPackage,
+                useAlbumArtColor = useAlbumArtColor,
+                colorMode = colorMode,
+                customColorArgb = customColorArgb,
+                gradientEnabled = gradientEnabled,
+                gradientColorStartArgb = gradientColorStartArgb,
+                gradientColorEndArgb = gradientColorEndArgb,
+                gradientAnchorY = gradientAnchorY,
+                gradientRadius = gradientRadius,
+                sizeScale = sizeScale,
+                opacity = opacity,
+                marginTop = marginTop,
+                marginStart = marginStart,
+                wobbleOnCharge = wobbleOnCharge,
+                aodAnim = aodAnim
+            )
         }
         
         fun getClockName(style: Int): String {
@@ -114,27 +167,40 @@ data class ClockConfig(
         }
         
         fun getTotalStyles(): Int = CLOCK_LAYOUTS.size
-
-        fun supportsCustomization(style: Int): Boolean {
-            return style !in UNSUPPORTED_CLOCKS
-        }
-
-        fun supportsFontCustomization(style: Int): Boolean {
-            return style !in UNSUPPORTED_CLOCK_FONT
-        }
     }
     
     fun save(context: Context) {
+        val cr = context.contentResolver
+        Settings.Secure.putInt(cr, "lock_screen_custom_clock_style", style)
+        Settings.Secure.putInt(cr, "lock_screen_custom_clock_face", 0)
+
         Settings.Secure.putInt(
-            context.contentResolver,
-            "clock_style",
-            style
+            cr, "lock_screen_custom_clock_album_art_color", if (useAlbumArtColor) 1 else 0
+        )
+        Settings.Secure.putString(cr, "lock_screen_custom_clock_color_mode", colorMode)
+        Settings.Secure.putInt(cr, "lock_screen_custom_clock_custom_color", customColorArgb)
+
+        Settings.Secure.putInt(
+            cr, "lock_screen_custom_clock_gradient_enabled", if (gradientEnabled) 1 else 0
         )
         Settings.Secure.putInt(
-            context.contentResolver,
-            "lock_screen_custom_clock_face",
-            0
+            cr, "lock_screen_custom_clock_gradient_color_start", gradientColorStartArgb
         )
+        Settings.Secure.putInt(
+            cr, "lock_screen_custom_clock_gradient_color_end", gradientColorEndArgb
+        )
+        Settings.Secure.putInt(cr, "lock_screen_custom_clock_gradient_anchor_y", gradientAnchorY)
+        Settings.Secure.putInt(cr, "lock_screen_custom_clock_gradient_radius", gradientRadius)
+
+        Settings.Secure.putInt(cr, "lock_screen_custom_clock_size_scale", sizeScale)
+        Settings.Secure.putInt(cr, "lock_screen_custom_clock_opacity", opacity)
+        Settings.Secure.putInt(cr, "lock_screen_custom_clock_margin_top", marginTop)
+        Settings.Secure.putInt(cr, "lock_screen_custom_clock_margin_start", marginStart)
+
+        Settings.Secure.putInt(
+            cr, "lock_screen_custom_clock_wobble_on_charge", if (wobbleOnCharge) 1 else 0
+        )
+        Settings.Secure.putInt(cr, "lock_screen_custom_clock_aod_anim", if (aodAnim) 1 else 0)
     }
 }
 
@@ -155,8 +221,6 @@ fun ClockConfigContent(
     var isApplying by remember { mutableStateOf(false) }
     
     val selectedStyle = currentPagerPage
-    val supportsCustomization = ClockConfig.supportsCustomization(selectedStyle)
-    val supportsFontCustomization = ClockConfig.supportsFontCustomization(selectedStyle)
     
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -247,52 +311,8 @@ fun ClockConfigContent(
                 )
             }
         }
-        
-        if (!supportsCustomization) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                color = if (isDarkTheme)
-                    Color(0xFFFFA500).copy(alpha = 0.15f)
-                else
-                    Color(0xFFFFA500).copy(alpha = 0.1f)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.Top
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Warning,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp),
-                        tint = Color(0xFFFFA500)
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Column {
-                        Text(
-                            text = "Limited Customization",
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = "This clock style doesn't support widgets, weather, now bar, or peek display. These features will be disabled when you apply this clock.",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = if (isDarkTheme)
-                                Color.White.copy(alpha = 0.7f)
-                            else
-                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
-                        )
-                    }
-                }
-            }
-        }
 
-        if (supportsFontCustomization) {
-            Surface(
+        Surface(
                 onClick = { showFontPicker = true },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(28.dp),
@@ -363,7 +383,30 @@ fun ClockConfigContent(
                     )
                 }
             }
-        }
+
+        ClockColorSection(
+            config = config,
+            onUpdate = onUpdate,
+            isDarkTheme = isDarkTheme
+        )
+
+        ClockGradientSection(
+            config = config,
+            onUpdate = onUpdate,
+            isDarkTheme = isDarkTheme
+        )
+
+        ClockLayoutSection(
+            config = config,
+            onUpdate = onUpdate,
+            isDarkTheme = isDarkTheme
+        )
+
+        ClockAnimationSection(
+            config = config,
+            onUpdate = onUpdate,
+            isDarkTheme = isDarkTheme
+        )
         
         Button(
             onClick = {
@@ -372,7 +415,7 @@ fun ClockConfigContent(
                     scope.launch {
                         applyClockChangesAndRestart(
                             context = context,
-                            clockPosition = selectedStyle,
+                            config = config.copy(style = selectedStyle),
                             onSuccess = {
                                 isApplying = false
                             },
@@ -501,74 +544,400 @@ fun ClockConfigContent(
     }
 }
 
+@Composable
+private fun SectionHeader(title: String, isDarkTheme: Boolean) {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.titleMedium,
+        fontWeight = FontWeight.Bold,
+        color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface,
+        modifier = Modifier.padding(top = 4.dp)
+    )
+}
+
+@Composable
+private fun ClockColorSection(
+    config: ClockConfig,
+    onUpdate: (ClockConfig) -> Unit,
+    isDarkTheme: Boolean
+) {
+    var showCustomColorPicker by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        SectionHeader("Clock Color", isDarkTheme)
+
+        ConfigCard(
+            title = "Album Art Color",
+            subtitle = "Tint the clock using the current album art",
+            icon = Icons.Default.Palette,
+            enabled = config.useAlbumArtColor,
+            isDarkTheme = isDarkTheme
+        ) {
+            Switch(
+                checked = config.useAlbumArtColor,
+                onCheckedChange = { onUpdate(config.copy(useAlbumArtColor = it)) },
+                colors = switchColors(isDarkTheme)
+            )
+        }
+
+        if (!config.useAlbumArtColor) {
+            ColorModePicker(
+                selected = config.colorMode,
+                onSelect = { onUpdate(config.copy(colorMode = it)) },
+                isDarkTheme = isDarkTheme
+            )
+
+            if (config.colorMode == "custom") {
+                ColorSwatchRow(
+                    title = "Custom Color",
+                    argb = config.customColorArgb,
+                    onClick = { showCustomColorPicker = true },
+                    isDarkTheme = isDarkTheme
+                )
+            }
+        }
+    }
+
+    if (showCustomColorPicker) {
+        com.android.settings.utils.ClockColorPickerDialog(
+            initialColor = String.format("%06X", config.customColorArgb and 0x00FFFFFF),
+            title = "Clock Color",
+            onDismiss = { showCustomColorPicker = false },
+            onColorSelected = { color ->
+                val argb = (color.toArgb() and 0x00FFFFFF) or 0xFF000000.toInt()
+                onUpdate(config.copy(customColorArgb = argb))
+                showCustomColorPicker = false
+            }
+        )
+    }
+}
+
+@Composable
+private fun ClockGradientSection(
+    config: ClockConfig,
+    onUpdate: (ClockConfig) -> Unit,
+    isDarkTheme: Boolean
+) {
+    var showStartPicker by remember { mutableStateOf(false) }
+    var showEndPicker by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        SectionHeader("Gradient", isDarkTheme)
+
+        ConfigCard(
+            title = "Enable Gradient",
+            subtitle = if (config.gradientEnabled) "Active" else "Disabled",
+            icon = Icons.Default.Gradient,
+            enabled = config.gradientEnabled,
+            isDarkTheme = isDarkTheme
+        ) {
+            Switch(
+                checked = config.gradientEnabled,
+                onCheckedChange = { onUpdate(config.copy(gradientEnabled = it)) },
+                colors = switchColors(isDarkTheme)
+            )
+        }
+
+        if (config.gradientEnabled) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Box(modifier = Modifier.weight(1f)) {
+                    ColorSwatchRow(
+                        title = "Start",
+                        argb = config.gradientColorStartArgb,
+                        onClick = { showStartPicker = true },
+                        isDarkTheme = isDarkTheme
+                    )
+                }
+                Box(modifier = Modifier.weight(1f)) {
+                    ColorSwatchRow(
+                        title = "End",
+                        argb = config.gradientColorEndArgb,
+                        onClick = { showEndPicker = true },
+                        isDarkTheme = isDarkTheme
+                    )
+                }
+            }
+
+            SliderCard(
+                title = "Anchor Y",
+                value = config.gradientAnchorY,
+                valueRange = 0f..100f,
+                unit = "%",
+                onValueChange = { onUpdate(config.copy(gradientAnchorY = it)) },
+                isDarkTheme = isDarkTheme
+            )
+
+            SliderCard(
+                title = "Radius",
+                value = config.gradientRadius,
+                valueRange = 25f..200f,
+                unit = "%",
+                onValueChange = { onUpdate(config.copy(gradientRadius = it)) },
+                isDarkTheme = isDarkTheme
+            )
+        }
+    }
+
+    if (showStartPicker) {
+        com.android.settings.utils.ClockColorPickerDialog(
+            initialColor = String.format("%06X", config.gradientColorStartArgb and 0x00FFFFFF),
+            title = "Gradient Start",
+            onDismiss = { showStartPicker = false },
+            onColorSelected = { color ->
+                val argb = (color.toArgb() and 0x00FFFFFF) or 0xFF000000.toInt()
+                onUpdate(config.copy(gradientColorStartArgb = argb))
+                showStartPicker = false
+            }
+        )
+    }
+    if (showEndPicker) {
+        com.android.settings.utils.ClockColorPickerDialog(
+            initialColor = String.format("%06X", config.gradientColorEndArgb and 0x00FFFFFF),
+            title = "Gradient End",
+            onDismiss = { showEndPicker = false },
+            onColorSelected = { color ->
+                val argb = (color.toArgb() and 0x00FFFFFF) or 0xFF000000.toInt()
+                onUpdate(config.copy(gradientColorEndArgb = argb))
+                showEndPicker = false
+            }
+        )
+    }
+}
+
+@Composable
+private fun ClockLayoutSection(
+    config: ClockConfig,
+    onUpdate: (ClockConfig) -> Unit,
+    isDarkTheme: Boolean
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        SectionHeader("Layout", isDarkTheme)
+
+        SliderCard(
+            title = "Clock Size",
+            value = config.sizeScale,
+            valueRange = 50f..150f,
+            unit = "%",
+            onValueChange = { onUpdate(config.copy(sizeScale = it)) },
+            isDarkTheme = isDarkTheme
+        )
+
+        SliderCard(
+            title = "Opacity",
+            value = config.opacity,
+            valueRange = 10f..100f,
+            unit = "%",
+            onValueChange = { onUpdate(config.copy(opacity = it)) },
+            isDarkTheme = isDarkTheme
+        )
+
+        SliderCard(
+            title = "Top Margin",
+            value = config.marginTop,
+            valueRange = 0f..100f,
+            unit = "px",
+            onValueChange = { onUpdate(config.copy(marginTop = it)) },
+            isDarkTheme = isDarkTheme
+        )
+
+        SliderCard(
+            title = "Start Margin",
+            value = config.marginStart,
+            valueRange = -200f..200f,
+            unit = "px",
+            onValueChange = { onUpdate(config.copy(marginStart = it)) },
+            isDarkTheme = isDarkTheme
+        )
+    }
+}
+
+@Composable
+private fun ClockAnimationSection(
+    config: ClockConfig,
+    onUpdate: (ClockConfig) -> Unit,
+    isDarkTheme: Boolean
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        SectionHeader("Animation", isDarkTheme)
+
+        ConfigCard(
+            title = "Wobble on Charge",
+            subtitle = "Clock wobbles when plugged in",
+            icon = Icons.Default.BatteryChargingFull,
+            enabled = config.wobbleOnCharge,
+            isDarkTheme = isDarkTheme
+        ) {
+            Switch(
+                checked = config.wobbleOnCharge,
+                onCheckedChange = { onUpdate(config.copy(wobbleOnCharge = it)) },
+                colors = switchColors(isDarkTheme)
+            )
+        }
+
+        ConfigCard(
+            title = "AOD Animation",
+            subtitle = "Animate clock in Always-On Display",
+            icon = Icons.Default.Nightlight,
+            enabled = config.aodAnim,
+            isDarkTheme = isDarkTheme
+        ) {
+            Switch(
+                checked = config.aodAnim,
+                onCheckedChange = { onUpdate(config.copy(aodAnim = it)) },
+                colors = switchColors(isDarkTheme)
+            )
+        }
+    }
+}
+
+@Composable
+private fun switchColors(isDarkTheme: Boolean) = SwitchDefaults.colors(
+    checkedThumbColor = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onPrimary,
+    checkedTrackColor = if (isDarkTheme) Color.White.copy(alpha = 0.3f) else MaterialTheme.colorScheme.primary
+)
+
+@Composable
+private fun ColorModePicker(
+    selected: String,
+    onSelect: (String) -> Unit,
+    isDarkTheme: Boolean
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(28.dp),
+        color = if (isDarkTheme)
+            Color.White.copy(alpha = 0.05f)
+        else
+            MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = "Color Mode",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Medium,
+                color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                ClockConfig.COLOR_MODE_OPTIONS.forEach { (value, label) ->
+                    val isSelected = selected == value
+                    Surface(
+                        onClick = { onSelect(value) },
+                        shape = RoundedCornerShape(18.dp),
+                        color = when {
+                            isSelected && isDarkTheme -> Color.White.copy(alpha = 0.2f)
+                            isSelected -> MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                            isDarkTheme -> Color.White.copy(alpha = 0.05f)
+                            else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                        },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Box(
+                            modifier = Modifier.padding(vertical = 10.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = label,
+                                style = MaterialTheme.typography.labelLarge,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                color = when {
+                                    isSelected && isDarkTheme -> Color.White
+                                    isSelected -> MaterialTheme.colorScheme.primary
+                                    isDarkTheme -> Color.White.copy(alpha = 0.7f)
+                                    else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ColorSwatchRow(
+    title: String,
+    argb: Int,
+    onClick: () -> Unit,
+    isDarkTheme: Boolean
+) {
+    Surface(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(28.dp),
+        color = if (isDarkTheme)
+            Color.White.copy(alpha = 0.05f)
+        else
+            MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(32.dp)
+                    .clip(CircleShape)
+                    .background(Color(argb))
+                    .border(1.dp, Color.White.copy(alpha = 0.3f), CircleShape)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Medium,
+                    color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = String.format("#%06X", argb and 0x00FFFFFF),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (isDarkTheme)
+                        Color.White.copy(alpha = 0.5f)
+                    else
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    }
+}
+
 private suspend fun applyClockChangesAndRestart(
     context: android.content.Context,
-    clockPosition: Int,
+    config: ClockConfig,
     onSuccess: () -> Unit,
     onFailure: () -> Unit
 ) {
+    val clockPosition = config.style
     try {
-        android.provider.Settings.Secure.putInt(
-            context.contentResolver,
-            "clock_style",
-            clockPosition
-        )
-        android.provider.Settings.Secure.putInt(
-            context.contentResolver,
-            "lock_screen_custom_clock_face",
-            0
-        )
-        
-        if (!ClockConfig.supportsFontCustomization(clockPosition)) {
-            android.provider.Settings.Secure.putString(
-                context.contentResolver,
-                "lock_screen_clock_font_package",
-                null
-            )
-        }
-
-        if (!ClockConfig.supportsCustomization(clockPosition)) {
-            android.provider.Settings.System.putInt(
-                context.contentResolver,
-                "lockscreen_widgets_enabled",
-                0
-            )
-            android.provider.Settings.System.putInt(
-                context.contentResolver,
-                "lockscreen_weather_enabled",
-                0
-            )
-            android.provider.Settings.System.putInt(
-                context.contentResolver,
-                "keyguard_now_bar_enabled",
-                0
-            )
-            android.provider.Settings.Secure.putInt(
-                context.contentResolver,
-                "peek_display_notifications",
-                0
-            )
-        }
+        config.save(context)
 
         val themeUtils = ThemeUtils.getInstance(context)
-        val mCenterClocks = intArrayOf(2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27)
-        
-        themeUtils.setOverlayEnabled(
-            "android.theme.customization.hideclock",
-            if (clockPosition != 0) "com.android.systemui.clocks.hideclock" else "android",
-            "android"
-        )
+
         themeUtils.setOverlayEnabled(
             "android.theme.customization.smartspace",
             if (clockPosition != 0) "com.android.systemui.hide.smartspace" else "com.android.systemui",
-            "com.android.systemui"
-        )
-        themeUtils.setOverlayEnabled(
-            "android.theme.customization.smartspace_offset",
-            if (clockPosition != 0 && mCenterClocks.contains(clockPosition))
-                "com.android.systemui.smartspace_offset.smartspace"
-            else
-                "com.android.systemui",
             "com.android.systemui"
         )
         

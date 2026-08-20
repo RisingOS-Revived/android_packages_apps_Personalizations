@@ -50,7 +50,7 @@ class AODSettings : OptimizedSettingsFragment() {
         mCustomImagePreference = findCachedPreference(CUSTOM_IMAGE_REQUEST_CODE_KEY)!!
         val context = getSafeContext()
         val clockStyle = context?.let { ctx ->
-            Settings.Secure.getIntForUser(ctx.contentResolver, "clock_style", 0, UserHandle.USER_CURRENT) 
+            Settings.Secure.getIntForUser(ctx.contentResolver, "lock_screen_custom_clock_style", 0, UserHandle.USER_CURRENT) 
         } ?: 0
         val imagePath = Settings.System.getString(context?.contentResolver, "custom_aod_image_uri")
         if (imagePath != null && clockStyle.compareTo(0) > 0) {

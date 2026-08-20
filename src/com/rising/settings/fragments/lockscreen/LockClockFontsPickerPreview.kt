@@ -130,10 +130,10 @@ class LockClockFontsPickerPreview : OptimizedSettingsFragment() {
         viewPager = rootView.findViewById(R.id.view_pager)
         pagerAdapter = ClockPagerAdapter()
         viewPager.adapter = pagerAdapter
-        mClockPosition = Settings.Secure.getIntForUser(context?.contentResolver, "clock_style", 0, UserHandle.USER_CURRENT)
+        mClockPosition = Settings.Secure.getIntForUser(context?.contentResolver, "lock_screen_custom_clock_style", 0, UserHandle.USER_CURRENT)
         if (mClockPosition < 0 || mClockPosition >= CLOCK_LAYOUTS.size) {
             mClockPosition = 0
-            Settings.Secure.putIntForUser(context?.contentResolver, "clock_style", 0, UserHandle.USER_CURRENT)
+            Settings.Secure.putIntForUser(context?.contentResolver, "lock_screen_custom_clock_style", 0, UserHandle.USER_CURRENT)
         }
         viewPager.currentItem = mClockPosition
 
@@ -286,7 +286,7 @@ class LockClockFontsPickerPreview : OptimizedSettingsFragment() {
                 }
 
                 Settings.Secure.putIntForUser(context?.contentResolver,
-                    "clock_style", mClockPosition, UserHandle.USER_CURRENT)
+                    "lock_screen_custom_clock_style", mClockPosition, UserHandle.USER_CURRENT)
                 Settings.Secure.putIntForUser(context?.contentResolver,
                     "lock_screen_custom_clock_face", 0, UserHandle.USER_CURRENT)
 
@@ -361,10 +361,6 @@ class LockClockFontsPickerPreview : OptimizedSettingsFragment() {
     }
 
     private fun updateClockOverlays(clockStyle: Int) {
-        mThemeUtils?.setOverlayEnabled(
-            "android.theme.customization.hideclock",
-            if (clockStyle != 0) "com.android.systemui.clocks.hideclock" else "android",
-            "android")
         mThemeUtils?.setOverlayEnabled(
             "android.theme.customization.smartspace",
             if (clockStyle != 0) "com.android.systemui.hide.smartspace" else "com.android.systemui",

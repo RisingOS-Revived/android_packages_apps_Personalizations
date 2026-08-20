@@ -20,6 +20,7 @@ import android.provider.Settings
 import android.widget.Toast
 import android.os.Handler
 import android.os.Looper
+import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.*
@@ -28,6 +29,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.font.*
@@ -35,112 +37,97 @@ import androidx.compose.ui.unit.*
 import com.android.settings.utils.SystemRestartUtils
 import kotlinx.coroutines.launch
 
-data class NowBarConfig(
+data class NowPlayingConfig(
     val enabled: Boolean = false,
-    val marginBottom: Int = 18
+    val iconStyle: Int = 0,
+    val iconSize: Int = 24,
+    val lyricsMode: Boolean = false,
+    val compactStyle: Boolean = false,
+    val tapToExpand: Boolean = true,
+    val colorMode: Int = 0,
+    val verticalPosition: Int = 88,
+    val trackTextSize: Int = 14,
+    val artistTextSize: Int = 12,
+    val showOnLockscreen: Boolean = true,
+    val showOnAod: Boolean = true
 ) {
     companion object {
-        fun load(context: Context): NowBarConfig {
-            val enabled = Settings.System.getInt(
-                context.contentResolver,
-                "keyguard_now_bar_enabled",
-                0
-            ) == 1
-            val marginBottom = Settings.System.getInt(
-                context.contentResolver,
-                "nowbar_margin_bottom",
-                18
+        fun load(context: Context): NowPlayingConfig {
+            val resolver = context.contentResolver
+            return NowPlayingConfig(
+                enabled = Settings.System.getInt(resolver, "nowplaying_enabled", 0) == 1,
+                iconStyle = Settings.System.getInt(resolver, "nowplaying_icon_style", 0),
+                iconSize = Settings.System.getInt(resolver, "nowplaying_icon_size", 24),
+                lyricsMode = Settings.System.getInt(resolver, "nowplaying_lyrics_mode", 0) == 1,
+                compactStyle = Settings.System.getInt(resolver, "nowplaying_use_compact_style", 0) == 1,
+                tapToExpand = Settings.System.getInt(resolver, "nowplaying_tap_to_expand", 1) == 1,
+                colorMode = Settings.System.getInt(resolver, "nowplaying_color_mode", 0),
+                verticalPosition = Settings.System.getInt(resolver, "nowplaying_vertical_position", 88),
+                trackTextSize = Settings.System.getInt(resolver, "nowplaying_track_text_size", 14),
+                artistTextSize = Settings.System.getInt(resolver, "nowplaying_artist_text_size", 12),
+                showOnLockscreen = Settings.System.getInt(resolver, "nowplaying_show_on_lockscreen", 1) == 1,
+                showOnAod = Settings.System.getInt(resolver, "nowplaying_show_on_aod", 1) == 1
             )
-            return NowBarConfig(enabled, marginBottom)
         }
     }
     
     fun save(context: Context) {
-        Settings.System.putInt(
-            context.contentResolver,
-            "keyguard_now_bar_enabled",
-            if (enabled) 1 else 0
-        )
-        Settings.System.putInt(
-            context.contentResolver,
-            "nowbar_margin_bottom",
-            marginBottom
-        )
+        val resolver = context.contentResolver
+        Settings.System.putInt(resolver, "nowplaying_enabled", if (enabled) 1 else 0)
+        Settings.System.putInt(resolver, "nowplaying_icon_style", iconStyle)
+        Settings.System.putInt(resolver, "nowplaying_icon_size", iconSize)
+        Settings.System.putInt(resolver, "nowplaying_lyrics_mode", if (lyricsMode) 1 else 0)
+        Settings.System.putInt(resolver, "nowplaying_use_compact_style", if (compactStyle) 1 else 0)
+        Settings.System.putInt(resolver, "nowplaying_tap_to_expand", if (tapToExpand) 1 else 0)
+        Settings.System.putInt(resolver, "nowplaying_color_mode", colorMode)
+        Settings.System.putInt(resolver, "nowplaying_vertical_position", verticalPosition)
+        Settings.System.putInt(resolver, "nowplaying_track_text_size", trackTextSize)
+        Settings.System.putInt(resolver, "nowplaying_artist_text_size", artistTextSize)
+        Settings.System.putInt(resolver, "nowplaying_show_on_lockscreen", if (showOnLockscreen) 1 else 0)
+        Settings.System.putInt(resolver, "nowplaying_show_on_aod", if (showOnAod) 1 else 0)
     }
 }
 
 @Composable
-fun NowBarConfigContent(
-    config: NowBarConfig,
-    onUpdate: (NowBarConfig) -> Unit,
+fun NowPlayingConfigContent(
+    config: NowPlayingConfig,
+    onUpdate: (NowPlayingConfig) -> Unit,
     isDarkTheme: Boolean,
     currentClockStyle: Int
 ) {
-    val supportsCustomization = ClockConfig.supportsCustomization(currentClockStyle)
+    val iconStyleOptions = listOf("Disabled", "App icon", "Music note icon")
+    val colorModeOptions = listOf("White", "Accent color", "Album art")
 
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Now Bar",
+            text = "Now Playing",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
         )
         Text(
-            text = "Quick info bar at the bottom",
+            text = "Customize lockscreen music recognition",
             style = MaterialTheme.typography.bodyMedium,
             color = if (isDarkTheme) 
                 Color.White.copy(alpha = 0.7f) 
             else 
                 MaterialTheme.colorScheme.onSurfaceVariant
         )
-        if (!supportsCustomization) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                color = if (isDarkTheme)
-                    Color(0xFFFFA500).copy(alpha = 0.15f)
-                else
-                    Color(0xFFFFA500).copy(alpha = 0.1f)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Warning,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                        tint = Color(0xFFFFA500)
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Text(
-                        text = "Not supported by current clock style. Will be disabled when you apply.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = if (isDarkTheme)
-                            Color.White.copy(alpha = 0.8f)
-                        else
-                            MaterialTheme.colorScheme.onSurface
-                    )
-                }
-            }
-        }
 
         ConfigCard(
-            title = "Enable Now Bar",
+            title = "Enable Now Playing",
             subtitle = if (config.enabled) "Active" else "Disabled",
             icon = Icons.Default.ViewCarousel,
-            enabled = config.enabled && supportsCustomization,
+            enabled = config.enabled,
             isDarkTheme = isDarkTheme
         ) {
             Switch(
                 checked = config.enabled,
                 onCheckedChange = { onUpdate(config.copy(enabled = it)) },
-                enabled = supportsCustomization,
+                enabled = true,
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onPrimary,
                     checkedTrackColor = if (isDarkTheme) Color.White.copy(alpha = 0.3f) else MaterialTheme.colorScheme.primary,
@@ -150,309 +137,235 @@ fun NowBarConfigContent(
             )
         }
         
-        if (config.enabled && supportsCustomization) {
+        if (config.enabled) {
+            OptionCard(
+                title = "Icon Style",
+                value = iconStyleOptions.getOrElse(config.iconStyle) { iconStyleOptions.first() },
+                options = iconStyleOptions,
+                selectedIndex = config.iconStyle.coerceIn(iconStyleOptions.indices),
+                onSelected = { onUpdate(config.copy(iconStyle = it)) },
+                isDarkTheme = isDarkTheme
+            )
+
             SliderCard(
-                title = "Bottom Margin",
-                value = config.marginBottom,
-                valueRange = 0f..210f,
+                title = "Icon Size",
+                value = config.iconSize,
+                valueRange = 5f..40f,
                 unit = "dp",
-                onValueChange = { onUpdate(config.copy(marginBottom = it)) },
+                onValueChange = { onUpdate(config.copy(iconSize = it)) },
+                isDarkTheme = isDarkTheme
+            )
+
+            NowPlayingSwitchCard(
+                title = "Lyrics Mode",
+                subtitle = if (config.lyricsMode) "Enabled" else "Disabled",
+                checked = config.lyricsMode,
+                onCheckedChange = { onUpdate(config.copy(lyricsMode = it)) },
+                isDarkTheme = isDarkTheme
+            )
+
+            NowPlayingSwitchCard(
+                title = "Compact Style",
+                subtitle = if (config.compactStyle) "Enabled" else "Disabled",
+                checked = config.compactStyle,
+                onCheckedChange = { onUpdate(config.copy(compactStyle = it)) },
+                isDarkTheme = isDarkTheme
+            )
+
+            NowPlayingSwitchCard(
+                title = "Tap To Expand",
+                subtitle = if (config.tapToExpand) "Enabled" else "Disabled",
+                checked = config.tapToExpand,
+                onCheckedChange = { onUpdate(config.copy(tapToExpand = it)) },
+                isDarkTheme = isDarkTheme
+            )
+
+            OptionCard(
+                title = "Color Mode",
+                value = colorModeOptions.getOrElse(config.colorMode) { colorModeOptions.first() },
+                options = colorModeOptions,
+                selectedIndex = config.colorMode.coerceIn(colorModeOptions.indices),
+                onSelected = { onUpdate(config.copy(colorMode = it)) },
+                isDarkTheme = isDarkTheme
+            )
+
+            SliderCard(
+                title = "Vertical Position",
+                value = config.verticalPosition,
+                valueRange = 10f..100f,
+                unit = "%",
+                onValueChange = { onUpdate(config.copy(verticalPosition = it)) },
+                isDarkTheme = isDarkTheme
+            )
+
+            SliderCard(
+                title = "Track Text Size",
+                value = config.trackTextSize,
+                valueRange = 8f..24f,
+                unit = "sp",
+                onValueChange = { onUpdate(config.copy(trackTextSize = it)) },
+                isDarkTheme = isDarkTheme
+            )
+
+            if (!config.compactStyle) {
+                SliderCard(
+                    title = "Artist Text Size",
+                    value = config.artistTextSize,
+                    valueRange = 5f..20f,
+                    unit = "sp",
+                    onValueChange = { onUpdate(config.copy(artistTextSize = it)) },
+                    isDarkTheme = isDarkTheme
+                )
+            }
+
+            Text(
+                text = "Display",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
+            )
+
+            NowPlayingSwitchCard(
+                title = "Show On Lockscreen",
+                subtitle = if (config.showOnLockscreen) "Visible" else "Hidden",
+                checked = config.showOnLockscreen,
+                onCheckedChange = { onUpdate(config.copy(showOnLockscreen = it)) },
+                isDarkTheme = isDarkTheme
+            )
+
+            NowPlayingSwitchCard(
+                title = "Show On AOD",
+                subtitle = if (config.showOnAod) "Visible" else "Hidden",
+                checked = config.showOnAod,
+                onCheckedChange = { onUpdate(config.copy(showOnAod = it)) },
                 isDarkTheme = isDarkTheme
             )
         }
     }
 }
 
-data class PeekDisplayConfig(
-    val enabled: Boolean = false,
-    val style: Int = 0,
-    val location: Int = 0
+@Composable
+private fun NowPlayingSwitchCard(
+    title: String,
+    subtitle: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    isDarkTheme: Boolean
 ) {
-    companion object {
-        fun load(context: Context): PeekDisplayConfig {
-            return PeekDisplayConfig(
-                enabled = Settings.Secure.getInt(
-                    context.contentResolver,
-                    "peek_display_notifications",
-                    0
-                ) == 1,
-                style = Settings.Secure.getInt(
-                    context.contentResolver,
-                    "peek_display_style",
-                    0
-                ),
-                location = Settings.Secure.getInt(
-                    context.contentResolver,
-                    "peek_display_location",
-                    0
-                ),
+    ConfigCard(
+        title = title,
+        subtitle = subtitle,
+        icon = Icons.Default.Settings,
+        enabled = checked,
+        isDarkTheme = isDarkTheme
+    ) {
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onPrimary,
+                checkedTrackColor = if (isDarkTheme) Color.White.copy(alpha = 0.3f) else MaterialTheme.colorScheme.primary
             )
-        }
-    }
-    
-    fun save(context: Context) {
-        Settings.Secure.putInt(
-            context.contentResolver,
-            "peek_display_notifications",
-            if (enabled) 1 else 0
-        )
-        Settings.Secure.putInt(
-            context.contentResolver,
-            "peek_display_style",
-            style
-        )
-        Settings.Secure.putInt(
-            context.contentResolver,
-            "peek_display_location",
-            location
         )
     }
 }
 
 @Composable
-fun PeekDisplayConfigContent(
-    config: PeekDisplayConfig,
-    onUpdate: (PeekDisplayConfig) -> Unit,
-    isDarkTheme: Boolean,
-    currentClockStyle: Int
+private fun OptionCard(
+    title: String,
+    value: String,
+    options: List<String>,
+    selectedIndex: Int,
+    onSelected: (Int) -> Unit,
+    isDarkTheme: Boolean
 ) {
-    val supportsCustomization = ClockConfig.supportsCustomization(currentClockStyle)
+    var expanded by remember { mutableStateOf(false) }
 
-    Column(
+    Surface(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        shape = RoundedCornerShape(28.dp),
+        color = if (isDarkTheme)
+            Color.White.copy(alpha = 0.05f)
+        else
+            MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)
     ) {
-        Text(
-            text = "Peek Display",
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold,
-            color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
-        )
-        
-        Text(
-            text = "Notification previews on lockscreen",
-            style = MaterialTheme.typography.bodyMedium,
-            color = if (isDarkTheme) 
-                Color.White.copy(alpha = 0.7f) 
-            else 
-                MaterialTheme.colorScheme.onSurfaceVariant
-        )
-
-        if (!supportsCustomization) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                color = if (isDarkTheme)
-                    Color(0xFFFFA500).copy(alpha = 0.15f)
-                else
-                    Color(0xFFFFA500).copy(alpha = 0.1f)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { expanded = !expanded },
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Warning,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                        tint = Color(0xFFFFA500)
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Not supported by current clock style. Will be disabled when you apply.",
+                        text = title,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Medium,
+                        color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = value,
                         style = MaterialTheme.typography.bodySmall,
                         color = if (isDarkTheme)
-                            Color.White.copy(alpha = 0.8f)
+                            Color.White.copy(alpha = 0.5f)
                         else
-                            MaterialTheme.colorScheme.onSurface
+                            MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-            }
-        }
-
-        ConfigCard(
-            title = "Enable Peek Display",
-            subtitle = if (config.enabled) "Active" else "Disabled",
-            icon = Icons.Default.NotificationsActive,
-            enabled = config.enabled && supportsCustomization,
-            isDarkTheme = isDarkTheme
-        ) {
-            Switch(
-                checked = config.enabled,
-                onCheckedChange = { onUpdate(config.copy(enabled = it)) },
-                enabled = supportsCustomization,
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onPrimary,
-                    checkedTrackColor = if (isDarkTheme) Color.White.copy(alpha = 0.3f) else MaterialTheme.colorScheme.primary,
-                    disabledCheckedThumbColor = if (isDarkTheme) Color.White.copy(alpha = 0.3f) else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
-                    disabledCheckedTrackColor = if (isDarkTheme) Color.White.copy(alpha = 0.1f) else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+                Icon(
+                    imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                    contentDescription = null,
+                    tint = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
                 )
-            )
-        }
-        
-        if (config.enabled && supportsCustomization) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(28.dp),
-                color = if (isDarkTheme)
-                    Color.White.copy(alpha = 0.05f)
-                else
-                    MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)
-            ) {
+            }
+
+            AnimatedVisibility(visible = expanded) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(20.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                        .padding(top = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Surface(
-                            shape = CircleShape,
-                            color = when {
-                                isDarkTheme -> Color.White.copy(alpha = 0.1f)
-                                else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-                            },
-                            modifier = Modifier.size(48.dp)
-                        ) {
-                            Box(
-                                contentAlignment = Alignment.Center,
-                                modifier = Modifier.fillMaxSize()
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Style,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(24.dp),
-                                    tint = if (isDarkTheme)
-                                        Color.White.copy(alpha = 0.8f)
-                                    else
-                                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    options.forEachIndexed { index, option ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(16.dp))
+                                .clickable {
+                                    onSelected(index)
+                                    expanded = false
+                                }
+                                .background(
+                                    if (index == selectedIndex) {
+                                        if (isDarkTheme)
+                                            Color.White.copy(alpha = 0.12f)
+                                        else
+                                            MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
+                                    } else {
+                                        Color.Transparent
+                                    }
                                 )
-                            }
-                        }
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Column(modifier = Modifier.weight(1f)) {
+                                .padding(horizontal = 12.dp, vertical = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Text(
-                                text = "Peek Display Style",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.Medium,
+                                text = option,
+                                modifier = Modifier.weight(1f),
+                                style = MaterialTheme.typography.bodyMedium,
                                 color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
                             )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = getStyleName(config.style),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = if (isDarkTheme)
-                                    Color.White.copy(alpha = 0.5f)
-                                else
-                                    MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                        var expandedStyle by remember { mutableStateOf(false) }
-                        Box {
-                            IconButton(onClick = { expandedStyle = true }) {
+                            if (index == selectedIndex) {
                                 Icon(
-                                    Icons.Default.ArrowDropDown,
-                                    "Select Style",
-                                    tint = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
-                                )
-                            }
-                            DropdownMenu(
-                                expanded = expandedStyle,
-                                onDismissRequest = { expandedStyle = false }
-                            ) {
-                                listOf("Default", "Minimal").forEachIndexed { index, style ->
-                                    DropdownMenuItem(
-                                        text = { Text(style) },
-                                        onClick = {
-                                            onUpdate(config.copy(style = index))
-                                            expandedStyle = false
-                                        }
-                                    )
-                                }
-                            }
-                        }
-                    }
-
-                    Divider(
-                        color = if (isDarkTheme)
-                            Color.White.copy(alpha = 0.1f)
-                        else
-                            MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
-                        modifier = Modifier.padding(horizontal = 48.dp)
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Surface(
-                            shape = CircleShape,
-                            color = when {
-                                isDarkTheme -> Color.White.copy(alpha = 0.1f)
-                                else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-                            },
-                            modifier = Modifier.size(48.dp)
-                        ) {
-                            Box(
-                                contentAlignment = Alignment.Center,
-                                modifier = Modifier.fillMaxSize()
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.LocationOn,
+                                    imageVector = Icons.Default.Check,
                                     contentDescription = null,
-                                    modifier = Modifier.size(24.dp),
-                                    tint = if (isDarkTheme)
-                                        Color.White.copy(alpha = 0.8f)
-                                    else
-                                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                                    modifier = Modifier.size(18.dp),
+                                    tint = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.primary
                                 )
-                            }
-                        }
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                text = "Peek display Location",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.Medium,
-                                color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = if (config.location == 0) "Top" else "Bottom",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = if (isDarkTheme)
-                                    Color.White.copy(alpha = 0.5f)
-                                else
-                                    MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                        var expandedLocation by remember { mutableStateOf(false) }
-                        Box {
-                            IconButton(onClick = { expandedLocation = true }) {
-                                Icon(
-                                    Icons.Default.ArrowDropDown,
-                                    "Select Location",
-                                    tint = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
-                                )
-                            }
-                            DropdownMenu(
-                                expanded = expandedLocation,
-                                onDismissRequest = { expandedLocation = false }
-                            ) {
-                                listOf("Top", "Bottom").forEachIndexed { index, location ->
-                                    DropdownMenuItem(
-                                        text = { Text(location) },
-                                        onClick = {
-                                            onUpdate(config.copy(location = index))
-                                            expandedLocation = false
-                                        }
-                                    )
-                                }
                             }
                         }
                     }
@@ -517,7 +430,6 @@ fun WeatherConfigContent(
     currentClockStyle: Int
 ) {
     val context = LocalContext.current
-    val supportsCustomization = ClockConfig.supportsCustomization(currentClockStyle)
     
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -539,45 +451,12 @@ fun WeatherConfigContent(
                 MaterialTheme.colorScheme.onSurfaceVariant
         )
         
-        if (!supportsCustomization) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                color = if (isDarkTheme)
-                    Color(0xFFFFA500).copy(alpha = 0.15f)
-                else
-                    Color(0xFFFFA500).copy(alpha = 0.1f)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Warning,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                        tint = Color(0xFFFFA500)
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Text(
-                        text = "Not supported by current clock style. Will be disabled when you apply.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = if (isDarkTheme)
-                            Color.White.copy(alpha = 0.8f)
-                        else
-                            MaterialTheme.colorScheme.onSurface
-                    )
-                }
-            }
-        }
 
         ConfigCard(
             title = "Enable Weather",
             subtitle = if (config.enabled) "Active" else "Disabled",
             icon = Icons.Default.Cloud,
-            enabled = config.enabled && supportsCustomization,
+            enabled = config.enabled,
             isDarkTheme = isDarkTheme
         ) {
             Switch(
@@ -589,7 +468,7 @@ fun WeatherConfigContent(
                         updateWeatherPreview(view, newConfig)
                     }
                 },
-                enabled = supportsCustomization,
+                enabled = true,
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onPrimary,
                     checkedTrackColor = if (isDarkTheme) Color.White.copy(alpha = 0.3f) else MaterialTheme.colorScheme.primary,
@@ -599,7 +478,7 @@ fun WeatherConfigContent(
             )
         }
         
-        if (config.enabled && supportsCustomization) {
+        if (config.enabled) {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(28.dp),
@@ -896,7 +775,6 @@ fun WidgetConfigContent(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val available = WidgetsList().filter { it !in widgetItems.map { widget -> widget.name } }
-    val supportsCustomization = ClockConfig.supportsCustomization(currentClockStyle)
 
     var pendingWidgets by remember(widgetItems) { mutableStateOf(widgetItems) }
     var isApplying by remember { mutableStateOf(false) }
@@ -970,39 +848,6 @@ fun WidgetConfigContent(
                 MaterialTheme.colorScheme.onSurfaceVariant
         )
         
-        if (!supportsCustomization) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                color = if (isDarkTheme)
-                    Color(0xFFFFA500).copy(alpha = 0.15f)
-                else
-                    Color(0xFFFFA500).copy(alpha = 0.1f)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Warning,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                        tint = Color(0xFFFFA500)
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Text(
-                        text = "Not supported by current clock style. Will be disabled when you apply.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = if (isDarkTheme)
-                            Color.White.copy(alpha = 0.8f)
-                        else
-                            MaterialTheme.colorScheme.onSurface
-                    )
-                }
-            }
-        }
         
         Surface(
             modifier = Modifier.fillMaxWidth(),
@@ -1093,7 +938,7 @@ fun WidgetConfigContent(
                                     pendingWidgets = pendingWidgets.filter { it != widget }
                                 },
                                 isDarkTheme = isDarkTheme,
-                                enabled = supportsCustomization
+                                enabled = true
                             )
                         }
                     }
@@ -1152,7 +997,7 @@ fun WidgetConfigContent(
                                     pendingWidgets = pendingWidgets.filter { it != widget }
                                 },
                                 isDarkTheme = isDarkTheme,
-                                enabled = supportsCustomization
+                                enabled = true
                             )
                         }
                     }
@@ -1203,9 +1048,8 @@ fun WidgetConfigContent(
         
         var showWidgetPicker by remember { mutableStateOf(false) }
         
-        val buttonEnabled = available.isNotEmpty() && supportsCustomization && (canAddBig || canAddSmall)
+        val buttonEnabled = available.isNotEmpty() && (canAddBig || canAddSmall)
         val buttonText = when {
-            !supportsCustomization -> "Not Supported by Clock"
             available.isEmpty() -> "All Widgets Added"
             !canAddBig && !canAddSmall -> "Both Rows Full"
             !canAddBig -> "Row 1 Full (Row 2 Available)"
@@ -1555,13 +1399,5 @@ fun SliderCard(
                 )
             )
         }
-    }
-}
-
-private fun getStyleName(style: Int): String {
-    return when (style) {
-        0 -> "Default"
-        1 -> "Minimal"
-        else -> "Unknown"
     }
 }

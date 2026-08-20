@@ -159,7 +159,7 @@ class LockScreen : OptimizedSettingsFragment() {
             if (lockHighlightPref != null && context != null) {
                 val lockHighlightClickMap = mapOf(
                     R.id.lockscreen_widgets_tile to "PersonalizationsWidgetsActivity",
-                    R.id.peek_display_tile to "com.rising.settings.fragments.lockscreen.LockscreenCustomizerActivity",
+                    R.id.now_playing_tile to "com.rising.settings.fragments.lockscreen.LockscreenCustomizerActivity",
                     R.id.aod_tile to "PersonalizationsAODActivity",
                     R.id.dw_tile to "PersonalizationsDWActivity"
                 )

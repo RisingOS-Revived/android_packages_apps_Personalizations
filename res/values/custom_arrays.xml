@@ -276,14 +276,12 @@
         <item>@string/settings_dashboard_style_1</item>
         <item>@string/settings_dashboard_style_2</item>
         <item>@string/settings_dashboard_style_3</item>
-        <item>@string/settings_dashboard_style_4</item>
     </string-array>
 
     <string-array name="settings_dashboard_style_values" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
-        <item>3</item>
     </string-array>
 
     <!-- Hide NavBar space  -->
@@ -478,6 +476,8 @@
         <item>@string/lockscreen_widgets_style2</item>
         <item>@string/lockscreen_widgets_style3</item>
         <item>@string/lockscreen_widgets_style4</item>
+        <item>@string/lockscreen_widgets_style5</item>
+        <item>@string/lockscreen_widgets_style6</item>
     </string-array>
 
     <string-array name="lockscreen_widgets_style_values" translatable="false">
@@ -485,6 +485,8 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 
     <!-- Wallpaper Blur  -->

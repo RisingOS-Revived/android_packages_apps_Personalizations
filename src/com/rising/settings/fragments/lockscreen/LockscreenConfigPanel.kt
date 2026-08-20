@@ -39,8 +39,7 @@ import androidx.compose.ui.unit.*
 enum class CustomizerTab {
     CLOCK,
     WIDGETS,
-    NOWBAR,
-    PEEK_DISPLAY,
+    NOWPLAYING,
     WEATHER
 }
 
@@ -51,15 +50,13 @@ fun LockscreenConfigPanel(
     onTabChange: (CustomizerTab) -> Unit,
     widgetItems: List<WidgetItem>,
     clockConfig: ClockConfig,
-    nowBarConfig: NowBarConfig,
-    peekConfig: PeekDisplayConfig,
+    nowPlayingConfig: NowPlayingConfig,
     weatherConfig: WeatherConfig,
     currentPagerPage: Int,
     weatherTextView: DummyWeatherTextView? = null,
     onWidgetUpdate: (List<WidgetItem>) -> Unit,
     onClockUpdate: (ClockConfig) -> Unit,
-    onNowBarUpdate: (NowBarConfig) -> Unit,
-    onPeekUpdate: (PeekDisplayConfig) -> Unit,
+    onNowPlayingUpdate: (NowPlayingConfig) -> Unit,
     onWeatherUpdate: (WeatherConfig) -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -167,15 +164,9 @@ fun LockscreenConfigPanel(
                                 isDarkTheme = isDarkTheme,
                                 currentClockStyle = currentPagerPage
                             )
-                            CustomizerTab.NOWBAR -> NowBarConfigContent(
-                                config = nowBarConfig,
-                                onUpdate = onNowBarUpdate,
-                                isDarkTheme = isDarkTheme,
-                                currentClockStyle = currentPagerPage
-                            )
-                            CustomizerTab.PEEK_DISPLAY -> PeekDisplayConfigContent(
-                                config = peekConfig,
-                                onUpdate = onPeekUpdate,
+                            CustomizerTab.NOWPLAYING -> NowPlayingConfigContent(
+                                config = nowPlayingConfig,
+                                onUpdate = onNowPlayingUpdate,
                                 isDarkTheme = isDarkTheme,
                                 currentClockStyle = currentPagerPage
                             )
@@ -257,8 +248,7 @@ private fun CustomizerTab.displayName(): String {
     return when (this) {
         CustomizerTab.CLOCK -> "Clock"
         CustomizerTab.WIDGETS -> "Widgets"
-        CustomizerTab.NOWBAR -> "Now Bar"
-        CustomizerTab.PEEK_DISPLAY -> "Peek"
+        CustomizerTab.NOWPLAYING -> "Now Playing"
         CustomizerTab.WEATHER -> "Weather"
     }
 }
@@ -268,8 +258,7 @@ private fun CustomizerTab.icon(): androidx.compose.ui.graphics.vector.ImageVecto
     return when (this) {
         CustomizerTab.CLOCK -> Icons.Default.Schedule
         CustomizerTab.WIDGETS -> Icons.Default.Widgets
-        CustomizerTab.NOWBAR -> Icons.Default.ViewCarousel
-        CustomizerTab.PEEK_DISPLAY -> Icons.Default.NotificationsActive
+        CustomizerTab.NOWPLAYING -> Icons.Default.Album
         CustomizerTab.WEATHER -> Icons.Default.Cloud
     }
 }

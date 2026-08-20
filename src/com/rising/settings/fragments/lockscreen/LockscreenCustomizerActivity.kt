@@ -82,8 +82,7 @@ fun LockscreenCustomizer() {
     var widgetItems by remember { mutableStateOf(load(context)) }
     
     var clockConfig by remember { mutableStateOf(ClockConfig.load(context)) }
-    var nowBarConfig by remember { mutableStateOf(NowBarConfig.load(context)) }
-    var peekConfig by remember { mutableStateOf(PeekDisplayConfig.load(context)) }
+    var nowPlayingConfig by remember { mutableStateOf(NowPlayingConfig.load(context)) }
     var weatherConfig by remember { mutableStateOf(WeatherConfig.load(context)) }
     var weatherTextViewRef by remember { mutableStateOf<DummyWeatherTextView?>(null) }
     
@@ -297,38 +296,8 @@ fun LockscreenCustomizer() {
 
             Spacer(modifier = Modifier.weight(1f))
 
-            if (peekConfig.enabled) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .border(
-                                2.dp,
-                                Color.White.copy(alpha = 0.5f),
-                                RoundedCornerShape(24.dp)
-                            )
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) {
-                                selectedTab = CustomizerTab.PEEK_DISPLAY
-                                showConfigPanel = true
-                            }
-                    ) {
-                        Box(modifier = Modifier.padding(12.dp)) {
-                            PeekDisplayPreview(peekConfig)
-                        }
-                    }
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-            
-            if (nowBarConfig.enabled) {
-                Spacer(modifier = Modifier.height(nowBarConfig.marginBottom.dp))
+            if (nowPlayingConfig.enabled && nowPlayingConfig.showOnLockscreen) {
+                Spacer(modifier = Modifier.height(12.dp))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -348,7 +317,7 @@ fun LockscreenCustomizer() {
                                 indication = null,
                                 interactionSource = remember { MutableInteractionSource() }
                             ) {
-                                selectedTab = CustomizerTab.NOWBAR
+                                selectedTab = CustomizerTab.NOWPLAYING
                                 showConfigPanel = true
                             }
                     ) {
@@ -357,7 +326,7 @@ fun LockscreenCustomizer() {
                                 .padding(8.dp)
                                 .wrapContentHeight()
                         ) {
-                            NowBarPreview(nowBarConfig)
+                            NowPlayingPreview(nowPlayingConfig)
                         }
                     }
                 }
@@ -457,8 +426,7 @@ fun LockscreenCustomizer() {
             onTabChange = { selectedTab = it },
             widgetItems = widgetItems,
             clockConfig = clockConfig,
-            nowBarConfig = nowBarConfig,
-            peekConfig = peekConfig,
+            nowPlayingConfig = nowPlayingConfig,
             weatherConfig = weatherConfig,
             currentPagerPage = pagerState.currentPage,
             weatherTextView = weatherTextViewRef,
@@ -472,12 +440,8 @@ fun LockscreenCustomizer() {
                     pagerState.animateScrollToPage(config.style)
                 }
             },
-            onNowBarUpdate = { config ->
-                nowBarConfig = config
-                config.save(context)
-            },
-            onPeekUpdate = { config ->
-                peekConfig = config
+            onNowPlayingUpdate = { config ->
+                nowPlayingConfig = config
                 config.save(context)
             },
             onWeatherUpdate = { config ->
@@ -498,7 +462,7 @@ private suspend fun applyChangesAndRestart(
     try {
         android.provider.Settings.Secure.putInt(
             context.contentResolver,
-            "clock_style",
+            "lock_screen_custom_clock_style",
             clockPosition
         )
         android.provider.Settings.Secure.putInt(
@@ -507,56 +471,11 @@ private suspend fun applyChangesAndRestart(
             0
         )
         
-        if (!ClockConfig.supportsFontCustomization(clockPosition)) {
-            android.provider.Settings.Secure.putString(
-                context.contentResolver,
-                "lock_screen_clock_font_package",
-                null
-            )
-        }
-
-        if (!ClockConfig.supportsCustomization(clockPosition)) {
-            android.provider.Settings.System.putInt(
-                context.contentResolver,
-                "lockscreen_widgets_enabled",
-                0
-            )
-            android.provider.Settings.System.putInt(
-                context.contentResolver,
-                "lockscreen_weather_enabled",
-                0
-            )
-            android.provider.Settings.System.putInt(
-                context.contentResolver,
-                "keyguard_now_bar_enabled",
-                0
-            )
-            android.provider.Settings.Secure.putInt(
-                context.contentResolver,
-                "peek_display_notifications",
-                0
-            )
-        }
-
         val themeUtils = ThemeUtils.getInstance(context)
-        val mCenterClocks = intArrayOf(2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27)
         
-        themeUtils.setOverlayEnabled(
-            "android.theme.customization.hideclock",
-            if (clockPosition != 0) "com.android.systemui.clocks.hideclock" else "android",
-            "android"
-        )
         themeUtils.setOverlayEnabled(
             "android.theme.customization.smartspace",
             if (clockPosition != 0) "com.android.systemui.hide.smartspace" else "com.android.systemui",
-            "com.android.systemui"
-        )
-        themeUtils.setOverlayEnabled(
-            "android.theme.customization.smartspace_offset",
-            if (clockPosition != 0 && mCenterClocks.contains(clockPosition))
-                "com.android.systemui.smartspace_offset.smartspace"
-            else
-                "com.android.systemui",
             "com.android.systemui"
         )
         
