@@ -15,6 +15,27 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Uses the legacy UDFPS enrollment UI with side text instead of a footer button. -->
+    <bool name="config_useLegacyUdfpsUi" translatable="false">false</bool>
+
+    <!-- Whether or not to use traffic light enroll -->
+    <bool name="config_face_enroll_use_traffic_light">false</bool>
+
+    <!-- Traffic light package to use -->
+    <string name="config_face_enroll_traffic_light_package"></string>
+
+    <!-- Battery Info: mAh divider
+         Some devices with prebuilt kernels report battery capacity in different units.
+         This value is used to convert from microampere-hours (uAh) to milliampere-hours (mAh).
+         Default: 1000 (converts uAh to mAh)
+         Example: If device reports 4000uAh instead of 4000mAh, set this to 1 -->
+    <integer name="config_battery_divider" translatable="false">1000</integer>
+
+    <!-- Whether to show vendor security patch level -->
+    <bool name="config_show_vendor_patch_level" translatable="false">true</bool>
+
+    <!-- Whether to show the search box in the Setup Wizard locale picker. -->
+    <bool name="config_show_setuplocalepicker_region_searchbox">true</bool>
 
     <!-- List of system apps that are allowed to configure per-app settings -->
     <string-array name="config_perAppConfAllowedSystemApps" translatable="false">

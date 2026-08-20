@@ -15,6 +15,12 @@
      limitations under the License.
 -->
 <resources>
+    <dimen name="fingerprint_side_skip_margin">24dp</dimen>
+
+    <!-- Expressive QR -->
+    <dimen name="wifi_sharing_qrcode_fragment_margin_size">23dp</dimen>
+    <dimen name="wifi_sharing_qrcode_fragment_size">264dp</dimen>
+
     <!-- Launcher card dimensions -->
     <dimen name="launcher_card_stroke_selected">4dp</dimen>
     <dimen name="launcher_card_elevation">2dp</dimen>

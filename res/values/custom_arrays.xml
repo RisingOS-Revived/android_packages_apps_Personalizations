@@ -15,6 +15,38 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Locale Picker -->
+    <array name="global_locales">
+        <item>en</item>
+        <item>de</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>it</item>
+        <item>pt</item>
+        <item>hi</item>
+        <item>ja</item>
+        <item>zh-Hans</item>
+        <item>zh-Hant</item>
+    </array>
+
+    <array name="japan_locales">
+        <item>ja</item>
+    </array>
+
+    <array name="tts_locales">
+        <item>en</item>
+        <item>de</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>it</item>
+        <item>ja</item>
+    </array>
+
+    <array name="united_states_locales">
+        <item>en-US</item>
+        <item>es-US</item>
+    </array>
+
     <!-- Apps excluded from the Tensor targets picker -->
     <string-array name="tensor_targets_hidden_apps" translatable="false">
         <item>android</item>

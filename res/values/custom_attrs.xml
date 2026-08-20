@@ -15,6 +15,20 @@
      limitations under the License.
 -->
 <resources>
+    <!-- Base attributes available to DeviceConfigSwitchPreference. -->
+    <declare-styleable name="DeviceConfigSwitchPreference">
+        <attr name="deviceConfigNamespace" format="string" />
+        <attr name="deviceConfigFlag" format="string" />
+        <attr name="deviceConfigDefault" format="boolean" />
+    </declare-styleable>
+
+    <!-- Interval seekbar -->
+    <declare-styleable name="IntervalSeekBar">
+        <attr name="minI" format="float" />
+        <attr name="maxI" format="float" />
+        <attr name="defaultValuePure" format="float" />
+        <attr name="digits" format="integer" />
+    </declare-styleable>
 
     <declare-styleable name="PagerSlidingTabStrip">
         <attr name="pstsIndicatorColor" format="color" />

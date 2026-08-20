@@ -15,6 +15,11 @@
      limitations under the License.
 -->
 <resources>
+    <style name="Theme.Settings.LocalePicker" parent="@style/Theme.Settings">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:clipChildren">true</item>
+        <item name="android:clipToPadding">true</item>
+    </style>
 
     <style name="OptionTitleTextAppearance" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
         <item name="android:textAlignment">center</item>
