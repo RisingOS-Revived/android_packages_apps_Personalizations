@@ -4,6 +4,12 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- App Lock -->
+    <plurals name="app_lock_summary_count">
+        <item quantity="one">1 app locked</item>
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> apps locked</item>
+    </plurals>
+
     <plurals name="ts_added_installed_count">
         <item quantity="one">Added %d app to targets</item>
         <item quantity="other">Added %d apps to targets</item>
