@@ -526,6 +526,9 @@
     <string name="status_bar_logo_use_custom_color_summary">Enable Status bar logo custom color</string>
     <string name="status_bar_logo_custom_color_title">Status bar logo custom color</string>
     <string name="status_bar_logo_custom_color_summary">Set status bar logo custom color</string>
+    <string name="status_bar_logo_color_default">Default (White)</string>
+    <string name="status_bar_logo_color_accent">Accent</string>
+    <string name="status_bar_logo_color_custom">Custom</string>
 
     <!-- Statusbar lyric -->
     <string name="status_bar_lyric_title">Status bar lyric</string>
