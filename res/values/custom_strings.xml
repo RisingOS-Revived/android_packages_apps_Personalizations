@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Screenshot Flash -->
+    <string name="screenshot_flash_title">Show screenshot flash</string>
+    <string name="screenshot_flash_summary">Briefly flash the screen when a screenshot is taken</string>
+
     <!-- Dynamic Bar -->
     <string name="dynamic_bar">Dynamic Bar</string>
     <string name="dynamic_bar_summary">Smart status bar chip for active events like recording, media, timers, and more</string>
