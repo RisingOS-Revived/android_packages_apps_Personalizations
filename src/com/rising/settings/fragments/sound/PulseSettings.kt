@@ -21,6 +21,7 @@ import android.provider.Settings
 
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
 
 import com.android.internal.logging.nano.MetricsProto
@@ -37,12 +38,14 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
 
         private val KEY_PULSE_SHOW_ON_MEDIA_PLAYER = Settings.Secure.PULSE_SHOW_ON_MEDIA_PLAYER
         private val KEY_PULSE_SHOW_ON_AMBIENT = Settings.Secure.PULSE_SHOW_ON_AMBIENT
-        private const val KEY_PULSE_BASS_HAPTICS = "pulse_bass_haptics"
-        private const val KEY_PULSE_RENDERER = "pulse_renderer"
-        private const val KEY_PULSE_COLOR = "pulse_color"
-        private const val KEY_PULSE_CUSTOM_COLOR = "pulse_custom_color"
-        private const val KEY_PULSE_CAPTURE_MODE = "pulse_capture_mode"
-        private const val KEY_PULSE_ROUND_OUTPUT = "pulse_rounded_bars"
+        private val KEY_PULSE_BASS_HAPTICS = Settings.Secure.PULSE_BASS_HAPTICS
+        private val KEY_PULSE_RENDERER = Settings.Secure.PULSE_RENDERER
+        private val KEY_PULSE_COLOR = Settings.Secure.PULSE_COLOR
+        private val KEY_PULSE_CUSTOM_COLOR = Settings.Secure.PULSE_CUSTOM_COLOR
+        private val KEY_PULSE_CAPTURE_MODE = Settings.Secure.PULSE_CAPTURE_MODE
+        private val KEY_PULSE_ROUND_OUTPUT = Settings.Secure.PULSE_ROUNDED_BARS
+        private val KEY_PULSE_HEIGHT = Settings.Secure.PULSE_HEIGHT_MULTIPLIER
+        private val KEY_PULSE_BAR_COUNT = Settings.Secure.PULSE_BAR_COUNT
     }
 
     private var mPulseShowOnMediaPlayer: SwitchPreferenceCompat? = null
@@ -53,6 +56,8 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
     private lateinit var mPulseCaptureMode: ListPreference
     private lateinit var mPulseCustomColor: ColorPickerPreference
     private lateinit var mPulseRoundOutput: SwitchPreferenceCompat
+    private lateinit var mPulseHeight: SeekBarPreference
+    private lateinit var mPulseBarCount: SeekBarPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +72,14 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
         mPulseCaptureMode = findCachedPreference<ListPreference>(KEY_PULSE_CAPTURE_MODE)!!
         mPulseBassHaptics = findCachedPreference<ListPreference>(KEY_PULSE_BASS_HAPTICS)!!
         mPulseRoundOutput = findCachedPreference<SwitchPreferenceCompat>(KEY_PULSE_ROUND_OUTPUT)!!
+        mPulseHeight = findCachedPreference<SeekBarPreference>(KEY_PULSE_HEIGHT)!!
+        mPulseBarCount = findCachedPreference<SeekBarPreference>(KEY_PULSE_BAR_COUNT)!!
 
         mPulseRenderer.onPreferenceChangeListener = this
-        updatePreferenceVisibility(getCurrentRenderer(), getCurrentColorMode(), getCurrentCaptureMode())
 
         mPulseColor.onPreferenceChangeListener = this
-        updatePreferenceVisibility(getCurrentRenderer(), getCurrentColorMode(), getCurrentCaptureMode())
+
+        updatePreferenceVisibility()
 
         val hapticAvailable = DeviceUtils.hasVibrator(requireContext())
         if (!hapticAvailable) {
@@ -83,11 +90,7 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
 
         mPulseShowOnMediaPlayer?.onPreferenceChangeListener = this
         mPulseShowOnAmbient?.let {
-            val mediaPlayerEnabled = Settings.Secure.getIntForUser(
-                    requireContext().contentResolver,
-                    Settings.Secure.PULSE_SHOW_ON_MEDIA_PLAYER,
-                    UserHandle.USER_CURRENT, 0) == 1
-            updateAmbientPreference(!mediaPlayerEnabled)
+            updateAmbientPreference(!willShowOnMediaPlayer())
         }
     }
 
@@ -95,22 +98,39 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
         when (preference) {
             mPulseRenderer -> {
                 val value = newValue as String
-                updatePreferenceVisibility(value, getCurrentColorMode(), getCurrentCaptureMode())
+                updatePreferenceVisibility(
+                        value,
+                        getCurrentColorMode(),
+                        getCurrentCaptureMode(),
+                        willShowOnMediaPlayer())
                 return true
             }
             mPulseColor -> {
                 val value = newValue as String
-                updatePreferenceVisibility(getCurrentRenderer(), value, getCurrentCaptureMode())
+                updatePreferenceVisibility(
+                        getCurrentRenderer(),
+                        value,
+                        getCurrentCaptureMode(),
+                        willShowOnMediaPlayer())
                 return true
             }
             mPulseCaptureMode -> {
                 val value = newValue as String
-                updatePreferenceVisibility(getCurrentRenderer(), getCurrentColorMode(), value)
+                updatePreferenceVisibility(
+                        getCurrentRenderer(),
+                        getCurrentColorMode(),
+                        value,
+                        willShowOnMediaPlayer())
                 return true
             }
             mPulseShowOnMediaPlayer -> {
                 val mediaPlayerState = newValue as Boolean
                 updateAmbientPreference(!mediaPlayerState)
+                updatePreferenceVisibility(
+                        getCurrentRenderer(),
+                        getCurrentColorMode(),
+                        getCurrentCaptureMode(),
+                        mediaPlayerState)
                 return true
             }
         }
@@ -127,7 +147,8 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
     private fun updatePreferenceVisibility(
         rendererValue: String?,
         colorValue: String?,
-        captureModeValue: String?
+        captureModeValue: String?,
+        showOnMediaPlayerEnabled: Boolean
     ) {
         if (captureModeValue != null) {
             setBassHapticPreference(captureModeValue != "1")
@@ -136,41 +157,65 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
         if (rendererValue != null) {
             var supportsColoring = false
             var supportsRounding = false
+            var heightFixed = false
+            var samplesFixed = false
             when (rendererValue) {
                 "minimal", "solid" -> {
                     supportsRounding = true
                     supportsColoring = true
                 }
-                "fading", "matrix", "neon", "particle",
+                "fading", "matrix", "neon",
                 "sparkle", "waveform", "dotwave" -> {
                     supportsColoring = true
                 }
+                "particle" -> {
+                    heightFixed = true
+                    samplesFixed = true
+                    supportsColoring = true
+                }
             }
+            mPulseHeight.isVisible = !showOnMediaPlayerEnabled && !heightFixed
+            mPulseBarCount.isVisible = !samplesFixed
             mPulseRoundOutput.isVisible = supportsRounding
             mPulseColor.isVisible = supportsColoring
             mPulseCustomColor.isVisible = supportsColoring && colorValue == "custom"
         }
     }
 
+    private fun updatePreferenceVisibility() {
+        updatePreferenceVisibility(
+                getCurrentRenderer(),
+                getCurrentColorMode(),
+                getCurrentCaptureMode(),
+                willShowOnMediaPlayer())
+    }
+
     private fun getCurrentRenderer(): String? {
         return Settings.Secure.getStringForUser(
                 requireContext().contentResolver,
-                Settings.Secure.PULSE_RENDERER,
+                KEY_PULSE_RENDERER,
                 UserHandle.USER_CURRENT)
     }
 
     private fun getCurrentColorMode(): String? {
         return Settings.Secure.getStringForUser(
                 requireContext().contentResolver,
-                Settings.Secure.PULSE_COLOR,
+                KEY_PULSE_COLOR,
                 UserHandle.USER_CURRENT)
     }
 
     private fun getCurrentCaptureMode(): String? {
         return Settings.Secure.getStringForUser(
                 requireContext().contentResolver,
-                Settings.Secure.PULSE_CAPTURE_MODE,
+                KEY_PULSE_CAPTURE_MODE,
                 UserHandle.USER_CURRENT)
+    }
+
+    private fun willShowOnMediaPlayer(): Boolean {
+        return Settings.Secure.getIntForUser(
+                requireContext().contentResolver,
+                KEY_PULSE_SHOW_ON_MEDIA_PLAYER,
+                UserHandle.USER_CURRENT, 0) == 1
     }
 
     private fun setBassHapticPreference(enabled: Boolean) {
