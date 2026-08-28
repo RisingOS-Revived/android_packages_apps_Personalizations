@@ -35,6 +35,8 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
     companion object {
         private val TAG = PulseSettings::class.java.simpleName
 
+        private val KEY_PULSE_SHOW_ON_MEDIA_PLAYER = Settings.Secure.PULSE_SHOW_ON_MEDIA_PLAYER
+        private val KEY_PULSE_SHOW_ON_AMBIENT = Settings.Secure.PULSE_SHOW_ON_AMBIENT
         private const val KEY_PULSE_BASS_HAPTICS = "pulse_bass_haptics"
         private const val KEY_PULSE_RENDERER = "pulse_renderer"
         private const val KEY_PULSE_COLOR = "pulse_color"
@@ -43,6 +45,8 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
         private const val KEY_PULSE_ROUND_OUTPUT = "pulse_rounded_bars"
     }
 
+    private var mPulseShowOnMediaPlayer: SwitchPreferenceCompat? = null
+    private var mPulseShowOnAmbient: SwitchPreferenceCompat? = null
     private lateinit var mPulseRenderer: ListPreference
     private lateinit var mPulseColor: ListPreference
     private lateinit var mPulseBassHaptics: ListPreference
@@ -55,6 +59,8 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
 
         addPreferencesFromResource(R.xml.pulse_settings)
 
+        mPulseShowOnMediaPlayer = findCachedPreference<SwitchPreferenceCompat>(KEY_PULSE_SHOW_ON_MEDIA_PLAYER)
+        mPulseShowOnAmbient = findCachedPreference<SwitchPreferenceCompat>(KEY_PULSE_SHOW_ON_AMBIENT)
         mPulseRenderer = findCachedPreference<ListPreference>(KEY_PULSE_RENDERER)!!
         mPulseColor = findCachedPreference<ListPreference>(KEY_PULSE_COLOR)!!
         mPulseCustomColor = findCachedPreference<ColorPickerPreference>(KEY_PULSE_CUSTOM_COLOR)!!
@@ -74,6 +80,15 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
         }
 
         mPulseCaptureMode.onPreferenceChangeListener = this
+
+        mPulseShowOnMediaPlayer?.onPreferenceChangeListener = this
+        mPulseShowOnAmbient?.let {
+            val mediaPlayerEnabled = Settings.Secure.getIntForUser(
+                    requireContext().contentResolver,
+                    Settings.Secure.PULSE_SHOW_ON_MEDIA_PLAYER,
+                    UserHandle.USER_CURRENT, 0) == 1
+            updateAmbientPreference(!mediaPlayerEnabled)
+        }
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
@@ -93,8 +108,20 @@ class PulseSettings : OptimizedSettingsFragment(), Preference.OnPreferenceChange
                 updatePreferenceVisibility(getCurrentRenderer(), getCurrentColorMode(), value)
                 return true
             }
+            mPulseShowOnMediaPlayer -> {
+                val mediaPlayerState = newValue as Boolean
+                updateAmbientPreference(!mediaPlayerState)
+                return true
+            }
         }
         return false
+    }
+
+    private fun updateAmbientPreference(state: Boolean) {
+        mPulseShowOnAmbient?.isEnabled = state
+        mPulseShowOnAmbient?.setSummary(
+                if (state) R.string.pulse_show_on_ambient_summary
+                else R.string.pulse_show_on_ambient_disabled_player)
     }
 
     private fun updatePreferenceVisibility(
