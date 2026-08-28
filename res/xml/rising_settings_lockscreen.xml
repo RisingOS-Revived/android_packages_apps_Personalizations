@@ -178,7 +178,14 @@
             android:key="global_actions_use_compose_dialog"
             android:title="@string/global_actions_use_compose_dialog_title"
             android:summary="@string/global_actions_use_compose_dialog_summary"
+            android:defaultValue="true" />
+
+        <com.android.settings.preferences.SecureSettingSwitchPreference
+            android:key="advanced_reboot"
+            android:title="@string/global_actions_advanced_reboot_title"
+            android:summary="@string/global_actions_advanced_reboot_summary"
             android:defaultValue="true"
+            android:dependency="global_actions_use_compose_dialog"
             lineage:position="bottom" />
 
     </PreferenceCategory>
