@@ -20,6 +20,7 @@ import android.content.Context
 import android.os.Bundle
 import android.os.SystemProperties
 import android.provider.SearchIndexableResource
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import com.android.internal.logging.nano.MetricsProto
 import com.android.internal.util.android.SystemRestartUtils
@@ -28,7 +29,6 @@ import com.android.settings.SettingsPreferenceFragment
 import com.android.settings.search.BaseSearchIndexProvider
 import com.android.settingslib.search.Indexable
 import com.android.settingslib.search.SearchIndexable
-import com.android.settings.preferences.LauncherIconPreference
 
 @SearchIndexable
 class QuickSwitch : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListener, Indexable {
@@ -54,17 +54,44 @@ class QuickSwitch : SettingsPreferenceFragment(), Preference.OnPreferenceChangeL
         }
     }
 
-    private lateinit var quickSwitchPref: LauncherIconPreference
+    private lateinit var quickSwitchPref: ListPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.quick_switch)
 
+        val defaultLauncher = SystemProperties.getInt(QUICKSWITCH_KEY, 0)
         quickSwitchPref = findPreference(QUICKSWITCH_KEY)!!
         quickSwitchPref.onPreferenceChangeListener = this
-        
-        val defaultLauncher = SystemProperties.getInt(QUICKSWITCH_KEY, 0)
-        quickSwitchPref.setValue(defaultLauncher)
+
+        val context = requireContext()
+        val res = context.resources
+
+        val launcherEntries = res.getStringArray(R.array.quickswitch_launcher_entries)
+        val launcherValues = res.getStringArray(R.array.quickswitch_launcher_values)
+
+        val quickSwitchEntries = mutableListOf<String>()
+        val quickSwitchValues = mutableListOf<String>()
+
+        // Always add the first launcher (default)
+        quickSwitchEntries.add(launcherEntries[0])
+        quickSwitchValues.add(launcherValues[0])
+
+        // Add Pixel launcher if shipped
+        if (SystemProperties.getInt("persist.sys.quickswitch_pixel_shipped", 0) != 0) {
+            quickSwitchEntries.add(launcherEntries[1])
+            quickSwitchValues.add(launcherValues[1])
+        }
+
+        // Add Lawnchair launcher if shipped
+        if (SystemProperties.getInt("persist.sys.quickswitch_lawnchair_shipped", 0) != 0) {
+            quickSwitchEntries.add(launcherEntries[2])
+            quickSwitchValues.add(launcherValues[2])
+        }
+
+        quickSwitchPref.entries = quickSwitchEntries.toTypedArray()
+        quickSwitchPref.entryValues = quickSwitchValues.toTypedArray()
+        quickSwitchPref.value = defaultLauncher.toString()
     }
 
     override fun getMetricsCategory(): Int {
