@@ -99,177 +99,261 @@
     <!-- Face enroll finish text -->
     <string name="security_settings_face_enroll_finish_description_with_bp">Now you can use your face to unlock your phone or verify it’s you, like when you sign in to apps or approve a purchase</string>
 
+    <!-- Vehicle Motion Cues -->
+    <string name="vehicle_motion_cues_title">Vehicle Motion Cues</string>
+    <string name="vehicle_motion_cues_summary">Show animated dots on screen edges that move with vehicle motion to help prevent motion sickness</string>
     <string name="vehicle_motion_cues_dot_size_title">Dot Size</string>
     <string name="vehicle_motion_cues_dot_size_summary">Size of the animated motion cue dots</string>
     <string name="vehicle_motion_cues_sensitivity_title">Motion Sensitivity</string>
     <string name="vehicle_motion_cues_sensitivity_summary">Strength of the dot translations relative to vehicle forces</string>
     <string name="vehicle_motion_cues_dot_count_title">Dot Count</string>
     <string name="vehicle_motion_cues_dot_count_summary">Number of animated motion cue dots shown along the screen margins</string>
+
+    <!-- Adaptive Battery -->
+    <string name="adaptive_battery_switch_title">Use Adaptive Battery</string>
     <string name="adaptive_battery_illustration_purpose">Allows users to enable or disable Adaptive Battery, which optimizes app battery usage based on phone usage patterns to extend battery life.</string>
     <string name="adaptive_battery_management_enabled_purpose">Whether Adaptive Battery is enabled to optimize battery usage based on app usage patterns.</string>
-    <string name="adaptive_battery_switch_title">Use Adaptive Battery</string>
     <string name="adaptive_battery_entry_purpose">Allows users to enable or disable Adaptive Battery, which optimizes app battery usage based on phone usage patterns to extend battery life.</string>
     <string name="adaptive_battery_top_intro_purpose">Adaptive Battery optimizes battery usage based on app usage patterns.</string>
-    <string name="battery_saver_group_purpose">Manage Battery Saver settings and schedules.</string>
-    <string name="battery_saver_schedule_category_purpose">Allows users to configure Battery Saver schedules, including automatic activation based on battery percentage and automatic deactivation when charged, as well as managing low-battery notification reminders.</string>
     <string name="adaptive_battery_category_purpose">Adaptive Battery settings category.</string>
+
+    <!-- Battery Saver -->
+    <string name="battery_saver_group_purpose">Manage Battery Saver settings and schedules.</string>
+    <string name="battery_schedule_title">Schedule and reminders</string>
+    <string name="battery_schedule_summary">Manage when Battery Saver turns on</string>
+    <string name="basic_battery_saver_title">Standard Battery Saver</string>
+    <string name="basic_battery_saver_summary">Limits visual effects and background activity. Turns on Dark theme, if not already on.</string>
+    <string name="basic_battery_saver_purpose">Enables Standard Battery Saver mode which limits visual effects and background activity</string>
+    <string name="extreme_battery_saver_title">Extreme Battery Saver</string>
+    <string name="extreme_battery_saver_summary">Includes all changes listed above. Also pauses non-essential apps and their notifications.</string>
     <string name="extreme_battery_saver_purpose">Enables Extreme Battery Saver mode which pauses non-essential apps and notifications</string>
-    <string name="low_power_mode_reminder_enabled_purpose">Whether to receive notification reminders when the battery is low</string>
+    <string name="battery_saver_schedule_category_purpose">Allows users to configure Battery Saver schedules, including automatic activation based on battery percentage and automatic deactivation when charged, as well as managing low-battery notification reminders.</string>
+    <string name="battery_saver_schedule_category">Schedule</string>
+    <string name="battery_saver_schedule_purpose">Allows users to configure Battery Saver schedules, including automatic activation based on battery percentage and automatic deactivation when charged, as well as managing low-battery notification reminders.</string>
+    <string name="battery_saver_schedule_switch_title">Turn on based on battery level</string>
+    <string name="battery_saver_schedule_switch_summary">Battery Saver turns on when battery falls to a level you set</string>
+    <string name="battery_saver_reminder_category">Reminders</string>
     <string name="battery_saver_reminder_entry_purpose">Manage reminders for low battery notifications.</string>
+    <string name="battery_saver_reminder_switch_title">Battery Saver reminders</string>
+    <string name="battery_saver_reminder_switch_summary">Get reminders when battery is low</string>
+    <string name="low_power_mode_reminder_enabled_purpose">Whether to receive notification reminders when the battery is low</string>
+
+    <!-- Software Update -->
+    <string name="software_update_entry_title">Software updates</string>
+    <string name="software_update_settings_v2_purpose">Provides a centralized dashboard for users to monitor and initiate updates across the operating system, Google Play system components, and installed applications to ensure device security and performance.</string>
     <string name="software_update_can_be_updated_header">Make your device even better</string>
     <string name="software_update_up_to_date_header">Your %1$s is up to date</string>
-    <string name="software_update_settings_v2_purpose">Provides a centralized dashboard for users to monitor and initiate updates across the operating system, Google Play system components, and installed applications to ensure device security and performance.</string>
     <string name="software_update_up_to_specific_date_summary">Updated to %1$s</string>
     <string name="software_update_pending_update_summary">Pending update</string>
     <string name="software_update_banner_up_to_date">Your device is up to date</string>
     <string name="software_update_banner_update_available">Updates available</string>
+    <string name="software_update_banner_checking">Checking for updates…</string>
+    <string name="system_update_entry_title">System update</string>
+    <string name="play_application_update_entry_title">App updates</string>
+    <string name="play_application_detail_indication_summary">Check for updates</string>
+
+    <!-- Wi-Fi QR code -->
     <string name="wifi_qr_code_animation_control">pause the animation</string>
 
+    <!-- Audio -->
     <string name="multi_audio_focus_title">Multi audio focus</string>
     <string name="multi_audio_focus_summary">Allow multiple apps to play audio simultaneously</string>
+
+    <!-- IME -->
     <string name="show_ime_space_title">Show IME button space</string>
+    <string name="show_ime_space_summary">Enable the input method quick switch feature to switch input methods or hide the on-screen keyboard from the feature bar at the bottom of the screen when typing</string>
+
+    <!-- Device info -->
     <string name="hardware_sku">Hardware SKU</string>
+    <string name="device_name">Device</string>
+
+    <!-- Carrier aggregation -->
     <string name="force_lte_ca_title">Carrier aggregation</string>
+
+    <!-- Refresh rate -->
+    <string name="screen_refresh_rate_title">Screen refresh rate</string>
     <string name="per_app_refresh_rate_title">Per-app refresh rate config</string>
     <string name="per_app_refresh_rate_summary">Configure refresh rate individually for each apps</string>
     <string name="per_app_refresh_rate_default">Follow system</string>
     <string name="extreme_refresh_rate_title">Extreme refresh rate</string>
     <string name="extreme_refresh_rate_summary">Force highest refresh rate for all apps</string>
     <string name="extreme_refresh_rate_warning">This will ensure system select highest refresh rate, ignoring user selected and app preferred options. Apps that require specific refresh rate may run abnormally.</string>
+
+    <!-- Ambient / Doze brightness -->
     <string name="ambient_doze_brightness_title">Always on display brightness</string>
     <string name="ambient_pulse_brightness_title">Ambient display brightness</string>
-    <string name="doze_brightness_force_summary">Use custom brightness values instead of screen brightness</string>
     <string name="doze_brightness_force_title">Force brightness values</string>
-    <string name="software_update_entry_title">Software updates</string>
-    <string name="software_update_banner_checking">Checking for updates…</string>
-    <string name="system_update_entry_title">System update</string>
-    <string name="play_application_detail_indication_summary">Check for updates</string>
-    <string name="play_application_update_entry_title">App updates</string>
-    <string name="basic_battery_saver_title">Standard Battery Saver</string>
-    <string name="basic_battery_saver_summary">Limits visual effects and background activity. Turns on Dark theme, if not already on.</string>
-    <string name="extreme_battery_saver_title">Extreme Battery Saver</string>
-    <string name="extreme_battery_saver_summary">Includes all changes listed above. Also pauses non-essential apps and their notifications.</string>
-    <string name="battery_schedule_summary">Manage when Battery Saver turns on</string>
-    <string name="face_down_sleep_title">Face down detection</string>
-    <string name="face_down_sleep_summary">Turn off screen after a short period when device is flipped over</string>
-    <string name="vehicle_motion_cues_title">Vehicle Motion Cues</string>
-    <string name="vehicle_motion_cues_summary">Show animated dots on screen edges that move with vehicle motion to help prevent motion sickness</string>
+    <string name="doze_brightness_force_summary">Use custom brightness values instead of screen brightness</string>
+
+    <!-- Doze gesture -->
     <string name="doze_gesture_vibrate_title">Haptic feedback</string>
     <string name="doze_gesture_vibrate_summary">Vibrate when this gesture is invoked</string>
+
+    <!-- Face down / Double tap to sleep -->
+    <string name="face_down_sleep_title">Face down detection</string>
+    <string name="face_down_sleep_summary">Turn off screen after a short period when device is flipped over</string>
     <string name="double_tap_screen_to_sleep_title">Double tap to turn off screen</string>
-    <string name="keywords_double_tap_screen_to_sleep">double tap to sleep, lock screen</string>
     <string name="double_tap_screen_to_sleep_summary">Double tap an empty space on the lock screen to turn off the screen.</string>
-    <string name="device_name">Device</string>
-    <string name="show_ime_space_summary">Enable the input method quick switch feature to switch input methods or hide the on-screen keyboard from the feature bar at the bottom of the screen when typing</string>
+    <string name="keywords_double_tap_screen_to_sleep">double tap to sleep, lock screen</string>
+
+    <!-- Changelog -->
+    <string name="changelog_title">Changelog</string>
 
     <!-- Locale Picker -->
     <string name="clear_search_query_description">Clear query</string>
     <string name="language_picker_page">Language picker page</string>
     <string name="search_region">Search regions</string>
     <string name="search_region_page">Search region page</string>
-    <string name="basic_battery_saver_purpose">Enables Standard Battery Saver mode which limits visual effects and background activity</string>
-    <string name="battery_saver_reminder_category">Reminders</string>
-    <string name="battery_saver_reminder_switch_title">Battery Saver reminders</string>
-    <string name="battery_saver_reminder_switch_summary">Get reminders when battery is low</string>
-    <string name="battery_saver_schedule_category">Schedule</string>
-    <string name="battery_saver_schedule_switch_title">Turn on based on battery level</string>
-    <string name="battery_saver_schedule_switch_summary">Battery Saver turns on when battery falls to a level you set</string>
-    <string name="battery_saver_schedule_purpose">Allows users to configure Battery Saver schedules, including automatic activation based on battery percentage and automatic deactivation when charged, as well as managing low-battery notification reminders.</string>
-    <string name="battery_schedule_title">Schedule and reminders</string>
-    <string name="changelog_title">Changelog</string>
-    <string name="screen_refresh_rate_title">Screen refresh rate</string>
 
-    <string name="pif_failed">Failed: %1$s</string>
-    <string name="pif_invalid_fingerprint">Invalid fingerprint format</string>
-    <string name="pif_imported_as">Imported as %1$s</string>
+    <!-- Play Integrity Fix -->
+    <string name="play_integrity_fix_title">Play Integrity Fix</string>
+    <string name="play_integrity_fix_summary">Spoof device attestation to pass Play Integrity checks</string>
+    <string name="pif_master_switch_title">Enable Play Integrity Fix</string>
+    <string name="pif_status">Status</string>
+    <string name="pif_no_config">No configuration loaded</string>
+    <string name="pif_active_config">Active configuration</string>
     <string name="pif_config_loaded">Configuration loaded</string>
+    <string name="pif_config_details">Configuration details</string>
+    <string name="pif_fetch_pixel_beta">Fetch Pixel Canary fingerprint</string>
+    <string name="pif_fetch_pixel_beta_summary">Download the latest Pixel Canary fingerprint from Google</string>
+    <string name="pif_fetching">Fetching from Google…</string>
+    <string name="pif_fetched_model">Fetched fingerprint for %1$s</string>
+    <string name="pif_generating">Generating configuration…</string>
+    <string name="pif_select_device">Select device</string>
+    <string name="pif_no_devices_found">No devices found</string>
+    <string name="pif_no_api_key">Failed to extract Flash Tool API key</string>
+    <string name="pif_import_config">Import configuration</string>
+    <string name="pif_import_config_summary">Import a PIF config from a file</string>
+    <string name="pif_imported_as">Imported as %1$s</string>
+    <string name="pif_invalid_fingerprint">Invalid fingerprint format</string>
+    <string name="pif_delete_config">Delete active configuration</string>
+    <string name="pif_delete_config_summary">Remove the currently active configuration file</string>
     <string name="pif_delete_title">Delete %1$s?</string>
     <string name="pif_delete_message">This configuration file will be permanently removed.</string>
+    <string name="pif_deleted">Deleted %1$s</string>
+    <string name="pif_failed">Failed: %1$s</string>
     <string name="pif_wipe_playstore_title">Clear Play Store data?</string>
     <string name="pif_wipe_playstore_message">Applying this fingerprint works best with a fresh Play Store session. Clear Play Store app data now? This will sign you out and clear its local cache and download queue.</string>
     <string name="pif_wipe_confirm">Clear data</string>
-    <string name="pif_deleted">Deleted %1$s</string>
-    <string name="pif_fetching">Fetching from Google…</string>
-    <string name="pif_no_devices_found">No devices found</string>
-    <string name="pif_no_api_key">Failed to extract Flash Tool API key</string>
-    <string name="pif_select_device">Select device</string>
-    <string name="pif_generating">Generating configuration…</string>
-    <string name="pif_fetched_model">Fetched fingerprint for %1$s</string>
-    <string name="spoofing_applying_changes">Applying changes…</string>
-    <string name="common_system_badge">System</string>
-    <string name="tensor_spoof_enable">Enable Tensor feature spoofing</string>
-    <string name="app_spoofing_disabled">Disabled</string>
-    <string name="tensor_targets_none_configured">No target apps configured</string>
-    <string name="tensor_targets_count">%1$d apps configured</string>
-    <string name="tensor_targets_empty_description">Add apps to spoof Tensor feature availability for them</string>
-    <string name="ts_keybox_imported">Keybox imported</string>
-    <string name="ts_failed">Failed: %1$s</string>
-    <string name="ts_target_list_imported">Target list imported</string>
+    <string name="pif_advanced_settings">Advanced spoofing</string>
+    <string name="pif_spoof_vending_finger_title">Play Store fingerprint spoof</string>
+    <string name="pif_spoof_vending_finger_summary">Controls which FINGERPRINT is presented to the Play Store process</string>
+    <string name="pif_vending_finger_disabled">Disabled (default)</string>
+    <string name="pif_vending_finger_same">Same as DroidGuard fingerprint</string>
+    <string name="pif_spoof_vending_sdk_title">Spoof SDK to DroidGuard</string>
+    <string name="pif_spoof_vending_sdk_summary">Override SDK_INT for DroidGuard to force the legacy &lt;A13 attestation path</string>
+    <string name="pif_footer_title">Passing basic integrity</string>
+    <string name="pif_footer_body">A Canary fingerprint is fetched and refreshed automatically every 21 days. Canary configs expire roughly 6 weeks from their release date — the expiry is shown in the active config summary.\n\nFor manual setup:\n1. Tap "Fetch Pixel Canary fingerprint" and select a device.\n2. If no devices are found, import a working PIF config from a trusted source. Config files are not provided.\n3. Recheck your Play Integrity status.\n\nAlways delete the active configuration before importing a new one. Loading an expired PIF config will cause TrickyStore strong integrity to fail even with a valid keybox.\n\nAdvanced spoofing:\n• Play Store fingerprint spoof — leave disabled unless advised otherwise. Spoofing FINGERPRINT to Play Store is rarely needed and may cause issues.\n• Spoof SDK to DroidGuard — forces the legacy pre-Android 13 attestation path. Only enable this if basic integrity is failing and your config targets an older SDK.</string>
+
+    <!-- TrickyStore -->
+    <string name="tricky_store_title">TrickyStore</string>
+    <string name="tricky_store_summary">Bypass hardware attestation checks using a custom keybox</string>
+    <string name="ts_master_switch_title">Enable TrickyStore</string>
+    <string name="ts_keybox_management">Keybox management</string>
+    <string name="ts_no_keybox">No keybox loaded</string>
     <string name="ts_keybox_installed">Keybox installed</string>
-    <string name="ts_target_apps_count">%1$d target apps</string>
+    <string name="ts_keybox_imported">Keybox imported</string>
+    <string name="ts_keybox_deleted">Keybox deleted</string>
+    <string name="ts_import_keybox">Import keybox</string>
+    <string name="ts_delete_keybox">Delete keybox</string>
+    <string name="ts_delete_keybox_title">Delete keybox?</string>
+    <string name="ts_delete_keybox_message">This will remove the currently installed keybox file.</string>
+    <string name="ts_delete_keybox_summary">Remove the currently active keybox file</string>
+    <string name="ts_fetch_keybox">Fetch keybox</string>
+    <string name="ts_fetch_keybox_summary">Download or locate a keybox.xml file</string>
+    <string name="ts_fetch_keybox_fetching">Fetching keybox…</string>
+    <string name="ts_fetch_keybox_success">Keybox fetched successfully</string>
+    <string name="ts_fetch_keybox_failed">Fetch failed: %1$s</string>
+    <string name="ts_fetch_keybox_blocked">Fetching blocked — resolve the current keybox issue first</string>
+    <string name="ts_fetch_keybox_same_file">This file matches the currently active keybox</string>
+    <string name="ts_fetch_keybox_no_valid_found">No valid keybox found</string>
+    <string name="ts_fetch_keybox_auto_replaced">Keybox automatically replaced</string>
+    <string name="ts_fetch_keybox_last_fetched">Last fetched: %1$s</string>
+    <string name="ts_fetch_keybox_revoked_refetch">Current keybox is revoked. Fetch a new one?</string>
+    <string name="ts_fetch_keybox_suspended_refetch">Current keybox is suspended. Fetch a new one?</string>
+    <string name="ts_failed">Failed: %1$s</string>
+    <string name="ts_revocation_status">Revocation status</string>
+    <string name="ts_revocation_checking">Checking…</string>
     <string name="ts_revocation_valid">Valid</string>
     <string name="ts_revocation_revoked">Revoked%1$s</string>
     <string name="ts_revocation_suspended">Suspended%1$s</string>
     <string name="ts_revocation_expiring_soon">Expiring soon</string>
     <string name="ts_revocation_chain_invalid">Certificate chain invalid</string>
     <string name="ts_revocation_untrusted_root">Untrusted root certificate</string>
-    <string name="ts_revocation_checking">Checking…</string>
+    <string name="ts_revocation_no_keybox">No keybox loaded — hardware attestation will fail</string>
     <string name="ts_revocation_not_yet_checked">Not yet checked</string>
     <string name="ts_revocation_last_checked">Last checked: %1$s</string>
     <string name="ts_revocation_error">Check failed: %1$s</string>
-    <string name="ts_fetch_keybox_blocked">Fetching blocked — resolve the current keybox issue first</string>
-    <string name="ts_fetch_keybox_last_fetched">Last fetched: %1$s</string>
-    <string name="ts_fetch_keybox_revoked_refetch">Current keybox is revoked. Fetch a new one?</string>
-    <string name="ts_fetch_keybox_suspended_refetch">Current keybox is suspended. Fetch a new one?</string>
-    <string name="ts_fetch_keybox_fetching">Fetching keybox…</string>
-    <string name="ts_fetch_keybox_same_file">This file matches the currently active keybox</string>
-    <string name="ts_fetch_keybox_failed">Fetch failed: %1$s</string>
-    <string name="ts_fetch_keybox_no_valid_found">No valid keybox found</string>
-    <string name="ts_fetch_keybox_auto_replaced">Keybox automatically replaced</string>
-    <string name="ts_fetch_keybox_success">Keybox fetched successfully</string>
-    <string name="ts_verification_auto_count">%1$d automatic</string>
-    <string name="ts_verification_cert_count">%1$d certificate</string>
-    <string name="ts_verification_leaf_count">%1$d leaf</string>
-    <string name="ts_delete_keybox_title">Delete keybox?</string>
-    <string name="ts_delete_keybox_message">This will remove the currently installed keybox file.</string>
-    <string name="ts_keybox_deleted">Keybox deleted</string>
     <string name="ts_untrusted_root_title">Untrusted root certificate</string>
     <string name="ts_untrusted_root_message">This keybox chains to a root certificate that isn\'t trusted. Keep it anyway?</string>
     <string name="ts_untrusted_root_keep">Keep</string>
     <string name="ts_untrusted_root_replace">Replace</string>
     <string name="ts_chain_invalid_title">Invalid certificate chain</string>
     <string name="ts_chain_invalid_message">This keybox\'s certificate chain could not be validated.</string>
-    <string name="ts_expiry_unknown">Unknown</string>
     <string name="ts_expiring_soon_title">Keybox expiring soon</string>
     <string name="ts_expiring_soon_message">This keybox will expire: %1$s</string>
-    <string name="ts_patch_date_hint">YYYY-MM-DD</string>
+    <string name="ts_expiry_unknown">Unknown</string>
+    <string name="ts_patch_date_hint" translatable="false">e.g. 2026-07-05, YYYY-MM-05, or per-package blocks</string>
     <string name="ts_patch_stale_warning">%1$s (stale, 12+ months old)</string>
     <string name="ts_invalid_patch_date">Invalid patch date format</string>
+    <string name="ts_no_patch">No patch level set</string>
+    <string name="ts_security_patch">Security patch level</string>
+    <string name="ts_target_configuration">Target configuration</string>
+    <string name="ts_manage_target_apps">Manage target apps</string>
+    <string name="ts_no_targets">No target apps configured</string>
+    <string name="ts_target_apps_count">%1$d target apps</string>
     <string name="ts_target_apps_empty_description">Add apps to apply spoofed attestation to them</string>
+    <string name="ts_import_target_list">Import target list</string>
+    <string name="ts_import_target_list_summary">Import a list of target package names from a file</string>
+    <string name="ts_target_list_imported">Target list imported</string>
+    <string name="ts_verification_mode">Verification mode</string>
+    <string name="ts_verification_mode_auto">Auto</string>
+    <string name="ts_verification_auto_count">%1$d automatic</string>
+    <string name="ts_verification_cert_count">%1$d certificate</string>
+    <string name="ts_verification_leaf_count">%1$d leaf</string>
     <string name="ts_mode_auto">Auto</string>
     <string name="ts_mode_leaf">Leaf certificate</string>
     <string name="ts_mode_cert">Full certificate</string>
     <string name="ts_mode_skip">Skip</string>
-    <string name="action_delete">Delete</string>
+    <string name="ts_footer_title">About TrickyStore</string>
+    <string name="ts_footer_body">TrickyStore intercepts key attestation requests and substitutes a custom keybox to satisfy hardware-backed integrity checks.\n\nTarget apps are the packages TrickyStore applies spoofed attestation to — apps not on the list use the device\'s real attestation chain.\n\nA revoked or expired keybox will cause verification to fail even if it loads successfully. Check the revocation status regularly if you rely on strong integrity.</string>
+
+    <!-- Spoofing (general/shared) -->
+    <string name="spoofing_applying_changes">Applying changes…</string>
+    <string name="spoofing_integrity_category">Integrity</string>
+    <string name="spoofing_identity_category">Device identity</string>
+    <string name="spoofing_features_category">Features</string>
+
+    <!-- Tensor feature spoofing -->
+    <string name="tensor_spoof_enable">Enable Tensor feature spoofing</string>
+    <string name="tensor_targets_none_configured">No target apps configured</string>
+    <string name="tensor_targets_count">%1$d apps configured</string>
+    <string name="tensor_targets_empty_description">Add apps to spoof Tensor feature availability for them</string>
+
+    <!-- App spoofing -->
+    <string name="user_selectable_app_spoofing_title">App spoofing</string>
+    <string name="user_selectable_app_spoofing_summary">Choose which apps get spoofed device info</string>
     <string name="user_select_spoofing_profile_title">Select spoofing profile</string>
-    <string name="add_new_spoof_profile">Add new profile</string>
-    <string name="app_spoofing_clear_all">Clear all</string>
-    <string name="app_spoofing_clear_all_confirm">This will remove spoofing configuration for all apps. Continue?</string>
     <string name="app_spoofing_header_title">App spoofing</string>
+    <string name="app_spoofing_disabled">Disabled</string>
     <string name="app_spoofing_configured_count">%1$d apps configured</string>
-    <string name="app_spoofing_add_apps">Add apps</string>
     <string name="app_spoofing_configured_apps">Configured apps</string>
     <string name="app_spoofing_no_apps_configured">No apps configured</string>
     <string name="app_spoofing_empty_description">Add an app to spoof its device identity</string>
+    <string name="app_spoofing_add_apps">Add apps</string>
+    <string name="app_spoofing_change_app">Change app</string>
+    <string name="app_spoofing_spoof_model">Spoof model</string>
+    <string name="app_spoofing_select_spoof_model">Select spoof model</string>
+    <string name="app_spoofing_longpress_hint">Long-press an app to remove it</string>
     <string name="app_spoofing_remove_title">Remove app?</string>
     <string name="app_spoofing_remove_confirm">Remove spoofing configuration for %1$s?</string>
-    <string name="app_spoofing_spoof_model">Spoof model</string>
-    <string name="app_spoofing_longpress_hint">Long-press an app to remove it</string>
-    <string name="app_spoofing_change_app">Change app</string>
+    <string name="app_spoofing_clear_all">Clear all</string>
+    <string name="app_spoofing_clear_all_confirm">This will remove spoofing configuration for all apps. Continue?</string>
     <string name="app_spoofing_no_apps_available">No apps available</string>
     <string name="app_spoofing_no_apps_found">No apps found for \"%1$s\"</string>
-    <string name="common_clear_search">Clear search</string>
-    <string name="app_spoofing_select_spoof_model">Select spoof model</string>
+
+    <!-- Custom spoof profile -->
+    <string name="add_new_spoof_profile">Add new profile</string>
     <string name="add_custom_spoof_profile_title">Add custom profile</string>
     <string name="custom_spoof_profile_name">Profile name</string>
     <string name="custom_spoof_profile_brand">Brand</string>
@@ -278,66 +362,23 @@
     <string name="custom_spoof_profile_model">Model</string>
     <string name="custom_spoof_profile_fingerprint">Fingerprint</string>
     <string name="custom_spoof_profile_product">Product</string>
-    <string name="show_system_apps">Show system apps</string>
-    <string name="hide_system_apps">Hide system apps</string>
-    <string name="action_select_all">Select all</string>
-    <string name="action_reset">Reset</string>
-    <string name="action_add_installed">Add installed</string>
-    <string name="action_search_apps">Search apps</string>
-    <string name="ts_revocation_status">Revocation status</string>
-    <string name="ts_target_configuration">Target configuration</string>
-    <string name="ts_no_targets">No target apps configured</string>
-    <string name="ts_manage_target_apps">Manage target apps</string>
-    <string name="ts_import_target_list">Import target list</string>
-    <string name="ts_import_target_list_summary">Import a list of target package names from a file</string>
-    <string name="ts_verification_mode">Verification mode</string>
-    <string name="ts_verification_mode_auto">Auto</string>
-    <string name="ts_no_patch">No patch level set</string>
-    <string name="ts_security_patch">Security patch level</string>
-    <string name="ts_footer_title">About TrickyStore</string>
-    <string name="ts_footer_body">TrickyStore intercepts key attestation requests and substitutes a custom keybox to satisfy hardware-backed integrity checks.\n\nTarget apps are the packages TrickyStore applies spoofed attestation to — apps not on the list use the device\'s real attestation chain.\n\nA revoked or expired keybox will cause verification to fail even if it loads successfully. Check the revocation status regularly if you rely on strong integrity.</string>
-    <string name="pif_config_details">Configuration details</string>
-    <string name="play_integrity_fix_summary">Spoof device attestation to pass Play Integrity checks</string>
-    <string name="spoofing_integrity_category">Integrity</string>
-    <string name="spoofing_identity_category">Device identity</string>
-    <string name="spoofing_features_category">Features</string>
-    <string name="user_selectable_app_spoofing_title">App spoofing</string>
-    <string name="user_selectable_app_spoofing_summary">Choose which apps get spoofed device info</string>
-    <string name="tricky_store_title">TrickyStore</string>
-    <string name="tricky_store_summary">Bypass hardware attestation checks using a custom keybox</string>
-    <string name="ts_master_switch_title">Enable TrickyStore</string>
-    <string name="ts_keybox_management">Keybox management</string>
-    <string name="ts_fetch_keybox">Fetch keybox</string>
-    <string name="ts_fetch_keybox_summary">Download or locate a keybox.xml file</string>
-    <string name="ts_no_keybox">No keybox loaded</string>
-    <string name="ts_import_keybox">Import keybox</string>
-    <string name="ts_delete_keybox">Delete keybox</string>
-    <string name="ts_delete_keybox_summary">Remove the currently active keybox file</string>
-    <string name="ts_revocation_no_keybox">No keybox loaded — hardware attestation will fail</string>
-    <string name="pif_vending_finger_disabled">Disabled (default)</string>
-    <string name="pif_vending_finger_same">Same as DroidGuard fingerprint</string>
-    <string name="play_integrity_fix_title">Play Integrity Fix</string>
-    <string name="pif_master_switch_title">Enable Play Integrity Fix</string>
-    <string name="pif_status">Status</string>
-    <string name="pif_no_config">No configuration loaded</string>
-    <string name="pif_active_config">Active configuration</string>
-    <string name="pif_fetch_pixel_beta">Fetch Pixel Canary fingerprint</string>
-    <string name="pif_fetch_pixel_beta_summary">Download the latest Pixel Canary fingerprint from Google</string>
-    <string name="pif_import_config">Import configuration</string>
-    <string name="pif_import_config_summary">Import a PIF config from a file</string>
-    <string name="pif_delete_config">Delete active configuration</string>
-    <string name="pif_delete_config_summary">Remove the currently active configuration file</string>
-    <string name="pif_advanced_settings">Advanced spoofing</string>
-    <string name="pif_spoof_vending_finger_title">Play Store fingerprint spoof</string>
-    <string name="pif_spoof_vending_finger_summary">Controls which FINGERPRINT is presented to the Play Store process</string>
-    <string name="pif_spoof_vending_sdk_title">Spoof SDK to DroidGuard</string>
-    <string name="pif_spoof_vending_sdk_summary">Override SDK_INT for DroidGuard to force the legacy &lt;A13 attestation path</string>
-    <string name="pif_footer_title">Passing basic integrity</string>
-    <string name="pif_footer_body">A Canary fingerprint is fetched and refreshed automatically every 21 days. Canary configs expire roughly 6 weeks from their release date — the expiry is shown in the active config summary.\n\nFor manual setup:\n1. Tap "Fetch Pixel Canary fingerprint" and select a device.\n2. If no devices are found, import a working PIF config from a trusted source. Config files are not provided.\n3. Recheck your Play Integrity status.\n\nAlways delete the active configuration before importing a new one. Loading an expired PIF config will cause TrickyStore strong integrity to fail even with a valid keybox.\n\nAdvanced spoofing:\n• Play Store fingerprint spoof — leave disabled unless advised otherwise. Spoofing FINGERPRINT to Play Store is rarely needed and may cause issues.\n• Spoof SDK to DroidGuard — forces the legacy pre-Android 13 attestation path. Only enable this if basic integrity is failing and your config targets an older SDK.</string>
+
+    <!-- Pixel Props -->
     <string name="pp_target_count">Spoofing %1$d app(s) as Pixel</string>
     <string name="pp_spoof_as">Spoof as</string>
     <string name="pp_empty_description">Selected apps will report the chosen Pixel device identity to unlock Pixel-exclusive features</string>
     <string name="pp_mainline_unsupported">This device is already a Pixel. Spoofing is not available on mainline Pixel devices.</string>
+
+    <!-- Common actions / shared UI strings -->
+    <string name="common_system_badge">System</string>
+    <string name="common_clear_search">Clear search</string>
+    <string name="show_system_apps">Show system apps</string>
+    <string name="hide_system_apps">Hide system apps</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_select_all">Select all</string>
+    <string name="action_reset">Reset</string>
+    <string name="action_add_installed">Add installed</string>
+    <string name="action_search_apps">Search apps</string>
 
     <!-- Widget string -->
     <string name="widgets_title">Widgets</string>
