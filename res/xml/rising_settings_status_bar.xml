@@ -58,6 +58,13 @@
             android:summary="@string/dynamic_bar_enable_summary"
             android:fragment="com.rising.settings.fragments.statusbar.DynamicBar" />
 
+        <!-- Cutout Progress -->
+        <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="cutout_progress"
+            android:title="@string/cutout_progress_title"
+            android:summary="@string/cutout_progress_summary"
+            android:fragment="com.rising.settings.fragments.statusbar.CutoutProgressSettingsFragment" />
+
         <com.android.settings.preferences.SecureSettingSwitchPreference
             android:key="enable_camera_privacy_indicator"
             android:title="@string/mic_camera_privacy_indicator_title"
