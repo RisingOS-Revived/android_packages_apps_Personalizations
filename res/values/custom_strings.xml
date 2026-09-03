@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Animation -->
+    <string name="activity_anim_perf_override_title">Activity Animation Override</string>
+    <string name="activity_anim_perf_override_summary">Use optimized activity transition animations</string>
+
     <!-- Show volume percentage -->
     <string name="show_volume_percentage_title">Show volume percentage</string>
     <string name="show_volume_percentage_summary">Show volume percentage in redesigned volume dialog</string>

@@ -42,6 +42,7 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
         private const val KEY_VOLUME_DIALOG_TYPE = "volume_dialog_type"
         private const val KEY_SHOW_VOLUME_PERCENTAGE = "show_volume_percentage"
         private const val KEY_AXION_VOLUME_STYLE = "axion_volume_style"
+        private const val SYS_ANI_OVERRIDE_ENABLED = "persist.sys.activity_anim_perf_override"
 
         private const val VOLUME_TYPE_AXION = 0
         private const val VOLUME_TYPE_REDESIGNED = 1
@@ -65,6 +66,7 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
     private var mVolumeDialogType: SystemSettingListPreference? = null
     private var mAxionVolumeStyle: SystemSettingListPreference? = null
     private var mShowVolumePercentage: SystemSettingListPreference? = null
+    private var mAniOverrideEnabled: SystemPropertyListPreference?? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +78,9 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
         mUnlockSound?.onPreferenceChangeListener = this
         mEmojiStyle = findPreference<SystemPropertyListPreference>(KEY_EMOJI_STYLE)
         mEmojiStyle?.onPreferenceChangeListener = this
+
+        mAniOverrideEnabled = findPreference<SystemPropertyListPreference?>(SYS_ANI_OVERRIDE_ENABLED)
+        mAniOverrideEnabled?.onPreferenceChangeListener = this
 
         mVolumeDialogType = findPreference<SystemSettingListPreference>(KEY_VOLUME_DIALOG_TYPE)
         mVolumeDialogType?.onPreferenceChangeListener = this
@@ -133,6 +138,11 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
                 context?.let { SystemUiRestartUtils.showSystemUIRestartDialog(it) }
                 val type = (newValue as? String)?.toIntOrNull() ?: VOLUME_TYPE_REDESIGNED
                 updateVolumeRelatedVisibility(type)
+                true
+            }
+
+            mAniOverrideEnabled -> {
+                context?.let { SystemRestartUtils.showSystemRestartDialog(it) }
                 true
             }
 

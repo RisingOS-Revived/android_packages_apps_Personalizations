@@ -15,6 +15,16 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Animation Override -->
+    <string-array name="anim_perf_override_entries">
+        <item>Disabled</item>
+        <item>Enabled</item>
+    </string-array>
+    <string-array name="anim_perf_override_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
     <!-- Volume Percentage -->
     <string-array name="volume_percentage_entries">
         <item>Disabled</item>

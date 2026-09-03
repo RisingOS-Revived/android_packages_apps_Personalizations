@@ -120,6 +120,16 @@
             android:defaultValue="0"
             android:summary="%s" />
 
+        <!-- Animation Override -->
+        <com.android.settings.preferences.SystemPropertyListPreference
+            android:key="persist.sys.activity_anim_perf_override"
+            android:icon="@drawable/ic_system_animation"
+            android:title="@string/activity_anim_perf_override_title"
+            android:summary="@string/activity_anim_perf_override_summary"
+            android:entries="@array/anim_perf_override_entries"
+            android:entryValues="@array/anim_perf_override_values"
+            android:defaultValue="0" />
+
         <!-- System animation styles -->
         <com.android.settings.preferences.SystemSettingListPreference
             android:key="system_animation_style"
