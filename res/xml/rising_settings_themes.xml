@@ -27,7 +27,7 @@
         <com.android.settingslib.widget.LayoutPreference
             android:key="themes_highlight_dashboard"
             android:layout="@layout/themes_highlight_dashboard"
-            android:selectable="false"/>
+            android:selectable="false" />
 
     </com.android.settings.preferences.rainbow.RainbowPreferenceCategory>
 
@@ -42,7 +42,8 @@
             android:title="@string/themes_lock_sound_title"
             android:entries="@array/themes_lock_unlock_sounds_entries"
             android:entryValues="@array/themes_lock_sounds_values"
-            android:defaultValue="/product/media/audio/ui/Lock.ogg" />
+            android:defaultValue="/product/media/audio/ui/Lock.ogg"
+            lineage:position="top" />
 
         <!-- Unlock sound -->
         <com.android.settings.preferences.GlobalSettingListPreference
@@ -51,7 +52,48 @@
             android:title="@string/themes_unlock_sound_title"
             android:entries="@array/themes_lock_unlock_sounds_entries"
             android:entryValues="@array/themes_unlock_sounds_values"
-            android:defaultValue="/product/media/audio/ui/Unlock.ogg" />
+            android:defaultValue="/product/media/audio/ui/Unlock.ogg"
+            lineage:position="bottom" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="volume_category"
+        android:title="@string/volume_category">
+
+        <!-- Volume panel Style -->
+        <com.android.settings.preferences.SystemSettingListPreference
+            android:key="volume_dialog_type"
+            android:icon="@drawable/ic_update"
+            android:title="@string/volume_dialog_type_title"
+            android:summary="%s"
+            android:entries="@array/volume_dialog_type_entries"
+            android:entryValues="@array/volume_dialog_type_values"
+            android:defaultValue="1"
+            lineage:position="top" />
+
+        <!-- Compose Volume Panel -->
+        <com.android.settings.preferences.SystemSettingListPreference
+            android:key="compose_volume_style"
+            android:icon="@drawable/ic_update"
+            android:title="@string/compose_volume_style_title"
+            android:summary="%s"
+            android:entries="@array/compose_volume_style_entries"
+            android:entryValues="@array/compose_volume_style_values"
+            android:defaultValue="0" />
+
+        <!-- Show volume percentage -->
+        <com.android.settings.preferences.SystemSettingListPreference
+            android:key="show_volume_percentage"
+            android:icon="@drawable/ic_numbers"
+            android:title="@string/show_volume_percentage_title"
+            android:summary="@string/show_volume_percentage_summary"
+            android:entries="@array/volume_percentage_entries"
+            android:entryValues="@array/volume_percentage_values"
+            android:defaultValue="0"
+            android:dependency="volume_dialog_type"
+            lineage:position="bottom" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -64,7 +106,8 @@
             android:icon="@drawable/ic_navbar"
             android:title="@string/theme_customization_navbar_title"
             android:summary="@string/theme_customization_navbar_summary"
-            android:fragment="com.rising.settings.fragments.ui.NavbarStyles" />
+            android:fragment="com.rising.settings.fragments.ui.NavbarStyles"
+            lineage:position="top" />
 
         <!-- Screen Off animation -->
         <com.android.settings.preferences.SystemSettingListPreference
@@ -75,9 +118,8 @@
             android:entries="@array/screen_off_animation_entries"
             android:entryValues="@array/screen_off_animation_values"
             android:defaultValue="0"
-            android:summary="%s"
-             />
-             
+            android:summary="%s" />
+
         <!-- System animation styles -->
         <com.android.settings.preferences.SystemSettingListPreference
             android:key="system_animation_style"
@@ -87,8 +129,7 @@
             android:entries="@array/system_animation_styles_entries"
             android:entryValues="@array/system_animation_styles_values"
             android:defaultValue="0"
-            android:summary="%s"
-            />
+            android:summary="%s" />
 
         <!-- Signal icon style -->
         <com.android.settings.preferences.ui.AdaptivePreference
@@ -96,7 +137,7 @@
             android:icon="@drawable/ic_signal"
             android:title="@string/theme_customization_signal_icon_title"
             android:summary="@string/theme_customization_signal_icon_summary"
-            android:fragment="com.rising.settings.fragments.ui.SignalIcons"/>
+            android:fragment="com.rising.settings.fragments.ui.SignalIcons" />
 
         <!-- Wifi icon style -->
         <com.android.settings.preferences.ui.AdaptivePreference
@@ -115,7 +156,7 @@
             android:entries="@array/emoji_style_entries"
             android:entryValues="@array/emoji_style_values"
             android:defaultValue="android"
-            lineage:position="bottom"/>
+            lineage:position="bottom" />
 
     </PreferenceCategory>
 

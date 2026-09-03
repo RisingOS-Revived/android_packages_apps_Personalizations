@@ -17,13 +17,17 @@ package com.rising.settings.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.os.UserHandle
+import android.provider.Settings
 import androidx.preference.Preference
 import com.android.internal.logging.nano.MetricsProto
-import com.android.internal.util.android.SystemRestartUtils;
+import com.android.internal.util.android.SystemRestartUtils
+import com.android.settings.utils.SystemRestartUtils as SystemUiRestartUtils
 import com.android.settings.R
 import com.android.settings.SettingsPreferenceFragment
 import com.android.settings.preferences.GlobalSettingListPreference
 import com.android.settings.preferences.SystemPropertyListPreference
+import com.android.settings.preferences.SystemSettingListPreference
 import com.android.settings.search.BaseSearchIndexProvider
 import com.android.settingslib.search.SearchIndexable
 
@@ -35,6 +39,13 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
         private const val KEY_LOCK_SOUND = "lock_sound"
         private const val KEY_UNLOCK_SOUND = "unlock_sound"
         private const val KEY_EMOJI_STYLE = "persist.sys.ax_emoji_style"
+        private const val KEY_VOLUME_DIALOG_TYPE = "volume_dialog_type"
+        private const val KEY_SHOW_VOLUME_PERCENTAGE = "show_volume_percentage"
+        private const val KEY_AXION_VOLUME_STYLE = "axion_volume_style"
+
+        private const val VOLUME_TYPE_AXION = 0
+        private const val VOLUME_TYPE_REDESIGNED = 1
+        private const val VOLUME_TYPE_STOCK = 2
 
         /**
          * For search
@@ -51,6 +62,9 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
     private var mLockSound: GlobalSettingListPreference? = null
     private var mUnlockSound: GlobalSettingListPreference? = null
     private var mEmojiStyle: SystemPropertyListPreference? = null
+    private var mVolumeDialogType: SystemSettingListPreference? = null
+    private var mAxionVolumeStyle: SystemSettingListPreference? = null
+    private var mShowVolumePercentage: SystemSettingListPreference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +76,14 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
         mUnlockSound?.onPreferenceChangeListener = this
         mEmojiStyle = findPreference<SystemPropertyListPreference>(KEY_EMOJI_STYLE)
         mEmojiStyle?.onPreferenceChangeListener = this
+
+        mVolumeDialogType = findPreference<SystemSettingListPreference>(KEY_VOLUME_DIALOG_TYPE)
+        mVolumeDialogType?.onPreferenceChangeListener = this
+
+        mAxionVolumeStyle = findPreference<SystemSettingListPreference>(KEY_AXION_VOLUME_STYLE)
+        mShowVolumePercentage = findPreference<SystemSettingListPreference>(KEY_SHOW_VOLUME_PERCENTAGE)
+
+        updateVolumeRelatedVisibility(getCurrentVolumeDialogType())
 
         // Initialize highlight preferences with null checks
         preferenceScreen?.let { screen ->
@@ -80,15 +102,37 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
         }
     }
 
+    private fun getCurrentVolumeDialogType(): Int {
+        val ctx = context ?: return VOLUME_TYPE_REDESIGNED
+        return Settings.System.getIntForUser(
+            ctx.contentResolver,
+            KEY_VOLUME_DIALOG_TYPE,
+            VOLUME_TYPE_REDESIGNED,
+            UserHandle.USER_CURRENT
+        )
+    }
+
+    private fun updateVolumeRelatedVisibility(type: Int) {
+        mAxionVolumeStyle?.isVisible = type == VOLUME_TYPE_AXION
+        mShowVolumePercentage?.isVisible = type == VOLUME_TYPE_REDESIGNED
+    }
+
     override fun onPreferenceChange(preference: Preference, newValue: Any?): Boolean {
         return when (preference) {
             mLockSound, mUnlockSound -> {
-                context?.let { SystemRestartUtils.showSystemUIRestartDialog(it) }
+                context?.let { SystemUiRestartUtils.showSystemUIRestartDialog(it) }
                 true
             }
 
             mEmojiStyle -> {
                 context?.let { SystemRestartUtils.showSystemRestartDialog(it) }
+                true
+            }
+
+            mVolumeDialogType -> {
+                context?.let { SystemUiRestartUtils.showSystemUIRestartDialog(it) }
+                val type = (newValue as? String)?.toIntOrNull() ?: VOLUME_TYPE_REDESIGNED
+                updateVolumeRelatedVisibility(type)
                 true
             }
 

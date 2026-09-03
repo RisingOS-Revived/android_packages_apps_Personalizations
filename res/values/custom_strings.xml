@@ -15,6 +15,18 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Show volume percentage -->
+    <string name="show_volume_percentage_title">Show volume percentage</string>
+    <string name="show_volume_percentage_summary">Show volume percentage in redesigned volume dialog</string>
+
+    <!-- Volume panel Style -->
+    <string name="volume_dialog_type_title">Volume style</string>
+    <string name="volume_dialog_type_summary">Select volume dialog style</string>
+
+    <!-- Compose Volume Panel -->
+    <string name="volume_category">Volume</string>
+    <string name="compose_volume_style_title">Compose volume panel</string>
+
     <!-- Wallpaper Glymps -->
     <string name="lock_glymps_title">Wallpaper Glymps</string>
     <string name="lock_glymps_enable_title">Enable Wallpaper Glymps</string>
