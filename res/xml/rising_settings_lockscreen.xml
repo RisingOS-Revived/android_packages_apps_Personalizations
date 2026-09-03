@@ -35,13 +35,19 @@
         android:key="lockscreen_interface_category"
         android:title="@string/lockscreen_interface_category">
 
+
+        <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="lock_glymps_settings"
+            android:title="@string/lock_glymps_title"
+            android:summary="@string/lock_glymps_enable_summary"
+            android:fragment="com.rising.settings.fragments.LockGlympsSettings"
+            lineage:position="top" />
+
         <com.android.settings.preferences.SystemSettingSwitchPreference
             android:key="lockscreen_battery_info"
             android:title="@string/lockscreen_battery_info_title"
             android:summary="@string/lockscreen_battery_info_summary"
-            android:defaultValue="true"
-            lineage:position="top"
-            />
+            android:defaultValue="true" />
 
         <com.android.settings.preferences.SystemSettingSwitchPreference
             android:key="lockscreen_charging_time"

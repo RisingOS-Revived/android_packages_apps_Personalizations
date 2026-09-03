@@ -15,6 +15,43 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Wallpaper Glymps -->
+    <string name="lock_glymps_title">Wallpaper Glymps</string>
+    <string name="lock_glymps_enable_title">Enable Wallpaper Glymps</string>
+    <string name="lock_glymps_enable_summary">Change the wallpaper each time the screen turns on</string>
+    <string name="lock_glymps_wallpaper_target_title">Apply wallpaper to</string>
+    <string name="lock_glymps_source_category">Wallpaper source</string>
+    <string name="lock_glymps_source_title">Wallpaper source</string>
+    <string name="lock_glymps_source_summary">Choose where to get wallpapers from</string>
+    <string name="lock_glymps_custom_urls_title">Manage custom URLs</string>
+    <string name="lock_glymps_custom_urls_summary">Add or remove custom wallpaper URLs</string>
+    <string name="lock_glymps_folder_title">Local folder</string>
+    <string name="lock_glymps_folder_summary">View folder location and wallpaper count (max 10 wallpapers)</string>
+    <string name="lock_glymps_download_category">Download settings</string>
+    <string name="lock_glymps_wifi_only_title">Wi-Fi only</string>
+    <string name="lock_glymps_wifi_only_summary">Download wallpapers only when connected to Wi-Fi</string>
+    <string name="lock_glymps_cache_size_title">Cache size</string>
+    <string name="lock_glymps_cache_size_summary">Number of wallpapers to pre-download</string>
+    <string name="lock_glymps_advanced_category">Advanced</string>
+    <string name="lock_glymps_clear_cache_title">Clear cache</string>
+    <string name="lock_glymps_clear_cache_summary">Remove all cached wallpapers</string>
+    <string name="lock_glymps_behavior_category">Behavior</string>
+    <string name="lock_glymps_change_on_title">Change wallpaper on</string>
+    <string name="lock_glymps_change_on_summary">When to change the wallpaper</string>
+    <string name="lock_glymps_timer_interval_title">Timer interval</string>
+    <string name="lock_glymps_timer_interval_summary">How often to change the wallpaper automatically</string>
+    <string name="lock_glymps_footer_title">Information</string>
+    <string name="lock_glymps_footer_text">📁 Local folder: /sdcard/Glymps\n\n⚠ Low-end devices may experience slight lag.\n\n🎨 Tip: Use a custom accent in Monet settings for stable colors.</string>
+    <string name="lock_glymps_preview_category">Current wallpapers</string>
+    <string name="lock_glymps_preview_title">Wallpaper preview</string>
+    <string name="lock_glymps_preview_summary">Current lock screen and home screen wallpapers</string>
+    <string name="lock_glymps_lock_screen">Lock screen</string>
+    <string name="lock_glymps_home_screen">Home screen</string>
+    <string name="lock_glymps_apply_now">Apply new wallpaper</string>
+    <string name="lock_glymps_applying">Applying…</string>
+    <string name="lock_glymps_lock_preview_desc">Lock screen wallpaper preview</string>
+    <string name="lock_glymps_home_preview_desc">Home screen wallpaper preview</string>
+
     <!-- Status bar/Cutout progress ring -->
     <string name="cutout_progress_title">Cutout progress ring</string>
     <string name="cutout_progress_summary">Show a progress ring around the camera cutout</string>
