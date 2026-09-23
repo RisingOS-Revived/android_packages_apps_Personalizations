@@ -41,6 +41,12 @@
         android:key="wallpaper_effects"
         android:title="@string/wallpaper_effects_title">
         
+        <com.android.settings.preferences.SystemSettingSwitchPreference
+            android:key="wallpaper_zoom_enabled"
+            android:title="@string/wallpaper_zoom_title"
+            android:summary="@string/wallpaper_zoom_summary"
+            android:defaultValue="true" />
+
         <com.android.settings.preferences.SystemPropertyListPreference
             android:key="persist.sys.wallpaper.effect_type"
             android:title="@string/wallpaper_effect_type_title"

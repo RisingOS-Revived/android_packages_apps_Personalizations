@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Wallpaper zoom -->
+    <string name="wallpaper_zoom_title">Wallpaper zoom</string>
+    <string name="wallpaper_zoom_summary">Turn off to show the wallpaper without extra zoom</string>
+
     <!-- Animation -->
     <string name="activity_anim_perf_override_title">Activity Animation Override</string>
     <string name="activity_anim_perf_override_summary">Use optimized activity transition animations</string>
