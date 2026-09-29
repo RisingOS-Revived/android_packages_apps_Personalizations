@@ -502,7 +502,7 @@
     <string name="ts_failed">Failed: %1$s</string>
     <string name="ts_revocation_status">Revocation status</string>
     <string name="ts_revocation_checking">Checking…</string>
-    <string name="ts_revocation_valid">Valid</string>
+    <string name="ts_revocation_valid">Not on Google\'s revocation list</string>
     <string name="ts_revocation_revoked">Revoked%1$s</string>
     <string name="ts_revocation_suspended">Suspended%1$s</string>
     <string name="ts_revocation_expiring_soon">Expiring soon</string>
