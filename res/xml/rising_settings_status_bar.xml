@@ -52,6 +52,13 @@
                 <intent android:action="com.android.settings.action.STATUS_BAR_TUNER" />
         </com.android.settings.preferences.ui.AdaptivePreference>
 
+        <!-- Network traffic -->
+        <com.android.settings.preferences.ui.AdaptivePreference
+            android:key="network_traffic_settings"
+            android:title="@string/network_traffic_settings_title"
+            android:summary="@string/network_traffic_settings_summary"
+            android:fragment="com.rising.settings.fragments.statusbar.NetworkTrafficSettings" />
+
         <com.android.settings.preferences.ui.AdaptivePreference
             android:key="dynamic_bar"
             android:title="@string/dynamic_bar"
