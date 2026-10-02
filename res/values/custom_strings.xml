@@ -15,6 +15,12 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Compose QS Customizations -->
+    <string name="qqs_show_brightness_slider_title">Show brightness slider in QQS</string>
+    <string name="qqs_show_brightness_slider_summary">Display the brightness slider in the collapsed Quick Settings panel</string>
+    <string name="qqs_show_media_title">Show media player in QQS</string>
+    <string name="qqs_show_media_summary">Display the media player in the collapsed Quick Settings panel</string>
+
     <!-- Wallpaper zoom -->
     <string name="wallpaper_zoom_title">Wallpaper zoom</string>
     <string name="wallpaper_zoom_summary">Turn off to show the wallpaper without extra zoom</string>
