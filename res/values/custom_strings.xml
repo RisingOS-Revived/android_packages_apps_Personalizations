@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Revamped bottom bar UI -->
+    <string name="penguin_glass_tab_bars_title">Enable BottomBar UI Revamp</string>
+    <string name="penguin_glass_tab_bars_summary">IOS Style BottomBar UI for google apps</string>
+
     <!-- Compose QS Customizations -->
     <string name="qqs_show_brightness_slider_title">Show brightness slider in QQS</string>
     <string name="qqs_show_brightness_slider_summary">Display the brightness slider in the collapsed Quick Settings panel</string>
