@@ -18,6 +18,7 @@ package com.rising.settings.fragments
 import android.content.ContentResolver
 import android.content.Context
 import android.content.res.Resources
+import android.hardware.face.FaceManager
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
 import android.provider.Settings
@@ -48,8 +49,14 @@ class LockScreen : OptimizedSettingsFragment() {
         private const val KEY_UDFPS_ANIMATIONS = "udfps_recognizing_animation_preview"
         private const val KEY_UDFPS_ICONS = "udfps_icon_picker"
         private const val SCREEN_OFF_UDFPS_ENABLED = "screen_off_udfps_enabled"
+        private const val KEY_FACE_ANIMATION = "face_unlock_animation"
         private const val KEY_FP_SUCCESS = "fp_success_vibrate"
         private const val KEY_FP_FAIL = "fp_error_vibrate"
+
+        private fun hasFace(context: Context?): Boolean {
+            val faceManager = context?.getSystemService(Context.FACE_SERVICE) as? FaceManager
+            return faceManager != null && faceManager.isHardwareDetected
+        }
 
         /**
          * For search
@@ -72,6 +79,10 @@ class LockScreen : OptimizedSettingsFragment() {
                     if (!Utils.isPackageInstalled(context, "com.crdroid.udfps.icons")) {
                         keys.add(KEY_UDFPS_ICONS)
                     }
+                }
+
+                if (!hasFace(context)) {
+                    keys.add(KEY_FACE_ANIMATION)
                 }
                 return keys
             }
@@ -148,6 +159,10 @@ class LockScreen : OptimizedSettingsFragment() {
                     mScreenOffUdfps?.let { category.removePreference(it) }
                 }
             }
+        }
+
+        if (!hasFace(context)) {
+            findCachedPreference<Preference>(KEY_FACE_ANIMATION)?.let { it.parent?.removePreference(it) }
         }
 
         val screen = preferenceScreen

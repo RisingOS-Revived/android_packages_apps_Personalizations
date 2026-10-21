@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Face unlock animation -->
+    <string name="face_unlock_animation_title">Face unlock animation</string>
+    <string name="face_unlock_animation_summary">Show the scanning, success and failure animation on the lock screen while unlocking with your face</string>
+
     <!-- Revamped bottom bar UI -->
     <string name="penguin_glass_tab_bars_title">Enable BottomBar UI Revamp</string>
     <string name="penguin_glass_tab_bars_summary">IOS Style BottomBar UI for google apps</string>

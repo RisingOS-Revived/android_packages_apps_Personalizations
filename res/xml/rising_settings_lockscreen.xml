@@ -167,6 +167,13 @@
             android:defaultValue="@*android:bool/config_dozeSupportsAodWallpaper"
             lineage:position="top" />
 
+        <!-- Face unlock animation -->
+        <com.android.settings.preferences.SystemSettingSwitchPreference
+            android:key="face_unlock_animation"
+            android:title="@string/face_unlock_animation_title"
+            android:summary="@string/face_unlock_animation_summary"
+            android:defaultValue="true" />
+
         <!-- Dynamic charging animation -->
         <com.android.settings.preferences.SystemSettingSwitchPreference
             android:key="wireless_charging_dynamic_color"
