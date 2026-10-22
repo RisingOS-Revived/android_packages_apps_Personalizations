@@ -433,27 +433,16 @@
     <!-- Play Integrity Fix -->
     <string name="play_integrity_fix_title">Play Integrity Fix</string>
     <string name="play_integrity_fix_summary">Spoof device attestation to pass Play Integrity checks</string>
-    <string name="pif_master_switch_title">Enable Play Integrity Fix</string>
-    <string name="pif_status">Status</string>
     <string name="pif_no_config">No configuration loaded</string>
     <string name="pif_active_config">Active configuration</string>
-    <string name="pif_config_loaded">Configuration loaded</string>
-    <string name="pif_config_details">Configuration details</string>
     <string name="pif_fetch_pixel_beta">Fetch Pixel Canary fingerprint</string>
-    <string name="pif_fetch_pixel_beta_summary">Download the latest Pixel Canary fingerprint from Google</string>
-    <string name="pif_fetching">Fetching from Google…</string>
     <string name="pif_fetched_model">Fetched fingerprint for %1$s</string>
-    <string name="pif_generating">Generating configuration…</string>
     <string name="pif_recommended_suffix">Recommended</string>
     <string name="pif_select_device">Select device</string>
     <string name="pif_no_devices_found">No devices found</string>
     <string name="pif_no_api_key">Failed to extract Flash Tool API key</string>
-    <string name="pif_import_config">Import configuration</string>
-    <string name="pif_import_config_summary">Import a PIF config from a file</string>
     <string name="pif_imported_as">Imported as %1$s</string>
     <string name="pif_invalid_fingerprint">Invalid fingerprint format</string>
-    <string name="pif_delete_config">Delete active configuration</string>
-    <string name="pif_delete_config_summary">Remove the currently active configuration file</string>
     <string name="pif_delete_title">Delete %1$s?</string>
     <string name="pif_delete_message">This configuration file will be permanently removed.</string>
     <string name="pif_deleted">Deleted %1$s</string>
@@ -463,14 +452,20 @@
     <string name="pif_wipe_confirm">Clear data</string>
     <string name="pif_advanced_settings">Advanced spoofing</string>
     <string name="pif_spoof_vending_finger_title">Play Store fingerprint spoof</string>
-    <string name="pif_spoof_vending_finger_summary">Controls which FINGERPRINT is presented to the Play Store process</string>
     <string name="pif_vending_finger_disabled">Disabled (default)</string>
     <string name="pif_vending_finger_same">Same as DroidGuard fingerprint</string>
+    <string name="pif_fingerprint_spoofing">Spoofing</string>
+    <string name="pif_active_model">Active: %1$s</string>
+    <string name="pif_canary_fingerprint">Canary fingerprint</string>
+    <string name="pif_patch_age">Patch %1$s \u00b7 %2$dd old</string>
+    <string name="pif_days_left">%1$dd left</string>
+    <string name="pif_expired">Expired</string>
+    <string name="pif_vending_finger_custom_clear_hint">Tap to turn off</string>
     <string name="pif_spoof_vending_sdk_title">Spoof SDK to Play Store</string>
     <string name="pif_spoof_vending_sdk_summary">Present SDK 32 to the Play Store to force the legacy &lt;A13 verdict path. Never raised above the real SDK. Can break Play Store behavior, so leave off unless testing</string>
     <string name="pif_vending_finger_custom_summary">Custom fingerprint: %1$s</string>
     <string name="pif_spoof_build_title">Spoof build fields</string>
-    <string name="pif_spoof_build_summary">Present the fingerprint\'s Build fields (model, device, fingerprint, ...) to DroidGuard</string>
+    <string name="pif_spoof_build_summary">Present the fingerprint\'s Build fields (model, device, fingerprint, …) to DroidGuard</string>
     <string name="pif_spoof_props_title">Spoof system properties</string>
     <string name="pif_spoof_props_summary">Present the fingerprint\'s build id, security patch, API level and product identity to DroidGuard</string>
     <string name="pif_spoof_provider_title">Spoof keystore provider</string>
@@ -478,9 +473,7 @@
     <string name="pif_spoof_signature_title">Spoof ROM signature</string>
     <string name="pif_spoof_signature_summary">Experimental. Work around the test-key ROM ban for DroidGuard</string>
     <string name="pif_reset_advanced_title">Reset advanced spoofing</string>
-    <string name="pif_reset_advanced_summary">Restore the default value of every switch above. The fingerprint is kept</string>
     <string name="pif_reset_advanced_message">Reset all advanced spoofing options to their defaults? The current fingerprint is kept.</string>
-    <string name="pif_footer_title">Passing basic integrity</string>
     <string name="pif_footer_body">A Canary fingerprint is fetched and refreshed automatically every 21 days. Canary configs expire roughly 6 weeks from their release date — the expiry is shown in the active config summary.\n\nFor manual setup:\n1. Tap "Fetch Pixel Canary fingerprint" and select a device.\n2. If no devices are found, import a working PIF config from a trusted source. Config files are not provided.\n3. Recheck your Play Integrity status.\n\nAlways delete the active configuration before importing a new one. Loading an expired PIF config will cause TrickyStore strong integrity to fail even with a valid keybox.\n\nAdvanced spoofing:\n• Play Store fingerprint spoof — leave disabled unless advised otherwise. Spoofing FINGERPRINT to Play Store is rarely needed and may cause issues.\n• Spoof SDK to DroidGuard — forces the legacy pre-Android 13 attestation path. Only enable this if basic integrity is failing and your config targets an older SDK.</string>
 
     <!-- TrickyStore -->
@@ -492,15 +485,12 @@
     <string name="ts_keybox_installed">Keybox installed</string>
     <string name="ts_keybox_imported">Keybox imported</string>
     <string name="ts_keybox_deleted">Keybox deleted</string>
-    <string name="ts_import_keybox">Import keybox</string>
-    <string name="ts_delete_keybox">Delete keybox</string>
     <string name="ts_delete_keybox_title">Delete keybox?</string>
     <string name="ts_delete_keybox_message">This will remove the currently installed keybox file.</string>
-    <string name="ts_delete_keybox_summary">Remove the currently active keybox file</string>
-    <string name="ts_fetch_keybox">Fetch keybox</string>
+    <string name="ts_fetch_keybox">Fetch latest keybox</string>
     <string name="ts_fetch_keybox_summary">Download or locate a keybox.xml file</string>
     <string name="ts_fetch_keybox_fetching">Fetching keybox…</string>
-    <string name="ts_fetch_keybox_success">Keybox fetched successfully</string>
+    <string name="ts_fetch_keybox_success">Latest keybox fetched successfully</string>
     <string name="ts_fetch_keybox_failed">Fetch failed: %1$s</string>
     <string name="ts_fetch_keybox_blocked">Fetching blocked — resolve the current keybox issue first</string>
     <string name="ts_fetch_keybox_same_file">This file matches the currently active keybox</string>
@@ -509,6 +499,12 @@
     <string name="ts_fetch_keybox_last_fetched">Last fetched: %1$s</string>
     <string name="ts_fetch_keybox_revoked_refetch">Current keybox is revoked. Fetch a new one?</string>
     <string name="ts_fetch_keybox_suspended_refetch">Current keybox is suspended. Fetch a new one?</string>
+    <string name="ts_chip_valid">Valid</string>
+    <string name="ts_chip_expiring">Expiring</string>
+    <string name="ts_chip_invalid">Invalid chain</string>
+    <string name="ts_chip_unknown_root">Unknown root</string>
+    <string name="ts_chip_checking">Checking</string>
+    <string name="ts_chip_unchecked">Not checked</string>
     <string name="ts_failed">Failed: %1$s</string>
     <string name="ts_revocation_status">Revocation status</string>
     <string name="ts_revocation_checking">Checking…</string>
@@ -523,13 +519,13 @@
     <string name="ts_revocation_last_checked">Last checked: %1$s</string>
     <string name="ts_revocation_error">Check failed: %1$s</string>
     <string name="ts_untrusted_root_title">Untrusted root certificate</string>
-    <string name="ts_untrusted_root_message">This keybox chains to a root certificate that isn\'t trusted. Keep it anyway?</string>
+    <string name="ts_untrusted_root_message">This keybox has a certificate chain rooted at an authority not recognized by Evolution X. It may still pass Strong Integrity on some devices. Keep it installed or replace it with the latest keybox?</string>
     <string name="ts_untrusted_root_keep">Keep</string>
     <string name="ts_untrusted_root_replace">Replace</string>
     <string name="ts_chain_invalid_title">Invalid certificate chain</string>
-    <string name="ts_chain_invalid_message">This keybox\'s certificate chain could not be validated.</string>
+    <string name="ts_chain_invalid_message">The keybox certificate chain is invalid or could not be verified. It may be corrupted or tampered with. Would you like to replace it with the latest keybox?</string>
     <string name="ts_expiring_soon_title">Keybox expiring soon</string>
-    <string name="ts_expiring_soon_message">This keybox will expire: %1$s</string>
+    <string name="ts_expiring_soon_message">This keybox\'s certificate expires on %1$s. It currently passes integrity but will stop working after expiry. Replace it now with the latest keybox?</string>
     <string name="ts_expiry_unknown">Unknown</string>
     <string name="ts_patch_date_hint" translatable="false">e.g. 2026-07-05, YYYY-MM-05, or per-package blocks</string>
     <string name="ts_patch_stale_warning">%1$s (stale, 12+ months old)</string>
@@ -553,8 +549,7 @@
     <string name="ts_mode_leaf">Leaf certificate</string>
     <string name="ts_mode_cert">Full certificate</string>
     <string name="ts_mode_skip">Skip</string>
-    <string name="ts_footer_title">About TrickyStore</string>
-    <string name="ts_footer_body">TrickyStore intercepts key attestation requests and substitutes a custom keybox to satisfy hardware-backed integrity checks.\n\nTarget apps are the packages TrickyStore applies spoofed attestation to — apps not on the list use the device\'s real attestation chain.\n\nA revoked or expired keybox will cause verification to fail even if it loads successfully. Check the revocation status regularly if you rely on strong integrity.</string>
+    <string name="ts_footer_body">A keybox is fetched and kept valid automatically. The revocation status is checked every 24 hours, and a new keybox is fetched from the official source if the current one is revoked or suspended.\n\nFor manual setup:\n1. Tap \"Fetch latest keybox\" to download one automatically, or import your own from a trusted source.\n2. Open \"Manage target apps\" and select the apps that require integrity checks.\n3. Set target mode to \"Leaf\" if your device has a working TEE; otherwise leave it as Auto.\n4. Recheck your Play Integrity status.\n\nNote: If no valid latest keybox is available, auto-fetch is paused for 24 hours before retrying. Always delete the existing keybox before importing a new one.</string>
 
     <!-- Spoofing (general/shared) -->
     <string name="spoofing_applying_changes">Applying changes…</string>
@@ -619,6 +614,7 @@
     <string name="show_system_apps">Show system apps</string>
     <string name="hide_system_apps">Hide system apps</string>
     <string name="action_delete">Delete</string>
+    <string name="action_import">Import</string>
     <string name="action_select_all">Select all</string>
     <string name="action_reset">Reset</string>
     <string name="action_add_installed">Add installed</string>

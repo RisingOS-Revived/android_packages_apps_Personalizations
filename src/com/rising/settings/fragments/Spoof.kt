@@ -17,126 +17,108 @@ package com.rising.settings.fragments
 
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemProperties
+import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.History
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent
 import com.android.settings.R
 import com.android.settings.SettingsPreferenceFragment
-import com.android.settings.preferences.SecureSettingSwitchPreference
+import com.android.settings.core.SubSettingLauncher
 import com.android.settings.search.BaseSearchIndexProvider
-import com.android.settings.utils.PreferenceUtils
 import com.android.settingslib.search.SearchIndexable
+import com.android.settingslib.spa.framework.theme.SettingsSpace
 
+/**
+ * Spoofing hub. Compose host for the same entries the old preference screen had: the two
+ * Play Integrity switches (TrickyStore, PIF) with their own sub-pages, device identity pages,
+ * Tensor targets (non-Tensor devices only), the Photos / Snapchat overrides (installed apps
+ * only) and a reset action. `res/xml/rising_settings_spoof.xml` is kept only as the search
+ * index source.
+ */
 @SearchIndexable
-class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListener {
+class Spoof : SettingsPreferenceFragment() {
 
-    companion object {
-        private const val TAG = "Spoof"
+    private val handler = Handler(Looper.getMainLooper())
+    private var pendingKill: Runnable? = null
+    private var resumeTick by mutableIntStateOf(0)
 
-        private const val KEY_FEATURES_CATEGORY = "spoofing_features_category"
-        private const val KEY_APP_SPECIFIC_CATEGORY = "spoofing_app_specific_category"
-        private const val PI_PHOTOS_SPOOF = "pi_photos_spoof"
-        private const val PI_SNAPCHAT_SPOOF = "pi_snapchat_spoof"
-        private const val KEY_TENSOR_TARGETS = "tensor_targets_settings"
-        private const val KEY_RESET_DEFAULTS = "spoofing_reset_defaults"
-
-        private const val PHOTOS_PACKAGE = "com.google.android.apps.photos"
-        private const val SNAPCHAT_PACKAGE = "com.snapchat.android"
-
-        @JvmField
-        val SEARCH_INDEX_DATA_PROVIDER = BaseSearchIndexProvider(R.xml.rising_settings_spoof)
-    }
-
-    private var mFeaturesCategory: PreferenceCategory? = null
-    private var mAppSpecificCategory: PreferenceCategory? = null
-    private var mPhotosSpoof: SecureSettingSwitchPreference? = null
-    private var mSnapchatSpoof: SecureSettingSwitchPreference? = null
-    private var mTensorTargets: Preference? = null
-
-    private lateinit var mHandler: Handler
-    private var mPendingKill: Runnable? = null
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.rising_settings_spoof)
-
-        mHandler = Handler(Looper.getMainLooper())
-
-        mFeaturesCategory = findPreference(KEY_FEATURES_CATEGORY)
-        mAppSpecificCategory = findPreference(KEY_APP_SPECIFIC_CATEGORY)
-        mPhotosSpoof = findPreference(PI_PHOTOS_SPOOF)
-        mSnapchatSpoof = findPreference(PI_SNAPCHAT_SPOOF)
-        mTensorTargets = findPreference(KEY_TENSOR_TARGETS)
-
-        // Tensor targets: only relevant on non-Tensor devices
-        val model = SystemProperties.get("ro.product.model")
-        val isTensorDevice = model.matches(Regex("Pixel (6|7|8|9|10)[a-zA-Z ]*"))
-        mTensorTargets?.let {
-            if (isTensorDevice) mFeaturesCategory?.removePreference(it)
-        }
-        mPhotosSpoof = initAppSpoof(mPhotosSpoof, PHOTOS_PACKAGE)
-        mSnapchatSpoof = initAppSpoof(mSnapchatSpoof, SNAPCHAT_PACKAGE)
-
-        findPreference<Preference>(KEY_RESET_DEFAULTS)?.setOnPreferenceClickListener {
-            showResetDefaultsDialog()
-            true
-        }
+        requireActivity().title = getString(R.string.spoofing_title)
     }
 
-    private fun showResetDefaultsDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.spoofing_reset_defaults_dialog_title)
-            .setMessage(R.string.spoofing_reset_defaults_dialog_message)
-            .setPositiveButton(R.string.spoofing_reset_defaults_confirm) { _, _ ->
-                try {
-                    TrickyStore.resetAllSpoofDefaults(requireContext())
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.spoofing_reset_defaults_done,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } catch (e: Exception) {
-                    Log.e(TAG, "Failed to reset spoof defaults", e)
-                }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View = ComposeView(requireContext()).apply {
+        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        setContent {
+            ExpressiveTheme {
+                SpoofContent(
+                    refreshKey = resumeTick,
+                    onOpen = ::openPage,
+                    onAppSpoofChanged = ::scheduleKill,
+                )
             }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
+        }
     }
 
-    /**
-     * Checks whether [pkg] is installed. If not, removes [pref] from the
-     * app-specific category and returns null. If installed, syncs the checked state from
-     * Settings.Secure and registers the change listener, then returns the preference unchanged.
-     */
-    private fun initAppSpoof(
-        pref: SecureSettingSwitchPreference?,
-        pkg: String
-    ): SecureSettingSwitchPreference? {
-        if (pref == null) return null
-        try {
-            requireContext().packageManager.getPackageInfo(pkg, 0)
-        } catch (e: PackageManager.NameNotFoundException) {
-            mAppSpecificCategory?.removePreference(pref)
-            return null
-        }
-        pref.onPreferenceChangeListener = this
-        return pref
+    override fun onResume() {
+        super.onResume()
+        // Re-read the master switches: they can be flipped from the sub-pages.
+        resumeTick++
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        pendingKill?.let { handler.removeCallbacks(it) }
+    }
+
+    override fun getMetricsCategory(): Int = MetricsEvent.VIEW_UNKNOWN
+
+    private fun openPage(destination: Class<*>, titleRes: Int) {
+        SubSettingLauncher(requireContext())
+            .setDestination(destination.name)
+            .setTitleRes(titleRes)
+            .setSourceMetricsCategory(getMetricsCategory())
+            .launch()
     }
 
     private fun scheduleKill(pkg: String) {
-        mPendingKill?.let { mHandler.removeCallbacks(it) }
-        Toast.makeText(context, R.string.spoofing_applying_changes, Toast.LENGTH_SHORT).show()
+        pendingKill?.let { handler.removeCallbacks(it) }
+        Toast.makeText(requireContext(), R.string.spoofing_applying_changes, Toast.LENGTH_SHORT)
+            .show()
         val kill = Runnable { killIfRunning(pkg) }
-        mPendingKill = kill
-        mHandler.postDelayed(kill, 500)
+        pendingKill = kill
+        handler.postDelayed(kill, KILL_DELAY_MS)
     }
 
     private fun killIfRunning(pkg: String) {
@@ -158,26 +140,227 @@ class Spoof : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListene
         }
     }
 
-    override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
-        if (mSnapchatSpoof == null && mPhotosSpoof == null) return true
-        when (preference) {
-            mSnapchatSpoof -> scheduleKill(SNAPCHAT_PACKAGE)
-            mPhotosSpoof -> scheduleKill(PHOTOS_PACKAGE)
+    companion object {
+        private const val TAG = "Spoof"
+        private const val KILL_DELAY_MS = 500L
+
+        private const val TRICKYSTORE_ENABLED_KEY = "spoof_trickystore_enabled"
+        private const val PIF_ENABLED_KEY = "spoof_pif_enabled"
+        private const val PI_PHOTOS_SPOOF = "pi_photos_spoof"
+        private const val PI_SNAPCHAT_SPOOF = "pi_snapchat_spoof"
+        private const val KEY_TENSOR_TARGETS = "tensor_targets_settings"
+
+        private const val PHOTOS_PACKAGE = "com.google.android.apps.photos"
+        private const val SNAPCHAT_PACKAGE = "com.snapchat.android"
+
+        private const val WIKI_URL = "https://github.com/RisingOS-Revived/risingOS_wiki"
+
+        private fun isInstalled(context: Context, pkg: String): Boolean = try {
+            context.packageManager.getPackageInfo(pkg, 0)
+            true
+        } catch (_: PackageManager.NameNotFoundException) {
+            false
         }
-        return true
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mPendingKill?.let { mHandler.removeCallbacks(it) }
-    }
+        private fun isTensorDevice(): Boolean {
+            val model = SystemProperties.get("ro.product.model")
+            return model.matches(Regex("Pixel (6|7|8|9|10)[a-zA-Z ]*"))
+        }
 
-    override fun onResume() {
-        super.onResume()
-        PreferenceUtils.reloadCustomPrimarySwitches(preferenceScreen)
-    }
+        @JvmField
+        val SEARCH_INDEX_DATA_PROVIDER = object : BaseSearchIndexProvider(R.xml.rising_settings_spoof) {
+            override fun getNonIndexableKeys(context: Context): List<String> {
+                val keys = super.getNonIndexableKeys(context).toMutableList()
+                if (isTensorDevice()) keys.add(KEY_TENSOR_TARGETS)
+                if (!isInstalled(context, PHOTOS_PACKAGE)) keys.add(PI_PHOTOS_SPOOF)
+                if (!isInstalled(context, SNAPCHAT_PACKAGE)) keys.add(PI_SNAPCHAT_SPOOF)
+                return keys
+            }
+        }
 
-    override fun getMetricsCategory(): Int {
-        return MetricsEvent.VIEW_UNKNOWN
+        @Composable
+        private fun SpoofContent(
+            refreshKey: Int,
+            onOpen: (Class<*>, Int) -> Unit,
+            onAppSpoofChanged: (String) -> Unit,
+        ) {
+            val context = LocalContext.current
+            val resolver = context.contentResolver
+
+            val isTensor = remember { isTensorDevice() }
+            val photosInstalled = remember { isInstalled(context, PHOTOS_PACKAGE) }
+            val snapInstalled = remember { isInstalled(context, SNAPCHAT_PACKAGE) }
+
+            var tsEnabled by remember(refreshKey) {
+                mutableStateOf(Settings.System.getInt(resolver, TRICKYSTORE_ENABLED_KEY, 1) != 0)
+            }
+            var pifEnabled by remember(refreshKey) {
+                mutableStateOf(Settings.System.getInt(resolver, PIF_ENABLED_KEY, 1) != 0)
+            }
+            var photosSpoof by remember(refreshKey) {
+                mutableStateOf(Settings.Secure.getInt(resolver, PI_PHOTOS_SPOOF, 1) != 0)
+            }
+            var snapSpoof by remember(refreshKey) {
+                mutableStateOf(Settings.Secure.getInt(resolver, PI_SNAPCHAT_SPOOF, 0) != 0)
+            }
+            var showResetDialog by remember { mutableStateOf(false) }
+
+            if (showResetDialog) {
+                ExpressiveConfirmDialog(
+                    title = stringResource(R.string.spoofing_reset_defaults_dialog_title),
+                    message = stringResource(R.string.spoofing_reset_defaults_dialog_message),
+                    confirmText = stringResource(R.string.spoofing_reset_defaults_confirm),
+                    destructive = true,
+                    onConfirm = {
+                        try {
+                            TrickyStore.resetAllSpoofDefaults(context)
+                            Toast.makeText(
+                                context, R.string.spoofing_reset_defaults_done, Toast.LENGTH_SHORT,
+                            ).show()
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Failed to reset spoof defaults", e)
+                        }
+                    },
+                    onDismiss = { showResetDialog = false },
+                    dismissText = stringResource(R.string.cancel),
+                )
+            }
+
+            ExpressiveScreen {
+                ExpressiveGroup(title = stringResource(R.string.spoofing_integrity_category)) {
+                    item {
+                        ExpressiveSwitchNavRow(
+                            title = stringResource(R.string.tricky_store_title),
+                            summary = stringResource(R.string.tricky_store_summary),
+                            checked = tsEnabled,
+                            onCheckedChange = {
+                                tsEnabled = it
+                                Settings.System.putInt(
+                                    resolver, TRICKYSTORE_ENABLED_KEY, if (it) 1 else 0)
+                            },
+                            onClick = { onOpen(TrickyStore::class.java, R.string.tricky_store_title) },
+                        )
+                    }
+                    item {
+                        ExpressiveSwitchNavRow(
+                            title = stringResource(R.string.play_integrity_fix_title),
+                            summary = stringResource(R.string.play_integrity_fix_summary),
+                            checked = pifEnabled,
+                            onCheckedChange = {
+                                pifEnabled = it
+                                Settings.System.putInt(resolver, PIF_ENABLED_KEY, if (it) 1 else 0)
+                            },
+                            onClick = {
+                                onOpen(PlayIntegrityFix::class.java, R.string.play_integrity_fix_title)
+                            },
+                        )
+                    }
+                }
+
+                ExpressiveGroup(title = stringResource(R.string.spoofing_identity_category)) {
+                    item {
+                        ExpressiveNavRow(
+                            title = stringResource(R.string.user_selectable_app_spoofing_title),
+                            summary = stringResource(R.string.user_selectable_app_spoofing_summary),
+                            onClick = {
+                                onOpen(
+                                    UserSelectedAppSpoofSettings::class.java,
+                                    R.string.user_selectable_app_spoofing_title,
+                                )
+                            },
+                        )
+                    }
+                    item {
+                        ExpressiveNavRow(
+                            title = stringResource(R.string.spoofing_pixel_props_title),
+                            summary = stringResource(R.string.spoofing_pixel_props_summary),
+                            onClick = {
+                                onOpen(
+                                    PixelPropsSettings::class.java,
+                                    R.string.spoofing_pixel_props_title,
+                                )
+                            },
+                        )
+                    }
+                }
+
+                // Tensor targets only matter on non-Tensor devices
+                if (!isTensor) {
+                    ExpressiveGroup(title = stringResource(R.string.spoofing_features_category)) {
+                        item {
+                            ExpressiveNavRow(
+                                title = stringResource(R.string.tensor_spoof_title),
+                                summary = stringResource(R.string.tensor_spoof_summary),
+                                onClick = {
+                                    onOpen(
+                                        TensorTargetsSettings::class.java,
+                                        R.string.tensor_spoof_title,
+                                    )
+                                },
+                            )
+                        }
+                    }
+                }
+
+                if (photosInstalled || snapInstalled) {
+                    ExpressiveGroup(title = stringResource(R.string.spoofing_app_specific_category)) {
+                        if (photosInstalled) {
+                            item {
+                                ExpressiveSwitchRow(
+                                    titleText = stringResource(R.string.spoofing_photos_title),
+                                    summaryText = stringResource(R.string.spoofing_photos_summary),
+                                    isChecked = photosSpoof,
+                                    onChange = {
+                                        photosSpoof = it
+                                        Settings.Secure.putInt(
+                                            resolver, PI_PHOTOS_SPOOF, if (it) 1 else 0)
+                                        onAppSpoofChanged(PHOTOS_PACKAGE)
+                                    },
+                                )
+                            }
+                        }
+                        if (snapInstalled) {
+                            item {
+                                ExpressiveSwitchRow(
+                                    titleText = stringResource(R.string.spoofing_snap_title),
+                                    summaryText = stringResource(R.string.spoofing_snap_summary),
+                                    isChecked = snapSpoof,
+                                    onChange = {
+                                        snapSpoof = it
+                                        Settings.Secure.putInt(
+                                            resolver, PI_SNAPCHAT_SPOOF, if (it) 1 else 0)
+                                        onAppSpoofChanged(SNAPCHAT_PACKAGE)
+                                    },
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(Modifier.height(SettingsSpace.small1))
+                ExpressiveActionRow(
+                    actions = listOf(
+                        ExpressiveAction(
+                            text = stringResource(R.string.spoofing_reset_defaults_title),
+                            icon = Icons.Rounded.History,
+                            onClick = { showResetDialog = true },
+                        ),
+                    ),
+                )
+
+                ExpressiveGroup(title = stringResource(R.string.help_section_title)) {
+                    item {
+                        ExpressiveNavRow(
+                            title = stringResource(R.string.help_footer_title),
+                            summary = stringResource(R.string.help_footer_summary),
+                            onClick = {
+                                context.startActivity(
+                                    Intent(Intent.ACTION_VIEW, Uri.parse(WIKI_URL)))
+                            },
+                        )
+                    }
+                }
+            }
+        }
     }
 }
