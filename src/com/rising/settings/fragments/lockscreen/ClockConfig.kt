@@ -227,14 +227,14 @@ fun ClockConfigContent(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Clock Style",
+            text = stringResource(R.string.personalizations_ui_clock_style),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
         )
         
         Text(
-            text = "Swipe on the preview to browse styles",
+            text = stringResource(R.string.personalizations_ui_swipe_on_the_preview_to_browse_styles),
             style = MaterialTheme.typography.bodyMedium,
             color = if (isDarkTheme) 
                 Color.White.copy(alpha = 0.7f) 
@@ -282,7 +282,7 @@ fun ClockConfigContent(
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Current Style",
+                        text = stringResource(R.string.personalizations_ui_current_style),
                         style = MaterialTheme.typography.labelMedium,
                         color = if (isDarkTheme)
                             Color.White.copy(alpha = 0.6f)
@@ -353,7 +353,7 @@ fun ClockConfigContent(
                     Spacer(modifier = Modifier.width(16.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "Clock Font",
+                            text = stringResource(R.string.personalizations_ui_clock_font),
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Medium,
                             color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
@@ -365,7 +365,7 @@ fun ClockConfigContent(
                                     context,
                                     fontManager.allFontPackages[selectedFontIndex]
                                 )
-                            } else "System Default",
+                            } else stringResource(R.string.personalizations_ui_system_default),
                             style = MaterialTheme.typography.bodySmall,
                             color = if (isDarkTheme)
                                 Color.White.copy(alpha = 0.5f)
@@ -375,7 +375,7 @@ fun ClockConfigContent(
                     }
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = "Select Font",
+                        contentDescription = stringResource(R.string.personalizations_ui_select_font),
                         tint = if (isDarkTheme)
                             Color.White.copy(alpha = 0.6f)
                         else
@@ -458,7 +458,7 @@ fun ClockConfigContent(
             }
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = if (isApplying) "Applying..." else "Apply Clock Style",
+                text = if (isApplying) stringResource(R.string.personalizations_ui_applying) else stringResource(R.string.personalizations_ui_apply_clock_style),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = if (isDarkTheme) Color.Black else MaterialTheme.colorScheme.onPrimary
@@ -471,7 +471,7 @@ fun ClockConfigContent(
             onDismissRequest = { showFontPicker = false },
             title = { 
                 Text(
-                    "Select Font",
+                    stringResource(R.string.personalizations_ui_select_font),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
@@ -515,7 +515,7 @@ fun ClockConfigContent(
                                 if (selectedFontIndex == index) {
                                     Icon(
                                         imageVector = Icons.Default.Check,
-                                        contentDescription = "Selected",
+                                        contentDescription = stringResource(R.string.personalizations_ui_selected),
                                         tint = if (isDarkTheme)
                                             Color.White
                                         else
@@ -533,7 +533,7 @@ fun ClockConfigContent(
                     shape = RoundedCornerShape(20.dp)
                 ) {
                     Text(
-                        "Close",
+                        stringResource(R.string.personalizations_ui_close),
                         color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.primary
                     )
                 }
@@ -567,11 +567,11 @@ private fun ClockColorSection(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        SectionHeader("Clock Color", isDarkTheme)
+        SectionHeader(stringResource(R.string.personalizations_ui_clock_color), isDarkTheme)
 
         ConfigCard(
-            title = "Album Art Color",
-            subtitle = "Tint the clock using the current album art",
+            title = stringResource(R.string.personalizations_ui_album_art_color),
+            subtitle = stringResource(R.string.personalizations_ui_album_art_color_summary),
             icon = Icons.Default.Palette,
             enabled = config.useAlbumArtColor,
             isDarkTheme = isDarkTheme
@@ -592,7 +592,7 @@ private fun ClockColorSection(
 
             if (config.colorMode == "custom") {
                 ColorSwatchRow(
-                    title = "Custom Color",
+                    title = stringResource(R.string.personalizations_ui_custom_color),
                     argb = config.customColorArgb,
                     onClick = { showCustomColorPicker = true },
                     isDarkTheme = isDarkTheme
@@ -604,7 +604,7 @@ private fun ClockColorSection(
     if (showCustomColorPicker) {
         com.android.settings.utils.ClockColorPickerDialog(
             initialColor = String.format("%06X", config.customColorArgb and 0x00FFFFFF),
-            title = "Clock Color",
+            title = stringResource(R.string.personalizations_ui_clock_color),
             onDismiss = { showCustomColorPicker = false },
             onColorSelected = { color ->
                 val argb = (color.toArgb() and 0x00FFFFFF) or 0xFF000000.toInt()
@@ -628,11 +628,11 @@ private fun ClockGradientSection(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        SectionHeader("Gradient", isDarkTheme)
+        SectionHeader(stringResource(R.string.personalizations_ui_gradient), isDarkTheme)
 
         ConfigCard(
-            title = "Enable Gradient",
-            subtitle = if (config.gradientEnabled) "Active" else "Disabled",
+            title = stringResource(R.string.personalizations_ui_enable_gradient),
+            subtitle = if (config.gradientEnabled) stringResource(R.string.personalizations_ui_active) else stringResource(R.string.personalizations_ui_disabled),
             icon = Icons.Default.Gradient,
             enabled = config.gradientEnabled,
             isDarkTheme = isDarkTheme
@@ -651,7 +651,7 @@ private fun ClockGradientSection(
             ) {
                 Box(modifier = Modifier.weight(1f)) {
                     ColorSwatchRow(
-                        title = "Start",
+                        title = stringResource(R.string.personalizations_ui_start),
                         argb = config.gradientColorStartArgb,
                         onClick = { showStartPicker = true },
                         isDarkTheme = isDarkTheme
@@ -659,7 +659,7 @@ private fun ClockGradientSection(
                 }
                 Box(modifier = Modifier.weight(1f)) {
                     ColorSwatchRow(
-                        title = "End",
+                        title = stringResource(R.string.personalizations_ui_end),
                         argb = config.gradientColorEndArgb,
                         onClick = { showEndPicker = true },
                         isDarkTheme = isDarkTheme
@@ -668,7 +668,7 @@ private fun ClockGradientSection(
             }
 
             SliderCard(
-                title = "Anchor Y",
+                title = stringResource(R.string.personalizations_ui_anchor_y),
                 value = config.gradientAnchorY,
                 valueRange = 0f..100f,
                 unit = "%",
@@ -677,7 +677,7 @@ private fun ClockGradientSection(
             )
 
             SliderCard(
-                title = "Radius",
+                title = stringResource(R.string.personalizations_ui_radius),
                 value = config.gradientRadius,
                 valueRange = 25f..200f,
                 unit = "%",
@@ -690,7 +690,7 @@ private fun ClockGradientSection(
     if (showStartPicker) {
         com.android.settings.utils.ClockColorPickerDialog(
             initialColor = String.format("%06X", config.gradientColorStartArgb and 0x00FFFFFF),
-            title = "Gradient Start",
+            title = stringResource(R.string.personalizations_ui_gradient_start),
             onDismiss = { showStartPicker = false },
             onColorSelected = { color ->
                 val argb = (color.toArgb() and 0x00FFFFFF) or 0xFF000000.toInt()
@@ -702,7 +702,7 @@ private fun ClockGradientSection(
     if (showEndPicker) {
         com.android.settings.utils.ClockColorPickerDialog(
             initialColor = String.format("%06X", config.gradientColorEndArgb and 0x00FFFFFF),
-            title = "Gradient End",
+            title = stringResource(R.string.personalizations_ui_gradient_end),
             onDismiss = { showEndPicker = false },
             onColorSelected = { color ->
                 val argb = (color.toArgb() and 0x00FFFFFF) or 0xFF000000.toInt()
@@ -723,10 +723,10 @@ private fun ClockLayoutSection(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        SectionHeader("Layout", isDarkTheme)
+        SectionHeader(stringResource(R.string.personalizations_ui_layout), isDarkTheme)
 
         SliderCard(
-            title = "Clock Size",
+            title = stringResource(R.string.personalizations_ui_clock_size),
             value = config.sizeScale,
             valueRange = 50f..150f,
             unit = "%",
@@ -735,7 +735,7 @@ private fun ClockLayoutSection(
         )
 
         SliderCard(
-            title = "Opacity",
+            title = stringResource(R.string.personalizations_ui_opacity),
             value = config.opacity,
             valueRange = 10f..100f,
             unit = "%",
@@ -744,7 +744,7 @@ private fun ClockLayoutSection(
         )
 
         SliderCard(
-            title = "Top Margin",
+            title = stringResource(R.string.personalizations_ui_top_margin),
             value = config.marginTop,
             valueRange = 0f..100f,
             unit = "px",
@@ -753,7 +753,7 @@ private fun ClockLayoutSection(
         )
 
         SliderCard(
-            title = "Start Margin",
+            title = stringResource(R.string.personalizations_ui_start_margin),
             value = config.marginStart,
             valueRange = -200f..200f,
             unit = "px",
@@ -773,11 +773,11 @@ private fun ClockAnimationSection(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        SectionHeader("Animation", isDarkTheme)
+        SectionHeader(stringResource(R.string.personalizations_ui_animation), isDarkTheme)
 
         ConfigCard(
-            title = "Wobble on Charge",
-            subtitle = "Clock wobbles when plugged in",
+            title = stringResource(R.string.personalizations_ui_wobble_on_charge),
+            subtitle = stringResource(R.string.personalizations_ui_clock_wobbles_when_plugged_in),
             icon = Icons.Default.BatteryChargingFull,
             enabled = config.wobbleOnCharge,
             isDarkTheme = isDarkTheme
@@ -790,8 +790,8 @@ private fun ClockAnimationSection(
         }
 
         ConfigCard(
-            title = "AOD Animation",
-            subtitle = "Animate clock in Always-On Display",
+            title = stringResource(R.string.personalizations_ui_aod_animation),
+            subtitle = stringResource(R.string.personalizations_ui_animate_clock_in_always_on_display),
             icon = Icons.Default.Nightlight,
             enabled = config.aodAnim,
             isDarkTheme = isDarkTheme
@@ -827,7 +827,7 @@ private fun ColorModePicker(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "Color Mode",
+                text = stringResource(R.string.personalizations_ui_color_mode),
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium,
                 color = if (isDarkTheme) Color.White else MaterialTheme.colorScheme.onSurface
@@ -855,7 +855,12 @@ private fun ColorModePicker(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = label,
+                                text = when (value) {
+                                    "default" -> stringResource(R.string.personalizations_ui_default),
+                                    "accent" -> stringResource(R.string.personalizations_ui_accent),
+                                    "custom" -> stringResource(R.string.personalizations_ui_custom),
+                                    else -> label
+                                },
                                 style = MaterialTheme.typography.labelLarge,
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                                 color = when {
@@ -949,7 +954,7 @@ private suspend fun applyClockChangesAndRestart(
                 Handler(Looper.getMainLooper()).postDelayed({
                     android.widget.Toast.makeText(
                         context,
-                        "Settings applied successfully!",
+                        context.getString(R.string.personalizations_ui_settings_applied_successfully),
                         android.widget.Toast.LENGTH_SHORT
                     ).show()
                     onSuccess()
@@ -957,7 +962,7 @@ private suspend fun applyClockChangesAndRestart(
             } catch (e: Exception) {
                 android.widget.Toast.makeText(
                     context,
-                    "Settings saved. Please restart SystemUI manually if changes don't appear.",
+                    context.getString(R.string.personalizations_ui_settings_saved_restart_manually),
                     android.widget.Toast.LENGTH_LONG
                 ).show()
                 onFailure()
@@ -967,7 +972,7 @@ private suspend fun applyClockChangesAndRestart(
         Handler(Looper.getMainLooper()).post {
             android.widget.Toast.makeText(
                 context,
-                "Settings saved. Please restart SystemUI manually if changes don't appear.",
+                context.getString(R.string.personalizations_ui_settings_saved_restart_manually),
                 android.widget.Toast.LENGTH_LONG
             ).show()
             onFailure()
