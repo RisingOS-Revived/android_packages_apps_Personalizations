@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Triple tap status bar to open the current app in a freeform window -->
+    <string name="status_bar_triple_tap_freeform_title">Triple tap to open in freeform</string>
+    <string name="status_bar_triple_tap_freeform_summary">Triple-tap on the status bar to open the current app in a freeform window</string>
+
     <!-- Face unlock animation -->
     <string name="face_unlock_animation_title">Face unlock animation</string>
     <string name="face_unlock_animation_summary">Show the scanning, success and failure animation on the lock screen while unlocking with your face</string>
