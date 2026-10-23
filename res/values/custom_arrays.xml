@@ -416,7 +416,7 @@
     </string-array>
 
     <!-- Themes - Lock/Unlock Sounds -->
-    <string-array name="themes_lock_unlock_sounds_entries" translatable="false">
+    <string-array name="themes_lock_unlock_sounds_entries">
         <item>Default</item>
         <item>Amazon Fire</item>
         <item>Asus Zenfone Max</item>
