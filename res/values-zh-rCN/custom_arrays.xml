@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="anim_perf_override_entries">
+        <item>停用</item>
+        <item>启用</item>
+    </string-array>
+    <string-array name="boot_animation_styles_entries">
+        <item>RisingOS（默认）</item>
+        <item>CyberPunk</item>
+        <item>Google</item>
+        <item>Google（Monet）</item>
+        <item>Valorant</item>
+        <item>自定义</item>
+    </string-array>
+    <string-array name="cutout_progress_easing_entries">
+        <item>线性</item>
+        <item>加速</item>
+        <item>减速</item>
+        <item>先加速后减速</item>
+    </string-array>
+    <string-array name="cutout_progress_finish_style_entries">
+        <item>弹出</item>
+        <item>分段级联</item>
+        <item>立即完成</item>
+    </string-array>
+    <string-array name="cutout_progress_position_entries">
+        <item>右侧</item>
+        <item>左侧</item>
+        <item>上方</item>
+        <item>下方</item>
+        <item>右上方</item>
+        <item>左上方</item>
+        <item>右下方</item>
+        <item>左下方</item>
+    </string-array>
+    <string-array name="cutout_progress_truncate_entries">
+        <item>中间</item>
+        <item>开头</item>
+        <item>末尾</item>
+    </string-array>
+    <string-array name="dynamic_bar_chip_style_entries">
+        <item>胶囊形</item>
+        <item>圆形</item>
+    </string-array>
+    <string-array name="lock_glymps_cache_size_entries">
+        <item>3 张壁纸（约 30 MB）</item>
+        <item>5 张壁纸（约 50 MB）</item>
+        <item>10 张壁纸（约 100 MB）</item>
+    </string-array>
+    <string-array name="lock_glymps_change_on_entries">
+        <item>屏幕点亮时</item>
+        <item>屏幕熄灭时（推荐）</item>
+        <item>按定时器更换</item>
+    </string-array>
+    <string-array name="lock_glymps_source_entries">
+        <item>随机壁纸（Picsum）</item>
+        <item>自定义网址列表</item>
+        <item>本地文件夹</item>
+    </string-array>
+    <string-array name="lock_glymps_timer_entries">
+        <item>5 分钟</item>
+        <item>10 分钟</item>
+        <item>15 分钟</item>
+        <item>30 分钟</item>
+        <item>1 小时</item>
+        <item>2 小时</item>
+        <item>3 小时</item>
+        <item>6 小时</item>
+        <item>12 小时</item>
+        <item>24 小时</item>
+    </string-array>
+    <string-array name="perapp_spoof_profile_labels">
+        <item>Black Shark 4 (China)</item>
+        <item>Poco F5</item>
+        <item>Samsung Galaxy S25 Ultra</item>
+        <item>Samsung Galaxy Z Fold 5</item>
+        <item>Honor Magic V2 RSR</item>
+        <item>Lenovo Legion Y700</item>
+        <item>Xiaomi 11T Pro</item>
+        <item>Xiaomi 13</item>
+        <item>Xiaomi 13 Pro</item>
+        <item>Xiaomi 14 Pro</item>
+        <item>OnePlus 12</item>
+        <item>OnePlus 13</item>
+        <item>Pixel 11 Pro XL</item>
+        <item>REDMAGIC 9 Pro</item>
+        <item>REDMAGIC 10 Pro</item>
+        <item>Realme 15 Pro 5G</item>
+        <item>ROG Phone 9 Pro</item>
+        <item>无</item>
+    </string-array>
+    <string-array name="quickswitch_launcher_entries">
+        <item>Ortus 桌面</item>
+        <item>Pixel 桌面</item>
+        <item>Lawnchair 桌面</item>
+    </string-array>
+    <string-array name="themes_lock_unlock_sounds_entries">
+        <item>默认</item>
+        <item>Amazon Fire</item>
+        <item>Asus Zenfone Max</item>
+        <item>Essential PH-1</item>
+        <item>HTC M8</item>
+        <item>Huawei</item>
+        <item>Hyper OS</item>
+        <item>Iqoo</item>
+        <item>LG G3</item>
+        <item>Minecraft 门</item>
+        <item>MIUI 10</item>
+        <item>MIUI 11</item>
+        <item>Nextbit</item>
+        <item>Nokia X</item>
+        <item>经典 IOS</item>
+        <item>One UI</item>
+        <item>OOS 14</item>
+        <item>Razer Phone</item>
+        <item>Soong</item>
+        <item>Windows 设备</item>
+        <item>Windows 错误</item>
+    </string-array>
+    <string-array name="volume_dialog_type_entries">
+        <item>Compose 新版面板</item>
+        <item>系统原生面板</item>
+    </string-array>
+    <string-array name="volume_percentage_entries">
+        <item>停用</item>
+        <item>启用</item>
+    </string-array>
+    <string-array name="wallpaper_effect_entries">
+        <item>无</item>
+        <item>色差</item>
+        <item>暗角</item>
+        <item>像素化</item>
+        <item>饱和度</item>
+        <item>复古棕褐色</item>
+        <item>锐化</item>
+        <item>灰度</item>
+        <item>反色</item>
+        <item>径向模糊</item>
+        <item>色调分离</item>
+    </string-array>
+</resources>

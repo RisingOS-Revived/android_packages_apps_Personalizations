@@ -565,7 +565,7 @@
     <string name="ts_expiring_soon_title">Keybox expiring soon</string>
     <string name="ts_expiring_soon_message">This keybox\'s certificate expires on %1$s. It currently passes integrity but will stop working after expiry. Replace it now with the latest keybox?</string>
     <string name="ts_expiry_unknown">Unknown</string>
-    <string name="ts_patch_date_hint" translatable="false">e.g. 2026-07-05, YYYY-MM-05, or per-package blocks</string>
+    <string name="ts_patch_date_hint">e.g. 2026-07-05, YYYY-MM-05, or per-package blocks</string>
     <string name="ts_patch_stale_warning">%1$s (stale, 12+ months old)</string>
     <string name="ts_invalid_patch_date">Invalid patch date format</string>
     <string name="ts_no_patch">No patch level set</string>
@@ -1557,7 +1557,7 @@
     <string name="press_color_to_apply">Press on color below to apply</string>
     <string name="arrow_right" translatable="false">→</string>
     <string name="arrow_down" translatable="false">↓</string>
-    <string name="hex" translatable="false">Hex:</string>
+    <string name="hex">Hex:</string>
     <string name="hex_hint" translatable="false">#ff000000</string>
     <string name="set">Set</string>
     <string name="color_default">Default</string>
@@ -1714,7 +1714,7 @@
     <string name="hardware_keys_action_split_screen">Split screen</string>
     <string name="hardware_keys_action_close_app">Kill app</string>
     <string name="hardware_keys_action_play_pause_music">Play/pause music playback</string>
-    <string name="hardware_keys_action_partial_screenshot" translatable="false">Partial screenshot</string>
+    <string name="hardware_keys_action_partial_screenshot">Partial screenshot</string>
     <string name="hardware_keys_action_torch">Toggle torch</string>
     <string name="hardware_keys_action_screenshot">Take screenshot</string>
     <string name="hardware_keys_action_volume_panel">Toggle volume panel</string>
