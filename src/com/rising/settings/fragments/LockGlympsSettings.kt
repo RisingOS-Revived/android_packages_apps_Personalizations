@@ -214,7 +214,7 @@ class LockGlympsSettings : SettingsPreferenceFragment(), Preference.OnPreference
         val storageDir = File(Environment.getExternalStorageDirectory(), STORAGE_FOLDER)
 
         if (!storageDir.exists()) {
-            folderInfoPreference.summary = "Folder not found. Tap to create."
+            folderInfoPreference.summary = getString(R.string.personalizations_ui_folder_not_found_tap_to_create)
         } else {
             val files = storageDir.listFiles { _, name ->
                 val lower = name.lowercase()
@@ -223,7 +223,7 @@ class LockGlympsSettings : SettingsPreferenceFragment(), Preference.OnPreference
             }
 
             val count = files?.size ?: 0
-            folderInfoPreference.summary = "$count wallpapers found in ${storageDir.path}"
+            folderInfoPreference.summary = getString(R.string.lock_glymps_wallpapers_found, count, storageDir.path)
         }
     }
 
@@ -233,32 +233,31 @@ class LockGlympsSettings : SettingsPreferenceFragment(), Preference.OnPreference
         val storageDir = File(Environment.getExternalStorageDirectory(), STORAGE_FOLDER)
 
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Local Wallpaper Folder")
+        builder.setTitle(context.getString(R.string.personalizations_ui_local_wallpaper_folder))
 
         if (!storageDir.exists()) {
             builder.setMessage(
-                "Folder does not exist yet.\n\nLocation: ${storageDir.path}" +
-                    "\n\nWould you like to create it?"
+                context.getString(R.string.lock_glymps_folder_create_prompt, storageDir.path)
             )
 
-            builder.setPositiveButton("Create Folder") { _, _ ->
+            builder.setPositiveButton(context.getString(R.string.personalizations_ui_create_folder)) { _, _ ->
                 if (storageDir.mkdirs()) {
                     Toast.makeText(
                         context,
-                        "Folder created: ${storageDir.path}",
+                        context.getString(R.string.lock_glymps_folder_created, storageDir.path),
                         Toast.LENGTH_LONG
                     ).show()
                     updateFolderInfo()
                 } else {
                     Toast.makeText(
                         context,
-                        "Failed to create folder",
+                        context.getString(R.string.personalizations_ui_failed_to_create_folder),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
 
-            builder.setNegativeButton("Cancel", null)
+            builder.setNegativeButton(context.getString(R.string.personalizations_ui_cancel), null)
         } else {
             val files = storageDir.listFiles { _, name ->
                 val lower = name.lowercase()
@@ -269,13 +268,10 @@ class LockGlympsSettings : SettingsPreferenceFragment(), Preference.OnPreference
             val count = files?.size ?: 0
 
             builder.setMessage(
-                "Folder location: ${storageDir.path}" +
-                    "\n\nWallpapers found: $count" +
-                    "\n\nSupported formats: JPG, PNG, WEBP" +
-                    "\n\nPlace your wallpaper images in this folder and they will be used randomly."
+                context.getString(R.string.lock_glymps_folder_details, storageDir.path, count)
             )
 
-            builder.setPositiveButton("OK", null)
+            builder.setPositiveButton(context.getString(R.string.personalizations_ui_ok), null)
         }
 
         builder.show()
@@ -301,8 +297,8 @@ class LockGlympsSettings : SettingsPreferenceFragment(), Preference.OnPreference
         )
 
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Custom Wallpaper URLs")
-        builder.setMessage("Enter direct image URLs, one per line")
+        builder.setTitle(context.getString(R.string.personalizations_ui_custom_wallpaper_urls))
+        builder.setMessage(context.getString(R.string.personalizations_ui_enter_direct_image_urls_one_per_line))
 
         val input = EditText(context).apply {
             setText(urls?.replace(",", "\n") ?: "")
@@ -316,7 +312,7 @@ class LockGlympsSettings : SettingsPreferenceFragment(), Preference.OnPreference
 
         builder.setView(input)
 
-        builder.setPositiveButton("Save") { _, _ ->
+        builder.setPositiveButton(context.getString(R.string.personalizations_ui_save)) { _, _ ->
             val inputText = input.text.toString()
             val lines = inputText.split("\n")
             val sb = StringBuilder()
@@ -336,10 +332,10 @@ class LockGlympsSettings : SettingsPreferenceFragment(), Preference.OnPreference
 
             notifyServiceToRefresh(context)
 
-            Toast.makeText(context, "Custom URLs saved", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.personalizations_ui_custom_urls_saved), Toast.LENGTH_SHORT).show()
         }
 
-        builder.setNegativeButton("Cancel", null)
+        builder.setNegativeButton(context.getString(R.string.personalizations_ui_cancel), null)
         builder.show()
     }
 
@@ -347,10 +343,10 @@ class LockGlympsSettings : SettingsPreferenceFragment(), Preference.OnPreference
         val context = activity ?: return
 
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Clear Cache")
-        builder.setMessage("This will delete all cached wallpapers and they will be re-downloaded. Continue?")
+        builder.setTitle(context.getString(R.string.personalizations_ui_clear_cache))
+        builder.setMessage(context.getString(R.string.personalizations_ui_clear_wallpaper_cache_confirm))
 
-        builder.setPositiveButton("Clear") { _, _ ->
+        builder.setPositiveButton(context.getString(R.string.personalizations_ui_clear)) { _, _ ->
             val intent = Intent().apply {
                 setClassName(
                     "com.android.systemui",
@@ -362,14 +358,14 @@ class LockGlympsSettings : SettingsPreferenceFragment(), Preference.OnPreference
 
             Toast.makeText(
                 context,
-                "Cache cleared. New wallpapers will be downloaded.",
+                context.getString(R.string.personalizations_ui_wallpaper_cache_cleared),
                 Toast.LENGTH_SHORT
             ).show()
 
             SystemRestartUtils.showSystemUIRestartDialog(context)
         }
 
-        builder.setNegativeButton("Cancel", null)
+        builder.setNegativeButton(context.getString(R.string.personalizations_ui_cancel), null)
         builder.show()
     }
 

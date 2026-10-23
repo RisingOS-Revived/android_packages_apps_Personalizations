@@ -195,7 +195,7 @@ private fun BoxScope.SizePicker(
                         val canAdd = if (span == 2) bigCount < 2 else smallCount < 4
                         
                         if (!canAdd) {
-                            val message = if (span == 2) "Row 1 is full (max 2 big widgets)" else "Row 2 is full (max 4 small widgets)"
+                            val message = if (span == 2) context.getString(R.string.personalizations_ui_row_1_is_full_max_2_big_widgets) else context.getString(R.string.personalizations_ui_row_2_is_full_max_4_small_widgets)
                             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                         } else {
                             onSelect(WidgetItem(widgetName, span))
@@ -228,7 +228,7 @@ private fun BoxScope.SizePicker(
     ) {
         Icon(
             Icons.Default.Close,
-            contentDescription = "Close",
+            contentDescription = stringResource(R.string.personalizations_ui_close),
             tint = onSurface()
         )
     }

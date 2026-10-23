@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ts_added_installed_count">
+        <item quantity="one">已添加 %d 个应用到目标列表</item>
+        <item quantity="other">已添加 %d 个应用到目标列表</item>
+    </plurals>
+</resources>
