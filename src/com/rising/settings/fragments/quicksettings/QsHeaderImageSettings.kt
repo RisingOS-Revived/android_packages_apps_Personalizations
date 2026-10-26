@@ -18,13 +18,15 @@ package com.rising.settings.fragments.quicksettings
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.UserHandle
 import android.provider.MediaStore
 import android.provider.SearchIndexableResource
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 
 import androidx.preference.ListPreference
@@ -34,21 +36,33 @@ import androidx.preference.Preference.OnPreferenceChangeListener
 import com.android.internal.logging.nano.MetricsProto
 import com.android.settings.R
 import com.android.settings.search.BaseSearchIndexProvider
-import com.rising.settings.fragments.OptimizedSettingsFragment
-import com.android.settingslib.search.SearchIndexable
-
 import com.android.settings.utils.ImageUtils
+import com.android.settingslib.search.SearchIndexable
+import com.rising.settings.fragments.OptimizedSettingsFragment
+
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 @SearchIndexable
 class QsHeaderImageSettings : OptimizedSettingsFragment(), OnPreferenceChangeListener {
 
     companion object {
+        private const val TAG = "QsHeaderImageSettings"
+
         private const val CUSTOM_HEADER_BROWSE = "custom_header_browse"
         private const val DAYLIGHT_HEADER_PACK = "daylight_header_pack"
         private const val CUSTOM_HEADER_PROVIDER = "qs_header_provider"
-        private const val STATUS_BAR_CUSTOM_HEADER = "status_bar_custom_header"
         private const val FILE_HEADER_SELECT = "file_header_select"
-        private const val REQUEST_PICK_IMAGE = 0
+        private const val REQUEST_PICK_IMAGE = 10001
+
+        private const val PROVIDER_DAYLIGHT = "daylight"
+        private const val PROVIDER_FILE = "file"
+
+        private const val OMNISTYLE_PACKAGE = "org.omnirom.omnistyle"
+        private const val OMNISTYLE_PICK = "$OMNISTYLE_PACKAGE.PickHeaderActivity"
+        private const val OMNISTYLE_BROWSE = "$OMNISTYLE_PACKAGE.BrowseHeaderActivity"
+        /** Pack key (package or package/activity) OmniStyle opens on. */
+        private const val EXTRA_HEADER_PACK = "header_pack"
 
         /**
          * For search
@@ -56,102 +70,127 @@ class QsHeaderImageSettings : OptimizedSettingsFragment(), OnPreferenceChangeLis
         @JvmField
         val SEARCH_INDEX_DATA_PROVIDER = object : BaseSearchIndexProvider() {
             override fun getXmlResourcesToIndex(context: Context, enabled: Boolean): List<SearchIndexableResource> {
-                val result = ArrayList<SearchIndexableResource>()
                 val sir = SearchIndexableResource(context)
                 sir.xmlResId = R.xml.qs_header_image_settings
-                result.add(sir)
-                return result
+                return arrayListOf(sir)
             }
 
-            override fun getNonIndexableKeys(context: Context): List<String> {
-                return ArrayList()
-            }
+            override fun getNonIndexableKeys(context: Context): List<String> = ArrayList()
         }
     }
+
+    private val mExecutor: ExecutorService = Executors.newSingleThreadExecutor()
+    private val mMainHandler = Handler(Looper.getMainLooper())
 
     private var mHeaderBrowse: Preference? = null
     private var mDaylightHeaderPack: ListPreference? = null
     private var mHeaderProvider: ListPreference? = null
-    private val mDaylightHeaderProvider = "daylight"
     private var mFileHeader: Preference? = null
-    private val mFileHeaderProvider = "file"
+    private var mBrowseAvailable = false
 
     override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
 
         addPreferencesFromResource(R.xml.qs_header_image_settings)
 
-        val resolver = activity?.contentResolver
-
         mHeaderBrowse = findCachedPreference(CUSTOM_HEADER_BROWSE)
-        mHeaderBrowse?.isEnabled = isBrowseHeaderAvailable()
-
+        mHeaderProvider = findCachedPreference(CUSTOM_HEADER_PROVIDER) as? ListPreference
         mDaylightHeaderPack = findCachedPreference(DAYLIGHT_HEADER_PACK) as? ListPreference
+        mFileHeader = findCachedPreference(FILE_HEADER_SELECT)
+
+        mHeaderProvider?.onPreferenceChangeListener = this
+        mDaylightHeaderPack?.onPreferenceChangeListener = this
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mBrowseAvailable = isOmniStyleAvailable()
 
         val entries = ArrayList<String>()
         val values = ArrayList<String>()
         getAvailableHeaderPacks(entries, values)
         mDaylightHeaderPack?.entries = entries.toTypedArray()
         mDaylightHeaderPack?.entryValues = values.toTypedArray()
-        updateHeaderProviderSummary()
-        mDaylightHeaderPack?.onPreferenceChangeListener = this
+        updateDaylightPackSummary()
 
-        val providerName = Settings.System.getString(resolver, Settings.System.STATUS_BAR_CUSTOM_HEADER_PROVIDER)
-            ?: mDaylightHeaderProvider
-        mHeaderBrowse?.isEnabled = isBrowseHeaderAvailable() && providerName != mFileHeaderProvider
-
-        mHeaderProvider = findCachedPreference(CUSTOM_HEADER_PROVIDER) as? ListPreference
-        val valueIndex = mHeaderProvider?.findIndexOfValue(providerName) ?: -1
-        mHeaderProvider?.setValueIndex(if (valueIndex >= 0) valueIndex else 0)
-        mHeaderProvider?.summary = mHeaderProvider?.entry
-        mHeaderProvider?.onPreferenceChangeListener = this
-        mDaylightHeaderPack?.isEnabled = providerName == mDaylightHeaderProvider
-
-        mFileHeader = findCachedPreference(FILE_HEADER_SELECT)
-        mFileHeader?.isEnabled = providerName == mFileHeaderProvider
+        var providerName = Settings.System.getString(
+            requireContext().contentResolver,
+            Settings.System.STATUS_BAR_CUSTOM_HEADER_PROVIDER
+        )
+        if (providerName == null || (mHeaderProvider?.findIndexOfValue(providerName) ?: -1) < 0) {
+            providerName = PROVIDER_DAYLIGHT
+        }
+        mHeaderProvider?.value = providerName
+        updateProviderUi(providerName)
     }
 
-    private fun updateHeaderProviderSummary() {
-        val settingHeaderPackage = Settings.System.getString(
-            activity?.contentResolver,
+    override fun onDestroy() {
+        super.onDestroy()
+        mExecutor.shutdown()
+    }
+
+    private fun updateDaylightPackSummary() {
+        val pack = Settings.System.getString(
+            requireContext().contentResolver,
             Settings.System.STATUS_BAR_DAYLIGHT_HEADER_PACK
         )
-        val valueIndex = mDaylightHeaderPack?.findIndexOfValue(settingHeaderPackage) ?: -1
-        if (valueIndex >= 0) {
-            mDaylightHeaderPack?.setValueIndex(valueIndex)
+        val index = mDaylightHeaderPack?.findIndexOfValue(pack) ?: -1
+        if (index >= 0) {
+            mDaylightHeaderPack?.setValueIndex(index)
             mDaylightHeaderPack?.summary = mDaylightHeaderPack?.entry
+        } else {
+            mDaylightHeaderPack?.summary = null
         }
     }
 
+    private fun updateProviderUi(provider: String?) {
+        val daylight = provider == PROVIDER_DAYLIGHT
+        val file = provider == PROVIDER_FILE
+
+        mHeaderProvider?.summary = mHeaderProvider?.entry
+        mDaylightHeaderPack?.isEnabled = daylight
+        mFileHeader?.isEnabled = file
+
+        // Daylight: browse packs read-only. Static: pick an image, OmniStyle applies it.
+        mHeaderBrowse?.isEnabled = mBrowseAvailable && !file
+        mHeaderBrowse?.setTitle(if (daylight) R.string.qs_header_browse_title else R.string.qs_header_pick_title)
+        mHeaderBrowse?.setSummary(if (daylight) R.string.qs_header_browse_summary else R.string.qs_header_pick_summary)
+
+        val intent = Intent(Intent.ACTION_MAIN)
+            .setClassName(OMNISTYLE_PACKAGE, if (daylight) OMNISTYLE_BROWSE else OMNISTYLE_PICK)
+        val pack = mDaylightHeaderPack?.value
+        if (daylight && !pack.isNullOrEmpty()) {
+            intent.putExtra(EXTRA_HEADER_PACK, pack)
+        }
+        mHeaderBrowse?.intent = intent
+    }
+
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
-        val resolver = activity?.contentResolver
-        when (preference?.key) {
+        val resolver = requireContext().contentResolver
+        return when (preference.key) {
             DAYLIGHT_HEADER_PACK -> {
-                val dhvalue = newValue as? String ?: return false
-                Settings.System.putString(resolver, Settings.System.STATUS_BAR_DAYLIGHT_HEADER_PACK, dhvalue)
-                val dhvalueIndex = mDaylightHeaderPack?.findIndexOfValue(dhvalue) ?: -1
-                if (dhvalueIndex >= 0) {
-                    mDaylightHeaderPack?.summary = mDaylightHeaderPack?.entries?.get(dhvalueIndex)
+                val value = newValue as? String ?: return false
+                Settings.System.putString(resolver, Settings.System.STATUS_BAR_DAYLIGHT_HEADER_PACK, value)
+                val index = mDaylightHeaderPack?.findIndexOfValue(value) ?: -1
+                if (index >= 0) {
+                    mDaylightHeaderPack?.summary = mDaylightHeaderPack?.entries?.get(index)
                 }
-                return true
+                // Keep the browse intent pointing at the newly chosen pack.
+                mDaylightHeaderPack?.value = value
+                updateProviderUi(mHeaderProvider?.value)
+                true
             }
 
             CUSTOM_HEADER_PROVIDER -> {
                 val value = newValue as? String ?: return false
+                if ((mHeaderProvider?.findIndexOfValue(value) ?: -1) < 0) return false
                 Settings.System.putString(resolver, Settings.System.STATUS_BAR_CUSTOM_HEADER_PROVIDER, value)
-                val valueIndex = mHeaderProvider?.findIndexOfValue(value) ?: -1
-                if (valueIndex >= 0) {
-                    mHeaderProvider?.summary = mHeaderProvider?.entries?.get(valueIndex)
-                }
-                mDaylightHeaderPack?.isEnabled = value == mDaylightHeaderProvider
-                mHeaderBrowse?.isEnabled = value != mFileHeaderProvider
-                mHeaderBrowse?.setTitle(if (valueIndex == 0) R.string.qs_header_browse_title else R.string.qs_header_pick_title)
-                mHeaderBrowse?.setSummary(if (valueIndex == 0) R.string.qs_header_browse_summary else R.string.qs_header_pick_summary)
-                mFileHeader?.isEnabled = value == mFileHeaderProvider
-                return true
+                mHeaderProvider?.value = value
+                updateProviderUi(value)
+                true
             }
 
-            else -> return false
+            else -> false
         }
     }
 
@@ -160,7 +199,7 @@ class QsHeaderImageSettings : OptimizedSettingsFragment(), OnPreferenceChangeLis
             try {
                 val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 intent.type = "image/*"
-                startActivityForResult(intent, 10001)
+                startActivityForResult(intent, REQUEST_PICK_IMAGE)
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), R.string.qs_header_needs_gallery, Toast.LENGTH_LONG).show()
             }
@@ -169,64 +208,61 @@ class QsHeaderImageSettings : OptimizedSettingsFragment(), OnPreferenceChangeLis
         return super.onPreferenceTreeClick(preference)
     }
 
-    private fun isBrowseHeaderAvailable(): Boolean {
-        val pm = activity?.packageManager
-        val browse = Intent()
-        browse.setClassName("org.omnirom.omnistyle", "org.omnirom.omnistyle.PickHeaderActivity")
-        return pm?.resolveActivity(browse, 0) != null
+    private fun isOmniStyleAvailable(): Boolean {
+        val pick = Intent().setClassName(OMNISTYLE_PACKAGE, OMNISTYLE_PICK)
+        return requireContext().packageManager.resolveActivity(pick, 0) != null
     }
 
     private fun getAvailableHeaderPacks(entries: MutableList<String>, values: MutableList<String>) {
         val headerMap = HashMap<String, String>()
-        val intent = Intent()
-        val packageManager = activity?.packageManager
+        val pm = requireContext().packageManager
+        val intent = Intent("org.omnirom.DaylightHeaderPack")
 
-        intent.action = "org.omnirom.DaylightHeaderPack"
-        packageManager?.queryIntentActivities(intent, 0)?.forEach { r ->
-            val packageName = r.activityInfo.packageName
-            val label = r.activityInfo.loadLabel(packageManager).toString().takeIf { it.isNotEmpty() } ?: packageName
-            headerMap[label] = packageName
+        pm.queryIntentActivities(intent, 0).forEach { r ->
+            headerMap[r.activityInfo.loadLabel(pm).toString()] = r.activityInfo.packageName
         }
 
         intent.action = "org.omnirom.DaylightHeaderPack1"
-        packageManager?.queryIntentActivities(intent, 0)?.forEach { r ->
-            val packageName = r.activityInfo.packageName
-            if (r.activityInfo.name.endsWith(".theme")) {
-                return@forEach
-            }
-            val label = r.activityInfo.loadLabel(packageManager).toString().takeIf { it.isNotEmpty() } ?: packageName
-            headerMap[label] = "$packageName/${r.activityInfo.name}"
+        pm.queryIntentActivities(intent, 0).forEach { r ->
+            if (r.activityInfo.name.endsWith(".theme")) return@forEach
+            headerMap[r.activityInfo.loadLabel(pm).toString()] =
+                "${r.activityInfo.packageName}/${r.activityInfo.name}"
         }
 
-        val labelList = headerMap.keys.sorted()
-        labelList.forEach { label ->
+        headerMap.keys.sortedWith(String.CASE_INSENSITIVE_ORDER).forEach { label ->
             entries.add(label)
             values.add(headerMap[label] ?: "")
         }
     }
 
-    override fun getMetricsCategory(): Int {
-        return MetricsProto.MetricsEvent.VIEW_UNKNOWN
-    }
+    override fun getMetricsCategory(): Int = MetricsProto.MetricsEvent.VIEW_UNKNOWN
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, result: Intent?) {
-        if (requestCode == 10001) {
-            if (resultCode != Activity.RESULT_OK) {
-                return
-            }
-            val imgUri = result?.data
-            if (imgUri != null) {
-                val savedImagePath = ImageUtils.saveImageToInternalStorage(
-                    requireContext(), imgUri, "qs_header_image", "QS_HEADER_IMAGE"
+        super.onActivityResult(requestCode, resultCode, result)
+        val imgUri: Uri = result?.data ?: return
+        if (requestCode != REQUEST_PICK_IMAGE || resultCode != Activity.RESULT_OK) return
+
+        val appContext = requireContext().applicationContext
+
+        mExecutor.execute {
+            val savedPath = try {
+                ImageUtils.saveImageToInternalStorage(
+                    appContext, imgUri, "qs_header_image", "QS_HEADER_IMAGE"
                 )
-                if (savedImagePath != null) {
-                    val resolver = requireContext().contentResolver
-                    Settings.System.putStringForUser(
-                        resolver, 
-                        Settings.System.STATUS_BAR_FILE_HEADER_IMAGE, 
-                        savedImagePath, 
-                        UserHandle.USER_CURRENT
-                    )
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to save header image $imgUri", e)
+                null
+            }
+            if (savedPath != null) {
+                Settings.System.putStringForUser(
+                    appContext.contentResolver,
+                    Settings.System.STATUS_BAR_FILE_HEADER_IMAGE,
+                    savedPath,
+                    UserHandle.USER_CURRENT
+                )
+            } else {
+                mMainHandler.post {
+                    Toast.makeText(appContext, R.string.qs_header_file_failed, Toast.LENGTH_LONG).show()
                 }
             }
         }
