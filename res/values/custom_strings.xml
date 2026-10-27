@@ -524,6 +524,7 @@
     <string name="ts_keybox_deleted">Keybox deleted</string>
     <string name="ts_delete_keybox_title">Delete keybox?</string>
     <string name="ts_delete_keybox_message">This will remove the currently installed keybox file.</string>
+    <string name="ts_wipe_playstore_message">Play Store caches integrity verdicts. Clear its data now so the new keybox takes effect right away? This will sign you out and clear its local cache and download queue.</string>
     <string name="ts_fetch_keybox">Fetch latest keybox</string>
     <string name="ts_fetch_keybox_summary">Download or locate a keybox.xml file</string>
     <string name="ts_fetch_keybox_fetching">Fetching keybox…</string>
