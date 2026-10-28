@@ -27,6 +27,12 @@
             android:defaultValue="false"
             app:position="top" />
 
+        <com.android.settings.preferences.SecureSettingSwitchPreference
+            android:key="show_clipboard_overlay"
+            android:title="@string/show_clipboard_overlay_title"
+            android:summary="@string/show_clipboard_overlay_summary"
+            android:defaultValue="true" />
+
         <com.android.settings.preferences.SystemSettingSwitchPreference
             android:key="hide_status_bar_in_screenshot"
             android:title="@string/hide_status_bar_in_screenshot_title"
