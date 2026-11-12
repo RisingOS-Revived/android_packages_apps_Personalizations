@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Dialog and toast blur -->
+    <string name="dialog_blur_title">Dialog and toast blur</string>
+    <string name="dialog_blur_summary">Blur the background of system dialogs and toasts</string>
+
     <!-- Custom emoji font -->
     <string name="emoji_add_font">Add emoji font</string>
     <string name="emoji_custom_label">Custom: %1$s</string>

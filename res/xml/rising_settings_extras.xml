@@ -28,6 +28,13 @@
             android:defaultValue="true"
             app:position="top" />
 
+        <!-- Dialog and toast blur -->
+        <com.android.settings.preferences.SystemSettingSwitchPreference
+            android:key="dialog_blur_enabled"
+            android:title="@string/dialog_blur_title"
+            android:summary="@string/dialog_blur_summary"
+            android:defaultValue="true" />
+
         <com.android.settings.preferences.SecureSettingListPreference
             android:key="package_installer_style"
             android:title="@string/package_installer_style_title"
