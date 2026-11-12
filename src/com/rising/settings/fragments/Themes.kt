@@ -62,7 +62,7 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
 
     private var mLockSound: GlobalSettingListPreference? = null
     private var mUnlockSound: GlobalSettingListPreference? = null
-    private var mEmojiStyle: SystemPropertyListPreference? = null
+    private var mEmojiStyle: Preference? = null
     private var mVolumeDialogType: SystemSettingListPreference? = null
     private var mAxionVolumeStyle: SystemSettingListPreference? = null
     private var mShowVolumePercentage: SystemSettingListPreference? = null
@@ -76,7 +76,7 @@ class Themes : SettingsPreferenceFragment(), Preference.OnPreferenceChangeListen
         mLockSound?.onPreferenceChangeListener = this
         mUnlockSound = findPreference<GlobalSettingListPreference>(KEY_UNLOCK_SOUND)
         mUnlockSound?.onPreferenceChangeListener = this
-        mEmojiStyle = findPreference<SystemPropertyListPreference>(KEY_EMOJI_STYLE)
+        mEmojiStyle = findPreference<Preference>(KEY_EMOJI_STYLE)
         mEmojiStyle?.onPreferenceChangeListener = this
 
         mAniOverrideEnabled = findPreference<SystemPropertyListPreference?>(SYS_ANI_OVERRIDE_ENABLED)

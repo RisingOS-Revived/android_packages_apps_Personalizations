@@ -15,6 +15,26 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Custom emoji font -->
+    <string name="emoji_add_font">Add emoji font</string>
+    <string name="emoji_custom_label">Custom: %1$s</string>
+    <string name="emoji_preview_title">Preview emoji font</string>
+    <string name="emoji_preview_coverage">%1$d of %2$d newest emoji included</string>
+    <string name="emoji_later">Later</string>
+    <string name="emoji_reboot_title">Reboot required</string>
+    <string name="emoji_reboot_message">The built-in emoji style is read at boot. Reboot to apply it.</string>
+    <string name="emoji_reboot_now">Reboot now</string>
+    <string name="emoji_restart_title">Restart to apply emoji</string>
+    <string name="emoji_restart_message">These emoji replace the system emoji in every app that uses the system font. Restarting now restarts SystemUI and closes all running apps so they pick up the new emoji. If you restart later, each app switches the next time it starts.</string>
+    <string name="emoji_restart_now">Restart now</string>
+    <string name="emoji_apps_reset">Reset third-party apps</string>
+    <string name="emoji_apps_confirm">This copies your emoji font over every emoji font stored in app data, stops Facebook and Messenger from downloading their own, clears the caches of those apps and Gboard, and turns off the Google Play services font provider. Affected apps are force stopped. Run it again after those apps update.</string>
+    <string name="emoji_apps_reset_button">Reset</string>
+    <string name="emoji_toast_invalid">Invalid emoji font file</string>
+    <string name="emoji_toast_failed">Failed to apply emoji font</string>
+    <string name="emoji_toast_updater_disabled">Font updates are disabled on this device</string>
+    <string name="emoji_toast_not_installed">Add a custom emoji font first</string>
+
     <!-- Package installer -->
     <string name="package_installer_style_title">Package installer style</string>
     <string name="package_installer_style_aosp">AOSP</string>

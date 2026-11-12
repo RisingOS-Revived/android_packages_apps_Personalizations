@@ -4,6 +4,12 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Custom emoji font -->
+    <plurals name="emoji_apps_done">
+        <item quantity="one">Replaced %1$d emoji font in app data. Apps that use downloadable emoji now fall back to the system emoji.</item>
+        <item quantity="other">Replaced %1$d emoji fonts in app data. Apps that use downloadable emoji now fall back to the system emoji.</item>
+    </plurals>
+
     <!-- App Lock -->
     <plurals name="app_lock_summary_count">
         <item quantity="one">1 app locked</item>
